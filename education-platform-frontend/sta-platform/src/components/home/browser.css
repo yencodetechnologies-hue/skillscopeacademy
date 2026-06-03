@@ -1,0 +1,111 @@
+.browse {
+  padding: 80px 0;
+  background: #fff;
+}
+
+.browse-header {
+  margin-bottom: 36px;
+}
+
+.browse-subtitle {
+  color: #cc0000;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.browse-header h2 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.browse-desc {
+  color: #666;
+  font-size: 16px;
+}
+
+/* Category Tabs */
+.cat-tabs {
+  background: #111827;
+  border-radius: 16px;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 40px;
+}
+
+.cat-tab {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.cat-tab:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.cat-tab.active {
+  background: #cc0000;
+  color: white;
+  font-weight: 700;
+}
+
+.cat-count {
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cat-tab.active .cat-count {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Course Grid */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.no-courses {
+  color: #999;
+  padding: 40px 0;
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.browse-footer {
+  text-align: center;
+}
+
+.see-more-btn {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.see-more-btn:hover {
+  background: #cc0000;
+}

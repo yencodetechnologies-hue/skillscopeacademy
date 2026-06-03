@@ -1,0 +1,147 @@
+.whychoose {
+  padding: 90px 0;
+  background: #f4f7fb;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* LEFT */
+.why-left {
+  background: #111827;
+  padding: 40px;
+  border-radius: 24px;
+  color: white;
+}
+
+.why-trusted-label {
+  color: #cc0000;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.review-box {
+  background: #1a2a3a;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.review-box h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.review-box p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+
+.testimonial-box {
+  background: #1a2a3a;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.stars {
+  color: gold;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.testimonial-box p {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.testimonial-box h5 {
+  color: #cc0000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.testimonial-box h5 span {
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+}
+
+/* RIGHT */
+.why-subtitle {
+  color: #cc0000;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.why-right h2 {
+  font-size: 40px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 20px;
+  line-height: 1.25;
+}
+
+.why-desc {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 36px;
+}
+
+.why-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.why-reason {
+  background: white;
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.reason-icon {
+  font-size: 26px;
+  width: 48px;
+  height: 48px;
+  background: #fff5f5;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.why-reason h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.why-reason p {
+  font-size: 13px;
+  color: #777;
+}

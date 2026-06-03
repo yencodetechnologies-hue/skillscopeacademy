@@ -1,0 +1,87 @@
+/* Stats Banner — overlapping hero */
+.stats-banner {
+  background: rgba(0,0,0,0.85);
+  color: white;
+  padding: 18px 0;
+}
+
+.stats-banner-inner {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon {
+  font-size: 26px;
+}
+
+.stat-item strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+}
+
+.stat-item span {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Feature boxes */
+.features-strip {
+  background: white;
+  padding: 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.feature-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 30px 28px;
+  border-right: 1px solid #f0f0f0;
+}
+
+.feature-box:last-child {
+  border-right: none;
+}
+
+.feature-icon {
+  font-size: 32px;
+  background: #fff5f5;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature-box h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.feature-box p {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.5;
+}

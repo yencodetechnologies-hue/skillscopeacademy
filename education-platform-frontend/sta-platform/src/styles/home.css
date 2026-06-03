@@ -1,0 +1,168 @@
+/* TOPBAR */
+.topbar {
+  background: #111827;
+  color: rgba(255,255,255,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 40px;
+  font-size: 13px;
+  gap: 20px;
+}
+
+.topbar-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.topbar-contact svg {
+  color: #cc0000;
+}
+
+.sep {
+  color: rgba(255,255,255,0.3);
+}
+
+.topbar-middle {
+  flex: 1;
+  overflow: hidden;
+  text-align: center;
+}
+
+.topbar-ticker {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 1px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.topbar-right svg {
+  color: #cc0000;
+}
+
+.topbar-addr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px;
+  background: white;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+
+.nav-logo .logo-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  line-height: 1.2;
+}
+
+.logo-safety {
+  font-size: 26px;
+  font-weight: 900;
+  color: #cc0000;
+  letter-spacing: -0.5px;
+}
+
+.logo-training {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.logo-academy {
+  font-size: 13px;
+  font-weight: 500;
+  color: #777;
+  letter-spacing: 2px;
+  display: block;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link {
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #cc0000;
+}
+
+.dropdown-icon {
+  font-size: 11px;
+  color: #999;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nav-btn {
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-combo {
+  background: #cc0000;
+  color: white;
+}
+
+.btn-combo:hover {
+  background: #aa0000;
+}
+
+.btn-book {
+  background: #cc0000;
+  color: white;
+}
+
+.btn-book:hover {
+  background: #aa0000;
+}
+
+.btn-login {
+  background: #cc0000;
+  color: white;
+}
+
+.btn-login:hover {
+  background: #aa0000;
+}

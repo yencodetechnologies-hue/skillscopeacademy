@@ -1,0 +1,60 @@
+.cta-section {
+  background: #cc0000;
+  padding: 60px 0;
+}
+
+.cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.cta-text h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.cta-text p {
+  color: rgba(255,255,255,0.85);
+  font-size: 16px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  padding: 16px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.cta-btn-dark {
+  background: #111827;
+  color: white;
+}
+
+.cta-btn-dark:hover {
+  background: #1f2937;
+}
+
+.cta-btn-outline {
+  background: transparent;
+  border-color: white;
+  color: white;
+}
+
+.cta-btn-outline:hover {
+  background: white;
+  color: #cc0000;
+}

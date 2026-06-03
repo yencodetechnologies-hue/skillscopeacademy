@@ -1,0 +1,305 @@
+.course-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+}
+
+.card-img-wrap {
+  position: relative;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #cc0000;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.card-duration {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.65);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.card-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.card-price {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.card-original {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.card-save {
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.card-code {
+  font-size: 12px;
+  color: #cc0000;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.card-meta span {
+  font-size: 13px;
+  color: #666;
+}
+
+.card-select-label {
+  font-size: 12px;
+  color: #cc0000;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.card-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.option-box {
+  flex: 1;
+  background: #f4f6fa;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.option-box p {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.option-box strong {
+  font-size: 20px;
+  font-weight: 800;
+  color: #cc0000;
+}
+
+.card-book-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #cc0000;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.card-book-btn:hover {
+  background: #aa0000;
+}
+
+.card-details-btn {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: white;
+  color: #555;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.card-details-btn:hover {
+  border-color: #cc0000;
+  color: #cc0000;
+}
+
+/* ── Additions to coursecard.css ──────────────────────────── */
+
+/* Image placeholder when no thumbnail */
+.card-img-ph {
+  width: 100%; height: 200px;
+  background: #FDEDEC;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+
+/* Option box — clickable button style */
+.option-box {
+  flex: 1;
+  background: #f4f6fa;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.option-box:hover { border-color: #cc0000; background: #fff; }
+
+/* Active selected option */
+.option-active {
+  border-color: #cc0000 !important;
+  background: #fff8f8 !important;
+}
+
+/* Book button "added" state */
+.card-book-btn--added {
+  background: #2E7D32 !important;
+  cursor: default;
+}
+.card-book-btn--added:hover { background: #2E7D32 !important; }
+
+/* browser.css skeleton additions */
+.cat-tab-skel {
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  animation: skel-pulse 1.4s ease-in-out infinite;
+}
+
+.course-card-skel {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.course-card-skel-img {
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.course-card-skel-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skel-line {
+  height: 13px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes skel-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* browse error */
+.browse-error {
+  background: #FFF5F5; border: 1px solid #FECACA;
+  border-radius: 10px; padding: 14px 20px;
+  color: #B91C1C; font-size: 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 24px;
+}
+.browse-error button {
+  background: #cc0000; color: #fff;
+  border: none; padding: 6px 14px;
+  border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+
+/* Navbar cart button */
+.nav-cart-btn {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  background: #f4f6f8; border: 1px solid #e8e8e8;
+  border-radius: 10px; color: #333;
+  text-decoration: none; transition: all 0.2s;
+  flex-shrink: 0;
+}
+.nav-cart-btn:hover { background: #cc0000; color: #fff; border-color: #cc0000; }
+
+.nav-cart-badge {
+  position: absolute;
+  top: -7px; right: -7px;
+  background: #cc0000; color: #fff;
+  font-size: 10px; font-weight: 800;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff;
+}
+
+@media (max-width: 1024px) {
+  .course-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .course-grid { grid-template-columns: 1fr; }
+}

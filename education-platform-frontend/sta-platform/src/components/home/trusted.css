@@ -1,0 +1,41 @@
+.trusted {
+  padding: 80px 0;
+  background: white;
+}
+
+.trusted-label {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #cc0000;
+  letter-spacing: 3px;
+  margin-bottom: 48px;
+}
+
+.trusted-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px;
+}
+
+.client-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  transition: box-shadow 0.2s;
+}
+
+.client-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.client-card img {
+  max-width: 100%;
+  max-height: 50px;
+  object-fit: contain;
+}

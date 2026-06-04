@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:7000/api"
+  baseURL: "https://skillscopeacademy.yencodetechnologies.in/api" || "http://localhost:7000/api"
 })
 
 /*

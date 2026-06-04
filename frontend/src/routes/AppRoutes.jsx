@@ -22,8 +22,10 @@ import Cart from '../components/home/Cart'
 import Activitylogs from '../pages/admin/Activitylogs'
 import About   from '../pages/About'
 import Contact from '../pages/Contact'
-import CMS     from '../pages/admin/CMS'
+
 import AdminDashboard from '../pages/admin/AdminDashboard'
+import Cms from '../pages/admin/Cms'
+
 
 
 
@@ -55,7 +57,7 @@ const AppRoutes = () => (
       <Route path="/admin/gallery"      element={<AdminWrap><AdminGallery /></AdminWrap>} />
       <Route path="/admin/banner"       element={<AdminWrap><AdminBanner /></AdminWrap>} />
       <Route path="/admin/activitylogs"element={<AdminWrap><Activitylogs /></AdminWrap>} />
-      <Route path="/cms" element={<AdminWrap><CMS /></AdminWrap>} />
+      <Route path="/cms" element={<AdminWrap><Cms/></AdminWrap>} />
     </Routes>
   </BrowserRouter>
 )

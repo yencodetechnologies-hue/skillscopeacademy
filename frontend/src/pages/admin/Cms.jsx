@@ -386,7 +386,7 @@ const TABS = [
   { id:'footer',  label:'Footer' },
 ]
 
-export default function CMS() {
+export default function Cms() {
   const [activeTab, setActiveTab] = useState('about')
   const [toast, setToast] = useState({ msg:'', type:'' })
 

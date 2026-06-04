@@ -1,68 +1,52 @@
 name: SkillScope Academy Backend CI/CD
 
 on:
-push:
-branches:
-- main
-
-concurrency:
-group: production-deploy
-cancel-in-progress: true
+  push:
+    branches:
+      - main
 
 jobs:
-build:
-name: Build Backend
-runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-```
-defaults:
-  run:
-    working-directory: backend
+    defaults:
+      run:
+        working-directory: backend
 
-steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: "20"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-  - name: Install Dependencies
-    run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-  - name: Run Tests
-    run: npm test || echo "No tests found"
-```
+      - name: Run Tests
+        run: |
+          npm test || true
 
-deploy:
-name: Deploy To VPS
-needs: build
-runs-on: ubuntu-latest
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Deploy Application
-    uses: appleboy/ssh-action@v1.0.3
-    with:
-      host: ${{ secrets.SERVER_HOST }}
-      username: root
-      key: ${{ secrets.SSH_PRIVATE_KEY }}
-      script: |
-        cd ~/skillscopeacademy/skillscopeacademy
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/skillscopeacademy/skillscopeacademy/backend
 
-        echo "Pulling latest code..."
-        git pull origin main
+            git pull origin main
 
-        echo "Installing backend dependencies..."
-        cd backend
-        npm install
+            npm install
 
-        echo "Restarting PM2..."
-        pm2 restart skillscopeacademy --update-env
+            pm2 restart skillscopeacademy --update-env
 
-        echo "Saving PM2 configuration..."
-        pm2 save
-
-        echo "Deployment completed successfully."
-```
+            pm2 save

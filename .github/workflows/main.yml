@@ -35,7 +35,7 @@ steps:
 
   - name: Run Tests
     run: npm test --if-present
-```
+
 
 deploy:
 name: Deploy to Production VPS
@@ -43,7 +43,7 @@ needs: build
 runs-on: ubuntu-latest
 timeout-minutes: 15
 
-```
+
 steps:
   - name: Deploy Application
     uses: appleboy/ssh-action@v1.0.3
@@ -89,4 +89,4 @@ steps:
 
         echo "✅ Deployment Successful"
         echo "=================================="
-```
+

@@ -1,10 +1,3 @@
-// import { coursesData } from './mockData'
-
-// export const fetchCourses = async () => {
-//   // Simulate API delay
-//   await new Promise(res => setTimeout(res, 300))
-//   return { courses: coursesData }
-// }
 
 
 import API from './api'

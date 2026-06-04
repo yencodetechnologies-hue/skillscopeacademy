@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <aside className='sidebar'>
 
-      <h2>STA Academy</h2>
+      <h2>Skill Scope Academy</h2>
 
       <nav>
 
@@ -13,6 +13,8 @@ const Sidebar = () => {
         <Link to='/courses'>Courses</Link>
 
         <Link to='/admin'>Admin</Link>
+
+        <Link to="/admin/cms">CMS / Site Content</Link>
 
       </nav>
 

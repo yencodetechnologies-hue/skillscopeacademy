@@ -8,6 +8,7 @@ import BrowseCourses from '../components/home/BrowserCourses'
 import WhyChoose from '../components/home/WhyChoose'
 import TrustedCompanies from '../components/home/TrustedCompanies'
 import CTA from '../components/home/CTA'
+import FaqSection from '../components/home/FaqSection'
 
 const Home = () => {
   return (
@@ -20,8 +21,12 @@ const Home = () => {
       <BrowseCourses />
       <WhyChoose />
       <TrustedCompanies />
-      <CTA />
-      <Footer />
+     <CTA />
+<FaqSection
+  title="Frequently Asked Questions"
+  subtitle="Everything you need to know about our courses and training."
+/>
+<Footer />
     </>
   )
 }

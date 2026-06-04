@@ -20,7 +20,9 @@ import AdminGallery    from '../pages/admin/AdminGallery'
 import AdminBanner     from '../pages/admin/AdminBanner'
 import Cart from '../components/home/Cart'
 import Activitylogs from '../pages/admin/Activitylogs'
-
+import About   from '../pages/About'
+import Contact from '../pages/Contact'
+import CMS     from '../pages/admin/CMS'
 
 
 const AdminWrap = ({ children }) => (
@@ -37,6 +39,9 @@ const AppRoutes = () => (
       <Route path="/login"    element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/cart" element={<Cart/>} />
+      <Route path="/about"   element={<About />} />
+<Route path="/contact" element={<Contact />} />
+      
 
 
       {/* Admin routes — each page is its own component */}
@@ -48,6 +53,7 @@ const AppRoutes = () => (
       <Route path="/admin/gallery"      element={<AdminWrap><AdminGallery /></AdminWrap>} />
       <Route path="/admin/banner"       element={<AdminWrap><AdminBanner /></AdminWrap>} />
       <Route path="/admin/activitylogs"element={<AdminWrap><Activitylogs /></AdminWrap>} />
+      <Route path="/admin/cms" element={<AdminWrap><CMS /></AdminWrap>} />
     </Routes>
   </BrowserRouter>
 )

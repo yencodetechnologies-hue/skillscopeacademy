@@ -13,6 +13,8 @@ const authRoutes = require('./routes/authRoutes')
 const courseRoutes = require('./routes/courseRoutes')
 const categoryRoutes=require('./routes/categoryRoutes')
 const scheduleRoutes=require('./routes/scheduleRoutes')
+const siteContentRoutes = require('./routes/siteContentRoutes')
+
 
 console.log("type off schedule",typeof scheduleRoutes)
 console.log("scheeddrouttes",scheduleRoutes)
@@ -36,7 +38,7 @@ app.use(cors({
 app.use('/api/auth', authRoutes)
 app.use('/api/courses', courseRoutes)
 app.use('/api/schedules', scheduleRoutes)
-
+app.use('/api/site', siteContentRoutes)
 
 
 app.use('/api/categories', categoryRoutes)

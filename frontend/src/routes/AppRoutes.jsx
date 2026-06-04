@@ -19,7 +19,8 @@ import AdminSchedule   from '../pages/admin/AdminSchedule'
 import AdminGallery    from '../pages/admin/AdminGallery'
 import AdminBanner     from '../pages/admin/AdminBanner'
 import Cart from '../components/home/Cart'
-import AdminActivitylogs from '../pages/admin/AdminActivitylogs'
+import AdminActivitylogs from '../pages/admin/AdminActivityLogs'
+
 
 const AdminWrap = ({ children }) => (
   <ProtectedAdminRoute>

@@ -6,7 +6,7 @@ const {
   getContact, updateContact,
   getFaqs, getAllFaqs, createFaq, updateFaq, deleteFaq,
   getFooter, updateFooter,
-} = require('../controllers/siteContentController')
+} = require('../controllers/Sitecontentcontroller')
 
 // Public
 router.get('/about',   getAbout)

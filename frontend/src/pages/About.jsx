@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import { getAbout } from '../services/siteContentServices'
 import { siteConfig } from '../services/mockData'
-import './about.css'
+import './About.css'
 
 export default function About() {
   const [data, setData]       = useState(null)

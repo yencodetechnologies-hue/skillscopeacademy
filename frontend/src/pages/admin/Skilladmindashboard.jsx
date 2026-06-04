@@ -4,7 +4,7 @@ import { getCourses } from '../../services/adminService'
 import { getAllUsers } from '../../services/adminService'
 import { getAllPayments } from '../../services/adminService'
 
-const AdminDashboard = () => {
+const Skilladmindashboard = () => {
   const navigate = useNavigate()
   const [stats, setStats] = useState({ courses: 0, users: 0, payments: 0, revenue: 0 })
   const [loading, setLoading] = useState(true)
@@ -93,4 +93,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default AdminDashboard
+export default Skilladmindashboard

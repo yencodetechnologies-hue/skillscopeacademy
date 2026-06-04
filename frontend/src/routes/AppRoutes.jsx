@@ -23,8 +23,8 @@ import Activitylogs from '../pages/admin/Activitylogs'
 import About   from '../pages/About'
 import Contact from '../pages/Contact'
 
-import AdminDashboard from '../pages/admin/AdminDashboard'
 import Cms from '../pages/admin/Cms'
+import Skilladmindashboard from '../pages/admin/Skilladmindashboard'
 
 
 
@@ -49,7 +49,7 @@ const AppRoutes = () => (
 
 
       {/* Admin routes — each page is its own component */}
-      <Route path="/admin"              element={<AdminWrap><AdminDashboard /></AdminWrap>} />
+      <Route path="/admin"              element={<AdminWrap><Skilladmindashboard /></AdminWrap>} />
       <Route path="/admin/courses"      element={<AdminWrap><AdminCourses /></AdminWrap>} />
       <Route path="/admin/users"        element={<AdminWrap><AdminUsers /></AdminWrap>} />
       <Route path="/admin/payments"     element={<AdminWrap><AdminPayments /></AdminWrap>} />

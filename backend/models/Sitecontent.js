@@ -39,7 +39,7 @@ const FooterSchema = new mongoose.Schema({
   courses:       [String],
   quickLinks:    [String],
   accreditation: [String],
-  copyright:     { type: String, default: '© 2024 Safety Training Academy. All rights reserved.' },
+  copyright:     { type: String, default: '© 2026 Skill Scope Academy. All rights reserved.' },
   abn:           { type: String, default: '' },
   rto:           { type: String, default: '' },
   website:       { type: String, default: '' },

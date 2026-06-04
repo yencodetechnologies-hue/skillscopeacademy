@@ -53,7 +53,7 @@ const AppRoutes = () => (
       <Route path="/admin/gallery"      element={<AdminWrap><AdminGallery /></AdminWrap>} />
       <Route path="/admin/banner"       element={<AdminWrap><AdminBanner /></AdminWrap>} />
       <Route path="/admin/activitylogs"element={<AdminWrap><Activitylogs /></AdminWrap>} />
-      <Route path="/admin/cms" element={<AdminWrap><CMS /></AdminWrap>} />
+      <Route path="/cms" element={<AdminWrap><CMS /></AdminWrap>} />
     </Routes>
   </BrowserRouter>
 )

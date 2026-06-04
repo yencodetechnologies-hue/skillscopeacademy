@@ -42,6 +42,8 @@ const AdminDashboard = () => {
     { label: '+ Manage Banners',       nav: '/admin/banner',        icon: '🎯' },
     { label: '→ View Activity Logs',   nav: '/admin/activitylogs', icon: '📋' },
     { label: '🏠 Go to Landing Page',  nav: '/',                    icon: ''   },
+    { label: '🏠 cms',  nav: '/cms',                    icon: ''   },
+
   ]
 
   return (

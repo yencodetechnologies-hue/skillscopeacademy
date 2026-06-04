@@ -33,7 +33,7 @@ const WhyChoose = () => {
           <p className='why-subtitle'>WHY CHOOSE STA</p>
           <h2>NSW's Most Trusted Training RTO</h2>
           <p className='why-desc'>
-            Safety Training Academy has been delivering nationally recognised workplace safety training since 2019. Over 1,000 five-star reviews — and certificate same day.
+            Skill ScopeAcademy has been delivering nationally recognised workplace Skill Scope since 2019. Over 1,000 five-star reviews — and certificate same day.
           </p>
 
           <div className='why-reasons'>

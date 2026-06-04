@@ -10,7 +10,7 @@ const navItems = [
   { key: 'schedule',     path: '/admin/schedule',     icon: '📅', label: 'Schedule'     },
   { key: 'gallery',      path: '/admin/gallery',      icon: '🖼', label: 'Gallery'      },
   { key: 'banner',       path: '/admin/banner',       icon: '🎯', label: 'Banner'       },
-  { key: 'activitylogs', path: '/admin/activity-logs',icon: '📋', label: 'Activity Logs'},
+  { key: 'activitylogs', path: '/admin/activitylogs',icon: '📋', label: 'Activity Logs'},
 ]
 
 const AdminLayout = ({ children }) => {
@@ -28,7 +28,7 @@ const AdminLayout = ({ children }) => {
       <aside className="admin-sidebar">
         <div className="sidebar-brand">
           <h2>Admin Portal</h2>
-          <p>Safety Training Academy</p>
+          <p>Skill Scope Academy</p>
         </div>
         <nav className="sidebar-nav">
           {navItems.map(item => {

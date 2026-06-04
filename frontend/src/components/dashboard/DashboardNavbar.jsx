@@ -3,7 +3,7 @@ const DashboardNavbar = () => {
     <header className="dashboard-navbar">
 
       <div>
-        <h2>Safety Training Academy</h2>
+        <h2>Skill Scope Academy</h2>
       </div>
 
       <div className="navbar-right">

@@ -14,7 +14,7 @@ const Sidebar = () => {
 
         <Link to='/admin'>Admin</Link>
 
-        <Link to="/admin/cms">CMS / Site Content</Link>
+        <Link to="/cms">CMS / Site Content</Link>
 
       </nav>
 

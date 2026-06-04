@@ -51,9 +51,9 @@ function Navbar() {
       {/* Logo */}
       <div className="nav-logo">
         <Link to="/" className="logo-text">
-          <span className="logo-safety">SAFETY </span>
+          <span className="logo-safety">Skill</span>
           <span className="logo-training">
-            TRAINING<br/>
+            Scope<br/>
             <span className="logo-academy">ACADEMY</span>
           </span>
         </Link>

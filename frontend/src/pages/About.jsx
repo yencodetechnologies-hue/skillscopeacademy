@@ -16,10 +16,10 @@ export default function About() {
   }, [])
 
   // ── Resolved values: DB first → hardcoded fallback ─────────
-  const heading     = data?.heading     || 'About Safety Training Academy'
+  const heading     = data?.heading     || 'About Skill Scope Academy'
   const subheading  = data?.subheading  || 'Nationally Recognised Training'
   const description = data?.description ||
-    'Safety Training Academy is a Registered Training Organisation (RTO #45234) delivering nationally recognised qualifications across Australia. We provide practical, hands-on training that meets the highest industry standards.'
+    'Skill Scope Academy is a Registered Training Organisation (RTO #45234) delivering nationally recognised qualifications across Australia. We provide practical, hands-on training that meets the highest industry standards.'
   const mission = data?.mission || ''
   const vision  = data?.vision  || ''
 
@@ -153,7 +153,7 @@ export default function About() {
         <div className="container about-cta-inner">
           <div>
             <h2>Ready to Get Certified?</h2>
-            <p>Browse our full range of nationally recognised safety courses and book your spot today.</p>
+            <p>Browse our full range of nationally recognised  courses and book your spot today.</p>
           </div>
           <div className="about-cta-btns">
             <Link to="/courses" className="about-btn-primary">View All Courses</Link>

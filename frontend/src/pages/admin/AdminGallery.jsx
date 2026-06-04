@@ -12,7 +12,9 @@ const AdminGallery = () => {
     setLoading(true)
     try {
       const { data } = await getGallery()
-      setImages(data.data || data.images || [])
+      console.log("gallerydata",data.gallery);
+      
+      setImages(data.gallery || data.images || [])
     } catch (e) { console.error(e) }
     finally { setLoading(false) }
   }, [])

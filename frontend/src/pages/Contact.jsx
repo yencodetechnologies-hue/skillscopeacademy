@@ -42,7 +42,7 @@ export default function Contact() {
   // ── Resolved values ───────────────────────────────────────
   const phone1  = contact?.phone1  || '1300 976 097'
   const phone2  = contact?.phone2  || '0483 878 887'
-  const email   = contact?.email   || 'info@safetytrainingacademy.edu.au'
+  const email   = contact?.email   || 'info@skillscopeacademy.edu.au'
   const address = contact?.address || '3/14-16 Marjorie Street, Sefton NSW 2162'
   const hours   = contact?.hours   || 'Mon–Fri 8am–5pm'
   const social  = contact?.social  || {}

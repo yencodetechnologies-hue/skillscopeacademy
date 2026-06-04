@@ -243,7 +243,7 @@ const Admin = () => {
       <aside className="admin-sidebar">
         <div className="sidebar-brand">
           <h2>Admin Portal</h2>
-          <p>Safety Training Academy</p>
+          <p>Skill Scope Academy</p>
         </div>
         <nav className="sidebar-nav">
           {navItems.map(item => (

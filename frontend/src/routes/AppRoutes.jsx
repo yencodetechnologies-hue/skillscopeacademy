@@ -11,7 +11,7 @@ import ProtectedAdminRoute from '../components/ProtectedadminRoute'
 import AdminLayout         from '../layouts/AdminLayout'
 
 // Admin pages
-import AdminDashboard  from '../pages/admin/Admindashboard'
+
 import AdminCourses    from '../pages/admin/AdminCourses'
 import AdminUsers      from '../pages/admin/AdminUsers'
 import AdminPayments   from '../pages/admin/Adminpayments'
@@ -23,6 +23,8 @@ import Activitylogs from '../pages/admin/Activitylogs'
 import About   from '../pages/About'
 import Contact from '../pages/Contact'
 import CMS     from '../pages/admin/CMS'
+import AdminDashboard from '../pages/admin/AdminDashboard'
+
 
 
 const AdminWrap = ({ children }) => (

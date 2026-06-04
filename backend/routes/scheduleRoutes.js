@@ -70,10 +70,7 @@ module.exports = router
 // router.get('/', getActivityLogs)
 // module.exports = router
 
-// ════════════════════════════════════════════
-// routes/courseRoutes.js  — add this line:
-// ════════════════════════════════════════════
-// router.patch('/:id/toggle-status', toggleCourseStatus)
+
 
 // ════════════════════════════════════════════
 // server.js / app.js — register all routes:

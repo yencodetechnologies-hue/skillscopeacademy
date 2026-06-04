@@ -32,7 +32,7 @@ const ACTION_TEXT = {
   logout: '#6A1B9A',
 }
 
-const AdminActivityLogs = () => {
+const AdminActivitylogs = () => {
   const [logs, setLogs]       = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage]       = useState(1)
@@ -131,4 +131,4 @@ const AdminActivityLogs = () => {
   )
 }
 
-export default AdminActivityLogs
+export default AdminActivitylogs

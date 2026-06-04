@@ -18,8 +18,8 @@ import AdminPayments   from '../pages/admin/Adminpayments'
 import AdminSchedule   from '../pages/admin/AdminSchedule'
 import AdminGallery    from '../pages/admin/AdminGallery'
 import AdminBanner     from '../pages/admin/AdminBanner'
-import AdminActivityLogs from '../pages/admin/AdminActivityLogs'
 import Cart from '../components/home/Cart'
+import AdminActivitylogs from '../pages/admin/AdminActivitylogs'
 
 const AdminWrap = ({ children }) => (
   <ProtectedAdminRoute>
@@ -45,7 +45,7 @@ const AppRoutes = () => (
       <Route path="/admin/schedule"     element={<AdminWrap><AdminSchedule /></AdminWrap>} />
       <Route path="/admin/gallery"      element={<AdminWrap><AdminGallery /></AdminWrap>} />
       <Route path="/admin/banner"       element={<AdminWrap><AdminBanner /></AdminWrap>} />
-      <Route path="/admin/activity-logs"element={<AdminWrap><AdminActivityLogs /></AdminWrap>} />
+      <Route path="/admin/activity-logs"element={<AdminWrap><AdminActivitylogs /></AdminWrap>} />
     </Routes>
   </BrowserRouter>
 )

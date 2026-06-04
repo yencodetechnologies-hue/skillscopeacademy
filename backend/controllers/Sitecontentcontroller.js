@@ -1,4 +1,4 @@
-const { About, Contact, FaqItem, Footer } = require('../models/SiteContent')
+const { About, Contact, FaqItem, Footer } = require('../models/Sitecontent')
 
 // ── helpers ────────────────────────────────────────────────────────────────
 const getOrCreate = async (Model, defaults = {}) => {

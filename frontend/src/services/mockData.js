@@ -262,6 +262,6 @@ export const footerData = {
     "Conduct civil construction wheeled front end loader operations (with experience)",
     "Confined Space Combined Training Courses",
   ],
-  quickLinks: ["Home", "VOC", "Book Now", "About Us", "Contact Us", "FAQs"],
+  quickLinks: ["Home", "VOC", "Book Now", "About Us", "Contact Us"],
   accreditation: ["RTO #45234", "SafeWork NSW Approved", "Nationally Recognised Training"],
 };

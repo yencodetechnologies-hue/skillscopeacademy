@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import {
   getAbout, updateAbout,
   getContact, updateContact,
-  getAllFaqs, createFaq, updateFaq, deleteFaq,
+
   getFooter, updateFooter,
 } from '../../services/siteContentServices'
 
@@ -194,115 +194,6 @@ function ContactTab({ toast }) {
   )
 }
 
-// ══════════════════════════════════════════════════════════════════
-// TAB: FAQ
-// ══════════════════════════════════════════════════════════════════
-function FaqTab({ toast }) {
-  const [faqs, setFaqs] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [editId, setEditId] = useState(null)
-  const [form, setForm] = useState({ question:'', answer:'', order:0, active:true })
-  const [saving, setSaving] = useState(false)
-
-  const load = () => getAllFaqs().then(d=>{ setFaqs(d); setLoading(false) }).catch(()=>setLoading(false))
-  useEffect(() => { load() }, [])
-
-  const openEdit = (faq) => { setEditId(faq._id); setForm({ question:faq.question, answer:faq.answer, order:faq.order, active:faq.active }) }
-  const openNew  = ()    => { setEditId('new'); setForm({ question:'', answer:'', order:0, active:true }) }
-  const close    = ()    => { setEditId(null) }
-
-  const save = async () => {
-    if (!form.question.trim() || !form.answer.trim()) { toast('Question and Answer are required','error'); return }
-    setSaving(true)
-    try {
-      if (editId==='new') await createFaq(form)
-      else await updateFaq(editId, form)
-      await load()
-      close()
-      toast('FAQ saved!','success')
-    } catch(e) { toast(e.message||'Save failed','error') }
-    finally { setSaving(false) }
-  }
-
-  const del = async (id) => {
-    if (!confirm('Delete this FAQ?')) return
-    try { await deleteFaq(id); await load(); toast('FAQ deleted','success') }
-    catch(e) { toast(e.message||'Delete failed','error') }
-  }
-
-  const toggle = async (faq) => {
-    try { await updateFaq(faq._id, { active: !faq.active }); await load() }
-    catch(e) { toast(e.message,'error') }
-  }
-
-  if (loading) return <div style={{padding:40,color:'#94a3b8'}}>Loading…</div>
-
-  return (
-    <div>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:20}}>
-        <div>
-          <div style={sectionTitle}>FAQ Management</div>
-          <div style={sectionSub}>Shown in the FAQ section on the Home page and Contact page.</div>
-        </div>
-        <button style={btn('primary')} onClick={openNew}>+ Add FAQ</button>
-      </div>
-
-      {/* Edit / Add form */}
-      {editId && (
-        <div style={{...card, border:'1px solid #c4b5fd', background:'#faf5ff'}}>
-          <div style={{fontSize:15,fontWeight:700,color:'#4f46e5',marginBottom:14}}>
-            {editId==='new'?'New FAQ':'Edit FAQ'}
-          </div>
-          <div style={{marginBottom:12}}>
-            <label style={label}>Question</label>
-            <input style={inp} value={form.question} onChange={e=>setForm(f=>({...f,question:e.target.value}))} placeholder="Enter question..." />
-          </div>
-          <div style={{marginBottom:12}}>
-            <label style={label}>Answer</label>
-            <textarea style={textarea} value={form.answer} onChange={e=>setForm(f=>({...f,answer:e.target.value}))} placeholder="Enter answer..." />
-          </div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:16}}>
-            <div>
-              <label style={label}>Display Order</label>
-              <input style={inp} type="number" value={form.order} onChange={e=>setForm(f=>({...f,order:Number(e.target.value)}))} />
-            </div>
-            <div style={{display:'flex',alignItems:'center',gap:10,marginTop:22}}>
-              <input type="checkbox" id="faq-active" checked={form.active} onChange={e=>setForm(f=>({...f,active:e.target.checked}))} style={{width:16,height:16,accentColor:'#4f46e5'}} />
-              <label htmlFor="faq-active" style={{fontSize:13,fontWeight:600,color:'#374151',cursor:'pointer'}}>Active (visible on site)</label>
-            </div>
-          </div>
-          <button style={btn('primary')} onClick={save} disabled={saving}>{saving?'Saving…':'Save FAQ'}</button>
-          <button style={btn('secondary')} onClick={close}>Cancel</button>
-        </div>
-      )}
-
-      {/* FAQ list */}
-      {faqs.length===0 ? (
-        <div style={{...card,textAlign:'center',padding:40,color:'#94a3b8'}}>No FAQs yet. Click + Add FAQ.</div>
-      ) : faqs.map(faq => (
-        <div key={faq._id} style={{...card, marginBottom:12, opacity: faq.active ? 1 : 0.55}}>
-          <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12}}>
-            <div style={{flex:1}}>
-              <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:4}}>
-                <span style={{fontSize:14,fontWeight:700,color:'#0f172a'}}>{faq.question}</span>
-                {!faq.active && <span style={{fontSize:10,fontWeight:700,padding:'2px 8px',borderRadius:20,background:'#fef3c7',color:'#b45309'}}>HIDDEN</span>}
-              </div>
-              <div style={{fontSize:13,color:'#64748b',lineHeight:1.6}}>{faq.answer}</div>
-              <div style={{fontSize:11,color:'#94a3b8',marginTop:4}}>Order: {faq.order}</div>
-            </div>
-            <div style={{display:'flex',gap:6,flexShrink:0}}>
-              <button style={{...btn('secondary'),padding:'6px 12px'}} onClick={()=>toggle(faq)}>
-                {faq.active?'Hide':'Show'}
-              </button>
-              <button style={{...btn('secondary'),padding:'6px 12px'}} onClick={()=>openEdit(faq)}>Edit</button>
-              <button style={{...btn('danger'),padding:'6px 12px'}} onClick={()=>del(faq._id)}>Delete</button>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 // ══════════════════════════════════════════════════════════════════
 // TAB: FOOTER
@@ -382,7 +273,7 @@ function FooterTab({ toast }) {
 const TABS = [
   { id:'about',   label:'About' },
   { id:'contact', label:'Contact' },
-  { id:'faq',     label:'FAQ' },
+
   { id:'footer',  label:'Footer' },
 ]
 
@@ -425,7 +316,7 @@ export default function Cms() {
       {/* Tab content */}
       {activeTab==='about'   && <AboutTab   toast={showToast} />}
       {activeTab==='contact' && <ContactTab toast={showToast} />}
-      {activeTab==='faq'     && <FaqTab     toast={showToast} />}
+     
       {activeTab==='footer'  && <FooterTab  toast={showToast} />}
     </div>
   )

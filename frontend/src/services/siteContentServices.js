@@ -20,12 +20,6 @@ export const updateAbout = (body) => {
 export const getContact   = ()      => API.get('/site/contact').then(r => r.data.data)
 export const updateContact = (body) => API.put('/site/contact', body).then(r => r.data.data)
 
-// ── FAQ ────────────────────────────────────────────────────────────────────
-export const getFaqs    = ()        => API.get('/site/faqs').then(r => r.data.data)
-export const getAllFaqs = ()        => API.get('/site/faqs/all').then(r => r.data.data)
-export const createFaq  = (body)   => API.post('/site/faqs', body).then(r => r.data.data)
-export const updateFaq  = (id, b)  => API.put(`/site/faqs/${id}`, b).then(r => r.data.data)
-export const deleteFaq  = (id)     => API.delete(`/site/faqs/${id}`)
 
 // ── Footer ─────────────────────────────────────────────────────────────────
 export const getFooter   = ()      => API.get('/site/footer').then(r => r.data.data)

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link }   from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
-import { getContact, getFaqs } from '../services/siteContentServices'
+import { getContact } from '../services/siteContentServices'
 import {
   FaMapMarkerAlt, FaEnvelope, FaPhone, FaClock,
   FaFacebookF, FaInstagram, FaLinkedinIn, FaChevronDown,
@@ -10,8 +10,7 @@ import './Contact.css'
 
 export default function Contact() {
   const [contact, setContact] = useState(null)
-  const [faqs, setFaqs]       = useState([])
-  const [openFaq, setOpenFaq] = useState(null)
+  
   const [loading, setLoading] = useState(true)
   const [form, setForm]       = useState({ name:'', email:'', phone:'', message:'' })
   const [sent, setSent]       = useState(false)
@@ -20,10 +19,10 @@ export default function Contact() {
   useEffect(() => {
     Promise.all([
       getContact().catch(() => null),
-      getFaqs().catch(() => []),
+    
     ]).then(([c, f]) => {
       setContact(c)
-      setFaqs(Array.isArray(f) ? f : [])
+    
       setLoading(false)
     })
   }, [])
@@ -118,7 +117,7 @@ export default function Contact() {
               <div className="contact-quick-links">
                 <Link to="/courses" className="contact-quick-link">📚 Browse Courses</Link>
                 <Link to="/courses" className="contact-quick-link">📅 Book a Session</Link>
-                <a href="#faq"      className="contact-quick-link">❓ View FAQs</a>
+               
               </div>
             </div>
 
@@ -201,39 +200,7 @@ export default function Contact() {
         </section>
       )}
 
-      {/* ── FAQ ───────────────────────────────────────────── */}
-      {faqs.length > 0 && (
-        <section className="contact-faq-section" id="faq">
-          <div className="container">
-            <div className="contact-faq-head">
-              <p className="contact-hero-sub">COMMON QUESTIONS</p>
-              <h2>Frequently Asked Questions</h2>
-              <p>Quick answers to help you before you reach out.</p>
-            </div>
-
-            <div className="contact-faq-list">
-              {faqs.map((faq, i) => (
-                <div
-                  key={faq._id || i}
-                  className={`contact-faq-item${openFaq === i ? ' contact-faq-item--open' : ''}`}
-                >
-                  <button
-                    className="contact-faq-btn"
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  >
-                    <span>{faq.question}</span>
-                    <FaChevronDown className="contact-faq-arrow"/>
-                  </button>
-                  {openFaq === i && (
-                    <div className="contact-faq-body">{faq.answer}</div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
+   
     </MainLayout>
   )
 }

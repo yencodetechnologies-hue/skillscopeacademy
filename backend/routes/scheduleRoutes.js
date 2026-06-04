@@ -82,4 +82,4 @@ module.exports = router
 // app.use('/api/gallery',        require('./routes/galleryRoutes'))
 // app.use('/api/banners',        require('./routes/bannerRoutes'))
 // app.use('/api/payments',       require('./routes/paymentRoutes'))
-// app.use('/api/activity-logs',  require('./routes/activityLogRoutes'))
+// app.use('/api/activitylogs',  require('./routes/activityLogRoutes'))

@@ -19,7 +19,8 @@ import AdminSchedule   from '../pages/admin/AdminSchedule'
 import AdminGallery    from '../pages/admin/AdminGallery'
 import AdminBanner     from '../pages/admin/AdminBanner'
 import Cart from '../components/home/Cart'
-import AdminActivitylogs from '../pages/admin/AdminActivityLogs'
+import Activitylogs from '../pages/admin/Activitylogs'
+
 
 
 const AdminWrap = ({ children }) => (
@@ -46,7 +47,7 @@ const AppRoutes = () => (
       <Route path="/admin/schedule"     element={<AdminWrap><AdminSchedule /></AdminWrap>} />
       <Route path="/admin/gallery"      element={<AdminWrap><AdminGallery /></AdminWrap>} />
       <Route path="/admin/banner"       element={<AdminWrap><AdminBanner /></AdminWrap>} />
-      <Route path="/admin/activity-logs"element={<AdminWrap><AdminActivitylogs /></AdminWrap>} />
+      <Route path="/admin/activitylogs"element={<AdminWrap><Activitylogs /></AdminWrap>} />
     </Routes>
   </BrowserRouter>
 )

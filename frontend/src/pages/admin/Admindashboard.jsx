@@ -40,7 +40,7 @@ const AdminDashboard = () => {
     { label: '+ Add Schedule',         nav: '/admin/schedule',      icon: '📅' },
     { label: '+ Upload Gallery Image', nav: '/admin/gallery',       icon: '🖼' },
     { label: '+ Manage Banners',       nav: '/admin/banner',        icon: '🎯' },
-    { label: '→ View Activity Logs',   nav: '/admin/activity-logs', icon: '📋' },
+    { label: '→ View Activity Logs',   nav: '/admin/activitylogs', icon: '📋' },
     { label: '🏠 Go to Landing Page',  nav: '/',                    icon: ''   },
   ]
 

@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: "https://skillscopeacademy.yencodetechnologies.in/api"
+  baseURL: "https://skillscopeacademy.yencodetechnologies.in/api" 
 })
 
+// || "http://localhost:7000/api"
 /*
 ========================================
 REQUEST INTERCEPTOR

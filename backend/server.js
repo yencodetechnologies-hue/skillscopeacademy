@@ -13,7 +13,7 @@ const authRoutes         = require('./routes/authRoutes')
 const courseRoutes       = require('./routes/courseRoutes')
 const categoryRoutes     = require('./routes/categoryRoutes')
 const scheduleRoutes     = require('./routes/scheduleRoutes')
-const sitecontentroutes  = require('./routes/sitecontentroutes')
+const sitecontent  = require('./routes/sitecontent')
 const bannerRoutes       = require('./routes/bannerRoutes')       // NEW
 const galleryRoutes      = require('./routes/galleryRoutes')      // NEW
 const activityLogRoutes  = require('./routes/activityLogRoutes')  // NEW
@@ -39,7 +39,7 @@ app.use('/api/auth',           authRoutes)
 app.use('/api/courses',        courseRoutes)
 app.use('/api/categories',     categoryRoutes)
 app.use('/api/schedules',      scheduleRoutes)
-app.use('/api/site',           sitecontentroutes)
+app.use('/api/site',           sitecontent)
 app.use('/api/banners',        bannerRoutes)        // NEW
 app.use('/api/gallery',        galleryRoutes)       // NEW
 app.use('/api/activity-logs',  activityLogRoutes)   // NEW

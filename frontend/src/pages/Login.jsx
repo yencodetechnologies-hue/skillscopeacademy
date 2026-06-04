@@ -14,7 +14,7 @@ const Login = () => {
           </h1>
 
           <p>
-            Login to continue your professional skill scope journey.
+            Login to continue your professional skill Scope journey.
           </p>
 
         </div>

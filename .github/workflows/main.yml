@@ -1,47 +1,95 @@
 name: SkillScope Academy Backend CI/CD
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-deploy:
-runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-steps:
-  - name: Deploy to VPS
-    uses: appleboy/ssh-action@v1.0.3
-    with:
-      host: ${{ secrets.SERVER_HOST }}
-      username: root
-      key: ${{ secrets.SSH_PRIVATE_KEY }}
-      port: 22
-      debug: true
-      script: |
-        set -e
+    steps:
+      - name: Deploy to SkillScope Server
+        uses: appleboy/ssh-action@v0.1.10
 
-        cd ~/skillscopeacademy/skillscopeacademy/backend
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
 
-        echo "📥 Pulling latest code..."
-        git pull origin main
+          script: |
+            set -e
 
-        echo "⚙️ Loading Node.js 20..."
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-        nvm use 20
+            cd ~/skillscopeacademy/skillscopeacademy/backend
 
-        echo "📦 Installing dependencies..."
-        npm install
+            echo "📥 Updating project..."
+            git fetch origin
+            git reset --hard origin/main
 
-        echo "🚀 Restarting application..."
+            echo "⚙️ Loading Node.js..."
+            export NVM_DIR="$HOME/.nvm"
 
-        if pm2 describe skillscopeacademy >/dev/null 2>&1; then
-          pm2 restart skillscopeacademy --update-env
-        else
-          pm2 start server.js --name skillscopeacademy
-        fi
+            if [ -s "$NVM_DIR/nvm.sh" ]; then
+              . "$NVM_DIR/nvm.sh"
+              nvm use 20 || nvm install 20
+            elif [ -s "/usr/local/nvm/nvm.sh" ]; then
+              . "/usr/local/nvm/nvm.sh"
+              nvm use 20 || nvm install 20
+            else
+              echo "NVM not found; using system node: $(node -v)"
+            fi
 
-        pm2 save
+            echo "📦 Installing dependencies..."
+            npm install
 
-        echo "✅ Deployment successful"
+            echo "🚀 Restarting PM2..."
+            PM2_APP="skillscopeacademy"
+
+            if pm2 describe "$PM2_APP" > /dev/null 2>&1; then
+              pm2 restart "$PM2_APP" --update-env
+            else
+              pm2 start server.js --name "$PM2_APP"
+            fi
+
+            echo "💾 Saving PM2..."
+            pm2 save
+
+            echo "🔍 Checking PM2 Status..."
+            pm2 describe "$PM2_APP" | grep -E "script path|exec cwd|node.js version|status" || true
+
+            echo "🔍 Waiting for application startup..."
+            sleep 10
+
+            PORT=7001
+            ATTEMPTS=10
+            HEALTH_OK=0
+
+            for i in $(seq 1 $ATTEMPTS); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:$PORT/ || echo "000")
+
+              if [ "$HTTP_CODE" != "000" ]; then
+                echo "✅ Application responding with HTTP $HTTP_CODE (attempt $i)"
+                HEALTH_OK=1
+                break
+              fi
+
+              echo "Attempt $i/$ATTEMPTS failed, retrying in 3s..."
+              sleep 3
+            done
+
+            if [ "$HEALTH_OK" != "1" ]; then
+              echo "❌ Application failed to start"
+
+              echo "Port listener check:"
+              ss -tlnp | grep ":$PORT" || true
+
+              echo "PM2 logs:"
+              pm2 logs "$PM2_APP" --lines 50 --nostream || true
+
+              exit 1
+            fi
+
+            echo "✅ Deployment Finished Successfully"

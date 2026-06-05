@@ -294,7 +294,7 @@ export default function Cms() {
       <div style={{marginBottom:24}}>
         <h1 style={{fontSize:22,fontWeight:700,color:'#0f172a',margin:0}}>CMS — Site Content</h1>
         <p style={{fontSize:13,color:'#64748b',marginTop:4}}>
-          Manage About, Contact, FAQ and Footer content. Changes reflect live on the site.
+          Manage About, Contact, and Footer content. Changes reflect live on the site.
         </p>
       </div>
 

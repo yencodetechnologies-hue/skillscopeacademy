@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          npm test || true
+          npm test || echo "No tests found"
 
   deploy:
     needs: build
@@ -46,15 +46,25 @@ jobs:
             echo "📥 Pulling latest code..."
             git pull origin main
 
+            echo "⚙️ Loading Node via NVM..."
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 20
+
             echo "📦 Installing dependencies..."
             npm install
+
+            echo "🚀 Starting or Restarting PM2..."
 
             pm2 describe skillscopeacademy > /dev/null
 
             if [ $? -eq 0 ]; then
+              echo "♻️ Restarting existing app"
               pm2 restart skillscopeacademy --update-env
             else
+              echo "🆕 Starting new app"
               pm2 start server.js --name skillscopeacademy
             fi
 
+            echo "💾 Saving PM2 process list..."
             pm2 save

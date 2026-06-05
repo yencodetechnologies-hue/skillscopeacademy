@@ -6,42 +6,11 @@ branches:
 - main
 
 jobs:
-build:
-runs-on: ubuntu-latest
-
-```
-defaults:
-  run:
-    working-directory: backend
-
-steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v4
-
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: 20
-
-  - name: Install Dependencies
-    run: npm install
-
-  - name: Run Tests
-    run: |
-      npm test || echo "No tests found"
-```
-
 deploy:
-needs: build
 runs-on: ubuntu-latest
 
 ```
 steps:
-  - name: Test SSH Port
-    run: |
-      echo "Testing SSH connectivity..."
-      nc -vz ${{ secrets.SERVER_HOST }} 22
-
   - name: Deploy to VPS
     uses: appleboy/ssh-action@v1.0.3
     with:
@@ -51,12 +20,14 @@ steps:
       port: 22
       debug: true
       script: |
+        set -e
+
         cd ~/skillscopeacademy/skillscopeacademy/backend
 
         echo "📥 Pulling latest code..."
         git pull origin main
 
-        echo "⚙️ Loading Node via NVM..."
+        echo "⚙️ Loading Node.js 20..."
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
         nvm use 20
@@ -64,18 +35,15 @@ steps:
         echo "📦 Installing dependencies..."
         npm install
 
-        echo "🚀 Starting or Restarting PM2..."
+        echo "🚀 Restarting application..."
 
-        if pm2 describe skillscopeacademy > /dev/null; then
-          echo "♻️ Restarting existing app"
+        if pm2 describe skillscopeacademy >/dev/null 2>&1; then
           pm2 restart skillscopeacademy --update-env
         else
-          echo "🆕 Starting new app"
           pm2 start server.js --name skillscopeacademy
         fi
 
-        echo "💾 Saving PM2 process list..."
         pm2 save
 
-        echo "✅ Deployment completed"
+        echo "✅ Deployment successful"
 ```

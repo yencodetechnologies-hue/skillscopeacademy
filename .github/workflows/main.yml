@@ -9,7 +9,6 @@ jobs:
 deploy:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Deploy to VPS
     uses: appleboy/ssh-action@v1.0.3
@@ -46,4 +45,3 @@ steps:
         pm2 save
 
         echo "✅ Deployment successful"
-```

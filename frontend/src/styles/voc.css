@@ -1,0 +1,717 @@
+/* ─── VOC PAGE ─────────────────────────────────────────────── */
+.voc-page {
+  background: #f4f5f7;
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+}
+
+.voc-content {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* ─── STEP INDICATOR ───────────────────────────────────────── */
+.voc-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.voc-steps::before {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: #ddd;
+  z-index: 0;
+}
+
+.voc-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.voc-step-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ddd;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  border: 3px solid #ddd;
+  transition: all 0.3s;
+}
+
+.voc-step-circle.active {
+  background: #cc0000;
+  border-color: #cc0000;
+  color: white;
+}
+
+.voc-step-circle.done {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: white;
+}
+
+.voc-step-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.voc-step-label.active {
+  color: #cc0000;
+}
+
+/* ─── CARD ─────────────────────────────────────────────────── */
+.voc-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.voc-card-header {
+  background: #111827;
+  color: white;
+  padding: 28px 36px;
+  text-align: center;
+}
+
+.voc-card-header h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: white;
+}
+
+.voc-card-header p {
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+  font-size: 14px;
+}
+
+.voc-price-highlight {
+  color: #22d3ee;
+}
+
+/* ─── FORM ─────────────────────────────────────────────────── */
+.voc-form {
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.voc-form label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #555;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+
+.voc-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.voc-row.single {
+  grid-template-columns: 1fr;
+}
+
+.voc-row.three-col {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.voc-row.course-add-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.voc-row.course-add-row .flex-1 {
+  flex: 1;
+}
+
+.voc-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.voc-col label {
+  margin-bottom: 6px;
+}
+
+/* ─── INPUT ────────────────────────────────────────────────── */
+.voc-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0 14px;
+  background: #f8fafc;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.voc-input-wrap:focus-within {
+  border-color: #cc0000;
+  background: white;
+}
+
+.voc-input-wrap.error {
+  border-color: #dc2626;
+}
+
+.voc-input-wrap.warn {
+  border-color: #f59e0b;
+}
+
+.voc-input-icon {
+  font-size: 14px;
+  margin-right: 10px;
+  opacity: 0.5;
+}
+
+.voc-input-icon-right {
+  font-size: 14px;
+  margin-left: 10px;
+  opacity: 0.5;
+}
+
+.voc-input-wrap input,
+.voc-input-wrap select {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 13px 0;
+  font-size: 14px;
+  color: #111827;
+  font-family: inherit;
+}
+
+.voc-input-wrap select {
+  cursor: pointer;
+  appearance: none;
+}
+
+.select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 14px;
+  color: #999;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.voc-error {
+  color: #dc2626;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.voc-warn {
+  color: #d97706;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* ─── BUTTONS ──────────────────────────────────────────────── */
+.voc-btn-primary {
+  background: #cc0000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  white-space: nowrap;
+}
+
+.voc-btn-primary:hover:not(:disabled) {
+  background: #aa0000;
+}
+
+.voc-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.voc-btn-primary.full {
+  width: 100%;
+  padding: 16px;
+  font-size: 15px;
+}
+
+.voc-btn-back {
+  background: transparent;
+  color: #555;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  padding: 13px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.voc-btn-back:hover {
+  border-color: #999;
+  color: #111;
+}
+
+.voc-btn-add {
+  background: #cc0000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.voc-btn-add:hover {
+  background: #aa0000;
+}
+
+/* ─── COURSE LIST ──────────────────────────────────────────── */
+.voc-empty-courses {
+  border: 2px dashed #e2e8f0;
+  border-radius: 10px;
+  text-align: center;
+  padding: 48px 20px;
+  color: #888;
+}
+
+.voc-empty-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.voc-empty-courses p {
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 4px;
+}
+
+.voc-course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.voc-course-item {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 18px 20px;
+  background: #fafafa;
+}
+
+.voc-course-item-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.voc-check {
+  color: #16a34a;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.voc-course-info {
+  flex: 1;
+}
+
+.voc-course-info strong {
+  display: block;
+  font-size: 15px;
+  color: #111827;
+}
+
+.voc-course-price {
+  color: #cc0000;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.voc-remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.voc-remove-btn:hover {
+  opacity: 1;
+}
+
+.voc-date-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ─── FOOTER BAR ───────────────────────────────────────────── */
+.voc-footer-bar {
+  background: #111827;
+  margin: 0 -36px -32px;
+  padding: 20px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 0 12px 12px;
+  gap: 20px;
+}
+
+.voc-total {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.voc-total span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.5px;
+}
+
+.voc-total strong {
+  font-size: 22px;
+  color: white;
+}
+
+.voc-total small {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+
+.voc-big-price {
+  font-size: 28px !important;
+  color: #cc0000 !important;
+}
+
+.voc-footer-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ─── PAYMENT ──────────────────────────────────────────────── */
+.voc-payment-option {
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.voc-payment-option:hover {
+  border-color: #cc0000;
+}
+
+.voc-payment-option.selected {
+  border-color: #22d3ee;
+  background: #f0fdff;
+}
+
+.voc-payment-option > div {
+  flex: 1;
+}
+
+.voc-payment-option strong {
+  display: block;
+  font-size: 15px;
+  color: #111827;
+}
+
+.voc-payment-option p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #888;
+}
+
+.voc-pay-icon {
+  font-size: 22px;
+}
+
+.voc-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.voc-radio.checked {
+  border-color: #22d3ee;
+  background: #22d3ee;
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.voc-card-details {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fafafa;
+}
+
+.voc-card-details-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  letter-spacing: 0.5px;
+}
+
+.voc-card-brands {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #888;
+}
+
+.voc-brand {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.voc-brand.visa {
+  background: #1a1f71;
+  color: white;
+}
+
+.voc-brand.mc {
+  background: #eb001b;
+  color: white;
+}
+
+.voc-method-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.voc-method-badge.card {
+  background: rgba(34,211,238,0.2);
+  color: #22d3ee;
+}
+
+.voc-method-badge.bank {
+  background: rgba(34,197,94,0.2);
+  color: #16a34a;
+}
+
+.voc-bank-info {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voc-bank-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #166534;
+}
+
+.voc-upload-area {
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  color: #888;
+  font-size: 14px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.voc-upload-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.voc-upload-area:hover {
+  border-color: #cc0000;
+}
+
+/* ─── DONE ─────────────────────────────────────────────────── */
+.voc-done {
+  text-align: center;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.voc-done-icon {
+  font-size: 60px;
+}
+
+.voc-done h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.voc-done p {
+  color: #555;
+  font-size: 15px;
+  max-width: 500px;
+  margin: 0;
+}
+
+.voc-done-courses {
+  width: 100%;
+  max-width: 460px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.voc-done-course {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  color: #333;
+}
+
+.voc-done-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ─── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .voc-form {
+    padding: 24px 20px;
+  }
+
+  .voc-row,
+  .voc-row.three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .voc-row.course-add-row {
+    flex-direction: column;
+  }
+
+  .voc-footer-bar {
+    flex-direction: column;
+    margin: 0 -20px -24px;
+    padding: 20px;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .voc-footer-actions {
+    justify-content: center;
+  }
+
+  .voc-steps::before {
+    display: none;
+  }
+}
+/* ── Required asterisk ───────────────────────────────────────── */
+.voc-req { color: #e53e3e; margin-left: 2px; }
+
+/* ── RuPay brand badge ───────────────────────────────────────── */
+.voc-brand.rupay { background: #f97316; color: #fff; }
+
+/* ── Disabled select ─────────────────────────────────────────── */
+.voc-input-wrap select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Error message with icon ─────────────────────────────────── */
+.voc-error {
+  display: block;
+  color: #e53e3e;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ── Warn message ────────────────────────────────────────────── */
+.voc-warn {
+  display: block;
+  color: #d97706;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+/* ── Error border on input ───────────────────────────────────── */
+.voc-input-wrap.error {
+  border-color: #e53e3e !important;
+  box-shadow: 0 0 0 2px rgba(229,62,62,0.15);
+}
+
+/* ── Warn border ─────────────────────────────────────────────── */
+.voc-input-wrap.warn {
+  border-color: #d97706 !important;
+}

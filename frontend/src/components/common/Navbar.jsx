@@ -1,5 +1,5 @@
 
-import { Link }    from 'react-router-dom'
+import { Link, useNavigate }    from 'react-router-dom'
 import { navLinks } from '../../services/mockData'
 import { FaChevronDown, FaShoppingCart } from 'react-icons/fa'
 
@@ -7,7 +7,15 @@ import '../../styles/home.css'
 import { useCart } from '../Cartcontext'
 
 function Navbar() {
+  const navigate=useNavigate();
   const { totalItems } = useCart()
+  const handlenavigate=()=>{
+    navigate('/courses')
+  }
+
+  const handleloginnavigate=()=>{
+    navigate('/login')
+  }
 
   return (
     <header className="navbar">
@@ -35,7 +43,7 @@ function Navbar() {
       {/* Action Buttons */}
       <div className="nav-buttons">
         <button className="nav-btn btn-combo">Combo Courses</button>
-        <button className="nav-btn btn-book">Book now</button>
+        <button className="nav-btn btn-book" onClick={handlenavigate}>Book now</button>
 
         {/* Cart Icon */}
         <Link to="/cart" className="nav-cart-btn">
@@ -45,7 +53,7 @@ function Navbar() {
           )}
         </Link>
 
-        <button className="nav-btn btn-login">Login</button>
+        <button className="nav-btn btn-login" onClick={handleloginnavigate}>Login</button>
       </div>
     </header>
   )

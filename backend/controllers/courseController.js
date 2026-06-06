@@ -1,88 +1,168 @@
+
+
+// const slugify = require("slugify");
+
 // const Course = require('../models/Course')
 
-// exports.getCourses = async (
-//   req,
-//   res
-// ) => {
+// /*
+// ========================================
+// GET ALL COURSES
+// ========================================
+// */
+// exports.getCourses = async (req, res) => {
 //   try {
-//     const courses =
-//       await Course.find()
-//         .populate(
-//           "category",
-//           "name"
-//         )
-//         .sort({
-//           createdAt: -1,
-//         });
+//     const courses = await Course.find()
+//       .populate('category', 'name')
+//       .sort({ createdAt: -1 })
 
-//     res.json({
-//       success: true,
-//       courses,
-//     });
+//     res.json({ success: true, courses })
 //   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
+//     res.status(500).json({ success: false, message: error.message })
 //   }
-// };
+// }
 
-// exports.createCourse = async (
-//   req,
-//   res
-// ) => {
+
+
+// exports.createCourse = async (req, res) => {
 //   try {
-//     const thumbnail =
-//       req.file?.path || "";
+//     const thumbnail = req.file?.path || "";
 
-//     const course =
-//       await Course.create({
-//         title: req.body.title,
+//     let slug = slugify(req.body.title, {
+//       lower: true,
+//       strict: true,
+//       trim: true,
+//     });
 
-//         description:
-//           req.body.description,
+//     const existingSlug = await Course.findOne({ slug });
 
-//         category:
-//           req.body.category,
+//     if (existingSlug) {
+//       slug = `${slug}-${Date.now()}`;
+//     }
 
-//         instructor:
-//           req.body.instructor,
+//     const course = await Course.create({
+//       title: req.body.title,
+//       slug,
 
-//         price:
-//           Number(req.body.price),
+//       description: req.body.description,
+//       category: req.body.category || undefined,
+//       instructor: req.body.instructor,
 
-//         courseType:
-//           req.body.courseType ||
-//           "single",
+//       price: Number(req.body.price) || 0,
 
-//         comboPrice:
-//           Number(
-//             req.body.comboPrice
-//           ) || 0,
+//       courseType: req.body.courseType || "single",
+//       duration: Number(req.body.duration) || 0,
+//       certificateValidity:
+//         Number(req.body.certificateValidity) || 0,
+//       pricingType: req.body.pricingType || "Standard",
 
-//         comboDescription:
-//           req.body.comboDescription ||
-//           "",
+//       comboEnabled: req.body.comboEnabled === "true",
+//       comboPrice: Number(req.body.comboPrice) || 0,
+//       comboDescription: req.body.comboDescription || "",
+//       comboDuration: Number(req.body.comboDuration) || 0,
 
-//         comboDuration:
-//           Number(
-//             req.body.comboDuration
-//           ) || 0,
-
-//         thumbnail,
-//       });
+//       thumbnail,
+//     });
 
 //     res.status(201).json({
 //       success: true,
 //       course,
 //     });
 //   } catch (error) {
+//     console.log("Course Create Error:", error);
+
 //     res.status(500).json({
 //       success: false,
 //       message: error.message,
 //     });
 //   }
 // };
+// /*
+// ========================================
+// UPDATE COURSE
+// ========================================
+// */
+// exports.updateCourse = async (req, res) => {
+//   try {
+//     const thumbnail = req.file?.path || undefined
+
+//     const updateData = {
+//       title:            req.body.title,
+//       description:      req.body.description,
+//       instructor:       req.body.instructor,
+//       price:            Number(req.body.price) || 0,
+//       courseType:       req.body.courseType || 'single',
+//       comboEnabled:     req.body.comboEnabled === 'true',
+//       comboPrice:       Number(req.body.comboPrice) || 0,
+//       comboDescription: req.body.comboDescription || '',
+//       comboDuration:    Number(req.body.comboDuration) || 0,
+//     }
+
+//     // Only update category if provided
+//     if (req.body.category) updateData.category = req.body.category
+
+//     // Only update thumbnail if a new file was uploaded
+//     if (thumbnail) updateData.thumbnail = thumbnail
+
+//     const course = await Course.findByIdAndUpdate(
+//       req.params.id,
+//       updateData,
+//       { new: true }
+//     ).populate('category', 'name')
+
+//     if (!course) {
+//       return res.status(404).json({ success: false, message: 'Course not found' })
+//     }
+
+//     res.json({ success: true, course })
+//   } catch (error) {
+//     console.log("erorrcourseupdate",error);
+    
+//     res.status(500).json({ success: false, message: error.message })
+//   }
+// }
+
+// /*
+// ========================================
+// DELETE COURSE
+// ========================================
+// */
+// exports.deleteCourse = async (req, res) => {
+//   try {
+//     const course = await Course.findByIdAndDelete(req.params.id)
+
+//     if (!course) {
+//       return res.status(404).json({ success: false, message: 'Course not found' })
+//     }
+
+//     res.json({ success: true, message: 'Course deleted successfully' })
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message })
+//   }
+// }
+
+// /*
+// ========================================
+// TOGGLE COURSE STATUS (isActive)
+// ========================================
+// */
+// exports.toggleCourseStatus = async (req, res) => {
+//   try {
+//     const course = await Course.findById(req.params.id)
+
+//     if (!course) {
+//       return res.status(404).json({ success: false, message: 'Course not found' })
+//     }
+
+//     course.isActive = !course.isActive
+//     await course.save()
+
+//     res.json({ success: true, message: `Course is now ${course.isActive ? 'active' : 'inactive'}`, course })
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message })
+//   }
+// }
+
+
 
 const slugify = require("slugify");
 
@@ -104,40 +184,6 @@ exports.getCourses = async (req, res) => {
     res.status(500).json({ success: false, message: error.message })
   }
 }
-
-/*
-========================================
-CREATE COURSE
-========================================
-*/
-// exports.createCourse = async (req, res) => {
-//   try {
-//         console.log("BODY:", req.body);
-//     console.log("FILE:", req.file);
-
-//     const thumbnail = req.file?.path || ''
-
-//     const course = await Course.create({
-//       title:            req.body.title,
-//       description:      req.body.description,
-//       category:         req.body.category || undefined,
-//       instructor:       req.body.instructor,
-//       price:            Number(req.body.price) || 0,
-//       courseType:       req.body.courseType || 'single',
-//       comboEnabled:     req.body.comboEnabled === 'true',
-//       comboPrice:       Number(req.body.comboPrice) || 0,
-//       comboDescription: req.body.comboDescription || '',
-//       comboDuration:    Number(req.body.comboDuration) || 0,
-//       thumbnail,
-//     })
-
-//     res.status(201).json({ success: true, course })
-//   } catch (error) {
-//     console.log("erorrcourseadd",error);
-
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// }
 
 
 exports.createCourse = async (req, res) => {
@@ -252,6 +298,27 @@ exports.deleteCourse = async (req, res) => {
     }
 
     res.json({ success: true, message: 'Course deleted successfully' })
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message })
+  }
+}
+
+
+/*
+========================================
+GET SINGLE COURSE BY ID
+========================================
+*/
+exports.getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id)
+      .populate('category', 'name')
+
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course not found' })
+    }
+
+    res.json({ success: true, course })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }

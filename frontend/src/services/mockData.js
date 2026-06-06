@@ -51,14 +51,17 @@ export const statsData = [
   { value: "10,000+", label: "Students Trained", icon: "⭐" },
   { value: "100%", label: "Compliance Focused", icon: "✔" },
   { value: "Trusted", label: "Across Australia", icon: "🛡" },
+   { value: "Face to Face Training", subtitle: "Practical hands-on learning", icon: "👥" },
+  { value: "Qualified Trainers", subtitle: "Industry experienced experts", icon: "🏅" },
+  { value: "Nationally Recognized", subtitle: "Certificates accepted Australia-wide", icon: "📄" },
 ];
 
-export const featureBoxes = [
-  { title: "RTO #45234", subtitle: "Registered Training Organisation", icon: "🏢" },
-  { title: "Face to Face Training", subtitle: "Practical hands-on learning", icon: "👥" },
-  { title: "Qualified Trainers", subtitle: "Industry experienced experts", icon: "🏅" },
-  { title: "Nationally Recognized", subtitle: "Certificates accepted Australia-wide", icon: "📄" },
-];
+// export const featureBoxes = [
+ 
+//   { title: "Face to Face Training", subtitle: "Practical hands-on learning", icon: "👥" },
+//   { title: "Qualified Trainers", subtitle: "Industry experienced experts", icon: "🏅" },
+//   { title: "Nationally Recognized", subtitle: "Certificates accepted Australia-wide", icon: "📄" },
+// ];
 
 export const upcomingCourses = [
   { id: 1, day: "23", month: "MAY", title: "Conduct Civil Construction Excavator Operations", time: "08:00", price: "$500", status: "Full" },

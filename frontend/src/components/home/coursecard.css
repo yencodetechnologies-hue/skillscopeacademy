@@ -303,3 +303,48 @@
 @media (max-width: 640px) {
   .course-grid { grid-template-columns: 1fr; }
 }
+/* ── Qty Controls (replaces Book Now when in cart) ─────────── */
+.card-qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #cc0000;
+  height: 46px;
+}
+
+.card-qty-btn {
+  flex: 1;
+  height: 100%;
+  background: #cc0000;
+  color: white;
+  border: none;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.card-qty-btn:hover { background: #aa0000; }
+.card-qty-minus { border-radius: 0; }
+.card-qty-plus  { border-radius: 0; }
+
+.card-qty-num {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #cc0000;
+  background: white;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+}

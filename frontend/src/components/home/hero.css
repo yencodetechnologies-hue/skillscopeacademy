@@ -1,56 +1,55 @@
+/* ══════════════════════════════════════════════
+   HERO — slider + content + stats all inside one
+   section so the image covers everything
+   ══════════════════════════════════════════════ */
+
 .hero {
-  background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600') center/cover no-repeat;
-  min-height: 760px;
   position: relative;
+  background: #111;
 }
 
+/* ── Single dark tint covers the ENTIRE .hero section ──
+   This one ::before replaces all separate overlays.
+   z-index: 1 = above slider (0), below all content (2+) */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Slider stays at z-index 0 inside hero-slider-wrap */
+.hero-slider-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Overlay div: NO own background — ::before handles the tint */
 .hero-overlay {
-  background: rgba(0,0,0,0.6);
-  min-height: 760px;
-  display: flex;
-  align-items: center;
+  position: relative;
+  z-index: 2;
+  background: transparent;
 }
 
-.hero-content {
+.hero-wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
-  padding: 80px 0;
+  flex-direction: column;
   width: 90%;
   max-width: 1300px;
-  margin: auto;
+  margin: 0 auto;
+  padding: 48px 0 52px;
 }
 
-.hero-left {
-  flex: 1;
-  color: white;
-}
-
-.hero-left h1 {
-  font-size: 64px;
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 20px;
-  color: white;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
-}
-
-.hero-highlight {
-  color: #cc0000 !important;
-}
-
-.hero-desc {
-  font-size: 18px;
-  line-height: 1.7;
-  margin-bottom: 30px;
-  color: rgba(255,255,255,0.9);
-}
-
-.hero-actions {
+/* ── Action bar ── */
+.hero-action-bar {
   display: flex;
-  gap: 16px;
   align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
 }
 
@@ -65,43 +64,64 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
   transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
-
-.hero-primary-btn:hover {
-  background: #aa0000;
-}
+.hero-primary-btn:hover { background: #aa0000; }
 
 .hero-search {
   display: flex;
   border-radius: 10px;
   overflow: hidden;
   flex: 1;
-  max-width: 380px;
+  max-width: 400px;
 }
-
 .hero-search input {
   flex: 1;
   padding: 16px 18px;
   border: none;
   font-size: 15px;
   outline: none;
+  font-family: inherit;
 }
-
 .search-submit {
   background: #cc0000;
   color: white;
   border: none;
-  padding: 0 20px;
+  padding: 0 22px;
   font-size: 18px;
+  cursor: pointer;
   transition: background 0.2s;
 }
+.search-submit:hover { background: #aa0000; }
 
-.search-submit:hover {
-  background: #aa0000;
+/* ── Main row ── */
+.hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
 }
 
-/* ENROLMENT CARD */
+.hero-left { flex: 1; color: white; }
+.hero-left h1 {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+}
+.hero-highlight { color: #cc0000 !important; }
+.hero-desc {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ── Enrolment card ── */
 .hero-card {
   width: 420px;
   flex-shrink: 0;
@@ -110,26 +130,9 @@
   border-radius: 20px;
   color: white;
 }
-
-.hero-card h2 {
-  font-size: 28px;
-  color: white;
-  margin-bottom: 12px;
-}
-
-.hero-card-divider {
-  width: 50px;
-  height: 3px;
-  background: #cc0000;
-  margin-bottom: 20px;
-}
-
-.hero-card p {
-  color: rgba(255,255,255,0.75);
-  font-size: 15px;
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
+.hero-card h2 { font-size: 28px; color: white; margin-bottom: 12px; }
+.hero-card-divider { width: 50px; height: 3px; background: #cc0000; margin-bottom: 20px; }
+.hero-card p { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.7; margin-bottom: 24px; }
 
 .enrol-btn {
   width: 100%;
@@ -144,13 +147,84 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
   transition: background 0.2s;
 }
+.enrol-btn:last-child { margin-bottom: 0; }
+.enrol-btn:hover { background: #aa0000; }
 
-.enrol-btn:last-child {
-  margin-bottom: 0;
+/* ══════════════════════════════════════════════
+   STATS STRIP — inside .hero, z-index 2
+   ::before tint is behind it, slider behind that
+   ══════════════════════════════════════════════ */
+.hero-stats {
+  position: relative;
+  z-index: 2;
+  padding: 0 5% 36px;
+  background: transparent;
 }
 
-.enrol-btn:hover {
-  background: #aa0000;
+.hero-stats-inner {
+  display: flex;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+.hero-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  padding: 22px 18px;
+  border-right: 1px solid rgba(255,255,255,0.18);
+  transition: background 0.2s;
+}
+.hero-stat-item:last-child { border-right: none; }
+.hero-stat-item:hover { background: rgba(255,255,255,0.08); }
+
+.hero-stat-icon { font-size: 22px; flex-shrink: 0; }
+
+.hero-stat-item strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  line-height: 1.2;
+}
+.hero-stat-item span {
+  font-size: 10px;
+  color: rgba(255,255,255,0.88);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .hero-card { width: 360px; }
+  .hero-left h1 { font-size: 52px; }
+}
+@media (max-width: 768px) {
+  .hero-content { flex-direction: column; }
+  .hero-card    { width: 100%; }
+  .hero-left h1 { font-size: 40px; }
+  .hero-action-bar { flex-direction: column; align-items: stretch; }
+  .hero-search { max-width: 100%; }
+  .hero-stats-inner { flex-wrap: wrap; }
+  .hero-stat-item { flex: 1 1 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
+  .hero-stat-item:nth-last-child(-n+2) { border-bottom: none; }
+}
+@media (max-width: 480px) {
+  .hero-left h1 { font-size: 32px; }
+  .hero-wrapper { padding: 32px 0 40px; }
+  .hero-stat-item { flex: 1 1 100%; }
 }

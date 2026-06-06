@@ -109,3 +109,18 @@
 .see-more-btn:hover {
   background: #cc0000;
 }
+
+/* View All Categories tab */
+.cat-view-all-tab {
+  background: rgba(255,255,255,0.12) !important;
+  color: rgba(255,255,255,0.85) !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  transition: all 0.2s !important;
+}
+.cat-view-all-tab:hover {
+  background: #cc0000 !important;
+  border-color: #cc0000 !important;
+  color: #fff !important;
+}

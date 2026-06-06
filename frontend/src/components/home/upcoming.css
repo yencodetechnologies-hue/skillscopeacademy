@@ -8,12 +8,6 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.upcoming-ticker-wrap::-webkit-scrollbar {
-  display: none;
 }
 
 .upcoming-label {
@@ -25,19 +19,28 @@
   padding: 10px 16px;
   border-radius: 8px;
   white-space: nowrap;
-  writing-mode: horizontal-tb;
   flex-shrink: 0;
 }
 
+/* Viewport that clips the sliding content */
+.upcoming-ticker-viewport {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+/* The sliding strip — no overflow scroll, moved by JS transform */
 .upcoming-ticker {
   display: flex;
   gap: 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  width: max-content;
+  will-change: transform;
 }
 
-.upcoming-ticker::-webkit-scrollbar {
-  display: none;
+.upcoming-loading {
+  color: #777;
+  font-size: 14px;
+  padding: 12px 0;
 }
 
 .upcoming-item {
@@ -47,9 +50,16 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  min-width: 340px;
+  width: 340px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.07);
   flex-shrink: 0;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.upcoming-item:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+  transform: translateY(-2px);
 }
 
 .upcoming-date {
@@ -79,6 +89,7 @@
 
 .upcoming-info {
   flex: 1;
+  min-width: 0;
 }
 
 .upcoming-title {
@@ -87,6 +98,9 @@
   color: #111827;
   line-height: 1.4;
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .upcoming-meta {
@@ -101,11 +115,15 @@
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .btn-full {
   background: #cc0000;
   color: white;
+  opacity: 0.85;
+  cursor: default;
 }
 
 .btn-available {
@@ -113,6 +131,6 @@
   color: white;
 }
 
-.btn-full:hover, .btn-available:hover {
+.btn-available:hover {
   background: #aa0000;
 }

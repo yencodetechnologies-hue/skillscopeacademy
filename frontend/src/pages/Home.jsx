@@ -29,18 +29,13 @@
 // }
 
 // export default Home
-
-import Navbar           from '../components/common/Navbar'
-import Footer           from '../components/common/Footer'
-import Hero             from '../components/home/Hero'
-import UpcomingCourses  from '../components/home/UpcomingCourses'
-import BrowseCourses    from '../components/home/BrowserCourses'
-import WhyChoose        from '../components/home/WhyChoose'
-import TrustedCompanies from '../components/home/TrustedCompanies'
-import CTA              from '../components/home/CTA'
-
-// StatsStrip is now rendered inside Hero so the slider image
-// covers both the hero content AND the stats strip.
+import Navbar          from '../components/common/Navbar'
+import Footer          from '../components/common/Footer'
+import Hero            from '../components/home/Hero'
+import UpcomingCourses from '../components/home/UpcomingCourses'
+import BrowseCourses   from '../components/home/BrowserCourses'
+import WhyChoose       from '../components/home/WhyChoose'
+import CTA             from '../components/home/CTA'
 
 const Home = () => {
   return (
@@ -50,7 +45,6 @@ const Home = () => {
       <UpcomingCourses />
       <BrowseCourses />
       <WhyChoose />
-      <TrustedCompanies />
       <CTA />
       <Footer />
     </>

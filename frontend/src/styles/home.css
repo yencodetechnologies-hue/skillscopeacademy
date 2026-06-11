@@ -166,3 +166,17 @@
 .btn-login:hover {
   background: #aa0000;
 }
+
+.btn-back-admin {
+  background: #1a1a2e;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid #cc0000;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-back-admin:hover {
+  background: #cc0000;
+  transform: translateX(-2px);
+}

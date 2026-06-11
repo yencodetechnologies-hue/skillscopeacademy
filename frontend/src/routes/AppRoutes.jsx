@@ -74,6 +74,7 @@ import VocRenewal  from '../pages/VocRenewal'   // ← NEW
 
 
 import ProtectedAdminRoute from '../components/ProtectedadminRoute'
+import GuestRoute          from '../components/GuestRoute'
 import AdminLayout         from '../layouts/AdminLayout'
 import Cart                from '../components/home/Cart'
 
@@ -102,8 +103,8 @@ const AppRoutes = () => (
       {/* Public routes */}
       <Route path="/"         element={<Home />} />
       <Route path="/courses"  element={<Courses />} />
-      <Route path="/login"    element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login"    element={<GuestRoute><Login /></GuestRoute>} />
+      <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
       <Route path="/cart"     element={<Cart />} />
       <Route path="/about"    element={<About />} />
       <Route path="/contact"  element={<Contact />} />

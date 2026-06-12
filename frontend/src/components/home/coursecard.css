@@ -348,3 +348,39 @@
   justify-content: center;
   min-width: 40px;
 }
+
+/* ── Buy buttons (shown after qty stepper) ─────────────────── */
+
+.card-buy-row {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.card-buy-btn {
+  width: 100%;
+  padding: 11px 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  letter-spacing: 0.01em;
+}
+.card-buy-btn:hover  { transform: translateY(-1px); }
+.card-buy-btn:active { transform: translateY(0); }
+
+.card-buy-std {
+  background: #cc0000;
+  color: #fff;
+}
+.card-buy-std:hover { background: #aa0000; }
+
+.card-buy-voc {
+  background: #fff;
+  color: #cc0000;
+  border: 2px solid #cc0000;
+}
+.card-buy-voc:hover { background: #fff5f5; }

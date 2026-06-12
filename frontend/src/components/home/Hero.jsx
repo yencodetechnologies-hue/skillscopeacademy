@@ -1,4 +1,3 @@
-
 // import { useState, useEffect, useCallback, useRef } from 'react'
 // import { useNavigate } from 'react-router-dom'
 // import { heroData, statsData } from '../../services/mockData'
@@ -299,30 +298,31 @@ function CourseSlideshow({ navigate }) {
         </div>
       ))}
 
-      {/* Thumb strip */}
+      {/* Thumb strip — each pill has a fill that runs like a timer */}
       {courses.length > 1 && (
         <div className="ss-thumbs">
           {courses.map((_, i) => (
             <button key={i} className={`ss-thumb${i === current ? ' ss-thumb-on' : ''}`} onClick={() => goTo(i)}>
-              <span className="ss-thumb-fill"
-                style={i === current && !paused
-                  ? { transition: `width ${DURATION}ms linear`, width: '100%' }
-                  : { width: '0%', transition: 'none' }
-                }
-              />
+              {i === current && !paused
+                ? <span key={`fill-${current}`} className="ss-thumb-fill ss-thumb-fill-active" style={{ animationDuration: `${DURATION}ms` }} />
+                : i < current
+                  ? <span className="ss-thumb-fill" style={{ width: '100%' }} />
+                  : <span className="ss-thumb-fill" style={{ width: '0%' }} />
+              }
             </button>
           ))}
         </div>
       )}
 
-      {/* Progress bar */}
+      {/* Bottom red progress bar — runs like a timer for the current slide */}
       <div className="ss-progress">
-        <div className="ss-bar" key={`${current}-${paused}`}
-          style={!paused && courses.length > 1
-            ? { transition: `width ${DURATION}ms linear`, width: '100%' }
-            : { width: '0%', transition: 'none' }
-          }
-        />
+        {!paused && courses.length > 1 && (
+          <div
+            key={`bar-${current}`}
+            className="ss-bar ss-bar-animate"
+            style={{ animationDuration: `${DURATION}ms` }}
+          />
+        )}
       </div>
     </div>
   )

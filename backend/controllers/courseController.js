@@ -1,392 +1,155 @@
-
-
-
-// const slugify = require("slugify");
-
-// const Course = require('../models/Course')
-
-// /*
-// ========================================
-// GET ALL COURSES
-// ========================================
-// */
-// exports.getCourses = async (req, res) => {
-//   try {
-//     const courses = await Course.find()
-//       .populate('category', 'name')
-//       .sort({ createdAt: -1 })
-
-//     res.json({ success: true, courses })
-//   } catch (error) {
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// }
-
-
-// exports.createCourse = async (req, res) => {
-//   try {
-//     const thumbnail = req.file?.path || "";
-
-//     let slug = slugify(req.body.title, {
-//       lower: true,
-//       strict: true,
-//       trim: true,
-//     });
-
-//     const existingSlug = await Course.findOne({ slug });
-
-//     if (existingSlug) {
-//       slug = `${slug}-${Date.now()}`;
-//     }
-
-//     const course = await Course.create({
-//       title: req.body.title,
-//       slug,
-
-//       description: req.body.description,
-//       category: req.body.category || undefined,
-//       instructor: req.body.instructor,
-
-//       price: Number(req.body.price) || 0,
-
-//       courseType: req.body.courseType || "single",
-//       duration: Number(req.body.duration) || 0,
-//       certificateValidity:
-//         Number(req.body.certificateValidity) || 0,
-//       pricingType: req.body.pricingType || "Standard",
-
-//       comboEnabled: req.body.comboEnabled === "true",
-//       comboPrice: Number(req.body.comboPrice) || 0,
-//       comboDescription: req.body.comboDescription || "",
-//       comboDuration: Number(req.body.comboDuration) || 0,
-
-//       thumbnail,
-//     });
-
-//     res.status(201).json({
-//       success: true,
-//       course,
-//     });
-//   } catch (error) {
-//     console.log("Course Create Error:", error);
-
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-// /*
-// ========================================
-// UPDATE COURSE
-// ========================================
-// */
-// exports.updateCourse = async (req, res) => {
-//   try {
-//     const thumbnail = req.file?.path || undefined
-
-//     const updateData = {
-//       title:            req.body.title,
-//       description:      req.body.description,
-//       instructor:       req.body.instructor,
-//       price:            Number(req.body.price) || 0,
-//       courseType:       req.body.courseType || 'single',
-//       comboEnabled:     req.body.comboEnabled === 'true',
-//       comboPrice:       Number(req.body.comboPrice) || 0,
-//       comboDescription: req.body.comboDescription || '',
-//       comboDuration:    Number(req.body.comboDuration) || 0,
-//     }
-
-//     // Only update category if provided
-//     if (req.body.category) updateData.category = req.body.category
-
-//     // Only update thumbnail if a new file was uploaded
-//     if (thumbnail) updateData.thumbnail = thumbnail
-
-//     const course = await Course.findByIdAndUpdate(
-//       req.params.id,
-//       updateData,
-//       { new: true }
-//     ).populate('category', 'name')
-
-//     if (!course) {
-//       return res.status(404).json({ success: false, message: 'Course not found' })
-//     }
-
-//     res.json({ success: true, course })
-//   } catch (error) {
-//     console.log("erorrcourseupdate",error);
-    
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// }
-
-// /*
-// ========================================
-// DELETE COURSE
-// ========================================
-// */
-// exports.deleteCourse = async (req, res) => {
-//   try {
-//     const course = await Course.findByIdAndDelete(req.params.id)
-
-//     if (!course) {
-//       return res.status(404).json({ success: false, message: 'Course not found' })
-//     }
-
-//     res.json({ success: true, message: 'Course deleted successfully' })
-//   } catch (error) {
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// }
-
-
-// /*
-// ========================================
-// GET SINGLE COURSE BY ID
-// ========================================
-// */
-// exports.getCourseById = async (req, res) => {
-//   try {
-//     const course = await Course.findById(req.params.id)
-//       .populate('category', 'name')
-
-//     if (!course) {
-//       return res.status(404).json({ success: false, message: 'Course not found' })
-//     }
-
-//     res.json({ success: true, course })
-//   } catch (error) {
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// }
-
-// /*
-// ========================================
-// TOGGLE COURSE STATUS (isActive)
-// ========================================
-// */
-// exports.toggleCourseStatus = async (req, res) => {
-//   try {
-//     const course = await Course.findById(req.params.id)
-
-//     if (!course) {
-//       return res.status(404).json({ success: false, message: 'Course not found' })
-//     }
-
-//     course.isActive = !course.isActive
-//     await course.save()
-
-//     res.json({ success: true, message: `Course is now ${course.isActive ? 'active' : 'inactive'}`, course })
-//   } catch (error) {
-//     res.status(500).json({ success: false, message: error.message })
-//   }
-// }
-
-
-
-
-const slugify = require("slugify");
-
 const Course = require('../models/Course')
 
-/*
-========================================
-GET ALL COURSES
-========================================
-*/
+// ── Helper: build update object from body ─────────────────────
+const ALLOWED = [
+  'title','urlSlug','code','instructor','duration','certificateValidity',
+  'pricingType','vocPrice','originalPrice','price','deliveryMethod','location',
+  'description','trainingOverview','vocationalOutcome','feesAndCharges',
+  'optionalCharges','outcomePoint','metaTitle','metaDescription',
+  'courseRequirement','codeOfPracticeTitle',
+  'courseType','comboEnabled','comboPrice','comboDescription','comboDuration',
+  'category','isActive','order',
+]
+
+const pickFields = (body) => {
+  const obj = {}
+  ALLOWED.forEach(k => {
+    if (body[k] !== undefined && body[k] !== null && body[k] !== '') {
+      obj[k] = body[k]
+    }
+  })
+  // Booleans
+  if (body.comboEnabled !== undefined) obj.comboEnabled = body.comboEnabled === 'true' || body.comboEnabled === true
+  if (body.isActive    !== undefined) obj.isActive    = body.isActive    === 'true' || body.isActive    === true
+  // Numbers
+  ;['vocPrice','originalPrice','price','comboPrice','comboDuration','order'].forEach(k => {
+    if (obj[k] !== undefined) obj[k] = Number(obj[k]) || 0
+  })
+  return obj
+}
+
+const makeSlug = (title) =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') +
+  '-' + Date.now().toString(36)
+
+// ══════════════════════════════════════════════════════════════
+// GET ALL COURSES
+// ══════════════════════════════════════════════════════════════
 exports.getCourses = async (req, res) => {
   try {
     const courses = await Course.find()
       .populate('category', 'name')
-      .sort({ sortOrder: 1, createdAt: -1 })
-
+      .sort({ order: 1, createdAt: -1 })
     res.json({ success: true, courses })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
   }
 }
 
-
-exports.createCourse = async (req, res) => {
-  try {
-    const thumbnail = req.file?.path || "";
-
-    let slug = slugify(req.body.title, {
-      lower: true,
-      strict: true,
-      trim: true,
-    });
-
-    const existingSlug = await Course.findOne({ slug });
-
-    if (existingSlug) {
-      slug = `${slug}-${Date.now()}`;
-    }
-
-    const course = await Course.create({
-      title: req.body.title,
-      slug,
-
-      description: req.body.description,
-      category: req.body.category || undefined,
-      instructor: req.body.instructor,
-
-      price: Number(req.body.price) || 0,
-
-      courseType: req.body.courseType || "single",
-      duration: Number(req.body.duration) || 0,
-      certificateValidity:
-        Number(req.body.certificateValidity) || 0,
-      pricingType: req.body.pricingType || "Standard",
-
-      comboEnabled: req.body.comboEnabled === "true",
-      comboPrice: Number(req.body.comboPrice) || 0,
-      comboDescription: req.body.comboDescription || "",
-      comboDuration: Number(req.body.comboDuration) || 0,
-
-      thumbnail,
-    });
-
-    res.status(201).json({
-      success: true,
-      course,
-    });
-  } catch (error) {
-    console.log("Course Create Error:", error);
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-/*
-========================================
-UPDATE COURSE
-========================================
-*/
-exports.updateCourse = async (req, res) => {
-  try {
-    const thumbnail = req.file?.path || undefined
-
-    const updateData = {
-      title:            req.body.title,
-      description:      req.body.description,
-      instructor:       req.body.instructor,
-      price:            Number(req.body.price) || 0,
-      courseType:       req.body.courseType || 'single',
-      comboEnabled:     req.body.comboEnabled === 'true',
-      comboPrice:       Number(req.body.comboPrice) || 0,
-      comboDescription: req.body.comboDescription || '',
-      comboDuration:    Number(req.body.comboDuration) || 0,
-    }
-
-    // Only update category if provided
-    if (req.body.category) updateData.category = req.body.category
-
-    // Only update thumbnail if a new file was uploaded
-    if (thumbnail) updateData.thumbnail = thumbnail
-
-    const course = await Course.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    ).populate('category', 'name')
-
-    if (!course) {
-      return res.status(404).json({ success: false, message: 'Course not found' })
-    }
-
-    res.json({ success: true, course })
-  } catch (error) {
-    console.log("erorrcourseupdate",error);
-    
-    res.status(500).json({ success: false, message: error.message })
-  }
-}
-
-/*
-========================================
-DELETE COURSE
-========================================
-*/
-exports.deleteCourse = async (req, res) => {
-  try {
-    const course = await Course.findByIdAndDelete(req.params.id)
-
-    if (!course) {
-      return res.status(404).json({ success: false, message: 'Course not found' })
-    }
-
-    res.json({ success: true, message: 'Course deleted successfully' })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
-  }
-}
-
-
-/*
-========================================
-GET SINGLE COURSE BY ID
-========================================
-*/
+// ══════════════════════════════════════════════════════════════
+// GET SINGLE COURSE BY ID
+// ══════════════════════════════════════════════════════════════
 exports.getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id)
-      .populate('category', 'name')
-
-    if (!course) {
-      return res.status(404).json({ success: false, message: 'Course not found' })
-    }
-
+    const course = await Course.findById(req.params.id).populate('category', 'name')
+    if (!course) return res.status(404).json({ success: false, message: 'Course not found' })
     res.json({ success: true, course })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
   }
 }
 
-/*
-========================================
-TOGGLE COURSE STATUS (isActive)
-========================================
-*/
+// ══════════════════════════════════════════════════════════════
+// CREATE COURSE
+// ══════════════════════════════════════════════════════════════
+exports.createCourse = async (req, res) => {
+  try {
+    const { title } = req.body
+    if (!title?.trim()) return res.status(400).json({ success: false, message: 'Title is required' })
+
+    const fields = pickFields(req.body)
+    fields.title = title.trim()
+    fields.slug  = req.body.urlSlug?.trim()
+      ? req.body.urlSlug.trim()
+      : makeSlug(title)
+
+    if (req.file?.path) fields.thumbnail = req.file.path
+
+    // PDF uploads
+    if (req.files?.codeOfPracticeFile?.[0]?.path)
+      fields.codeOfPracticeFile = req.files.codeOfPracticeFile[0].path
+    if (req.files?.syllabusFile?.[0]?.path)
+      fields.syllabusFile = req.files.syllabusFile[0].path
+
+    const course = await Course.create(fields)
+    res.status(201).json({ success: true, course })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// UPDATE COURSE
+// ══════════════════════════════════════════════════════════════
+exports.updateCourse = async (req, res) => {
+  try {
+    const fields = pickFields(req.body)
+    if (req.body.title?.trim()) fields.title = req.body.title.trim()
+    if (req.file?.path) fields.thumbnail = req.file.path
+    if (req.files?.codeOfPracticeFile?.[0]?.path)
+      fields.codeOfPracticeFile = req.files.codeOfPracticeFile[0].path
+    if (req.files?.syllabusFile?.[0]?.path)
+      fields.syllabusFile = req.files.syllabusFile[0].path
+
+    const course = await Course.findByIdAndUpdate(req.params.id, fields, { new: true })
+      .populate('category', 'name')
+    if (!course) return res.status(404).json({ success: false, message: 'Course not found' })
+    res.json({ success: true, course })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// DELETE COURSE
+// ══════════════════════════════════════════════════════════════
+exports.deleteCourse = async (req, res) => {
+  try {
+    await Course.findByIdAndDelete(req.params.id)
+    res.json({ success: true, message: 'Course deleted' })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// TOGGLE STATUS
+// ══════════════════════════════════════════════════════════════
 exports.toggleCourseStatus = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id)
-
-    if (!course) {
-      return res.status(404).json({ success: false, message: 'Course not found' })
-    }
-
+    if (!course) return res.status(404).json({ success: false, message: 'Course not found' })
     course.isActive = !course.isActive
     await course.save()
-
-    res.json({ success: true, message: `Course is now ${course.isActive ? 'active' : 'inactive'}`, course })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+    res.json({ success: true, course })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
   }
 }
 
-/*
-========================================
-REORDER COURSES
-Body: { orderedIds: ['id1', 'id2', ...] }
-========================================
-*/
+// ══════════════════════════════════════════════════════════════
+// REORDER COURSES
+// ══════════════════════════════════════════════════════════════
 exports.reorderCourses = async (req, res) => {
   try {
     const { orderedIds } = req.body
-    if (!Array.isArray(orderedIds)) {
+    if (!Array.isArray(orderedIds))
       return res.status(400).json({ success: false, message: 'orderedIds array required' })
-    }
-    await Promise.all(
-      orderedIds.map((id, idx) =>
-        Course.findByIdAndUpdate(id, { sortOrder: idx })
-      )
-    )
+    await Promise.all(orderedIds.map((id, idx) =>
+      Course.findByIdAndUpdate(id, { order: idx })
+    ))
     res.json({ success: true, message: 'Courses reordered' })
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
   }
 }

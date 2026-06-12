@@ -270,18 +270,35 @@
   background: #fff; width: 0%;
   border-radius: 2px;
 }
+/* Active fill runs via keyframe so it reliably restarts on remount */
+.ss-thumb-fill-active {
+  width: 0%;
+  animation: ss-fill-run linear forwards;
+}
+@keyframes ss-fill-run {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
 
 .ss-progress {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: rgba(255,255,255,0.1);
+  height: 4px;
+  background: rgba(255,255,255,0.12);
   z-index: 10;
 }
 .ss-bar {
   height: 100%;
   background: linear-gradient(90deg, #cc0000, #ff4444);
   width: 0%;
+}
+/* Animate the red bar via keyframe — remounting the element restarts it cleanly */
+.ss-bar-animate {
+  animation: ss-bar-run linear forwards;
+}
+@keyframes ss-bar-run {
+  from { width: 0%; }
+  to   { width: 100%; }
 }
 
 /* ══ STATS STRIP — full width, glassmorphic ══ */

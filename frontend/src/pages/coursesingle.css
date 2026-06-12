@@ -2,28 +2,76 @@
    COURSE SINGLE PAGE
    ══════════════════════════════════════════════════════════════ */
 
-.cs-page { background: #f4f6f8; min-height: 80vh; }
+.cs-page { background: #f4f6f8; min-height: 80vh; padding-bottom: 90px; }
 
-/* ── Breadcrumb ── */
-.cs-breadcrumb {
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 12px 0;
+/* ── Hero banner ── */
+.cs-hero {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  background: #eee;
 }
-.cs-breadcrumb .container {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+.cs-hero img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block; z-index: 0;
 }
-.cs-bc-link {
-  font-size: 13px; color: #cc0000;
-  cursor: pointer; font-weight: 600;
-  transition: opacity 0.15s;
+.cs-img-ph {
+  font-size: 96px;
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; background: #FDEDEC;
 }
-.cs-bc-link:hover { opacity: 0.75; }
-.cs-bc-sep { color: #ccc; font-size: 13px; }
-.cs-bc-current { font-size: 13px; color: #666; }
+.cs-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 45%, transparent 75%);
+}
+.cs-badge {
+  position: absolute; top: 24px; left: 24px;
+  max-width: calc(100% - 400px);
+  background: #cc0000; color: #fff;
+  font-size: 13px; font-weight: 700;
+  padding: 8px 16px; border-radius: 8px;
+  z-index: 2;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.cs-hero-content {
+  position: absolute; left: 24px; bottom: 28px;
+  max-width: 720px; z-index: 2; color: #fff;
+}
+.cs-hero-content h1 {
+  font-size: 36px; font-weight: 800; margin: 0 0 6px;
+}
+.cs-hero-sub { font-size: 14px; opacity: 0.85; margin: 0 0 10px; }
+.cs-hero-desc {
+  font-size: 14px; line-height: 1.6; opacity: 0.9;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden; max-width: 640px;
+}
+
+.cs-hero-card {
+  position: absolute; right: 32px; top: 32px;
+  width: 340px; z-index: 3;
+}
+
+/* ── Meta strip ── */
+.cs-meta-strip {
+  background: #fff; border-bottom: 1px solid #eee;
+  padding: 18px 0;
+}
+.cs-meta-grid {
+  display: flex; flex-wrap: wrap; gap: 24px;
+}
+.cs-meta-item { display: flex; align-items: center; gap: 10px; min-width: 140px; }
+.cs-meta-icon {
+  font-size: 22px;
+  background: #fdecec; border-radius: 8px;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cs-meta-val { font-size: 14px; font-weight: 800; color: #111827; margin: 0; }
+.cs-meta-label { font-size: 12px; color: #888; margin: 2px 0 0; }
 
 /* ── Inner layout ── */
 .cs-inner {
@@ -31,109 +79,106 @@
   grid-template-columns: 1fr 360px;
   gap: 32px;
   padding-top: 32px;
-  padding-bottom: 64px;
   align-items: start;
 }
 
-/* ── Left ── */
-.cs-left {}
+/* ── Sections ── */
+.cs-section {
+  background: #fff; border-radius: 14px;
+  padding: 28px; margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.cs-section h2 {
+  font-size: 20px; font-weight: 800; color: #111827;
+  margin: 0 0 18px; padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
+}
+.cs-desc { font-size: 15px; color: #555; line-height: 1.7; }
+.cs-text-list p { font-size: 15px; color: #555; line-height: 1.7; margin: 0 0 14px; }
+.cs-text-list p:last-child { margin-bottom: 0; }
 
-.cs-hero-img {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  background: #eee;
-  height: 320px;
-}
-.cs-hero-img img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-}
-.cs-img-ph {
-  font-size: 72px;
-  display: flex; align-items: center; justify-content: center;
-  height: 100%; background: #FDEDEC;
-}
-.cs-badge {
-  position: absolute; top: 16px; left: 16px;
-  background: #cc0000; color: #fff;
-  font-size: 12px; font-weight: 700;
-  padding: 5px 12px; border-radius: 6px;
-}
-
-/* ── Tabs ── */
-.cs-tabs {
-  display: flex; gap: 4px;
-  background: #fff; border-radius: 12px;
-  padding: 6px; margin-bottom: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-}
-.cs-tab {
-  flex: 1; padding: 10px 16px;
-  border: none; border-radius: 8px;
-  font-size: 14px; font-weight: 600;
-  color: #666; cursor: pointer;
-  background: transparent;
-  transition: all 0.2s;
-  text-transform: capitalize;
-}
-.cs-tab:hover { background: #f4f6f8; color: #111; }
-.cs-tab-active {
-  background: #cc0000 !important;
-  color: #fff !important;
-}
-
-.cs-tab-body {
-  background: #fff; border-radius: 16px;
-  padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-}
-
-/* Overview */
-.cs-overview h2 {
-  font-size: 24px; font-weight: 800; color: #111827;
-  margin-bottom: 12px;
-}
-.cs-desc { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 24px; }
-.cs-overview h3 { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 12px; }
-.cs-outcomes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-.cs-outcomes li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #374151; }
-.cs-check { color: #cc0000; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
-
-/* Details */
-.cs-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.cs-detail-item {
+/* Check list (entry requirements / fees) */
+.cs-check-list { display: flex; flex-direction: column; }
+.cs-check-row {
   display: flex; align-items: flex-start; gap: 12px;
-  background: #f9f9f9; border-radius: 10px; padding: 14px;
+  padding: 14px 0; border-bottom: 1px solid #f2f2f2;
 }
-.cs-detail-icon { font-size: 22px; flex-shrink: 0; }
-.cs-detail-label { font-size: 11px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
-.cs-detail-val { font-size: 15px; font-weight: 700; color: #111827; }
+.cs-check-row:last-child { border-bottom: none; padding-bottom: 0; }
+.cs-check-row span { color: #cc0000; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+.cs-check-row p { margin: 0; font-size: 14.5px; color: #444; line-height: 1.6; }
 
-/* Instructor */
-.cs-instructor { display: flex; align-items: flex-start; gap: 20px; }
-.cs-instructor-avatar {
-  width: 72px; height: 72px; border-radius: 50%;
-  background: #FDEDEC; display: flex;
-  align-items: center; justify-content: center;
-  font-size: 32px; flex-shrink: 0;
+/* Available dates & locations */
+.cs-sessions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.cs-session-row {
+  display: flex; align-items: center; gap: 16px;
+  border: 1px solid #eee; border-radius: 10px; padding: 14px 18px;
 }
-.cs-instructor h3 { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 4px; }
-.cs-instructor-role { font-size: 13px; color: #cc0000; font-weight: 600; margin-bottom: 10px; }
-.cs-instructor-bio { font-size: 14px; color: #555; line-height: 1.65; }
+.cs-session-date {
+  display: flex; flex-direction: column; align-items: center;
+  background: #0b1d33; color: #fff; border-radius: 8px;
+  width: 56px; height: 56px; flex-shrink: 0; justify-content: center;
+}
+.cs-session-day { font-size: 18px; font-weight: 800; line-height: 1; }
+.cs-session-month { font-size: 10px; font-weight: 700; letter-spacing: 1px; margin-top: 2px; }
+.cs-session-info { flex: 1; }
+.cs-session-name { font-size: 15px; font-weight: 700; color: #111827; margin: 0; }
+.cs-session-time { font-size: 13px; color: #888; margin: 2px 0 0; }
+.cs-session-badge {
+  background: #fff3cd; color: #b8860b;
+  font-size: 12px; font-weight: 700;
+  padding: 6px 12px; border-radius: 6px; flex-shrink: 0;
+}
+.cs-session-book {
+  background: #cc0000; color: #fff; border: none;
+  padding: 10px 22px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; cursor: pointer; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.cs-session-book:hover { background: #a00000; }
+.cs-see-all {
+  display: block; width: 100%; text-align: center;
+  background: transparent; border: none;
+  color: #cc0000; font-weight: 700; font-size: 14px;
+  cursor: pointer; padding: 10px;
+}
+
+/* Why choose */
+.cs-why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.cs-why-item {
+  display: flex; align-items: center; gap: 10px;
+  background: #f7f9fb; border-radius: 10px; padding: 16px;
+  font-size: 14px; font-weight: 600; color: #333;
+}
+.cs-why-item span { font-size: 20px; }
+
+/* Reviews */
+.cs-rating-summary { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.cs-rating-num { font-size: 38px; font-weight: 900; color: #111827; }
+.cs-stars { color: #f5a623; font-size: 16px; letter-spacing: 2px; }
+.cs-rating-sub { font-size: 13px; color: #888; margin: 4px 0 0; }
+.cs-review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.cs-review-card { background: #f7f9fb; border-radius: 10px; padding: 16px; }
+.cs-review-name { font-weight: 700; font-size: 14px; color: #111827; margin: 0 0 4px; }
+.cs-review-text { font-size: 13.5px; color: #555; font-style: italic; margin: 6px 0 0; }
 
 /* ── Right: booking card ── */
-.cs-right {}
+.cs-right {
+  display: flex; flex-direction: column; gap: 16px;
+  position: sticky; top: 90px;
+  align-self: start;
+}
 
 .cs-booking-card {
   background: #fff; border-radius: 18px;
-  padding: 28px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  position: sticky; top: 90px;
+  padding: 26px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
+.cs-hero-card .cs-booking-card { position: static; }
+
+.cs-enrol-label { font-size: 13px; font-weight: 700; color: #888; margin: 0 0 12px; }
 
 .cs-price-row {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 6px;
 }
 .cs-price { font-size: 34px; font-weight: 900; color: #111827; }
 .cs-orig-price { font-size: 16px; color: #aaa; text-decoration: line-through; }
@@ -142,42 +187,24 @@
   font-size: 12px; font-weight: 700;
   padding: 3px 8px; border-radius: 6px;
 }
-
-.cs-title { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 16px; line-height: 1.4; }
-
-.cs-meta-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-.cs-meta-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #555; }
-
-.cs-option-label {
-  font-size: 11px; font-weight: 800; color: #cc0000;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.cs-option-box {
-  display: flex; justify-content: space-between; align-items: center;
-  border: 2px solid #e8e8e8; border-radius: 10px;
-  padding: 12px 16px; margin-bottom: 8px;
-  font-size: 14px; color: #374151; transition: border-color 0.2s;
-}
-.cs-option-box strong { font-size: 16px; font-weight: 800; color: #cc0000; }
-.cs-option-active { border-color: #cc0000; background: #fff8f8; }
+.cs-incl-text { font-size: 13px; color: #888; margin: 0 0 16px; }
 
 .cs-book-btn {
   width: 100%; padding: 15px;
   background: #cc0000; color: #fff;
   border: none; border-radius: 10px;
   font-size: 15px; font-weight: 700;
-  cursor: pointer; margin: 16px 0 8px;
+  cursor: pointer; margin-bottom: 10px;
   transition: background 0.2s, transform 0.15s;
 }
-.cs-book-btn:hover { background: #aa0000; transform: translateY(-1px); }
+.cs-book-btn:hover { background: #a00000; transform: translateY(-1px); }
 
 /* Qty controls */
 .cs-qty-controls {
   display: flex; align-items: center;
   border: 2px solid #cc0000; border-radius: 10px;
   overflow: hidden; height: 50px;
-  margin: 16px 0 8px;
+  margin-bottom: 10px;
 }
 .cs-qty-btn {
   flex: 1; height: 100%; border: none;
@@ -186,7 +213,7 @@
   cursor: pointer; transition: background 0.15s;
   display: flex; align-items: center; justify-content: center;
 }
-.cs-qty-btn:hover { background: #aa0000; }
+.cs-qty-btn:hover { background: #a00000; }
 .cs-qty-num {
   flex: 1; text-align: center;
   font-size: 20px; font-weight: 800; color: #cc0000;
@@ -196,20 +223,103 @@
 
 .cs-voc-btn {
   width: 100%; padding: 13px;
-  background: transparent; color: #cc0000;
-  border: 2px solid #cc0000; border-radius: 10px;
+  background: #fdecec; color: #cc0000;
+  border: 1px solid #fadddd; border-radius: 10px;
   font-size: 14px; font-weight: 700;
-  cursor: pointer; margin-bottom: 20px;
+  cursor: pointer; margin-bottom: 18px;
   transition: all 0.2s;
 }
 .cs-voc-btn:hover { background: #cc0000; color: #fff; }
 
-.cs-guarantees { display: flex; flex-direction: column; gap: 8px; }
+.cs-guarantees {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 14px; border-top: 1px solid #f0f0f0;
+}
 .cs-guarantee-item {
   display: flex; align-items: center; gap: 8px;
   font-size: 13px; color: #555;
 }
-.cs-guarantee-item span { color: #2e7d32; font-weight: 800; }
+.cs-guarantee-item span { color: #cc0000; font-weight: 800; }
+
+/* ── PDF Download Boxes ── */
+.cs-pdf-box {
+  display: block;
+  padding: 18px 16px;
+  border-radius: 10px;
+  border: 2px solid;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 10px,
+    transparent 10px, transparent 20px
+  );
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.cs-pdf-box:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+
+.cs-pdf-cop { border-color: #cc0000; }
+.cs-pdf-handbook { border-color: #cc0000; }
+
+.cs-pdf-brand {
+  font-size: 18px; font-weight: 800; letter-spacing: 0.5px;
+  color: #0b1d33;
+}
+.cs-pdf-brand-skill { color: #cc0000; }
+.cs-pdf-brand-scope { color: #0b1d33; }
+.cs-pdf-brand-sub {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  color: #5a6b80; margin-bottom: 8px;
+}
+.cs-pdf-title {
+  font-size: 18px; font-weight: 800;
+  color: #cc0000; margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+.cs-pdf-cta {
+  font-size: 11px; font-weight: 600;
+  color: #333; letter-spacing: 0.3px;
+}
+
+/* ── Need help box ── */
+.cs-help-box {
+  background: #0b1d33; color: #fff;
+  border-radius: 14px; padding: 24px;
+}
+.cs-help-title { font-size: 16px; font-weight: 800; color: #cc0000; margin: 0 0 12px; }
+.cs-help-text { font-size: 13.5px; line-height: 1.6; color: #cfd6e0; margin: 0 0 18px; }
+.cs-help-btn {
+  display: block; text-align: center;
+  padding: 12px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  text-decoration: none; margin-bottom: 10px;
+  transition: opacity 0.2s;
+}
+.cs-help-btn:last-child { margin-bottom: 0; }
+.cs-help-btn:hover { opacity: 0.85; }
+.cs-help-call { background: #cc0000; color: #fff; }
+.cs-help-email { background: rgba(255,255,255,0.08); color: #fff; }
+
+/* ── Sticky bottom bar ── */
+.cs-sticky-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  background: #0b1d33; color: #fff;
+  display: flex; align-items: center; gap: 24px;
+  padding: 14px 32px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
+}
+.cs-sticky-info { flex: 1; min-width: 0; }
+.cs-sticky-title { font-size: 15px; font-weight: 800; margin: 0; }
+.cs-sticky-meta { font-size: 12px; color: #aebccd; margin: 4px 0 0; }
+.cs-sticky-price { font-size: 22px; font-weight: 900; color: #4fc3f7; flex-shrink: 0; }
+.cs-sticky-btn {
+  background: #cc0000; color: #fff; border: none;
+  padding: 12px 26px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.cs-sticky-btn:hover { background: #a00000; }
 
 /* ── Loading / Error ── */
 .cs-loading {
@@ -241,12 +351,20 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .cs-hero { height: auto; padding-bottom: 24px; }
+  .cs-hero-card { position: static; width: 100%; padding: 0 16px; margin-top: 280px; }
+  .cs-hero-content { max-width: calc(100% - 32px); }
   .cs-inner { grid-template-columns: 1fr; }
   .cs-booking-card { position: static; }
-  .cs-right { order: -1; }
 }
-@media (max-width: 560px) {
-  .cs-detail-grid { grid-template-columns: 1fr; }
-  .cs-hero-img { height: 220px; }
+@media (max-width: 640px) {
+  .cs-hero { height: 360px; }
+  .cs-hero-card { margin-top: 200px; }
+  .cs-hero-content h1 { font-size: 26px; }
+  .cs-meta-grid { gap: 14px; }
+  .cs-why-grid, .cs-review-grid { grid-template-columns: 1fr; }
+  .cs-session-row { flex-wrap: wrap; }
+  .cs-sticky-bar { padding: 10px 16px; gap: 12px; }
+  .cs-sticky-info { display: none; }
 }

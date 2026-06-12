@@ -1,70 +1,3 @@
-
-
-// // const express = require('express')
-// // const upload  = require('../middleware/uploadMiddleware')
-
-// // const {
-// //   getCourses,
-// //   createCourse,
-// //   updateCourse,
-// //   deleteCourse,
-// //   toggleCourseStatus,
-// // } = require('../controllers/courseController')
-
-// // const router = express.Router()
-
-// // router.get('/',getCourses)
-// // router.post('/',    upload.single('thumbnail'), createCourse)
-// // router.put('/:id',  upload.single('thumbnail'), updateCourse)
-// // router.delete('/:id',                    deleteCourse)
-// // router.patch('/:id/toggle-status',       toggleCourseStatus)
-
-// // module.exports = router
-
-// const express = require('express')
-// const upload  = require('../middleware/uploadMiddleware')
-
-// const {
-//   getCourses,
-//   getCourseById,
-//   createCourse,
-//   updateCourse,
-//   deleteCourse,
-//   toggleCourseStatus,
-// } = require('../controllers/courseController')
-
-// const router = express.Router()
-
-// router.get('/',getCourses)
-// router.get('/:id', getCourseById)
-// router.post('/',    upload.single('thumbnail'), createCourse)
-// router.put('/:id',  upload.single('thumbnail'), updateCourse)
-// router.delete('/:id',                    deleteCourse)
-// router.patch('/:id/toggle-status',       toggleCourseStatus)
-
-// module.exports = router
-
-// const express = require('express')
-// const upload  = require('../middleware/uploadMiddleware')
-
-// const {
-//   getCourses,
-//   createCourse,
-//   updateCourse,
-//   deleteCourse,
-//   toggleCourseStatus,
-// } = require('../controllers/courseController')
-
-// const router = express.Router()
-
-// router.get('/',getCourses)
-// router.post('/',    upload.single('thumbnail'), createCourse)
-// router.put('/:id',  upload.single('thumbnail'), updateCourse)
-// router.delete('/:id',                    deleteCourse)
-// router.patch('/:id/toggle-status',       toggleCourseStatus)
-
-// module.exports = router
-
 const express = require('express')
 const upload  = require('../middleware/uploadMiddleware')
 
@@ -80,12 +13,19 @@ const {
 
 const router = express.Router()
 
-router.get('/',getCourses)
-router.get('/:id', getCourseById)
-router.post('/',    upload.single('thumbnail'), createCourse)
-router.put('/:id',  upload.single('thumbnail'), updateCourse)
-router.delete('/:id',                    deleteCourse)
-router.patch('/:id/toggle-status',       toggleCourseStatus)
-router.post('/reorder',                  reorderCourses)
+// Multi-file upload: thumbnail (image) + codeOfPracticeFile (pdf) + syllabusFile (pdf)
+const courseUpload = upload.fields([
+  { name: 'thumbnail',           maxCount: 1 },
+  { name: 'codeOfPracticeFile',  maxCount: 1 },
+  { name: 'syllabusFile',        maxCount: 1 },
+])
+
+router.get('/',                    getCourses)
+router.get('/:id',                 getCourseById)
+router.post('/',                   courseUpload, createCourse)
+router.put('/:id',                 courseUpload, updateCourse)
+router.delete('/:id',              deleteCourse)
+router.patch('/:id/toggle-status', toggleCourseStatus)
+router.post('/reorder',            reorderCourses)
 
 module.exports = router

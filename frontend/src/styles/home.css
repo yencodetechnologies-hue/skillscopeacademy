@@ -168,15 +168,15 @@
 }
 
 .btn-back-admin {
-  background: #1a1a2e;
-  color: #ffffff;
+  background: #cc0000;
+  color: #fff;
   display: inline-flex;
   align-items: center;
-  border: 2px solid #cc0000;
+  border: none;
   transition: background 0.2s, transform 0.15s;
 }
 
 .btn-back-admin:hover {
-  background: #cc0000;
+  background: #aa0000;
   transform: translateX(-2px);
 }

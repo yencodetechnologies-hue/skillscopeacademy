@@ -215,6 +215,19 @@ exports.getCourseById = async (req, res) => {
 }
 
 // ══════════════════════════════════════════════════════════════
+// GET SINGLE COURSE BY SLUG (urlSlug)
+// ══════════════════════════════════════════════════════════════
+exports.getCourseBySlug = async (req, res) => {
+  try {
+    const course = await Course.findOne({ urlSlug: req.params.slug }).populate('category', 'name')
+    if (!course) return res.status(404).json({ success: false, message: 'Course not found' })
+    res.json({ success: true, course })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
 // CREATE COURSE
 // ══════════════════════════════════════════════════════════════
 exports.createCourse = async (req, res) => {

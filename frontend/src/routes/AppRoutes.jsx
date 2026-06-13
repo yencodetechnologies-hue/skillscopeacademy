@@ -177,7 +177,7 @@ const AppRoutes = () => (
       <Route path="/about"         element={<About />} />
       <Route path="/contact"       element={<Contact />} />
       <Route path="/voc"           element={<VocRenewal />} />
-      <Route path="/courses/:id"   element={<CourseSingle />} />
+      <Route path="/courses/:slug"  element={<CourseSingle />} />
 
       {/* Admin routes */}
       <Route path="/admin"                  element={<AdminWrap><Skilladmindashboard /></AdminWrap>} />

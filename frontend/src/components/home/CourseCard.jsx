@@ -39,7 +39,7 @@ const CourseCard = ({ course }) => {
   return (
     <div
       className="hcc-card"
-      onClick={() => navigate(`/courses/${course._id}`)}
+      onClick={() => navigate(`/courses/${course.urlSlug || course._id}`)}
     >
       {/* ── LEFT: Image ── */}
       <div className="hcc-img-wrap">
@@ -116,7 +116,7 @@ const CourseCard = ({ course }) => {
           )}
           <button
             className="hcc-details-btn"
-            onClick={e => { e.stopPropagation(); navigate(`/courses/${course._id}`) }}
+            onClick={e => { e.stopPropagation(); navigate(`/courses/${course.urlSlug || course._id}`) }}
           >
             Details
           </button>

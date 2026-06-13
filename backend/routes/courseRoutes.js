@@ -4,6 +4,7 @@ const upload  = require('../middleware/uploadMiddleware')
 const {
   getCourses,
   getCourseById,
+  getCourseBySlug,
   createCourse,
   updateCourse,
   deleteCourse,
@@ -21,6 +22,7 @@ const courseUpload = upload.fields([
 ])
 
 router.get('/',                    getCourses)
+router.get('/slug/:slug',          getCourseBySlug)
 router.get('/:id',                 getCourseById)
 router.post('/',                   courseUpload, createCourse)
 router.put('/:id',                 courseUpload, updateCourse)

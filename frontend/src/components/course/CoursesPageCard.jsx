@@ -36,7 +36,7 @@ const CoursesPageCard = ({ course }) => {
   return (
     <div
       className="cpc-card"
-      onClick={() => navigate(`/courses/${course._id}`)}
+      onClick={() => navigate(`/courses/${course.urlSlug || course._id}`)}
     >
       {/* Image */}
       <div className="cpc-img-wrap">
@@ -113,7 +113,7 @@ const CoursesPageCard = ({ course }) => {
 
         <button
           className="cpc-details-btn"
-          onClick={e => { e.stopPropagation(); navigate(`/courses/${course._id}`) }}
+          onClick={e => { e.stopPropagation(); navigate(`/courses/${course.urlSlug || course._id}`) }}
         >
           View Details ℹ
         </button>

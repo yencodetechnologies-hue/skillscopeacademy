@@ -69,7 +69,7 @@ function ComboCard({ course }) {
         }
         {/* Hover overlay */}
         <div className="combo-card-img-overlay">
-          <button className="combo-overlay-btn" onClick={() => navigate(`/courses/${course._id}`)}>
+          <button className="combo-overlay-btn" onClick={() => navigate(`/courses/${course.urlSlug || course._id}`)}>
             View Details
           </button>
         </div>
@@ -137,7 +137,7 @@ function ComboCard({ course }) {
         )}
 
         {/* View Details */}
-        <button className="combo-details-btn" onClick={() => navigate(`/courses/${course._id}`)}>
+        <button className="combo-details-btn" onClick={() => navigate(`/courses/${course.urlSlug || course._id}`)}>
           View Details ℹ
         </button>
 

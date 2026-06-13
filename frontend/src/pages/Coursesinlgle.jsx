@@ -321,7 +321,7 @@ function buildSessions(n = 4) {
 }
 
 export default function CourseSingle() {
-  const { id } = useParams()
+  const { slug } = useParams()
   const navigate = useNavigate()
   const { addToCart, removeFromCart, increaseQty, decreaseQty, items } = useCart()
 
@@ -331,16 +331,16 @@ export default function CourseSingle() {
 
   useEffect(() => {
     setLoading(true)
-    API.get(`/courses/${id}`)
+    API.get(`/courses/slug/${slug}`)
       .then(r => {
         const c = r.data?.course || r.data?.data || r.data
         setCourse(c)
       })
       .catch(() => setError('Course not found.'))
       .finally(() => setLoading(false))
-  }, [id])
+  }, [slug])
 
-  const cartItem = items.find(i => i.course._id === id && i.option === 'Standard')
+  const cartItem = items.find(i => i.course._id === course?._id && i.option === 'Standard')
   const qty = cartItem?.qty || 0
   const inCart = qty > 0
 

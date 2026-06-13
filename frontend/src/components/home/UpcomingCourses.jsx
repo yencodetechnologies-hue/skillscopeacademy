@@ -1,37 +1,3 @@
-// import { upcomingCourses } from '../../services/mockData'
-// import './upcoming.css'
-
-// const UpcomingCourses = () => {
-//   return (
-//     <section className='upcoming'>
-//       <div className='container'>
-//         <div className='upcoming-ticker-wrap'>
-//           <span className='upcoming-label'>DON&apos;T MISS OUT</span>
-//           <div className='upcoming-ticker'>
-//             {[...upcomingCourses, ...upcomingCourses].map((c, i) => (
-//               <div key={i} className='upcoming-item'>
-//                 <div className='upcoming-date'>
-//                   <span className='date-day'>{c.day}</span>
-//                   <span className='date-month'>{c.month}</span>
-//                 </div>
-//                 <div className='upcoming-info'>
-//                   <p className='upcoming-title'>{c.title}</p>
-//                   <p className='upcoming-meta'>{c.time} · {c.price}</p>
-//                 </div>
-//                 <button className={`upcoming-book ${c.status === 'Full' ? 'btn-full' : 'btn-available'}`}>
-//                   {c.status === 'Full' ? 'Full' : 'Book'}
-//                 </button>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default UpcomingCourses
-
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../../services/api'
@@ -41,55 +7,57 @@ import './upcoming.css'
 const formatDate = (dateStr) => {
   const d = new Date(dateStr)
   return {
-    day: d.getDate().toString().padStart(2, '0'),
+    day:   d.getDate().toString().padStart(2, '0'),
     month: d.toLocaleString('en-AU', { month: 'short' }).toUpperCase(),
   }
+}
+
+const spotsLabel = (slots) => {
+  if (slots === 0) return { text: 'Full', cls: 'full' }
+  if (slots <= 3)  return { text: `⚠ ${slots} left`, cls: 'low-spots' }
+  return { text: `${slots} spots`, cls: '' }
 }
 
 const UpcomingCourses = () => {
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
-  const tickerRef = useRef(null)
-  const animRef = useRef(null)
-  const posRef = useRef(0)
-  const navigate = useNavigate()
+  const trackRef  = useRef(null)
+  const animRef   = useRef(null)
+  const posRef    = useRef(0)
+  const navigate  = useNavigate()
 
-  // Fetch scheduled courses from API
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const res = await API.get('/schedules')
+        const res       = await API.get('/schedules')
         const schedules = res.data?.schedules || []
-        // Only upcoming (today or future), sort by date, limit 20
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
-        const upcoming = schedules
+        const today     = new Date(); today.setHours(0,0,0,0)
+        const upcoming  = schedules
           .filter(s => s.isActive && new Date(s.date) >= today)
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .slice(0, 20)
-
         if (upcoming.length > 0) {
           setCourses(upcoming)
         } else {
-          // fallback to mockData formatted
           setCourses(fallbackCourses.map(c => ({
-            _id: c.id,
-            date: `2025-${c.month === 'MAY' ? '05' : '06'}-${c.day}`,
-            startTime: c.time,
-            activeSlots: c.status === 'Full' ? 0 : 5,
-            courseId: { title: c.title },
-            price: c.price,
+            _id:         c.id,
+            date:        `2025-${c.month === 'MAY' ? '05' : '06'}-${c.day}`,
+            startTime:   c.time,
+            activeSlots: c.status === 'Full' ? 0 : 8,
+            location:    c.location || 'Sydney CBD',
+            courseId:    { title: c.title, category: { name: c.category || 'Course' } },
+            price:       c.price,
           })))
         }
       } catch {
-        // On API error, use fallback mock data
         setCourses(fallbackCourses.map(c => ({
-          _id: c.id,
-          date: `2025-${c.month === 'MAY' ? '05' : '06'}-${c.day}`,
-          startTime: c.time,
-          activeSlots: c.status === 'Full' ? 0 : 5,
-          courseId: { title: c.title },
-          price: c.price,
+          _id:         c.id,
+          date:        `2025-${c.month === 'MAY' ? '05' : '06'}-${c.day}`,
+          startTime:   c.time,
+          activeSlots: c.status === 'Full' ? 0 : 8,
+          location:    c.location || 'Sydney CBD',
+          courseId:    { title: c.title, category: { name: c.category || 'Course' } },
+          price:       c.price,
         })))
       } finally {
         setLoading(false)
@@ -98,91 +66,128 @@ const UpcomingCourses = () => {
     fetchSchedules()
   }, [])
 
-  // Auto-scroll animation
+  /* Auto-scroll */
   useEffect(() => {
     if (!courses.length || loading) return
-    const ticker = tickerRef.current
-    if (!ticker) return
-
-    let speed = 0.6
-    let isPaused = false
+    const track = trackRef.current
+    if (!track) return
+    let speed    = 0.5
+    let paused   = false
 
     const animate = () => {
-      if (!isPaused) {
+      if (!paused) {
         posRef.current -= speed
-        // Reset when first set scrolled fully out of view
-        const half = ticker.scrollWidth / 2
-        if (Math.abs(posRef.current) >= half) {
-          posRef.current = 0
-        }
-        ticker.style.transform = `translateX(${posRef.current}px)`
+        const half = track.scrollWidth / 2
+        if (Math.abs(posRef.current) >= half) posRef.current = 0
+        track.style.transform = `translateX(${posRef.current}px)`
       }
       animRef.current = requestAnimationFrame(animate)
     }
-
     animRef.current = requestAnimationFrame(animate)
 
-    const pause = () => { isPaused = true }
-    const resume = () => { isPaused = false }
-    ticker.addEventListener('mouseenter', pause)
-    ticker.addEventListener('mouseleave', resume)
-
+    const pause  = () => { paused = true }
+    const resume = () => { paused = false }
+    track.addEventListener('mouseenter', pause)
+    track.addEventListener('mouseleave', resume)
     return () => {
       cancelAnimationFrame(animRef.current)
-      ticker.removeEventListener('mouseenter', pause)
-      ticker.removeEventListener('mouseleave', resume)
+      track.removeEventListener('mouseenter', pause)
+      track.removeEventListener('mouseleave', resume)
     }
   }, [courses, loading])
 
   if (loading) {
     return (
-      <section className='upcoming'>
-        <div className='container'>
-          <div className='upcoming-ticker-wrap'>
-            <span className='upcoming-label'>DON&apos;T MISS OUT</span>
-            <div className='upcoming-loading'>Loading upcoming courses...</div>
+      <section className="upcoming">
+        <div className="container">
+          <div className="upcoming-header-row">
+            <div className="upcoming-header-left">
+              <span className="upcoming-label">DON'T MISS OUT</span>
+              <span className="upcoming-heading">Upcoming Courses</span>
+            </div>
           </div>
+          <div className="upcoming-loading">Loading upcoming courses…</div>
         </div>
       </section>
     )
   }
 
-  // Duplicate for seamless infinite loop
   const doubled = [...courses, ...courses]
 
   return (
-    <section className='upcoming'>
-      <div className='container'>
-        <div className='upcoming-ticker-wrap'>
-          <span className='upcoming-label'>DON&apos;T MISS OUT</span>
-          <div className='upcoming-ticker-viewport'>
-            <div className='upcoming-ticker' ref={tickerRef}>
-              {doubled.map((c, i) => {
-                const { day, month } = formatDate(c.date)
-                const isFull = c.activeSlots === 0
-                const title = c.courseId?.title || 'Course'
-                const price = c.price || '$—'
-                return (
-                  <div key={`${c._id}-${i}`} className='upcoming-item'>
-                    <div className='upcoming-date'>
-                      <span className='date-day'>{day}</span>
-                      <span className='date-month'>{month}</span>
-                    </div>
-                    <div className='upcoming-info'>
-                      <p className='upcoming-title'>{title}</p>
-                      <p className='upcoming-meta'>{c.startTime} · {price}</p>
-                    </div>
-                    <button
-                      className={`upcoming-book ${isFull ? 'btn-full' : 'btn-available'}`}
-                      onClick={() => !isFull && navigate('/courses')}
-                      disabled={isFull}
-                    >
-                      {isFull ? 'Full' : 'Book'}
-                    </button>
+    <section className="upcoming">
+      <div className="container">
+        <div className="upcoming-header-row">
+          <div className="upcoming-header-left">
+            <span className="upcoming-label">DON'T MISS OUT</span>
+            <span className="upcoming-heading">Upcoming Courses</span>
+          </div>
+          <button className="upcoming-view-all" onClick={() => navigate('/courses')}>
+            View All →
+          </button>
+        </div>
+
+        <div className="upcoming-slider-viewport">
+          <div className="upcoming-slider-track" ref={trackRef}>
+            {doubled.map((c, i) => {
+              const { day, month }   = formatDate(c.date)
+              const isFull           = c.activeSlots === 0
+              const spots            = spotsLabel(c.activeSlots)
+              const title            = c.courseId?.title || 'Course'
+              const categoryName     = c.courseId?.category?.name || c.sessionType || 'Course'
+              const price            = c.price ? `$${c.price}` : ''
+              const sessionTypeLabel = c.sessionType && c.sessionType !== 'General' ? c.sessionType : null
+
+              return (
+                <div
+                  key={`${c._id}-${i}`}
+                  className="upcoming-card"
+                  onClick={() => !isFull && navigate('/courses')}
+                >
+                  {/* Date Block */}
+                  <div className="upcoming-date-block">
+                    <span className="upc-day">{day}</span>
+                    <span className="upc-month">{month}</span>
                   </div>
-                )
-              })}
-            </div>
+
+                  {/* Card Body */}
+                  <div className="upcoming-card-body">
+                    <div className="upcoming-card-top">
+                      <span className="upc-category-tag">{categoryName.toUpperCase()}</span>
+                      <span className={`upc-spots-badge ${spots.cls}`}>{spots.text}</span>
+                    </div>
+
+                    <div className="upcoming-card-title">{title}</div>
+
+                    <div className="upcoming-card-meta">
+                      {c.startTime && (
+                        <span className="upc-meta-row">
+                          <span className="upc-meta-icon">🕐</span>
+                          {c.startTime} · {sessionTypeLabel || 'Full Day'}
+                        </span>
+                      )}
+                      {c.location && (
+                        <span className="upc-meta-row">
+                          <span className="upc-meta-icon">📍</span>
+                          {c.location}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="upcoming-card-footer">
+                      {price && <span className="upc-price">{price}</span>}
+                      <button
+                        className="upc-book-btn"
+                        onClick={e => { e.stopPropagation(); !isFull && navigate('/courses') }}
+                        disabled={isFull}
+                      >
+                        {isFull ? 'Full' : 'Book →'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

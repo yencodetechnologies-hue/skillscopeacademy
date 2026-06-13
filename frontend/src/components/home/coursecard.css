@@ -1,266 +1,224 @@
-.course-card {
+/* ═══════════════════════════════════════════════════════════
+   HOME COURSE CARD — horizontal, image-left design
+   Matches reference: large image / details panel side by side
+   ═══════════════════════════════════════════════════════════ */
+
+.hcc-card {
+  display: grid;
+  grid-template-columns: 260px 1fr;
   background: white;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border: 1px solid #ebebeb;
+  transition: box-shadow 0.22s, transform 0.22s;
+  cursor: pointer;
+  min-height: 290px;
+}
+.hcc-card:hover {
+  box-shadow: 0 14px 40px rgba(0,0,0,0.13);
+  transform: translateY(-4px);
 }
 
-.course-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.14);
-}
-
-.card-img-wrap {
+/* ── Left: Image ──────────────────────────────────────────── */
+.hcc-img-wrap {
   position: relative;
+  overflow: hidden;
 }
-
-.card-img-wrap img {
+.hcc-img-wrap img {
   width: 100%;
-  height: 200px;
+  height: 100%;
+  min-height: 240px;
   object-fit: cover;
+  display: block;
+  transition: transform 0.32s;
 }
+.hcc-card:hover .hcc-img-wrap img { transform: scale(1.05); }
 
-.card-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: #cc0000;
-  color: white;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.card-duration {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(0,0,0,0.65);
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.card-body {
-  padding: 20px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-price-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.card-price {
-  font-size: 26px;
-  font-weight: 800;
-  color: #111827;
-}
-
-.card-original {
-  font-size: 14px;
-  color: #999;
-  text-decoration: line-through;
-}
-
-.card-save {
-  background: #e8f5e9;
-  color: #2e7d32;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-
-.card-code {
-  font-size: 12px;
-  color: #cc0000;
-  font-weight: 700;
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
-}
-
-.card-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 12px;
-  line-height: 1.4;
-}
-
-.card-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 12px;
-}
-
-.card-meta span {
-  font-size: 13px;
-  color: #666;
-}
-
-.card-select-label {
-  font-size: 12px;
-  color: #cc0000;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
-.card-options {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.option-box {
-  flex: 1;
-  background: #f4f6fa;
-  border-radius: 10px;
-  padding: 12px;
-  text-align: center;
-}
-
-.option-box p {
-  font-size: 12px;
-  color: #777;
-  margin-bottom: 4px;
-}
-
-.option-box strong {
-  font-size: 20px;
-  font-weight: 800;
-  color: #cc0000;
-}
-
-.card-book-btn {
-  width: 100%;
-  padding: 13px;
-  border: none;
-  border-radius: 10px;
-  background: #cc0000;
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  transition: background 0.2s;
-}
-
-.card-book-btn:hover {
-  background: #aa0000;
-}
-
-.card-details-btn {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  background: white;
-  color: #555;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.card-details-btn:hover {
-  border-color: #cc0000;
-  color: #cc0000;
-}
-
-/* ── Additions to coursecard.css ──────────────────────────── */
-
-/* Image placeholder when no thumbnail */
-.card-img-ph {
-  width: 100%; height: 200px;
+.hcc-img-ph {
+  width: 100%; height: 100%; min-height: 240px;
   background: #FDEDEC;
   display: flex; align-items: center; justify-content: center;
-  font-size: 48px;
+  font-size: 56px;
 }
 
-/* Option box — clickable button style */
-.option-box {
-  flex: 1;
-  background: #f4f6fa;
-  border-radius: 10px;
-  padding: 12px;
-  text-align: center;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.18s;
-}
-.option-box:hover { border-color: #cc0000; background: #fff; }
-
-/* Active selected option */
-.option-active {
-  border-color: #cc0000 !important;
-  background: #fff8f8 !important;
+/* Duration badge — top right of image */
+.hcc-duration {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(0,0,0,0.68); color: white;
+  font-size: 13px; font-weight: 700;
+  padding: 5px 13px; border-radius: 8px;
 }
 
-/* Book button "added" state */
-.card-book-btn--added {
-  background: #2E7D32 !important;
-  cursor: default;
-}
-.card-book-btn--added:hover { background: #2E7D32 !important; }
-
-/* browser.css skeleton additions */
-.cat-tab-skel {
-  height: 42px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.12);
-  animation: skel-pulse 1.4s ease-in-out infinite;
+/* Category badge — bottom left of image */
+.hcc-cat-badge {
+  position: absolute; bottom: 14px; left: 14px;
+  background: #cc0000; color: white;
+  font-size: 12px; font-weight: 700;
+  padding: 5px 13px; border-radius: 7px;
+  text-transform: uppercase; letter-spacing: 0.5px;
 }
 
-.course-card-skel {
-  background: #fff;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-
-.course-card-skel-img {
-  height: 200px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-}
-
-.course-card-skel-body {
-  padding: 20px;
+/* ── Right: Body ──────────────────────────────────────────── */
+.hcc-body {
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
+  min-width: 0;
 }
 
+/* Price row */
+.hcc-price-row {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.hcc-price    { font-size: 28px; font-weight: 900; color: #cc0000; }
+.hcc-original { font-size: 15px; color: #aaa; text-decoration: line-through; }
+.hcc-save {
+  background: #e8f5e9; color: #2e7d32;
+  font-size: 12px; font-weight: 700;
+  padding: 3px 9px; border-radius: 6px;
+}
+
+/* Code */
+.hcc-code {
+  font-size: 12px; color: #cc0000;
+  font-weight: 700; letter-spacing: 0.4px;
+}
+
+/* Title */
+.hcc-title {
+  font-size: 17px; font-weight: 800;
+  color: #111827; line-height: 1.3;
+}
+
+/* Description */
+.hcc-desc {
+  font-size: 13px; color: #666; line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Meta */
+.hcc-meta {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.hcc-meta span {
+  font-size: 13px; color: #555;
+  display: flex; align-items: center; gap: 6px;
+}
+.hcc-icon { font-size: 14px; }
+
+/* Option boxes */
+.hcc-select-label {
+  font-size: 12px; color: #cc0000;
+  font-weight: 800; letter-spacing: 1.2px;
+  margin-top: 4px;
+}
+.hcc-options { display: flex; gap: 8px; }
+.hcc-option {
+  min-width: 90px; max-width: 140px;
+  border: 2px solid #e8e8e8; border-radius: 10px;
+  padding: 8px 12px; text-align: center;
+  background: #fafafa;
+}
+.hcc-option-active { border-color: #cc0000; background: #fff8f8; }
+.hcc-option p      { font-size: 11px; color: #888; margin-bottom: 4px; }
+.hcc-option strong { font-size: 15px; font-weight: 800; color: #111827; }
+.hcc-option-active strong { color: #cc0000; }
+
+/* Action row */
+.hcc-actions {
+  display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; margin-top: 4px;
+}
+.hcc-book-btn {
+  background: #cc0000; color: white;
+  border: none; padding: 12px 28px;
+  border-radius: 10px; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+.hcc-book-btn:hover { background: #aa0000; }
+
+.hcc-checkout-btn {
+  background: #cc0000; color: white;
+  border: none; padding: 12px 22px;
+  border-radius: 10px; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+.hcc-checkout-btn:hover { background: #aa0000; }
+
+.hcc-details-btn {
+  background: transparent; color: #444;
+  border: 2px solid #d0d0d0; padding: 12px 24px;
+  border-radius: 10px; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.hcc-details-btn:hover { border-color: #cc0000; color: #cc0000; }
+
+/* Qty controls */
+.hcc-qty-controls {
+  display: flex; align-items: center;
+  border: 2px solid #cc0000; border-radius: 10px;
+  overflow: hidden; height: 46px;
+}
+.hcc-qty-btn {
+  width: 42px; height: 100%;
+  background: #cc0000; color: white;
+  border: none; font-size: 20px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.hcc-qty-btn:hover { background: #aa0000; }
+.hcc-qty-num {
+  min-width: 40px; text-align: center;
+  font-size: 17px; font-weight: 800; color: #cc0000;
+  background: white; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .hcc-card { grid-template-columns: 1fr; }
+  .hcc-img-wrap img, .hcc-img-ph { min-height: 200px; }
+}
+
+/* ── Shared utilities used by BrowserCourses skeleton ─────── */
+.cat-tab-skel {
+  height: 42px; border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  animation: skel-pulse 1.4s ease-in-out infinite;
+  min-width: 120px;
+}
+.course-card-skel {
+  background: #fff; border-radius: 18px;
+  overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  display: grid; grid-template-columns: 260px 1fr;
+  min-height: 240px;
+}
+.course-card-skel-img {
+  background: linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%);
+  background-size: 200% 100%; animation: shimmer 1.4s infinite;
+}
+.course-card-skel-body {
+  padding: 24px 28px; display: flex;
+  flex-direction: column; gap: 14px; justify-content: center;
+}
 .skel-line {
-  height: 13px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
+  height: 13px; border-radius: 6px;
+  background: linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%);
+  background-size: 200% 100%; animation: shimmer 1.4s infinite;
 }
-
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
 @keyframes skel-pulse {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
+  0%,100% { opacity: 0.5; }
+  50%     { opacity: 1; }
 }
-
-/* browse error */
 .browse-error {
   background: #FFF5F5; border: 1px solid #FECACA;
   border-radius: 10px; padding: 14px 20px;
@@ -269,118 +227,19 @@
   gap: 12px; margin-bottom: 24px;
 }
 .browse-error button {
-  background: #cc0000; color: #fff;
-  border: none; padding: 6px 14px;
-  border-radius: 6px; cursor: pointer; font-size: 13px;
+  background: #cc0000; color: #fff; border: none;
+  padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
 }
-
-/* Navbar cart button */
 .nav-cart-btn {
-  position: relative;
-  display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px;
-  background: #f4f6f8; border: 1px solid #e8e8e8;
-  border-radius: 10px; color: #333;
-  text-decoration: none; transition: all 0.2s;
-  flex-shrink: 0;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; background: #f4f6f8; border: 1px solid #e8e8e8;
+  border-radius: 10px; color: #333; text-decoration: none; transition: all 0.2s; flex-shrink: 0;
 }
 .nav-cart-btn:hover { background: #cc0000; color: #fff; border-color: #cc0000; }
-
 .nav-cart-badge {
-  position: absolute;
-  top: -7px; right: -7px;
-  background: #cc0000; color: #fff;
-  font-size: 10px; font-weight: 800;
-  width: 18px; height: 18px;
-  border-radius: 50%;
+  position: absolute; top: -7px; right: -7px;
+  background: #cc0000; color: #fff; font-size: 10px; font-weight: 800;
+  width: 18px; height: 18px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   border: 2px solid #fff;
 }
-
-@media (max-width: 1024px) {
-  .course-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .course-grid { grid-template-columns: 1fr; }
-}
-/* ── Qty Controls (replaces Book Now when in cart) ─────────── */
-.card-qty-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 2px solid #cc0000;
-  height: 46px;
-}
-
-.card-qty-btn {
-  flex: 1;
-  height: 100%;
-  background: #cc0000;
-  color: white;
-  border: none;
-  font-size: 22px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-.card-qty-btn:hover { background: #aa0000; }
-.card-qty-minus { border-radius: 0; }
-.card-qty-plus  { border-radius: 0; }
-
-.card-qty-num {
-  flex: 1;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  color: #cc0000;
-  background: white;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-}
-
-/* ── Buy buttons (shown after qty stepper) ─────────────────── */
-
-.card-buy-row {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-bottom: 8px;
-}
-
-.card-buy-btn {
-  width: 100%;
-  padding: 11px 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
-  letter-spacing: 0.01em;
-}
-.card-buy-btn:hover  { transform: translateY(-1px); }
-.card-buy-btn:active { transform: translateY(0); }
-
-.card-buy-std {
-  background: #cc0000;
-  color: #fff;
-}
-.card-buy-std:hover { background: #aa0000; }
-
-.card-buy-voc {
-  background: #fff;
-  color: #cc0000;
-  border: 2px solid #cc0000;
-}
-.card-buy-voc:hover { background: #fff5f5; }

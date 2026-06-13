@@ -1,0 +1,148 @@
+/* ═══════════════════════════════════════════════════════════
+   COURSES PAGE CARD — vertical portrait card (3-col grid)
+   ═══════════════════════════════════════════════════════════ */
+
+.cpc-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border: 1px solid #f0f0f0;
+}
+.cpc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+}
+
+/* Image */
+.cpc-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.cpc-img-wrap img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.cpc-card:hover .cpc-img-wrap img { transform: scale(1.04); }
+.cpc-img-ph {
+  width: 100%; height: 200px;
+  background: #FDEDEC;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+.cpc-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: #cc0000; color: white;
+  font-size: 12px; font-weight: 700;
+  padding: 4px 10px; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.cpc-duration {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(0,0,0,0.65); color: white;
+  font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 6px;
+}
+
+/* Body */
+.cpc-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cpc-price-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 2px;
+}
+.cpc-price  { font-size: 26px; font-weight: 800; color: #111827; }
+.cpc-original { font-size: 14px; color: #999; text-decoration: line-through; }
+.cpc-save {
+  background: #e8f5e9; color: #2e7d32;
+  font-size: 12px; font-weight: 700;
+  padding: 3px 8px; border-radius: 6px;
+}
+
+.cpc-code { font-size: 12px; color: #cc0000; font-weight: 700; letter-spacing: 0.5px; }
+
+.cpc-title { font-size: 15px; font-weight: 700; color: #111827; line-height: 1.4; }
+
+.cpc-meta { display: flex; flex-direction: column; gap: 4px; }
+.cpc-meta span { font-size: 13px; color: #666; }
+
+.cpc-select-label {
+  font-size: 12px; color: #cc0000; font-weight: 700;
+  letter-spacing: 1px; margin-top: 4px;
+}
+
+.cpc-options { display: flex; gap: 10px; margin-bottom: 4px; }
+.cpc-option {
+  flex: 1; background: #f4f6fa; border-radius: 10px;
+  padding: 12px; text-align: center;
+  border: 2px solid transparent;
+}
+.cpc-option-active { border-color: #cc0000; background: #fff8f8; }
+.cpc-option p     { font-size: 12px; color: #777; margin-bottom: 4px; }
+.cpc-option strong { font-size: 20px; font-weight: 800; color: #cc0000; }
+
+.cpc-book-btn {
+  width: 100%; padding: 13px;
+  border: none; border-radius: 10px;
+  background: #cc0000; color: white;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s;
+  margin-top: auto;
+}
+.cpc-book-btn:hover { background: #aa0000; }
+
+.cpc-details-btn {
+  width: 100%; padding: 11px;
+  border: 1px solid #e0e0e0; border-radius: 10px;
+  background: white; color: #555;
+  font-size: 14px; cursor: pointer; transition: all 0.2s;
+  margin-top: 4px;
+}
+.cpc-details-btn:hover { border-color: #cc0000; color: #cc0000; }
+
+/* Qty controls */
+.cpc-qty-controls {
+  display: flex; align-items: center;
+  border: 2px solid #cc0000; border-radius: 10px;
+  overflow: hidden; height: 46px; margin-top: 2px;
+}
+.cpc-qty-btn {
+  flex: 1; height: 100%;
+  background: #cc0000; color: white; border: none;
+  font-size: 22px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.cpc-qty-btn:hover { background: #aa0000; }
+.cpc-qty-num {
+  flex: 1; text-align: center;
+  font-size: 18px; font-weight: 800; color: #cc0000;
+  background: white; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  min-width: 40px;
+}
+
+/* Buy row */
+.cpc-buy-row { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.cpc-buy-btn {
+  width: 100%; padding: 11px 12px;
+  border: none; border-radius: 10px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: background 0.15s;
+}
+.cpc-buy-std { background: #cc0000; color: #fff; }
+.cpc-buy-std:hover { background: #aa0000; }
+.cpc-buy-voc { background: #fff; color: #cc0000; border: 2px solid #cc0000; }
+.cpc-buy-voc:hover { background: #fff5f5; }

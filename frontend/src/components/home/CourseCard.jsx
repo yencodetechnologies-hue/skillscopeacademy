@@ -1,263 +1,3 @@
-
-
-// // import { useState } from 'react'
-// // import { useCart }  from '../Cartcontext'
-// // import './coursecard.css'
-
-// // const CourseCard = ({ course }) => {
-// //   const { addToCart, isInCart } = useCart()
-
-// //   const price      = Number(course.price)      || 0
-// //   const comboPrice = Number(course.comboPrice) || 0
-// //   // derive an "original" (crossed-out) price: 20 % above if not stored
-// //   const origPrice  = Number(course.originalPrice) || (price > 0 ? Math.round(price * 1.2) : 0)
-// //   const saving     = origPrice > price ? origPrice - price : 0
-
-// //   const [selectedOption, setSelectedOption] = useState('Standard')
-
-// //   const displayPrice =
-// //     selectedOption === 'Combo' && comboPrice > 0 ? comboPrice : price
-
-// //   const inCart = isInCart(course._id)
-
-// //   // Parse numeric days from "1 Day" or "3 Days" or course.days
-// //   const days = course.days
-// //     || (course.duration ? parseInt(course.duration, 10) || null : null)
-
-// //   return (
-// //     <div className="course-card">
-
-// //       {/* ── Image ── */}
-// //       <div className="card-img-wrap">
-// //         {course.thumbnail
-// //           ? <img src={course.thumbnail} alt={course.title} loading="lazy"/>
-// //           : <div className="card-img-ph">📖</div>
-// //         }
-// //         <span className="card-badge">{course.category?.name || 'Course'}</span>
-// //         {days && (
-// //           <span className="card-duration">
-// //             {days} {days === 1 ? 'Day' : 'Days'}
-// //           </span>
-// //         )}
-// //       </div>
-
-// //       {/* ── Body ── */}
-// //       <div className="card-body">
-
-// //         {/* Price row */}
-// //         <div className="card-price-row">
-// //           <span className="card-price">${displayPrice.toLocaleString()}</span>
-// //           {saving > 0 && (
-// //             <>
-// //               <span className="card-original">${origPrice.toLocaleString()}</span>
-// //               <span className="card-save">Save ${saving.toLocaleString()}</span>
-// //             </>
-// //           )}
-// //         </div>
-
-// //         {/* Code */}
-// //         {(course.code || course.urlSlug) && (
-// //           <p className="card-code">{course.code || course.urlSlug}</p>
-// //         )}
-
-// //         <h3 className="card-title">{course.title}</h3>
-
-// //         {/* Meta */}
-// //         <div className="card-meta">
-// //           {days             && <span>📅 {days} {days === 1 ? 'Day' : 'Days'}</span>}
-// //           {course.location  && <span>📍 {course.location}</span>}
-// //           {course.instructor && <span>👥 {course.instructor}</span>}
-// //           {course.type      && <span>👥 {course.type}</span>}
-// //         </div>
-
-// //         {/* Select option */}
-// //         <p className="card-select-label">SELECT OPTION</p>
-// //         <div className="card-options">
-// //           {/* Standard — always shown */}
-// //           <button
-// //             className={`option-box${selectedOption === 'Standard' ? ' option-active' : ''}`}
-// //             onClick={() => setSelectedOption('Standard')}
-// //           >
-// //             <p>Standard</p>
-// //             <strong>${price.toLocaleString()}</strong>
-// //           </button>
-
-// //           {/* Combo — only if enabled with a price */}
-// //           {course.comboEnabled && comboPrice > 0 && (
-// //             <button
-// //               className={`option-box${selectedOption === 'Combo' ? ' option-active' : ''}`}
-// //               onClick={() => setSelectedOption('Combo')}
-// //             >
-// //               <p>Combo</p>
-// //               <strong>${comboPrice.toLocaleString()}</strong>
-// //             </button>
-// //           )}
-
-// //           {/* VOC fallback */}
-// //           {(!course.comboEnabled || !comboPrice) && course.vocPrice && (
-// //             <button
-// //               className={`option-box${selectedOption === 'VOC' ? ' option-active' : ''}`}
-// //               onClick={() => setSelectedOption('VOC')}
-// //             >
-// //               <p>VOC</p>
-// //               <strong>${Number(course.vocPrice).toLocaleString()}</strong>
-// //             </button>
-// //           )}
-// //         </div>
-
-// //         {/* Book Now / Added */}
-// //         <button
-// //           className={`card-book-btn${inCart ? ' card-book-btn--added' : ''}`}
-// //           onClick={() => addToCart(course, selectedOption)}
-// //         >
-// //           {inCart ? '✓ Added to Cart' : 'Book Now →'}
-// //         </button>
-
-// //         <button className="card-details-btn">View Details ℹ</button>
-// //       </div>
-// //     </div>
-// //   )
-// // }
-
-// // export default CourseCard;
-
-// import { useNavigate } from 'react-router-dom'
-// import { useCart } from '../Cartcontext'
-// import './coursecard.css'
-
-// const CourseCard = ({ course }) => {
-//   const { addToCart, removeFromCart, increaseQty, decreaseQty, items } = useCart()
-//   const navigate = useNavigate()
-
-//   const price      = Number(course.price)      || 0
-//   const comboPrice = Number(course.comboPrice) || 0
-//   const origPrice  = Number(course.originalPrice) || (price > 0 ? Math.round(price * 1.2) : 0)
-//   const saving     = origPrice > price ? origPrice - price : 0
-
-//   const days = course.days || (course.duration ? parseInt(course.duration, 10) || null : null)
-
-//   // Find this course's cart item (Standard option by default)
-//   const cartItem = items.find(i => i.course._id === course._id && i.option === 'Standard')
-//   const qty = cartItem?.qty || 0
-//   const inCart = qty > 0
-
-//   const handleBookNow = () => {
-//     if (!inCart) {
-//       addToCart(course, 'Standard')
-//     }
-//   }
-
-//   const handleIncrease = (e) => {
-//     e.stopPropagation()
-//     increaseQty(course._id, 'Standard')
-//   }
-
-//   const handleDecrease = (e) => {
-//     e.stopPropagation()
-//     if (qty === 1) {
-//       removeFromCart(course._id, 'Standard')
-//     } else {
-//       decreaseQty(course._id, 'Standard')
-//     }
-//   }
-
-//   const handleViewDetails = () => {
-//     navigate(`/courses/${course._id}`)
-//   }
-
-//   const price2 = comboPrice > 0 ? comboPrice : price
-
-//   return (
-//     <div className="course-card">
-
-//       {/* ── Image ── */}
-//       <div className="card-img-wrap">
-//         {course.thumbnail
-//           ? <img src={course.thumbnail} alt={course.title} loading="lazy" />
-//           : <div className="card-img-ph">📖</div>
-//         }
-//         <span className="card-badge">{course.category?.name || 'Course'}</span>
-//         {days && (
-//           <span className="card-duration">
-//             {days} {days === 1 ? 'Day' : 'Days'}
-//           </span>
-//         )}
-//       </div>
-
-//       {/* ── Body ── */}
-//       <div className="card-body">
-
-//         {/* Price row */}
-//         <div className="card-price-row">
-//           <span className="card-price">${price.toLocaleString()}</span>
-//           {saving > 0 && (
-//             <>
-//               <span className="card-original">${origPrice.toLocaleString()}</span>
-//               <span className="card-save">Save ${saving.toLocaleString()}</span>
-//             </>
-//           )}
-//         </div>
-
-//         {(course.code || course.urlSlug) && (
-//           <p className="card-code">{course.code || course.urlSlug}</p>
-//         )}
-
-//         <h3 className="card-title">{course.title}</h3>
-
-//         <div className="card-meta">
-//           {days              && <span>📅 {days} {days === 1 ? 'Day' : 'Days'}</span>}
-//           {course.instructor && <span>👥 {course.instructor}</span>}
-//           {course.location   && <span>📍 {course.location}</span>}
-//         </div>
-
-//         <p className="card-select-label">SELECT OPTION</p>
-//         <div className="card-options">
-//           <div className="option-box option-active">
-//             <p>Standard</p>
-//             <strong>${price.toLocaleString()}</strong>
-//           </div>
-//           {course.comboEnabled && comboPrice > 0 && (
-//             <div className="option-box">
-//               <p>Combo</p>
-//               <strong>${comboPrice.toLocaleString()}</strong>
-//             </div>
-//           )}
-//           {(!course.comboEnabled || !comboPrice) && course.vocPrice && (
-//             <div className="option-box">
-//               <p>VOC</p>
-//               <strong>${Number(course.vocPrice).toLocaleString()}</strong>
-//             </div>
-//           )}
-//         </div>
-
-//         {/* Book Now / Qty Controls */}
-//         {!inCart ? (
-//           <button className="card-book-btn" onClick={handleBookNow}>
-//             Book Now →
-//           </button>
-//         ) : (
-//           <div className="card-qty-controls">
-//             <button className="card-qty-btn card-qty-minus" onClick={handleDecrease}>
-//               −
-//             </button>
-//             <span className="card-qty-num">{qty}</span>
-//             <button className="card-qty-btn card-qty-plus" onClick={handleIncrease}>
-//               +
-//             </button>
-//           </div>
-//         )}
-
-//         <button className="card-details-btn" onClick={handleViewDetails}>
-//           View Details ℹ
-//         </button>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default CourseCard
-
-
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../Cartcontext'
 import './coursecard.css'
@@ -266,160 +6,122 @@ const CourseCard = ({ course }) => {
   const { addToCart, removeFromCart, increaseQty, decreaseQty, items } = useCart()
   const navigate = useNavigate()
 
-  const price      = Number(course.price)     || 0
-  const vocPrice   = Number(course.vocPrice)  || 150
+  const price      = Number(course.price)      || 0
+  const vocPrice   = Number(course.vocPrice)   || 150
   const comboPrice = Number(course.comboPrice) || 0
   const origPrice  = Number(course.originalPrice) || (price > 0 ? Math.round(price * 1.2) : 0)
   const saving     = origPrice > price ? origPrice - price : 0
+  const days       = course.days || (course.duration ? parseInt(course.duration, 10) || null : null)
 
-  const days = course.days || (course.duration ? parseInt(course.duration, 10) || null : null)
-
-  // Standard cart item for this course
   const cartItemStd = items.find(i => i.course._id === course._id && i.option === 'Standard')
   const qty    = cartItemStd?.qty || 0
   const inCart = qty > 0
 
-  const handleBookNow = () => {
-    if (!inCart) addToCart(course, 'Standard')
-  }
-
-  const handleIncrease = (e) => {
-    e.stopPropagation()
-    increaseQty(course._id, 'Standard')
-  }
-
+  const handleBookNow = (e) => { e.stopPropagation(); if (!inCart) addToCart(course, 'Standard') }
+  const handleIncrease = (e) => { e.stopPropagation(); increaseQty(course._id, 'Standard') }
   const handleDecrease = (e) => {
     e.stopPropagation()
     if (qty === 1) removeFromCart(course._id, 'Standard')
     else           decreaseQty(course._id, 'Standard')
   }
-
-  // Standard → checkout page with course pre-filled
-  const goStandardCheckout = () => {
-    navigate('/checkout', {
-      state: {
-        course,
-        option:  'Standard',
-        qty:     qty > 0 ? qty : 1,
-        price,
-      },
-    })
+  const goCheckout = (e) => {
+    e.stopPropagation()
+    navigate('/checkout', { state: { course, option: 'Standard', qty: qty > 0 ? qty : 1, price } })
+  }
+  const goVoc = (e) => {
+    e.stopPropagation()
+    navigate('/voc', { state: { prefillCourse: { courseId: course._id, title: course.title, price: vocPrice, date: '' } } })
   }
 
-  // VOC → VOC Renewal page with course pre-selected
-  const goVocPage = () => {
-    navigate('/voc', {
-      state: {
-        prefillCourse: {
-          courseId: course._id,
-          title:    course.title,
-          price:    vocPrice,
-          date:     '',
-        },
-      },
-    })
-  }
+  const vocLabel = course.comboEnabled && comboPrice > 0 ? 'Combo' : 'VOC/RPL'
+  const vocAmt   = course.comboEnabled && comboPrice > 0 ? comboPrice : vocPrice
 
   return (
-    <div className="course-card">
-
-      {/* ── Image ── */}
-      <div className="card-img-wrap">
+    <div
+      className="hcc-card"
+      onClick={() => navigate(`/courses/${course._id}`)}
+    >
+      {/* ── LEFT: Image ── */}
+      <div className="hcc-img-wrap">
         {course.thumbnail
           ? <img src={course.thumbnail} alt={course.title} loading="lazy" />
-          : <div className="card-img-ph">📖</div>
+          : <div className="hcc-img-ph">📖</div>
         }
-        <span className="card-badge">{course.category?.name || 'Course'}</span>
-        {days && <span className="card-duration">{days} {days === 1 ? 'Day' : 'Days'}</span>}
+        {days && <span className="hcc-duration">{days} {days === 1 ? 'Day' : 'Days'}</span>}
+        {course.category?.name && (
+          <span className="hcc-cat-badge">{course.category.name}</span>
+        )}
       </div>
 
-      {/* ── Body ── */}
-      <div className="card-body">
+      {/* ── RIGHT: Details ── */}
+      <div className="hcc-body">
 
-        {/* Price row */}
-        <div className="card-price-row">
-          <span className="card-price">${price.toLocaleString()}</span>
+        {/* Price */}
+        <div className="hcc-price-row">
+          <span className="hcc-price">${price.toLocaleString()}</span>
           {saving > 0 && (
             <>
-              <span className="card-original">${origPrice.toLocaleString()}</span>
-              <span className="card-save">Save ${saving.toLocaleString()}</span>
+              <span className="hcc-original">${origPrice.toLocaleString()}</span>
+              <span className="hcc-save">Save ${saving.toLocaleString()}</span>
             </>
           )}
         </div>
 
+        {/* Course code */}
         {(course.code || course.urlSlug) && (
-          <p className="card-code">{course.code || course.urlSlug}</p>
+          <p className="hcc-code">{course.code || course.urlSlug}</p>
         )}
 
-        <h3 className="card-title">{course.title}</h3>
+        {/* Title */}
+        <h3 className="hcc-title">{course.title}</h3>
 
-        <div className="card-meta">
-          {days               && <span>📅 {days} {days === 1 ? 'Day' : 'Days'}</span>}
-          {course.instructor  && <span>👥 {course.instructor}</span>}
-          {course.location    && <span>📍 {course.location}</span>}
+        {/* Description */}
+        {course.description && (
+          <p className="hcc-desc">{course.description}</p>
+        )}
+
+        {/* Meta */}
+        <div className="hcc-meta">
+          {days               && <span><span className="hcc-icon">📅</span>{days} {days === 1 ? 'Day' : 'Days'}</span>}
+          {course.location    && <span><span className="hcc-icon">📍</span>{course.location}</span>}
+          {course.instructor  && <span><span className="hcc-icon">👥</span>{course.instructor}</span>}
         </div>
 
         {/* Option boxes */}
-        <p className="card-select-label">SELECT OPTION</p>
-        <div className="card-options">
-          <div className="option-box option-active">
+        <p className="hcc-select-label">SELECT OPTION</p>
+        <div className="hcc-options" onClick={e => e.stopPropagation()}>
+          <div className="hcc-option hcc-option-active">
             <p>Standard</p>
             <strong>${price.toLocaleString()}</strong>
           </div>
-          {course.comboEnabled && comboPrice > 0 ? (
-            <div className="option-box">
-              <p>Combo</p>
-              <strong>${comboPrice.toLocaleString()}</strong>
-            </div>
-          ) : (
-            <div className="option-box">
-              <p>VOC</p>
-              <strong>${vocPrice.toLocaleString()}</strong>
-            </div>
-          )}
+          <div className="hcc-option">
+            <p>{vocLabel}</p>
+            <strong>${vocAmt.toLocaleString()}</strong>
+          </div>
         </div>
 
-        {/* Book Now → qty stepper → buy buttons */}
-        {!inCart ? (
-          <button className="card-book-btn" onClick={handleBookNow}>
-            Book Now →
+        {/* Actions */}
+        <div className="hcc-actions" onClick={e => e.stopPropagation()}>
+          {!inCart ? (
+            <button className="hcc-book-btn" onClick={handleBookNow}>Book Now →</button>
+          ) : (
+            <>
+              <div className="hcc-qty-controls">
+                <button className="hcc-qty-btn" onClick={handleDecrease}>−</button>
+                <span className="hcc-qty-num">{qty}</span>
+                <button className="hcc-qty-btn" onClick={handleIncrease}>+</button>
+              </div>
+              <button className="hcc-checkout-btn" onClick={goCheckout}>Checkout →</button>
+            </>
+          )}
+          <button
+            className="hcc-details-btn"
+            onClick={e => { e.stopPropagation(); navigate(`/courses/${course._id}`) }}
+          >
+            Details
           </button>
-        ) : (
-          <>
-            {/* Qty stepper */}
-            <div className="card-qty-controls">
-              <button className="card-qty-btn card-qty-minus" onClick={handleDecrease}>−</button>
-              <span className="card-qty-num">{qty}</span>
-              <button className="card-qty-btn card-qty-plus" onClick={handleIncrease}>+</button>
-            </div>
+        </div>
 
-            {/* Buy buttons */}
-            <div className="card-buy-row">
-              {/* Standard → /checkout */}
-              <button
-                className="card-buy-btn card-buy-std"
-                onClick={goStandardCheckout}
-              >
-                Buy Standard — ${price.toLocaleString()}
-              </button>
-
-              {/* VOC → /voc page */}
-              <button
-                className="card-buy-btn card-buy-voc"
-                onClick={goVocPage}
-              >
-                Buy VOC — ${vocPrice.toLocaleString()}
-              </button>
-            </div>
-          </>
-        )}
-
-        <button
-          className="card-details-btn"
-          onClick={() => navigate(`/courses/${course._id}`)}
-        >
-          View Details ℹ
-        </button>
       </div>
     </div>
   )

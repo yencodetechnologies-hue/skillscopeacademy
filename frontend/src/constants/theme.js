@@ -4,10 +4,10 @@
  */
 export const colors = {
   brandPrimary: '#F5A623',
-  brandAccent: '#F57C00',
+  brandAccent: '#00796B',
   brandDark: '#0a1d33',
   brandPrimaryHover: '#D4920E',
-  brandAccentHover: '#E65100',
+  brandAccentHover: '#00695C',
   brandLight: '#FFF4D6',
   brandTint: '#FFF8E7',
   brandOnPrimary: '#1a1d2e',
@@ -26,10 +26,10 @@ export const colors = {
   warning: '#ca8a04',
   warningBg: '#fef9c3',
   warningAlt: '#f59e0b',
-  info: '#F57C00',
-  infoBg: '#FFF3E0',
-  infoHover: '#E65100',
-  infoBorder: '#FFCC80',
+  info: '#00796B',
+  infoBg: '#E0F2F1',
+  infoHover: '#00695C',
+  infoBorder: '#80CBC4',
   orange: '#f97316',
 
   navyDeep: '#0d2240',
@@ -62,7 +62,7 @@ export const colors = {
   bgSubtle: '#fafafa',
   bgPanel: '#f0f0f0',
 
-  cyanAccent: '#F57C00',
+  cyanAccent: '#00796B',
   linkMuted: '#4a7096',
   skyLight: '#bae0f7',
   skyWash: '#e8f4fd',

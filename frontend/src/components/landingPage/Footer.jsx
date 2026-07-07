@@ -128,9 +128,9 @@ function Footer({ courses }) {
                             <span>3/14-16 Marjorie Street, Sefton NSW 2162</span>
                         </div>
                         <div className="footer-contact-item">
-                            <a href="mailto:info@safetytrainingacademy.edu.au" style={{ color: "inherit", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px" }}>
+                            <a href="mailto:info@safetricks.com.au" style={{ color: "inherit", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px" }}>
                                 <i className="fa-solid fa-envelope" />
-                                <span>info@safetytrainingacademy.edu.au</span>
+                                <span>info@safetricks.com.au</span>
                             </a>
                         </div>
                         <div className="footer-contact-item">
@@ -224,8 +224,8 @@ function Footer({ courses }) {
 
             <div className="footer-bottom">
                 <span className="footer-bottom-text">
-                    © 2024 Safety Training Academy. All rights reserved.
-                    ABN 45234 · safetytrainingacademy.edu.au
+                    © 2024 SafeTricks. All rights reserved.
+                    ABN 45234 · safetricks.com.au
                 </span>
                 <div className="footer-rto-badge">RTO #45234</div>
             </div>

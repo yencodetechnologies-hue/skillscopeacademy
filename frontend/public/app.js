@@ -372,7 +372,7 @@ function renderQualificationCertificates(qual) {
             </table>
 
             <div class="footerCompany">
-                Australian International Education and Training Pty Ltd Trading as Safety Training Academy<br/>
+                Australian International Education and Training Pty Ltd Trading as SafeTricks<br/>
                 14- 16 Marjorie Street Sefton NSW 2162 &nbsp;--&nbsp; Ph: 1300 976 097
             </div>
             <div class="footerHr"></div>

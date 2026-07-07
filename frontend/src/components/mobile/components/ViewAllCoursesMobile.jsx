@@ -104,7 +104,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
 
       {/* ── Top Bar ── */}
       <div className="vac-topbar">
-        <span className="vac-logo-text">Safety Training Academy</span>
+        <span className="vac-logo-text">SafeTricks</span>
         <a href={ORG_PHONE_1300.tel} className="vac-topbar-phone">☎ Call Now</a>
       </div>
 

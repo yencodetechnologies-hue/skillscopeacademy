@@ -122,7 +122,7 @@ import Footer from './landingPage/Footer';
 import { API_URL } from '../data/service';
 import { openPdf } from '../utils/openPdf';
 import { cdnImage } from '../utils/cdnImage';
-import logo from '../assets/SafetyTrainingAcademylogo.png';
+import logo from '../assets/SafeTrickslogo.png';
 import '../styles/PublicForms.css';
 
 export default function PublicForms({ courses }) {
@@ -192,7 +192,7 @@ export default function PublicForms({ courses }) {
                         <img src={cdnImage(doc.bannerImage, { w: 500 })} alt={doc.title} />
                       ) : (
                         <div className="pf-handbook-fallback">
-                          <img src={logo} alt="Safety Training Academy" className="pf-handbook-logo" />
+                          <img src={logo} alt="SafeTricks" className="pf-handbook-logo" />
                         </div>
                       )}
                     </div>

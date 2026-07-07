@@ -59,7 +59,7 @@ export function formatTrustReviewsLine(rating, total) {
  */
 export function useGoogleReviews() {
   const [reviews, setReviews] = useState(FALLBACK_REVIEWS_SECTION);
-  const [placeName, setPlaceName] = useState("Safety Training Academy");
+  const [placeName, setPlaceName] = useState("SafeTricks");
   const [placeRating, setPlaceRating] = useState(5);
   const [userRatingsTotal, setUserRatingsTotal] = useState(null);
   const [loading, setLoading] = useState(true);

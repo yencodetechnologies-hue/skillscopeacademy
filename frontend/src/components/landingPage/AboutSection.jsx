@@ -20,7 +20,7 @@
 //                     <h2>About Us</h2>
 
 //                     <p>
-//                         Safety Training Academy is a Registered Training Organization specializing in
+//                         SafeTricks is a Registered Training Organization specializing in
 //                         Training and Assessing of High-Risk Licencing under the National Standard.
 //                     </p>
 
@@ -115,7 +115,7 @@ function AboutSection() {
             Number.isFinite(total) && total > 0
                 ? total.toLocaleString("en-AU")
                 : "1,000+"
-        return `Safety Training Academy has been delivering nationally recognised workplace safety training since 2019. Over ${count} five-star reviews — and certificate same day.`
+        return `SafeTricks has been delivering nationally recognised workplace safety training since 2019. Over ${count} five-star reviews — and certificate same day.`
     }, [userRatingsTotal])
 
     const reviews = useMemo(() => {

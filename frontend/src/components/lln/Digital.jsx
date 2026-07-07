@@ -17,7 +17,7 @@ import iphone       from "../../assets/phone.png"
 import photoCopier  from "../../assets/photocopier.jpg"
 import laptop       from "../../assets/laptop.jpg"
 import barCode      from "../../assets/barcode-scanner.jpg"
-import logo        from "../../assets/SafetyTrainingAcademylogo.png"
+import logo        from "../../assets/SafeTrickslogo.png"
 
 const digitalQuestions = [
     { type: "drag-files"  },
@@ -150,7 +150,7 @@ function Digital({ next }) {
             Object.keys(correctLabels).forEach(key => {
                 if (labelDrop[key] === correctLabels[key]) score++
             })
-            if (url.trim() === "https://safetytrainingacademy.edu.au") score++
+            if (url.trim() === "https://safetricks.com.au") score++
 
             const formattedAnswers = {}
             fileDrop.checklist.forEach((f, i) => { formattedAnswers[`0-${i}`]     = f.type })

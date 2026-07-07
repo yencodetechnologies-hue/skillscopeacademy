@@ -333,9 +333,9 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                     </div>
                     <div className="s5-policy-item s5-contact-block">
                         <h5>Contact information</h5>
-                        <p>Safety Training Academy — Maria Hajjar</p>
+                        <p>SafeTricks — Maria Hajjar</p>
                         <p>0439 007 746</p>
-                        <p>maria@safetytrainingacademy.edu.au</p>
+                        <p>maria@safetricks.com.au</p>
                     </div>
                 </div>
             </div>

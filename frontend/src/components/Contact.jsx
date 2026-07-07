@@ -82,12 +82,12 @@ function ContactPage() {
                             </div>
                         </div>
 
-                        <a href="mailto:info@safetytrainingacademy.edu.au" className="cp-contact-card" style={{ textDecoration: "none", color: "inherit" }}>
+                        <a href="mailto:info@safetricks.com.au" className="cp-contact-card" style={{ textDecoration: "none", color: "inherit" }}>
                             <div className="cp-contact-card-icon cp-icon-blue">✉️</div>
                             <div>
                                 <p className="cp-contact-card-label">Our Email</p>
                                 <span className="cp-contact-card-link">
-                                    info@safetytrainingacademy.edu.au
+                                    info@safetricks.com.au
                                 </span>
                             </div>
                         </a>
@@ -114,7 +114,7 @@ function ContactPage() {
                         </div>
 
                         <div className="cp-address-block">
-                            <p className="cp-address-name">Safety Training Academy | Sydney</p>
+                            <p className="cp-address-name">SafeTricks | Sydney</p>
                             <p className="cp-address-line">3/14-16 Marjorie Street, Sefton NSW 2162</p>
                             <a
                                 href="https://maps.google.com/?q=3/14-16+Marjorie+Street+Sefton+NSW+2162"

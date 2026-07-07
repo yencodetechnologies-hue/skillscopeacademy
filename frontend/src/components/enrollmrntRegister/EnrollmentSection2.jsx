@@ -200,7 +200,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                             htmlFor="usi-permission" 
                             className={`usi-permission-text ${errors.includes("usiPermission") ? "usi-label-error" : ""}`}
                         >
-                            I give permission for Safety Training Academy to access my Unique Student
+                            I give permission for SafeTricks to access my Unique Student
                             Identifier (USI) for the purpose of recording my results. <span className="usi-required">*</span>
                         </label>
                     </div>
@@ -252,7 +252,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                     </p>
 
                     <div className="usi-field">
-                        <label className={`${errors.includes("staAuthoriseName") ? "usi-label-error" : ""}`}>[Name] — authorises Safety Training Academy to apply your USI *</label>
+                        <label className={`${errors.includes("staAuthoriseName") ? "usi-label-error" : ""}`}>[Name] — authorises SafeTricks to apply your USI *</label>
                         <input
                             id="usi-staAuthoriseName"
                             className={`usi-input ${errors.includes("staAuthoriseName") ? "usi-input-error" : ""}`}

@@ -48,7 +48,7 @@ const navigate = useNavigate()
                     <h2>Course Enrolment</h2>
 
                     <p>
-                        To enrol for a Course with Safety Training Academy,
+                        To enrol for a Course with SafeTricks,
                         please complete our online Enrolment form via the button below:
                     </p>
 

@@ -17,7 +17,7 @@ import { colors } from '../constants/theme';
 //     getCoursePriceNumber,
 // } from "../utils/coursePrice"
 // import BookingModal from "../components/course/BookingModal"
-// import logo from "../assets/SafetyTrainingAcademylogo.png"
+// import logo from "../assets/SafeTrickslogo.png"
 // import PdfViewer from '../components/common/PdfViewer';
 // import { useGoogleReviews, shortAuthorName, getReviewDisplayText, GOOGLE_REVIEWS_MAX } from "../hooks/useGoogleReviews"
 // import { FALLBACK_COURSE_REVIEWS } from "../data/reviewsFallback"
@@ -169,9 +169,9 @@ import { colors } from '../constants/theme';
 //     useEffect(() => {
 //         if (!course) return
 
-//         const defaultTitle = "Safety Training Academy | Sydney NSW"
+//         const defaultTitle = "SafeTricks | Sydney NSW"
 //         const defaultDesc =
-//             "Safety Training Academy — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
+//             "SafeTricks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
 
 //         const prevTitle = document.title
 //         const metaEl = document.querySelector('meta[name="description"]')
@@ -742,7 +742,7 @@ import { colors } from '../constants/theme';
 //                             <div>
 //                                 <div className="cdp-stars">★★★★★</div>
 //                                 <div className="cdp-rating-count">{reviewCountLabel}</div>
-//                                 <div className="cdp-rating-site">safetytrainingacademy.edu.au</div>
+//                                 <div className="cdp-rating-site">safetricks.com.au</div>
 //                             </div>
 //                         </div>
 //                         <div className="cdp-review-grid">
@@ -834,8 +834,8 @@ import { colors } from '../constants/theme';
 //                             Our team can answer questions about course suitability, dates, and group bookings.
 //                         </p>
 //                         <a href={ORG_PHONE_1300.tel} className="cdp-sb-btn-cyan">☎ {ORG_PHONE_1300.display}</a>
-//                         <a href="mailto:info@safetytrainingacademy.edu.au" className="cdp-sb-btn-ghost">✉ Email us</a>
-//                         <div className="cdp-sb-email">info@safetytrainingacademy.edu.au</div>
+//                         <a href="mailto:info@safetricks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
+//                         <div className="cdp-sb-email">info@safetricks.com.au</div>
 //                     </div>
 
 //                 </div>
@@ -925,7 +925,7 @@ import {
     getCoursePriceNumber,
 } from "../utils/coursePrice"
 import BookingModal from "../components/course/BookingModal"
-import logo from "../assets/SafetyTrainingAcademylogo.png"
+import logo from "../assets/SafeTrickslogo.png"
 import PdfViewer from '../components/common/PdfViewer';
 import { useGoogleReviews, shortAuthorName, getReviewDisplayText, GOOGLE_REVIEWS_MAX } from "../hooks/useGoogleReviews"
 import { FALLBACK_COURSE_REVIEWS } from "../data/reviewsFallback"
@@ -1139,9 +1139,9 @@ const handleViewPDF = (pdfUrl) => {
     useEffect(() => {
         if (!course) return
 
-        const defaultTitle = "Safety Training Academy | Sydney NSW"
+        const defaultTitle = "SafeTricks | Sydney NSW"
         const defaultDesc =
-            "Safety Training Academy — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
+            "SafeTricks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
 
         const prevTitle = document.title
         const metaEl = document.querySelector('meta[name="description"]')
@@ -1769,7 +1769,7 @@ const handleViewPDF = (pdfUrl) => {
                             <div>
                                 <div className="cdp-stars">★★★★★</div>
                                 <div className="cdp-rating-count">{reviewCountLabel}</div>
-                                <div className="cdp-rating-site">safetytrainingacademy.edu.au</div>
+                                <div className="cdp-rating-site">safetricks.com.au</div>
                             </div>
                         </div>
                         <div className="cdp-review-grid">
@@ -1862,8 +1862,8 @@ const handleViewPDF = (pdfUrl) => {
                             Our team can answer questions about course suitability, dates, and group bookings.
                         </p>
                         <a href={ORG_PHONE_1300.tel} className="cdp-sb-btn-cyan">☎ {ORG_PHONE_1300.display}</a>
-                        <a href="mailto:info@safetytrainingacademy.edu.au" className="cdp-sb-btn-ghost">✉ Email us</a>
-                        <div className="cdp-sb-email">info@safetytrainingacademy.edu.au</div>
+                        <a href="mailto:info@safetricks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
+                        <div className="cdp-sb-email">info@safetricks.com.au</div>
                     </div>
 
                 </div>

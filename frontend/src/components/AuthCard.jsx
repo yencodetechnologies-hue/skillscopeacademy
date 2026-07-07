@@ -7,7 +7,7 @@ function AuthCard() {
 
       <div className="brand">
         <div className="brand-icon"><i className="fa-solid fa-graduation-cap"></i></div>
-        <span className="brand-name">Safety Training Academy</span>
+        <span className="brand-name">SafeTricks</span>
       </div>
 
       <h1>

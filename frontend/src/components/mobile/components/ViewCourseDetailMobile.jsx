@@ -13,7 +13,7 @@ import {
 } from "../../../utils/coursePrice";
 import BookingModal from "../../course/BookingModal";
 import { ORG_PHONE_1300 } from "../../../utils/organizationPhones";
-import logo from "../../../assets/SafetyTrainingAcademylogo.png";
+import logo from "../../../assets/SafeTrickslogo.png";
 import PdfViewer from "../../common/PdfViewer";
 import { useGoogleReviews, shortAuthorName, getReviewDisplayText, GOOGLE_REVIEWS_MAX } from "../../../hooks/useGoogleReviews";
 import { FALLBACK_MOBILE_REVIEWS } from "../../../data/reviewsFallback";

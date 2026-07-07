@@ -203,7 +203,7 @@ function Hero() {
             <div className="hero-card-divider"></div>
           </div>
           <p>
-            To enrol for a Course with Safety Training Academy, please complete our online
+            To enrol for a Course with SafeTricks, please complete our online
             Enrolment form via the button below:
           </p>
           <button className="enrol-btn" onClick={() => navigate("/book-now")}>

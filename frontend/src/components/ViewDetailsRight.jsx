@@ -123,7 +123,7 @@ function ViewDetailsRight({ course }) {
                 <a href={ORG_PHONE_1300.tel} style={{ textDecoration: "none" }}>
                     <button className="help-btn">📞 Call: {ORG_PHONE_1300.display}</button>
                 </a>
-                <a href="mailto:info@safetytrainingacademy.edu.au" style={{ textDecoration: "none" }}>
+                <a href="mailto:info@safetricks.com.au" style={{ textDecoration: "none" }}>
                     <button className="email-btn">✉ Email Support</button>
                 </a>
 

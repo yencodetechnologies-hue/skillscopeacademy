@@ -185,7 +185,7 @@ function LLNDAssessment(props) {
         })
 
         // URL → 1
-        if (answers.digital["2"] === "https://safetytrainingacademy.edu.au") {
+        if (answers.digital["2"] === "https://safetricks.com.au") {
             digiCorrect++
         }
 

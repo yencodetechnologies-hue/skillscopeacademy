@@ -6,13 +6,13 @@
 :root {
   /* Brand */
   --color-brand-primary: #F5A623;
-  --color-brand-accent: #F57C00;
+  --color-brand-accent: #00796B;
   --color-brand-dark: #0a1d33;
   --color-brand-primary-hover: #D4920E;
   --color-brand-light: #FFF4D6;
   --color-brand-tint: #FFF8E7;
   --color-brand-on-primary: #1a1d2e;
-  --color-brand-accent-hover: #E65100;
+  --color-brand-accent-hover: #00695C;
 
   /* Semantic */
   --color-success: #16a34a;
@@ -24,10 +24,10 @@
   --color-warning: #ca8a04;
   --color-warning-bg: #fef9c3;
   --color-warning-alt: #f59e0b;
-  --color-info: #F57C00;
-  --color-info-bg: #FFF3E0;
-  --color-info-hover: #E65100;
-  --color-info-border: #FFCC80;
+  --color-info: #00796B;
+  --color-info-bg: #E0F2F1;
+  --color-info-hover: #00695C;
+  --color-info-border: #80CBC4;
   --color-orange: #f97316;
 
   /* Extended palette (site-wide hardcoded colors consolidated here) */

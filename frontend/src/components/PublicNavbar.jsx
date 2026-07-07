@@ -1,7 +1,7 @@
 
 
 // import "../styles/PublicNavbar.css";
-// import logo from "../assets/SafetyTrainingAcademylogo.png";
+// import logo from "../assets/SafeTrickslogo.png";
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState, useEffect, useRef } from "react";
 // import { API_URL } from "../data/service";
@@ -107,7 +107,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="Safety Training Academy Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -264,7 +264,7 @@
 // export default PublicNavbar;
 
 // import "../styles/PublicNavbar.css";
-// import logo from "../assets/SafetyTrainingAcademylogo.png";
+// import logo from "../assets/SafeTrickslogo.png";
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState, useEffect } from "react";
 // import { API_URL } from "../data/service";
@@ -329,7 +329,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="Safety Training Academy Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -461,7 +461,7 @@
 // export default PublicNavbar;
 
 // import "../styles/PublicNavbar.css";
-// import logo from "../assets/SafetyTrainingAcademylogo.png";
+// import logo from "../assets/SafeTrickslogo.png";
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState, useEffect } from "react";
 // import { API_URL } from "../data/service";
@@ -555,7 +555,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="Safety Training Academy Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -711,7 +711,7 @@
 // export default PublicNavbar;
 
 // import "../styles/PublicNavbar.css";
-// import logo from "../assets/SafetyTrainingAcademylogo.png";
+// import logo from "../assets/SafeTrickslogo.png";
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState, useEffect } from "react";
 // import { API_URL } from "../data/service";
@@ -776,7 +776,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="Safety Training Academy Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -908,7 +908,7 @@
 // export default PublicNavbar;
 
 import "../styles/PublicNavbar.css";
-import logo from "../assets/SafetyTrainingAcademylogo.png";
+import logo from "../assets/SafeTrickslogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { API_URL } from "../data/service";
@@ -1015,7 +1015,7 @@ const handleOpenCop = (doc) => {
 
           {/* LOGO */}
           <div className="navbar-logo">
-            <img src={logo} alt="Safety Training Academy Logo"  onClick={() => navigate("/")} />
+            <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
           </div>
 
           {/* DESKTOP NAV LINKS */}

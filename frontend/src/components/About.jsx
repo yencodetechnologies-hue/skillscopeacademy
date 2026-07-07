@@ -19,7 +19,7 @@ const COURSES_LIST = [
 ]
 
 const WHY_ITEMS = [
-    { color: colors.brandAccent, icon: "✦", text: <><strong className="ab-cyan">Safety Training Academy training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
+    { color: colors.brandAccent, icon: "✦", text: <><strong className="ab-cyan">SafeTricks training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
     { color: colors.info, icon: "🎖", text: <>Our trainers have been in the industry for several years, and they are committed, experienced, and extremely qualified in the specific area in which they choose to train and assess.</> },
     { color: "#22c55e", icon: "🛡", text: <><strong>The safety of every student is so important to us</strong> that why we make it our priority. We are located in a well-organized area. We set ourselves apart by ensuring that our students are fully trained.</> },
     { color: colors.brandPrimary, icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
@@ -64,13 +64,13 @@ function AboutPage() {
                 <div className="ab-about-inner">
                     <div className="ab-about-left">
                         <h2 className="ab-about-heading">
-                            <span className="ab-cyan">Safety Training Academy</span>{" "}
+                            <span className="ab-cyan">SafeTricks</span>{" "}
                             specialises in the delivery of short courses
                         </h2>
 
                         <div className="ab-about-card">
                             <p className="ab-about-text">
-                                <strong>Safety Training Academy</strong> (STA) is a specialty branch of
+                                <strong>SafeTricks</strong> (STA) is a specialty branch of
                                 Australian International Education Training which was formed in 2017, who is a{" "}
                                 <a href="#" className="ab-link">Registered Training Organisation (RTO)</a> Provider
                                 No <strong>45234</strong>) that specialises in the delivery of{" "}
@@ -99,9 +99,9 @@ function AboutPage() {
 
                     <div className="ab-about-right">
                         <div className="ab-building-wrap">
-                            <img src={buildingImg} alt="Safety Training Academy building" className="ab-building-img" />
+                            <img src={buildingImg} alt="SafeTricks building" className="ab-building-img" />
                             <div className="ab-building-caption">
-                                📍 Safety Training Academy | Sydney – 3/14-16 Marjorie Street, Sefton NSW 2162
+                                📍 SafeTricks | Sydney – 3/14-16 Marjorie Street, Sefton NSW 2162
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@ function AboutPage() {
             <section className="ab-why">
                 <div className="ab-why-inner">
                     <h2 className="ab-why-title">
-                        Why Choose <span className="ab-cyan">Safety Training Academy</span>{" "}
+                        Why Choose <span className="ab-cyan">SafeTricks</span>{" "}
                         for short courses in Sydney
                     </h2>
 

@@ -73,7 +73,7 @@ function FooterMobile() {
           <div className="row-info">
             <i className="fa-solid fa-location-dot info-icon"></i>
             <p>
-              Safety Training Academy Sydney<br />
+              SafeTricks Sydney<br />
               3/14-16 Marjorie Street,<br />
               Sefton NSW 2162
             </p>
@@ -82,9 +82,9 @@ function FooterMobile() {
 
         <div className="footer-col footer-contact">
           <div className="sec-label">Contact</div>
-          <a href="mailto:info@safetytrainingacademy.edu.au" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
+          <a href="mailto:info@safetricks.com.au" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
             <i className="fa-solid fa-envelope info-icon"></i>
-            <p>info@safetytrainingacademy.edu.au</p>
+            <p>info@safetricks.com.au</p>
           </a>
           <a href={ORG_PHONE_MOBILE.tel} className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
             <i className="fa-solid fa-phone info-icon"></i>
@@ -123,7 +123,7 @@ function FooterMobile() {
       </div>
 
       <div className="footer-bottom">
-        <span>© 2024 Safety Training Academy</span>
+        <span>© 2024 SafeTricks</span>
         <span className="footer-rights">ALL RIGHTS RESERVED</span>
       </div>
     </footer>

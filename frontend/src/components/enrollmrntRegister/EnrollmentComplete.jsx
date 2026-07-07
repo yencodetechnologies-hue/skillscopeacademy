@@ -125,7 +125,7 @@ function EnrollmentComplete() {
                         </svg>
                     </div>
                     <h1 className="ec-title">
-                        Thank you for your booking with Safety Training Academy
+                        Thank you for your booking with SafeTricks
                     </h1>
                     <p className="ec-subtitle">
                         Your Booking has been completed successfully.
@@ -248,13 +248,13 @@ function EnrollmentComplete() {
 
                     <div className="ec-contact">
                         <p className="ec-regards">Kind regards,</p>
-                        <p className="ec-org-name">Safety Training Academy</p>
+                        <p className="ec-org-name">SafeTricks</p>
                         <p className="ec-org-role">Training Team</p>
                         <a href={ORG_PHONE_1300.tel} style={{ color: "inherit", textDecoration: "none" }} className="ec-org-phone">
                             {ORG_PHONE_1300.display}
                         </a>
-                        <a href="mailto:info@safetytrainingacademy.edu.au" className="ec-org-email">
-                            info@safetytrainingacademy.edu.au
+                        <a href="mailto:info@safetricks.com.au" className="ec-org-email">
+                            info@safetricks.com.au
                         </a>
                     </div>
 

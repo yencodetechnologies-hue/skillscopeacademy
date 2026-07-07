@@ -76,7 +76,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: #02afef;
+  background-color: #cc0000;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -160,7 +160,7 @@ body {
 }
 
 .sm-search-input:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
 }
 
@@ -183,7 +183,7 @@ body {
 }
 
 .sm-status-select:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
 }
 
 .sm-search-btn {
@@ -287,7 +287,7 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background: #02afef;
+  background: #cc0000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -500,7 +500,7 @@ body {
   font-weight: 600;
   color: #111;
   padding: 7px 14px;
-  border: 1px solid #02afef;
+  border: 1px solid #cc0000;
   border-radius: 8px;
   background: #faf5ff;
   white-space: nowrap;
@@ -542,7 +542,7 @@ body {
 .sm-loading {
   padding: 2rem;
   text-align: center;
-  color: #02afef;
+  color: #cc0000;
   font-weight: 500;
 }
 .sm-error {
@@ -630,7 +630,7 @@ body {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #02afef;
+  background: #cc0000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -670,7 +670,7 @@ body {
 .modal-section-title {
   font-size: 14px;
   font-weight: 600;
-  color: #02afef;
+  color: #cc0000;
   margin: 0 0 10px;
   padding-bottom: 6px;
   border-bottom: 1px solid #dbeeff;
@@ -712,7 +712,7 @@ body {
   transition: border-color 0.15s;
 }
 .modal-input-wrap:focus-within {
-  border-color: #02afef;
+  border-color: #cc0000;
   background: #fff;
 }
 .modal-input-icon {
@@ -754,7 +754,7 @@ body {
   padding: 10px 22px;
   border-radius: 8px;
   border: none;
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   font-size: 14px;
   font-weight: 600;

@@ -99,7 +99,7 @@
 
 .language-select:focus {
   outline: none;
-  border-color:#02afef;
+  border-color:#cc0000;
 }
 
 /* ===== FOOTER ===== */
@@ -133,13 +133,13 @@
 
 /* NEXT */
 .next-btn {
-  background:#02afef;
+  background:#cc0000;
   color: white;
   font-size: 14px;
 }
 
 .next-btn:hover {
-  background: #02afef;
+  background: #cc0000;
 }
 
 /* DISABLED */

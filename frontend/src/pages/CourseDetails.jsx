@@ -966,9 +966,9 @@ function BlueTick() {
         <span className="cdp-blue-tick" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 {/* outer thin ring */}
-                <circle cx="16" cy="16" r="14.5" stroke="#02afef" strokeWidth="1.5" fill="none"/>
+                <circle cx="16" cy="16" r="14.5" stroke="#cc0000" strokeWidth="1.5" fill="none"/>
                 {/* filled inner circle */}
-                <circle cx="16" cy="16" r="11" fill="#02afef"/>
+                <circle cx="16" cy="16" r="11" fill="#cc0000"/>
                 {/* white checkmark */}
                 <path d="M10.5 16.5L14 20L21.5 12.5" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

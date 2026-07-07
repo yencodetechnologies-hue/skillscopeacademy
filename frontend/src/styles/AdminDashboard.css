@@ -4,7 +4,7 @@
     align-items: center;
 }
 .week-navigation > button {
-    background: #02afef;
+    background: #cc0000;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -33,7 +33,7 @@
     color: #6b7280;
 }
 .booking-count {
-    color: #02afef;
+    color: #cc0000;
     bottom: 1px;
     font-weight: 700;
 }
@@ -61,13 +61,13 @@
 }
 .day-hoverable:hover,
 .day-active {
-    box-shadow: 0 0 0 2px #02afef;
-    border-color: #02afef;
+    box-shadow: 0 0 0 2px #cc0000;
+    border-color: #cc0000;
     background: #f0faff;
 }
 .day-hint {
     font-size: 11px;
-    color: #02afef;
+    color: #cc0000;
     font-weight: 600;
     margin-top: 2px;
     letter-spacing: 0.3px;
@@ -95,7 +95,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 14px 20px;
-    background:#02afef;
+    background:#cc0000;
     color: #fff;
 }
 .daily-modal-title {
@@ -195,7 +195,7 @@
     background: #f8fbff;
 }
 .daily-modal-pagination button {
-    background: #02afef;
+    background: #cc0000;
     color: #fff;
     border: none;
     border-radius: 6px;

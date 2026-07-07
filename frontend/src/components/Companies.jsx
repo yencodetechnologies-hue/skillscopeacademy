@@ -164,7 +164,7 @@ function LinksModal({ company, onClose }) {
                                                             {copied === link.token ? "✓ Copied" : "Copy Link"}
                                                         </button>
                                                         <button
-                                                            style={{ padding: "4px 8px", border: "none", background: "none", cursor: "pointer", color: isOpen ? "#02afef" : "#9ca3af", display: "flex", alignItems: "center" }}
+                                                            style={{ padding: "4px 8px", border: "none", background: "none", cursor: "pointer", color: isOpen ? "#cc0000" : "#9ca3af", display: "flex", alignItems: "center" }}
                                                             onClick={() => setOpenToken(isOpen ? null : link.token)}
                                                             title="View students"
                                                         >
@@ -663,12 +663,12 @@ export default function Companies() {
                                     <td>{company.mobileNumber ? company.mobileNumber : <span className="dash">—</span>}</td>
                                     <td>
                                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                            <span style={{ fontWeight: 700, color: company.linkCount > 0 ? "#02afef" : "#9ca3af" }}>
+                                            <span style={{ fontWeight: 700, color: company.linkCount > 0 ? "#cc0000" : "#9ca3af" }}>
                                                 {company.linkCount ?? 0}
                                             </span>
                                             {company.linkCount > 0 && (
                                                 <button
-                                                    style={{ border: "none", background: "none", cursor: "pointer", color: "#02afef", display: "flex", alignItems: "center", padding: 2 }}
+                                                    style={{ border: "none", background: "none", cursor: "pointer", color: "#cc0000", display: "flex", alignItems: "center", padding: 2 }}
                                                     title="View links"
                                                     onClick={() => setLinksModalCompany(company)}
                                                 >

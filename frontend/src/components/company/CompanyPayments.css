@@ -10,7 +10,7 @@
 .py-page-label {
   font-size: 14px;
   font-weight: 500;
-  color:#02afef;
+  color:#cc0000;
   margin: 0 0 4px;
 }
 
@@ -251,7 +251,7 @@
   border: 1px solid #e5e7eb; border-radius: 10px;
   padding: 16px; margin-bottom: 20px;
 }
-.pm-billing-label { font-size: 11px; font-weight: 700; color:#02afef; margin-bottom: 12px; letter-spacing: 1px; }
+.pm-billing-label { font-size: 11px; font-weight: 700; color:#cc0000; margin-bottom: 12px; letter-spacing: 1px; }
 .pm-billing-row { margin-bottom: 10px; }
 .pm-billing-key { font-size: 12px; color: #888; display: block; margin-bottom: 3px; }
 .pm-billing-val {

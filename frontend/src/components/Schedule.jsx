@@ -18,9 +18,9 @@ function authHeaders() {
 
 
 const COURSE_COLORS = [
-  "#f97316","#02afef","#06b6d4","#10b981",
+  "#f97316","#cc0000","#cc0000","#10b981",
   "#f59e0b","#ef4444","#3b82f6","#ec4899",
-  "#14b8a6","#02afef","#84cc16","#f43f5e",
+  "#14b8a6","#cc0000","#84cc16","#f43f5e",
 ];
 
 const VIEWS = [
@@ -148,7 +148,7 @@ function Schedule() {
   /* ── map schedule → FC event ── */
   const toFCEvent = useCallback((item) => {
     const dateStr = new Date(item.date).toISOString().split("T")[0];
-    const color   = colorMap[item.course?.id] || "#02afef";
+    const color   = colorMap[item.course?.id] || "#cc0000";
     return {
       id:              item.sessionId,
       title:           item.course?.title || "Course",
@@ -190,7 +190,7 @@ function Schedule() {
     try {
       const res   = await fetch(`${API_URL}/api/schedules/course/${courseId}`);
       const data  = await res.json();
-      const color = colorMap[courseId] || "#02afef";
+      const color = colorMap[courseId] || "#cc0000";
       const fc    = [];
       data.forEach(schedule => {
         schedule.sessions?.forEach(s => {

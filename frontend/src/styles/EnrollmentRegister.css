@@ -227,7 +227,7 @@
 .er-toast-ok-btn {
     width: 100%;
     padding: 12px;
-    background: #02afef;
+    background: #cc0000;
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -299,7 +299,7 @@
 }
 
 .er-submit-btn {
-    background: #02afef;
+    background: #cc0000;
     color: #fff;
     border: none;
     border-radius: 8px;

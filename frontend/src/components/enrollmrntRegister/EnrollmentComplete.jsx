@@ -153,7 +153,7 @@ function EnrollmentComplete() {
                             <p style={{
                                 fontWeight: 700,
                                 fontSize: 15,
-                                color: "#02afef",
+                                color: "#cc0000",
                                 marginBottom: 4,
                             }}>
                                 📎 Enrollment Links
@@ -193,7 +193,7 @@ function EnrollmentComplete() {
                                             </span>
                                             <span style={{
                                                 background: "#ede9fe",
-                                                color: "#02afef",
+                                                color: "#cc0000",
                                                 borderRadius: 20,
                                                 padding: "2px 10px",
                                                 fontSize: 11,
@@ -222,7 +222,7 @@ function EnrollmentComplete() {
                                             <button
                                                 onClick={() => handleCopy(link.token)}
                                                 style={{
-                                                    background: isCopied ? "#16a34a" : "#02afef",
+                                                    background: isCopied ? "#16a34a" : "#cc0000",
                                                     color: "white",
                                                     border: "none",
                                                     borderRadius: 6,
@@ -269,7 +269,7 @@ function EnrollmentComplete() {
                                 Redirecting to dashboard in{" "}
                                 <span style={{
                                     fontWeight: "700",
-                                    color: "#02afef",
+                                    color: "#cc0000",
                                     fontSize: "15px"
                                 }}>
                                     {countdown}s
@@ -287,7 +287,7 @@ function EnrollmentComplete() {
                                     <circle
                                         cx="24" cy="24" r="20"
                                         fill="none"
-                                        stroke="#02afef"
+                                        stroke="#cc0000"
                                         strokeWidth="4"
                                         strokeDasharray={`${2 * Math.PI * 20}`}
                                         strokeDashoffset={`${2 * Math.PI * 20 * (1 - countdown / 10)}`}
@@ -300,7 +300,7 @@ function EnrollmentComplete() {
                                         textAnchor="middle"
                                         fontSize="14"
                                         fontWeight="700"
-                                        fill="#02afef"
+                                        fill="#cc0000"
                                     >
                                         {countdown}
                                     </text>

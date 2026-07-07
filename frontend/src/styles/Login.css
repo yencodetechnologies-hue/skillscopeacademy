@@ -10,11 +10,11 @@
 }
 
 .back-btn-login:hover {
-  background: linear-gradient(90deg, #02afef, #02afef) !important;
+  background: linear-gradient(90deg, #cc0000, #cc0000) !important;
   color: white !important;
 }
 .welcome{
-  color: #02afef;
+  color: #cc0000;
 }
 /* ── Auth wrapper ── */
 @media (max-width: 425px) {

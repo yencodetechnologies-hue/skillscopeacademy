@@ -121,7 +121,7 @@ function LLNDAssessmentComplete({ data, onRetry, attempt, onContinue, flowId: fl
 
       {isPassed && (
         <div className="continue-wrapper">
-          <div className="auto-redirect-info" style={{ textAlign: "center", marginBottom: "15px", color: "#02afef", fontWeight: "600" }}>
+          <div className="auto-redirect-info" style={{ textAlign: "center", marginBottom: "15px", color: "#cc0000", fontWeight: "600" }}>
               {countdown > 0 && !autoStarted && `Auto-continuing to Enrollment Form in ${countdown}s...`}
           </div>
           <button

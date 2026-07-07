@@ -7,7 +7,7 @@ min-height:100vh;
 .title{
 font-size:32px;
 font-weight:700;
-color:#02afef;
+color:#cc0000;
 text-align:center;
 }
 
@@ -50,7 +50,7 @@ justify-content:space-between;
 }
 
 .next-btn{
-background:linear-gradient(90deg,#02afef,#0a8fc0);
+background:linear-gradient(90deg,#cc0000,#0a8fc0);
 border:none;
 color:white;
 padding:12px 28px;
@@ -85,7 +85,7 @@ justify-content:center;
 }
 
 .step.active{
-background:#02afef;
+background:#cc0000;
 color:white;
 }
 

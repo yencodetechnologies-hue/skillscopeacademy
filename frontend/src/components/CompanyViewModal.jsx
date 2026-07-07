@@ -117,7 +117,7 @@ function LinkCard({ link, students }) {
                 </button>
                 <button
                     className="cvm-link-btn-students"
-                    style={{ background: "#f5f3ff", color: "#02afef", border: "1px solid#02afef33" }}
+                    style={{ background: "#f5f3ff", color: "#cc0000", border: "1px solid#cc000033" }}
                     onClick={() => window.open(url, "_blank")}
                 >
                     Open Link ↗
@@ -421,9 +421,9 @@ export default function CompanyViewModal({ company, onClose }) {
                             <PurchasesSection purchases={purchases} />
 
                             {/* ── General Enrolment Link ── */}
-                            <div className="cvm-section" style={{ border: "1px solid#02afef33", background: "#f5f3ff44" }}>
+                            <div className="cvm-section" style={{ border: "1px solid#cc000033", background: "#f5f3ff44" }}>
                                 <div className="cvm-section-header" style={{ background: "#f5f3ff88" }}>
-                                    <h3 className="cvm-section-title" style={{ color: "#02afef" }}>General Enrolment Link</h3>
+                                    <h3 className="cvm-section-title" style={{ color: "#cc0000" }}>General Enrolment Link</h3>
                                     <p className="cvm-section-sub">
                                         Share this link with employees. They can select any course and enroll themselves under your company account.
                                     </p>

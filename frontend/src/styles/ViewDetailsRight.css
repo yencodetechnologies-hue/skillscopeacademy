@@ -13,7 +13,7 @@ height:fit-content;
     align-items: center;
 }
 .price-card{
-background:linear-gradient(135deg,#06b6d4,#2563eb);
+background:linear-gradient(135deg,#cc0000,#2563eb);
 padding:40px;
 border-radius:20px;
 color:white;
@@ -99,7 +99,7 @@ padding:16px;
 margin-top:20px;
 border:none;
 border-radius:30px;
-background:linear-gradient(90deg,#06b6d4,#2563eb);
+background:linear-gradient(90deg,#cc0000,#2563eb);
 color:white;
 font-weight:600;
 cursor:pointer;
@@ -154,7 +154,7 @@ font-size:28px;
 width:100%;
 padding:12px;
 border-radius:20px;
-border:2px solid #06b6d4;
+border:2px solid #cc0000;
 background:none;
 margin-top:10px;
 cursor:pointer;

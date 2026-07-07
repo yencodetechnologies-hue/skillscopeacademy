@@ -11,7 +11,7 @@ function DocViewer({ url, alt, className, style }) {
   if (!url) return null;
   if (/\.pdf($|\?)/i.test(url)) {
     return (
-      <a href={url} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: '#02afef', color: '#fff', borderRadius: 6, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+      <a href={url} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: '#cc0000', color: '#fff', borderRadius: 6, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
         📄 Open PDF
       </a>
     );

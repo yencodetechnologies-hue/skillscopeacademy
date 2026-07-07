@@ -78,7 +78,7 @@
   font-weight: 700;
   margin: 0;
 }
-.stat-value.purple-enrl { color: #02afef; }
+.stat-value.purple-enrl { color: #cc0000; }
 .stat-value.yellow { color: #d97706; }
 .stat-value.green.enrl  { color: #16a34a; }
 .stat-value.red    { color: #dc2626; }
@@ -129,7 +129,7 @@
   transition: border-color 0.2s;
 }
 .ef-search:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
   box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
 }
 .ef-select {
@@ -149,7 +149,7 @@
   transition: border-color 0.2s;
 }
 .ef-select:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
 }
 
 /* Table Section */
@@ -218,7 +218,7 @@
 .avatar {
   width: 30px;
   height: 30px;
-  background: #02afef;
+  background: #cc0000;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -260,7 +260,7 @@
 
 .enrollments-badge {
   background: #dbeeff;
-  color: #02afef;
+  color: #cc0000;
   padding: 3px 10px;
   border-radius: 20px;
   font-size: 0.78rem;
@@ -388,7 +388,7 @@
 .modal-title {
   font-size: 18px;
   font-weight: 700;
-  color: #02afef;
+  color: #cc0000;
   margin: 0 0 4px;
 }
 
@@ -501,8 +501,8 @@
 }
 
 .modal-tab.active {
-  color: #02afef;
-  border-bottom-color: #02afef;
+  color: #cc0000;
+  border-bottom-color: #cc0000;
 }
 
 .modal-tab:hover:not(.active) {
@@ -577,7 +577,7 @@
 
 .view-fullsize-link {
   font-size: 13px;
-  color: #02afef;
+  color: #cc0000;
   text-decoration: none;
   display: inline-flex;
   align-items: center;

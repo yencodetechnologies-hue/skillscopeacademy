@@ -3,7 +3,7 @@ margin-top:20px;
 }
 
 .payment-header>.payment-header{
-background:linear-gradient(90deg,#02afef,#ec4899);
+background:linear-gradient(90deg,#cc0000,#ec4899);
 color:white;
 padding:16px 20px;
 border-radius:8px 8px 0 0;
@@ -13,7 +13,7 @@ border-radius:8px 8px 0 0;
     display: block;
     margin-top: 6px;
     font-size: 13px;
-    color: #02afef;
+    color: #cc0000;
     font-weight: 500;
 }
 .payment-card{
@@ -92,7 +92,7 @@ cursor:pointer;
 }
 
 .method-card.active{
-border-color:#02afef;
+border-color:#cc0000;
 background:#f3f0ff;
 }
 
@@ -140,7 +140,7 @@ cursor:pointer;
 }
 
 .btn-primary{
-background:linear-gradient(90deg,#02afef,#ec4899);
+background:linear-gradient(90deg,#cc0000,#ec4899);
 color:white;
 border:none;
 padding:10px 16px;

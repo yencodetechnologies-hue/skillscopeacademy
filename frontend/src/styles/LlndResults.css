@@ -114,7 +114,7 @@
   transition: border-color 0.15s;
 }
 .lln-search-input:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
   background: #fff;
 }
 .lln-search-input::placeholder { color: #9ca3af; }

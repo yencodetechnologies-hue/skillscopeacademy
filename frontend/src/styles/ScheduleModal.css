@@ -121,7 +121,7 @@
 .csm-bulk-check {
   width: 16px;
   height: 16px;
-  border: 2px solid#02afef;
+  border: 2px solid#cc0000;
   border-radius: 3px;
   background: #fff;
   display: flex;
@@ -132,7 +132,7 @@
 }
 
 .csm-bulk-toggle input:checked + .csm-bulk-check {
-  background:#02afef;
+  background:#cc0000;
 }
 
 .csm-bulk-toggle input:checked + .csm-bulk-check::after {
@@ -188,7 +188,7 @@
 
 .csm-field input:focus,
 .csm-field select:focus {
-  border-color:#02afef;
+  border-color:#cc0000;
 }
 
 .csm-hint {
@@ -234,9 +234,9 @@
 }
 
 .csm-day-btn.active {
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
-  border-color:#02afef;
+  border-color:#cc0000;
 }
 
 .csm-day-btn.blurred {
@@ -246,15 +246,15 @@
 }
 
 .csm-day-btn:hover:not(.active):not(.blurred) {
-  border-color:#02afef;
-  color:#02afef;
+  border-color:#cc0000;
+  color:#cc0000;
 }
 
 /* ── Add Date Button ── */
 .csm-add-date-btn {
   margin-top: 1rem;
   padding: 0.55rem 1.2rem;
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -266,7 +266,7 @@
   gap: 6px;
   transition: background 0.15s;
 }
-.csm-add-date-btn:hover { background: #02afef; }
+.csm-add-date-btn:hover { background: #cc0000; }
 
 /* ── Schedule Section ── */
 .csm-schedule-section {
@@ -332,7 +332,7 @@
   transition: all 0.15s;
 }
 .csm-filter-tab:hover { background: #f5f5f5; color: #444; }
-.csm-filter-tab.active { background: #f0ebff; color:#02afef; font-weight: 500; }
+.csm-filter-tab.active { background: #f0ebff; color:#cc0000; font-weight: 500; }
 
 .csm-dot {
   width: 7px;
@@ -392,7 +392,7 @@
 
 .csm-add-slot-btn {
   font-size: 0.75rem;
-  color:#02afef;
+  color:#cc0000;
   background: none;
   border: none;
   cursor: pointer;
@@ -426,7 +426,7 @@
 
 .csm-tag {
   background: #f0ebff;
-  color:#02afef;
+  color:#cc0000;
   padding: 2px 10px;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -472,7 +472,7 @@
 
 .csm-edit-btn {
   font-size: 0.78rem;
-  color:#02afef;
+  color:#cc0000;
   background: none;
   border: none;
   cursor: pointer;
@@ -596,11 +596,11 @@
 }
 
 .csm-save-dates-btn.active {
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
   cursor: pointer;
 }
-.csm-save-dates-btn.active:hover { background: #02afef; }
+.csm-save-dates-btn.active:hover { background: #cc0000; }
 
 .csm-cancel-btn {
   padding: 0.6rem 1.2rem;
@@ -685,7 +685,7 @@
 
 .csm-save-changes-btn {
   padding: 0.55rem 1.2rem;
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -694,7 +694,7 @@
   cursor: pointer;
   transition: background 0.15s;
 }
-.csm-save-changes-btn:hover { background: #02afef; }
+.csm-save-changes-btn:hover { background: #cc0000; }
 .csm-save-changes-btn:disabled { background: #c4b5fd; cursor: not-allowed; }
 
 /* ═══════════════════════════════════════════════

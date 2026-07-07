@@ -22,7 +22,7 @@
 
 .checkbox-group input[type="checkbox"] {
     margin-top: 2px;
-    accent-color:#02afef; /* matches the purple Continue button */
+    accent-color:#cc0000; /* matches the purple Continue button */
     width: 15px;
     height: 15px;
     flex-shrink: 0;
@@ -162,7 +162,7 @@
 /* button */
 .continue-btn {
   margin-top: 20px;
-  background: linear-gradient(90deg, #02afef, #ec4899);
+  background: linear-gradient(90deg, #cc0000, #ec4899);
   color: white;
   border: none;
   padding: 12px 20px;

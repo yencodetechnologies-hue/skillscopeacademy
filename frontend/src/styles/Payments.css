@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #02afef;
+  --primary-color: #cc0000;
   --bg-gray: #f9fafb;
   --text-dark: #111827;
   --text-light: #6b7280;
@@ -498,8 +498,8 @@
 
 .btn-close { background: white; border: 1px solid #e5e7eb; color: #374151; }
 .btn-reject { background: #fee2e2; border: none; color: #dc2626; }
-.btn-confirm { background: #02afef; border: none; color: white; }
+.btn-confirm { background: #cc0000; border: none; color: white; }
 
 .btn-close:hover { background: #f9fafb; }
 .btn-reject:hover { background: #fecaca; }
-.btn-confirm:hover { background: #02afef; }
+.btn-confirm:hover { background: #cc0000; }

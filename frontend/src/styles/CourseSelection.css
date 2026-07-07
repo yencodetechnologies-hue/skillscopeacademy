@@ -76,7 +76,7 @@ margin-bottom:25px;
 .company-cart-subtotal {
     font-size: 14px;
     font-weight: 600;
-    color: #02afef;
+    color: #cc0000;
     min-width: 80px;
 }
 
@@ -118,12 +118,12 @@ margin-bottom:25px;
     padding: 14px 16px;
     background: #faf8ff;
     font-size: 15px;
-    color: #02afef;
+    color: #cc0000;
     border-top: 1.5px solid #e8e0f8;
 }
 
 .course-optgroup{
-    color:#02afef;
+    color:#cc0000;
     font-weight:600;
 }
 
@@ -147,7 +147,7 @@ margin-bottom:25px;
     transition: border-color 0.2s;
 }
 .cs-dropdown__trigger--open {
-    border-color:#02afef;
+    border-color:#cc0000;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -161,7 +161,7 @@ margin-bottom:25px;
     left: 0;
     right: 0;
     background: #fff;
-    border: 1px solid#02afef;
+    border: 1px solid#cc0000;
     border-top: none;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -188,7 +188,7 @@ margin-bottom:25px;
     padding: 8px 12px 4px;
     font-size: 12px;
     font-weight: 700;
-    color: #02afef;
+    color: #cc0000;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     background: #f0faff;
@@ -202,7 +202,7 @@ margin-bottom:25px;
     transition: background 0.15s;
 }
 .cs-dropdown__option:hover { background: #f3f0ff; }
-.cs-dropdown__option--selected { background: #ede9fe; color:#02afef; font-weight: 500; }
+.cs-dropdown__option--selected { background: #ede9fe; color:#cc0000; font-weight: 500; }
 
 .course-select{
   width:100%;
@@ -221,7 +221,7 @@ margin-bottom:25px;
   -webkit-appearance: radio;
   width: 19px;
   height: 16px;
-  accent-color:#02afef;
+  accent-color:#cc0000;
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -264,11 +264,11 @@ transition:0.3s;
 }
 
 .slot-card:hover{
-border-color:#02afef;
+border-color:#cc0000;
 }
 
 .slot-card.active{
-border:2px solid#02afef;
+border:2px solid#cc0000;
 background:#f3f0ff;
 box-shadow:0 0 0 2px rgba(124,58,237,0.2);
 }
@@ -284,7 +284,7 @@ margin-bottom:10px;
 }
 
 .spots{
-color:#02afef;
+color:#cc0000;
 font-size:14px;
 }
 
@@ -292,7 +292,7 @@ font-size:14px;
 display:block;
 margin:15px auto;
 border:none;
-color:#02afef;
+color:#cc0000;
 cursor:pointer;
 padding:12px 24px;
 font-weight:600;
@@ -303,7 +303,7 @@ background:#f4f0ff;
 }
 .show-more-btn-cs:hover{
 color: white;
-background:#02afef;
+background:#cc0000;
 }
 
 /* ===== ENROLMENT TYPE ===== */
@@ -340,7 +340,7 @@ background:#02afef;
 }
 
 .enrol-type-card:hover {
-  border-color: #29b6e8;
+  border-color: #cc0000;
   background: #f0f8ff;
 }
 
@@ -385,7 +385,7 @@ background:#02afef;
 .company-order-title {
     font-size: 14px;
     font-weight: 700;
-    color: #02afef;
+    color: #cc0000;
     margin-bottom: 10px;
 }
 .company-order-row {
@@ -414,12 +414,12 @@ background:#02afef;
 .company-order-price {
     font-size: 13px;
     font-weight: 600;
-    color: #02afef;
+    color: #cc0000;
 }
 .company-order-total {
     margin-top: 10px;
     font-size: 15px;
-    color: #02afef;
+    color: #cc0000;
     text-align: right;
 }
 
@@ -439,7 +439,7 @@ background:#02afef;
     gap: 8px;
 }
 .company-slot-reopen span {
-    color: #02afef;
+    color: #cc0000;
     text-decoration: underline;
     margin-left: auto;
     font-weight: 600;
@@ -451,10 +451,10 @@ background:#02afef;
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    border: 1.5px solid#02afef;
+    border: 1.5px solid#cc0000;
     border-radius: 8px;
     background: #fff;
-    color:#02afef;
+    color:#cc0000;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -521,8 +521,8 @@ background:#02afef;
 }
 .cs-cal-nav:hover {
     background: #f3f0ff;
-    border-color:#02afef;
-    color:#02afef;
+    border-color:#cc0000;
+    color:#cc0000;
 }
 
 .cs-cal-grid {
@@ -551,18 +551,18 @@ background:#02afef;
 
 .cs-cal-day--avail {
     background: #ede9fe;
-    color: #02afef;
+    color: #cc0000;
     cursor: pointer;
     font-weight: 600;
 }
 
 .cs-cal-day--avail:hover {
-    background:#02afef;
+    background:#cc0000;
     color: #fff;
 }
 
 .cs-cal-day--selected {
-    background: #02afef!important;
+    background: #cc0000!important;
     color: #fff !important;
     font-weight: 600;
 }
@@ -618,11 +618,11 @@ background:#02afef;
     transition: all 0.15s;
 }
 .cs-date-chip:hover {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #faf8ff;
 }
 .cs-date-chip--active {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #ede9fe;
 }
 .cs-date-chip__day {
@@ -637,7 +637,7 @@ background:#02afef;
 }
 .cs-date-chip__slots {
     font-size: 11px;
-    color:#02afef;
+    color:#cc0000;
     margin-top: 3px;
 }
 
@@ -676,7 +676,7 @@ background:#02afef;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #02afef;
+    color: #cc0000;
     background: #eef2ff;
     padding: 4px 10px;
     border-radius: 20px;

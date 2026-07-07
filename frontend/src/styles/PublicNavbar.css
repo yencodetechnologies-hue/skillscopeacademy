@@ -39,7 +39,7 @@
 }
 
 .logo span {
-  color: #02afef;
+  color: #cc0000;
 }
 
 /* NAV LINKS */
@@ -63,7 +63,7 @@
 .nav-links li:hover,
 .nav-links li:hover > i,
 .nav-links li:focus-within {
-  color: #02afef;
+  color: #cc0000;
 }
 
 /* BUTTONS */
@@ -77,7 +77,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background:#02afef;
+  background:#cc0000;
   color: white;
   border: none;
   padding: 13px 26px;
@@ -98,9 +98,9 @@
 }
 
 .pub-voc-btn {
-  border: 2px solid #02afef !important;
+  border: 2px solid #cc0000 !important;
   background: #19354a;
-  color: #02afef;
+  color: #cc0000;
   font-weight: 600;
 }
 
@@ -426,7 +426,7 @@
 }
 
 .combo-item:hover {
-  background: #02afef;
+  background: #cc0000;
   color: white;
 }
 

@@ -106,7 +106,7 @@
 .pf-handbook-body h2 {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #02afef;
+  color: #cc0000;
   margin: 0 0 10px;
 }
 
@@ -188,7 +188,7 @@
 }
 
 .pf-doc-item:hover .pf-doc-arrow {
-  color: #02afef;
+  color: #cc0000;
 }
 
 /* Empty / loading states */

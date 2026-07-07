@@ -39,7 +39,7 @@
 
 .success-btn {
     padding: 12px 28px;
-    background-color:#02afef;
+    background-color:#cc0000;
     color: white;
     border: none;
     border-radius: 8px;
@@ -51,5 +51,5 @@
 }
 
 .success-btn:hover {
-    background-color: #02afef;
+    background-color: #cc0000;
 }

@@ -11,7 +11,7 @@
 .dashboard-welcome {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #02afef;
+  color: #cc0000;
   margin: 0 0 6px;
 }
 
@@ -193,7 +193,7 @@
 
 /* Quick Actions */
 .quick-actions-card {
-  background: linear-gradient(135deg, #02afef,#02afef);
+  background: linear-gradient(135deg, #cc0000,#cc0000);
   border-radius: 16px;
   padding: 24px 20px;
 }

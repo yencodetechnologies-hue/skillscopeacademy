@@ -78,7 +78,7 @@
 
 .literacy-select:focus {
   outline: none;
-  border-color:#02afef;
+  border-color:#cc0000;
 }
 
 /* FOOTER */
@@ -112,12 +112,12 @@
 
 /* NEXT */
 .literacy-next-btn {
-  background:#02afef;
+  background:#cc0000;
   color: white;
 }
 
 .literacy-next-btn:hover {
-  background: #02afef;
+  background: #cc0000;
 }
 
 /* DISABLED */
@@ -237,11 +237,11 @@
 }
 
 .mcq-option:hover {
-  border-color:#02afef;
+  border-color:#cc0000;
 }
 
 .mcq-option input {
-  accent-color:#02afef;
+  accent-color:#cc0000;
 }
 
 .mcq-option span {

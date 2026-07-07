@@ -7,7 +7,7 @@
 
 /* HEADER */
 .llnd-header {
-  background: linear-gradient(90deg,#02afef, #d946ef);
+  background: linear-gradient(90deg,#cc0000, #d946ef);
   color: white;
   padding: 12px 16px;
   font-weight: 500;
@@ -115,7 +115,7 @@
 
 /* BUTTON */
 .continue-btn {
-  background: linear-gradient(90deg,#02afef, #d946ef);
+  background: linear-gradient(90deg,#cc0000, #d946ef);
   color: white;
   padding: 10px 20px;
   border: none;

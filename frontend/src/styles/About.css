@@ -288,8 +288,8 @@
     padding: 18px 24px;
 }
 
-.ab-vision-header { background: linear-gradient(90deg, #22d3ee, #06b6d4); }
-.ab-mission-header { background: linear-gradient(90deg,#02afef, #2563eb); }
+.ab-vision-header { background: linear-gradient(90deg, #22d3ee, #cc0000); }
+.ab-mission-header { background: linear-gradient(90deg,#cc0000, #2563eb); }
 
 .ab-vm-icon { font-size: 20px; }
 
@@ -381,7 +381,7 @@
 }
 
 .ab-value-featured {
-    background: linear-gradient(135deg, #2563eb,#02afef);
+    background: linear-gradient(135deg, #2563eb,#cc0000);
     color: #fff;
 }
 
@@ -421,7 +421,7 @@
 
 /* ── CTA ── */
 .ab-cta {
-    background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%);
+    background: linear-gradient(135deg, #cc0000 0%, #2563eb 100%);
     padding: 80px 24px;
     text-align: center;
 }

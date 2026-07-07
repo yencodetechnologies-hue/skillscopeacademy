@@ -281,7 +281,7 @@ const Payment = () => {
                       <div>{p.date}</div>
                       <div className="time-muted">{p.time || "—"}</div>
                     </td>
-                    <td className="td-mono" style={{ fontWeight: '600', color: '#02afef' }}>
+                    <td className="td-mono" style={{ fontWeight: '600', color: '#cc0000' }}>
                       {p.bookingId || "—"}
                     </td>
                     <td>
@@ -300,7 +300,7 @@ const Payment = () => {
                     <td className="td-mono" style={{ fontWeight: '600' }}>
                       {p.method === "Bank Transfer" ? (p.transId || "—") : "—"}
                     </td>
-                    <td className="td-mono" style={{ color: '#02afef', fontWeight: '600' }}>{p.gatewayTransId || "—"}</td>
+                    <td className="td-mono" style={{ color: '#cc0000', fontWeight: '600' }}>{p.gatewayTransId || "—"}</td>
                     <td className="amount">${p.amount}</td>
                     <td className="td-muted">{p.date}</td>
                     <td>
@@ -346,8 +346,8 @@ const Payment = () => {
                 onClick={() => setCurrentPage(page)}
                 style={{
                   padding: '6px 10px', borderRadius: '4px',
-                  border: currentPage === page ? '2px solid #02afef' : '1px solid #ddd',
-                  background: currentPage === page ? '#02afef' : '#f5f5f5',
+                  border: currentPage === page ? '2px solid #cc0000' : '1px solid #ddd',
+                  background: currentPage === page ? '#cc0000' : '#f5f5f5',
                   color: currentPage === page ? '#fff' : '#000',
                   cursor: 'pointer',
                   fontWeight: currentPage === page ? '500' : 'normal',
@@ -411,7 +411,7 @@ const Payment = () => {
                 <div className="details-grid">
                   <div className="detail-item">
                     <div className="label">Booking ID:</div>
-                    <div className="value mono-box" style={{ fontWeight: '700', color: '#02afef' }}>
+                    <div className="value mono-box" style={{ fontWeight: '700', color: '#cc0000' }}>
                       {selectedPayment.bookingId || "—"}
                     </div>
                   </div>

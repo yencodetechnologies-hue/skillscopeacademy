@@ -132,11 +132,11 @@
 
 .rco-category-item--active {
     background: #f5f3ff;
-    border-left-color:#02afef;
+    border-left-color:#cc0000;
 }
 
 .rco-category-item--active .rco-category-name {
-    color:#02afef;
+    color:#cc0000;
     font-weight: 500;
 }
 
@@ -156,7 +156,7 @@
 
 .rco-category-item--active .rco-category-count {
     background: #ede9fe;
-    color:#02afef;
+    color:#cc0000;
 }
 
 /* ── COURSES SECTION ─────────────────────────── */
@@ -167,7 +167,7 @@
 .rco-courses-heading {
     font-size: 13px;
     font-weight: 600;
-    color:#02afef;
+    color:#cc0000;
     margin: 0;
     padding: 14px 20px 8px;
 }
@@ -234,7 +234,7 @@
 }
 
 .rco-course-item:hover .rco-drag-handle {
-    color:#02afef;
+    color:#cc0000;
 }
 
 .rco-course-title {

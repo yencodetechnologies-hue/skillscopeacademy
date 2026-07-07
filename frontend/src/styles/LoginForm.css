@@ -93,7 +93,7 @@
 .login-box input:focus,
 .register-box input:focus {
   outline: none;
-  border: 1px solid #02afef;
+  border: 1px solid #cc0000;
   background: #fff;
 }
 
@@ -138,13 +138,13 @@
 }
 
 .options input[type="checkbox"] {
-  accent-color: #02afef;
+  accent-color: #cc0000;
   width: 14px;
   height: 14px;
 }
 
 .options a {
-  color: #02afef;
+  color: #cc0000;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -163,7 +163,7 @@
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
-  background: #02afef;
+  background: #cc0000;
   transition: opacity 0.2s, transform 0.1s;
 }
 

@@ -41,13 +41,13 @@
   font-family: inherit; font-size: .875rem; outline: none;
   transition: border-color .2s; box-sizing: border-box;
 }
-.ru-search-input:focus { border-color: #02afef; }
+.ru-search-input:focus { border-color: #cc0000; }
 .ru-select {
   padding: .55rem .75rem; border: 1.5px solid #e5e7eb;
   border-radius: 8px; font-family: inherit; font-size: .875rem;
   outline: none; background: #fff; cursor: pointer; transition: border-color .2s;
 }
-.ru-select:focus { border-color: #02afef; }
+.ru-select:focus { border-color: #cc0000; }
 
 /* ─── Table Card ────────────────────────────────────────────────────────────── */
 .ru-table-card {
@@ -98,7 +98,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 .ru-student-cell { display: flex; align-items: center; gap: .6rem; }
 .ru-avatar {
   width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, #02afef, #a29bfe);
+  background: linear-gradient(135deg, #cc0000, #a29bfe);
   display: flex; align-items: center; justify-content: center;
   font-weight: 700; color: #fff; font-size: .8rem; flex-shrink: 0;
 }
@@ -110,7 +110,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 .ru-btn-upload {
   padding: 5px 12px; border-radius: 7px; border: none; cursor: pointer;
   font-family: inherit; font-size: .75rem; font-weight: 600;
-  background: #02afef; color: #fff;
+  background: #cc0000; color: #fff;
   transition: background .2s, transform .1s; white-space: nowrap;
 }
 .ru-btn-upload:hover { background: #5a4bd1; transform: translateY(-1px); }
@@ -131,7 +131,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   background: #fff; cursor: pointer; font-size: .8rem; font-family: inherit;
   transition: all .15s;
 }
-.ru-page-btn:hover:not(:disabled) { border-color: #02afef; color: #02afef; }
+.ru-page-btn:hover:not(:disabled) { border-color: #cc0000; color: #cc0000; }
 .ru-page-btn:disabled { opacity: .4; cursor: not-allowed; }
 
 /* ─── Loading / Empty ───────────────────────────────────────────────────────── */
@@ -143,7 +143,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 .ru-date-primary   { font-size: .8rem; font-weight: 500; }
 .ru-date-secondary { font-size: .72rem; color: #9ca3af; }
 .ru-type-primary   { font-size: .8rem; }
-.ru-type-company   { font-size: .72rem; font-weight: 600; color: #02afef; }
+.ru-type-company   { font-size: .72rem; font-weight: 600; color: #cc0000; }
 .ru-email          { font-size: .8rem; color: #4b5563; }
 .ru-phone          { font-size: .8rem; }
 .ru-course-title   { font-weight: 500; font-size: .8rem; }
@@ -243,7 +243,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 }
 .ru-input:focus,
 .ru-mselect:focus,
-.ru-textarea:focus { border-color: #02afef; }
+.ru-textarea:focus { border-color: #cc0000; }
 .ru-textarea { resize: vertical; min-height: 80px; }
 
 /* Locked / read-only field */
@@ -274,10 +274,10 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   border-radius: 8px; background: #fff; cursor: pointer;
   font-family: inherit; font-size: .875rem; transition: all .15s;
 }
-.ru-btn-cancel:hover { border-color: #02afef; color: #02afef; }
+.ru-btn-cancel:hover { border-color: #cc0000; color: #cc0000; }
 .ru-btn-save {
   padding: .55rem 1.5rem; border: none; border-radius: 8px;
-  background: #02afef; color: #fff; cursor: pointer;
+  background: #cc0000; color: #fff; cursor: pointer;
   font-family: inherit; font-size: .875rem; font-weight: 600;
   transition: background .2s;
 }

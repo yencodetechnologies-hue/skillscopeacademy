@@ -114,7 +114,7 @@
 }
 
 .drop-zone:hover {
-  border-color:#02afef;
+  border-color:#cc0000;
   background: #f3f4f6;
 }
 
@@ -176,7 +176,7 @@
 
 .url-input:focus {
   outline: none;
-  border-color:#02afef;
+  border-color:#cc0000;
 }
 
 /* RESET BUTTON */
@@ -234,12 +234,12 @@
 }
 
 .digital-footer button:last-child {
-  background:#02afef;
+  background:#cc0000;
   color: white;
 }
 
 .digital-footer button:last-child:hover {
-  background: #02afef;
+  background: #cc0000;
 }
 
 .digital-footer span {

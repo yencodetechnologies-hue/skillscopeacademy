@@ -69,7 +69,7 @@ grid-template-columns:1fr;
   width: 44px;
   height: 44px;
   border: 4px solid #e0f2fe;
-  border-top: 4px solid #02afef;
+  border-top: 4px solid #cc0000;
   border-radius: 50%;
   animation: cdp-spin-animation 1s linear infinite;
 }
@@ -131,7 +131,7 @@ grid-template-columns:1fr;
   width: 275px;
   font-size: 15px;
   display: block;
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -234,7 +234,7 @@ grid-template-columns:1fr;
 .cdp-btn-book {
   display: block;
   width: 100%;
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -294,7 +294,7 @@ grid-template-columns:1fr;
 }
 
 .cdp-check {
-  color: #29b6e8;
+  color: #cc0000;
   font-weight: 700;
   font-size: 12px;
 }
@@ -420,14 +420,14 @@ grid-template-columns:1fr;
 }
 
 .cdp-accordion-toggle:focus-visible {
-  outline: 2px solid #29b6e8;
+  outline: 2px solid #cc0000;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 .cdp-accordion-chevron {
   flex-shrink: 0;
-  color: #29b6e8;
+  color: #cc0000;
   transition: transform 0.25s ease;
 }
 
@@ -465,7 +465,7 @@ grid-template-columns:1fr;
 .cdp-card-code {
   font-size: 13px;
   font-weight: 600;
-  color: #29b6e8;
+  color: #cc0000;
   background: #e8f4fd;
   padding: 3px 10px;
   border-radius: 20px;
@@ -517,7 +517,7 @@ grid-template-columns:1fr;
   justify-content: center;
   flex-shrink: 0;
   font-size: 11px;
-  color: #29b6e8;
+  color: #cc0000;
   font-weight: 700;
   margin-top: 1px;
 }
@@ -758,7 +758,7 @@ grid-template-columns:1fr;
 }
 
 .cdp-sb-title--light {
-  color: #29b6e8;
+  color: #cc0000;
   border-color: rgba(41, 182, 232, 0.2);
 }
 
@@ -790,7 +790,7 @@ grid-template-columns:1fr;
 .cdp-sb-btn-main {
   display: block;
   width: 100%;
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -829,11 +829,11 @@ grid-template-columns:1fr;
 }
 
 .cdp-hb-card {
-  background: #02afef;
+  background: #cc0000;
   background-image: repeating-linear-gradient(
     45deg,
-    #02afef,
-    #02afef 15px,
+    #cc0000,
+    #cc0000 15px,
     #0086b9 15px,
     #0086b9 30px
   );
@@ -881,7 +881,7 @@ grid-template-columns:1fr;
 .cdp-hb-title {
   font-size: 16px; /* Reduced from 20px */
   font-weight: 800;
-  color: #02afef;
+  color: #cc0000;
   margin: 0;
   line-height: 1.1;
   text-transform: uppercase;
@@ -907,7 +907,7 @@ grid-template-columns:1fr;
 .cdp-sb-btn-cyan {
   display: block;
   width: 100%;
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -1085,7 +1085,7 @@ grid-template-columns:1fr;
 }
 
 .cdp-sb-mini-list li span {
-  color: #29b6e8;
+  color: #cc0000;
 }
 
 .cdp-related-course {
@@ -1102,7 +1102,7 @@ grid-template-columns:1fr;
 }
 
 .cdp-related-course:hover .cdp-src-name {
-  color: #29b6e8;
+  color: #cc0000;
 }
 
 .cdp-src-icon {
@@ -1126,7 +1126,7 @@ grid-template-columns:1fr;
 
 .cdp-src-price {
   font-size: 12px;
-  color: #29b6e8;
+  color: #cc0000;
   font-weight: 600;
 }
 
@@ -1137,7 +1137,7 @@ grid-template-columns:1fr;
   left: 0;
   right: 0;
   background: #0d2240;
-  border-top: 2px solid #29b6e8;
+  border-top: 2px solid #cc0000;
   padding: 12px 80px;
   display: flex;
   align-items: center;
@@ -1165,7 +1165,7 @@ grid-template-columns:1fr;
 .cdp-sticky-price {
   font-size: 20px;
   font-weight: 800;
-  color: #29b6e8;
+  color: #cc0000;
 }
 
 .cdp-sticky-btns {
@@ -1174,7 +1174,7 @@ grid-template-columns:1fr;
 }
 
 .cdp-sticky-book {
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -1395,7 +1395,7 @@ grid-template-columns:1fr;
 
 .cdp-session-row:hover {
   background: #f8fafc;
-  border-color: #02afef;
+  border-color: #cc0000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
@@ -1417,7 +1417,7 @@ grid-template-columns:1fr;
 .cdp-s-mon {
   font-size: 10px;
   font-weight: 700;
-  color: #02afef;
+  color: #cc0000;
   margin-top: 2px;
   text-transform: uppercase;
 }
@@ -1459,7 +1459,7 @@ grid-template-columns:1fr;
 }
 
 .cdp-s-btn {
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1492,7 +1492,7 @@ grid-template-columns:1fr;
   width: 100% !important;
   margin-top: 20px !important;
   background: #fff !important;
-  color: #02afef !important;
+  color: #cc0000 !important;
   border: 1px solid #bae0f7 !important;
   padding: 14px !important;
   border-radius: 15px !important;
@@ -1505,7 +1505,7 @@ grid-template-columns:1fr;
 
 .cdp-see-all-btn:hover {
   background: #f0f7ff !important;
-  border-color: #02afef !important;
+  border-color: #cc0000 !important;
 }
 
 .cdp-sessions-expanded {
@@ -1609,7 +1609,7 @@ grid-template-columns:1fr;
 
 .cdp-marquee-item:hover {
   background: #f0f9ff;
-  border-color: #02afef;
+  border-color: #cc0000;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(2, 175, 239, 0.1);
 }
@@ -1617,7 +1617,7 @@ grid-template-columns:1fr;
 .cdp-marquee-icon {
   font-size: 16px;
   background: #e0f2fe;
-  color: #02afef;
+  color: #cc0000;
   width: 34px;
   height: 34px;
   border-radius: 8px;
@@ -1642,7 +1642,7 @@ grid-template-columns:1fr;
 
 .cdp-marquee-price {
   font-size: 11.5px;
-  color: #02afef;
+  color: #cc0000;
   font-weight: 800;
   letter-spacing: 0.3px;
   text-transform: uppercase;
@@ -1707,7 +1707,7 @@ grid-template-columns:1fr;
 .cdp-section-title {
   font-size: 20px;
   font-weight: 700;
-  color: #02afef;
+  color: #cc0000;
   margin: 0 0 14px 0;
   line-height: 1.2;
 }
@@ -1821,7 +1821,7 @@ grid-template-columns:1fr;
 .cdp-desc-pdf-placeholder {
   width: 100%;
   min-height: 200px;
-  background: linear-gradient(135deg, #0d2240 60%, #02afef 100%);
+  background: linear-gradient(135deg, #0d2240 60%, #cc0000 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1873,7 +1873,7 @@ grid-template-columns:1fr;
 
 .cdp-desc-pdf-caption {
   background: #0d2240;
-  color: #02afef;
+  color: #cc0000;
   font-size: 10px;
   font-weight: 700;
   text-align: center;

@@ -43,7 +43,7 @@
 }
 
 .menu-item.active {
-    background: #02afef;
+    background: #cc0000;
     color: white;
 }
 
@@ -63,7 +63,7 @@
     justify-content: center;
     cursor: pointer;
     font-size: 18px;
-    color: #02afef;
+    color: #cc0000;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 

@@ -4,8 +4,8 @@
    CSS VARIABLES
 ═══════════════════════════════════════════════════════ */
 :root {
-  --brand:       #02afef;
-  --brand-dark:  #02afef;
+  --brand:       #cc0000;
+  --brand-dark:  #cc0000;
   --brand-light: #ede9fe;
   --accent:      #f59e0b;
   --text:        #111827;

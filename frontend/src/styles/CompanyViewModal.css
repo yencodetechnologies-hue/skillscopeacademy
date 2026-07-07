@@ -58,7 +58,7 @@
     width: 46px;
     height: 46px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #02afef 0%, #0a8fc0 100%);
+    background: linear-gradient(135deg, #cc0000 0%, #0a8fc0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,7 +148,7 @@
     text-decoration: none;
     font-weight: 500;
 }
-.cvm-profile-email:hover { color: #02afef; }
+.cvm-profile-email:hover { color: #cc0000; }
 .cvm-profile-email svg { color: #9CA3AF; }
 
 .cvm-profile-divider {
@@ -285,7 +285,7 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.cvm-icon-purple { background: linear-gradient(135deg, #02afef, #0a8fc0); }
+.cvm-icon-purple { background: linear-gradient(135deg, #cc0000, #0a8fc0); }
 .cvm-icon-blue   { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
 .cvm-icon-gray   { background: linear-gradient(135deg, #9CA3AF, #6B7280); }
 .cvm-icon-gray svg { stroke: white; }
@@ -391,7 +391,7 @@
 
 .cvm-tag-pending     { background: #FEF3C7; color: #B45309; }
 .cvm-tag-completed   { background: #ECFDF5; color: #059669; }
-.cvm-tag-active      { background: #EEF2FF; color: #02afef; }
+.cvm-tag-active      { background: #EEF2FF; color: #cc0000; }
 .cvm-tag-inactive    { background: #F3F4F6; color: #9CA3AF; }
 .cvm-tag-submitted   { background: #E0F2FE; color: #0369A1; }
 .cvm-tag-not-submitted { background: #FEF2F2; color: #DC2626; }
@@ -453,7 +453,7 @@
 .cvm-order-amount {
     font-size: 14px;
     font-weight: 700;
-    color: #02afef;
+    color: #cc0000;
 }
 .cvm-order-status {
     font-size: 11.5px;
@@ -490,7 +490,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #02afef;
+    background: #cc0000;
     color: white;
     font-size: 12px;
     font-weight: 700;
@@ -641,7 +641,7 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    background: #02afef;
+    background: #cc0000;
     color: #fff;
     transition: background 0.15s;
 }
@@ -660,14 +660,14 @@
     border: 1px solid #e0e7ff;
     cursor: pointer;
     background: #f0faff;
-    color: #02afef;
+    color: #cc0000;
     transition: all 0.15s;
 }
 .cvm-link-btn-students:hover,
 .cvm-link-btn-students--active {
-    background: #02afef;
+    background: #cc0000;
     color: #fff;
-    border-color: #02afef;
+    border-color: #cc0000;
 }
 
 .cvm-link-students-panel {
@@ -684,7 +684,7 @@
     border-bottom: 1px solid #e0e7ff;
     font-size: 13px;
     font-weight: 700;
-    color: #02afef;
+    color: #cc0000;
 }
 
 .cvm-link-students-empty {

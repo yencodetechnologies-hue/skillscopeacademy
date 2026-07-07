@@ -12,7 +12,7 @@
 .lln-page-title {
   font-size: 20px;
   font-weight: 600;
-  color:#02afef;
+  color:#cc0000;
   margin: 0 0 4px;
 }
 .lln-page-sub {
@@ -54,7 +54,7 @@
 .lln-val-red    { color: #dc2626; }
 .lln-val-amber  { color: #d97706; }
 .lln-val-blue   { color: #2563eb; }
-.lln-val-purple { color:#02afef; }
+.lln-val-purple { color:#cc0000; }
 
 /* ─── Table Card ────────────────────────────────────────────────────────────── */
 .lln-card {
@@ -114,7 +114,7 @@
   transition: border-color 0.15s;
 }
 .lln-search-input:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
   background: #fff;
 }
 .lln-search-input::placeholder { color: #9ca3af; }

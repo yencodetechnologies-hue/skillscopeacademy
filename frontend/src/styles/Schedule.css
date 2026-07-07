@@ -463,7 +463,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 22px 22px 18px;
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
 }
 .modal-head h2 { margin: 0 0 3px; font-size: 1.15rem; font-weight: 700; }
@@ -533,7 +533,7 @@
 /* Assign teacher button */
 .btn-assign {
   width: 100%;
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
   border: none;
   border-radius: 8px;

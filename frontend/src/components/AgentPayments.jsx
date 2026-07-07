@@ -211,7 +211,7 @@ export default function AgentPayments() {
                     padding: "8px 12px",
                     borderRadius: "4px",
                     border: currentPage === page ? "none" : "1px solid #e5e7eb",
-                    backgroundColor: currentPage === page ? "#02afef" : "white",
+                    backgroundColor: currentPage === page ? "#cc0000" : "white",
                     color: currentPage === page ? "white" : "#666",
                     cursor: "pointer",
                     fontSize: "12px"

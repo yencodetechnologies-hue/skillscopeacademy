@@ -40,7 +40,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #02afef;
+  background: #cc0000;
   color: white;
   border: none;
   border-radius: 10px;
@@ -117,7 +117,7 @@
 }
 
 .search-input:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
 }
 
 .status-select {
@@ -140,7 +140,7 @@
 }
 
 .status-select:focus {
-  border-color: #02afef;
+  border-color: #cc0000;
 }
 
 .btn-search {
@@ -160,9 +160,9 @@
 }
 
 .btn-search:hover {
-  border-color: #02afef;
+  border-color: #cc0000;
   background: #f0faff;
-  color: #02afef;
+  color: #cc0000;
 }
 
 /* ───── Table Card ───── */
@@ -256,7 +256,7 @@ tbody td {
   width: 38px;
   height: 38px;
   border-radius: 9px;
-  background:#02afef;
+  background:#cc0000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -317,7 +317,7 @@ tbody td {
   transition: background 0.15s;
 }
 
-.btn-icon-view { color: #02afef; }
+.btn-icon-view { color: #cc0000; }
 .btn-icon-view:hover { background: #f0faff; }
 
 .btn-icon-edit { color: #374151; }
@@ -341,8 +341,8 @@ tbody td {
 }
 
 .btn-deactivate:hover {
-  border-color: #02afef;
-  color: #02afef;
+  border-color: #cc0000;
+  color: #cc0000;
 }
 
 /* ───── Pagination ───── */
@@ -380,8 +380,8 @@ tbody td {
 }
 
 .btn-page:hover:not(:disabled) {
-  border-color: #02afef;
-  color: #02afef;
+  border-color: #cc0000;
+  color: #cc0000;
 }
 
 .btn-page:disabled {
@@ -544,7 +544,7 @@ tbody td {
 }
 
 .field-input-wrap:focus-within {
-  border-color: #02afef;
+  border-color: #cc0000;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
 }
 
@@ -647,7 +647,7 @@ tbody td {
   align-items: center;
   gap: 8px;
   padding: 10px 26px;
-  background: linear-gradient(135deg, #02afef, #0a8fc0);
+  background: linear-gradient(135deg, #cc0000, #0a8fc0);
   color: white;
   border: none;
   border-radius: 9px;

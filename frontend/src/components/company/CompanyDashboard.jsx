@@ -138,7 +138,7 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
         background: "#f5f3ff",
         borderBottom: "1px solid #e0e7ff",
       }}>
-        <span style={{ fontWeight: 600, fontSize: 13, color: "#02afef" }}>
+        <span style={{ fontWeight: 600, fontSize: 13, color: "#cc0000" }}>
           👥 Students via this link
         </span>
         <button
@@ -292,7 +292,7 @@ function CourseLinkCards({ companyId }) {
                     padding: "7px 16px", fontSize: "13px", fontWeight: "600",
                     borderRadius: "8px", border: "none",
                     cursor: isFull ? "not-allowed" : "pointer",
-                    background: isFull ? "#e5e7eb" : "#02afef",
+                    background: isFull ? "#e5e7eb" : "#cc0000",
                     color: isFull ? "#999" : "#fff",
                   }}
                 >
@@ -305,8 +305,8 @@ function CourseLinkCards({ companyId }) {
                     padding: "7px 16px", fontSize: "13px", fontWeight: "600",
                     borderRadius: "8px", border: "1px solid #e0e7ff",
                     cursor: "pointer",
-                    background: isOpen ? "#02afef" : "#f5f3ff",
-                    color: isOpen ? "#fff" : "#02afef",
+                    background: isOpen ? "#cc0000" : "#f5f3ff",
+                    color: isOpen ? "#fff" : "#cc0000",
                     transition: "all 0.15s",
                   }}
                 >

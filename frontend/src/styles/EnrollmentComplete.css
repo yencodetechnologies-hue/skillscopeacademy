@@ -22,7 +22,7 @@
 
 /* Gradient Header */
 .ec-header {
-    background: linear-gradient(135deg, #0d2240 0%, #02afef 60%, #29b6e8 100%);
+    background: linear-gradient(135deg, #0d2240 0%, #cc0000 60%, #cc0000 100%);
     padding: 40px 32px 32px;
     text-align: center;
     display: flex;
@@ -121,7 +121,7 @@
 
 .ec-org-email {
     font-size: 14px;
-    color: #02afef;
+    color: #cc0000;
     text-decoration: none;
     font-weight: 500;
     display: block;
@@ -135,7 +135,7 @@
 .ec-dashboard-btn {
     display: block;
     width: 100%;
-    background: #02afef;
+    background: #cc0000;
     color: #fff;
     border: none;
     border-radius: 10px;

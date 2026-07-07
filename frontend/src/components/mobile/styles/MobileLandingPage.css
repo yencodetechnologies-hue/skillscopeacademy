@@ -20,7 +20,7 @@
 .announcement-bar {
   height: 32px;
   width: 100%;
-  background: #15a0de;
+  background: #cc0000;
   color: #fff;
   overflow: hidden;
   white-space: nowrap;
@@ -135,7 +135,7 @@
 }
 
 .mlp-slide-badge {
-  background: #29b6e8;
+  background: #cc0000;
   color: #0d2240;
   font-size: 10px;
   font-weight: 700;
@@ -159,7 +159,7 @@
 }
 
 .mlp-slide-price {
-  color: #29b6e8;
+  color: #cc0000;
   font-size: 16px;
   font-weight: 700;
 }
@@ -213,7 +213,7 @@
 }
 
 .mlp-dot.active {
-  background: #29b6e8;
+  background: #cc0000;
   width: 18px;
   border-radius: 3px;
 }
@@ -261,7 +261,7 @@
   border: 1px solid rgba(41,182,232,0.3);
   border-radius: 20px;
   padding: 4px 10px;
-  color: #29b6e8;
+  color: #cc0000;
   font-size: 11px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -279,7 +279,7 @@
 
 .mlp-btn-book {
   flex: 1;
-  background: #15a0de;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -295,7 +295,7 @@
 }
 
 .mlp-btn-call {
-  background: #29b6e8;
+  background: #cc0000;
   color: #0d2240;
   border: none;
   border-radius: 10px;
@@ -322,7 +322,7 @@
 .mlp-section-label {
   font-size: 11px;
   font-weight: 700;
-  color: #29b6e8;
+  color: #cc0000;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 15px;
@@ -342,7 +342,7 @@
 .mlp-session-course-tag {
   font-size: 12px;
   font-weight: 500;
-  color: #29b6e8;
+  color: #cc0000;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -379,7 +379,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #29b6e8;
+  background: #cc0000;
   margin-right: 10px;
   flex-shrink: 0;
 }
@@ -442,7 +442,7 @@
   border: none;
 }
 .mlp-date-actions > button{
-  background-color: #15a0de;
+  background-color: #cc0000;
   color: #fff;
   padding: 5px 9px;
 }
@@ -772,7 +772,7 @@
   padding: 10px 16px;
   display: flex;
   gap: 8px;
-  border-top: 2px solid #29b6e8;
+  border-top: 2px solid #cc0000;
   z-index: 100;
 }
 
@@ -1026,7 +1026,7 @@
   color: #0d2240;
   outline: none;
 }
-.mlp-input:focus { border-color: #29b6e8; }
+.mlp-input:focus { border-color: #cc0000; }
 .mlp-input::placeholder { color: #94a3b8; }
 .mlp-input-full { width: 100%; }
 
@@ -1042,7 +1042,7 @@
   resize: none;
   font-family: inherit;
 }
-.mlp-textarea:focus { border-color: #29b6e8; }
+.mlp-textarea:focus { border-color: #cc0000; }
 .mlp-textarea::placeholder { color: #94a3b8; }
 
 .mlp-modal-send {
@@ -1077,7 +1077,7 @@
 
 .mlp-modal-enrol-btn {
   flex: 1;
-  background: #29b6e8;
+  background: #cc0000;
   color: #0d2240;
   border: none;
   border-radius: 10px;

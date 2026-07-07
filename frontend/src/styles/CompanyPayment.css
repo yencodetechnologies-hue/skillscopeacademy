@@ -1,9 +1,9 @@
 /* ── Variables ── */
 :root {
-  --cp2-indigo: #02afef;
+  --cp2-indigo: #cc0000;
   --cp2-green:  #16a34a;
   --cp2-amber:  #d97706;
-  --cp2-sky:    #0ea5e9;
+  --cp2-sky:    #cc0000;
   --cp2-red:    #dc2626;
   --cp2-border: #e5e7eb;
   --cp2-bg:     #f9fafb;
@@ -41,9 +41,9 @@
 }
 
 .cp2-page-btn--active {
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
-  border-color: #02afef;
+  border-color: #cc0000;
   font-weight: 600;
 }
 
@@ -264,7 +264,7 @@
 .cp2-course-pill {
   display: inline-block;
   background: #dbeeff;
-  color: #02afef;
+  color: #cc0000;
   padding: 2px 8px;
   border-radius: 20px;
   font-size: 12px;
@@ -507,7 +507,7 @@
   align-self: flex-start;
 }
 
-.cp2-open-btn:hover { background: #02afef; }
+.cp2-open-btn:hover { background: #cc0000; }
 
 .cp2-no-receipt {
   display: flex;

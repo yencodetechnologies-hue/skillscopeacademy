@@ -37,7 +37,7 @@ font-size:14px;
 }
 
 .llnd-step.active{
-background:#02afef;
+background:#cc0000;
 color:white;
 border:none;
 }
@@ -63,7 +63,7 @@ border:1px solid #d1d5db;
     justify-content: flex-end;
 }
 .next-btn-llnd{
-background:linear-gradient(90deg,#02afef,#ec4899);
+background:linear-gradient(90deg,#cc0000,#ec4899);
 border:none;
 color:white;
 padding:12px 28px;
@@ -123,7 +123,7 @@ margin-top:20px;
 padding:12px 30px;
 border:none;
 border-radius:8px;
-background:linear-gradient(90deg,#02afef,#ec4899);
+background:linear-gradient(90deg,#cc0000,#ec4899);
 color:white;
 cursor:pointer;
 }

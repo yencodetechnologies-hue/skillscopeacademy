@@ -76,7 +76,7 @@
 }
 
 .vac-search-input:focus {
-  border-color: #29b6e8;
+  border-color: #cc0000;
 }
 
 .vac-search-clear {
@@ -178,7 +178,7 @@
 .vac-course-color {
   width: 6px;
   flex-shrink: 0;
-  background-color: #15a0de;
+  background-color: #cc0000;
 }
 
 .vac-course-body {
@@ -262,7 +262,7 @@
 
 .vac-btn-book {
   flex: 1;
-  background: #15a0de;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -305,7 +305,7 @@
   padding: 10px 16px;
   display: flex;
   gap: 8px;
-  border-top: 2px solid #29b6e8;
+  border-top: 2px solid #cc0000;
   z-index: 100;
 }
 

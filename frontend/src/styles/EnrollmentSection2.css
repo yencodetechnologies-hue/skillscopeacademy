@@ -106,7 +106,7 @@
 }
 
 .usi-input:focus {
-    border-color: #02afef;
+    border-color: #cc0000;
     background: #fff;
 }
 
@@ -125,7 +125,7 @@
 
 .usi-permission-checkbox {
     margin-top: 3px;
-    accent-color: #02afef;
+    accent-color: #cc0000;
     width: 16px;
     height: 16px;
     flex-shrink: 0;
@@ -180,7 +180,7 @@
 }
 
 .usi-radio {
-    accent-color: #02afef;
+    accent-color: #cc0000;
     cursor: pointer;
 }
 
@@ -311,7 +311,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #02afef;
+    background: #cc0000;
     border: none;
     border-radius: 10px;
     padding: 13px 28px;
@@ -357,18 +357,18 @@
 }
 
 .usi-dropzone:hover {
-    border-color: #02afef;
+    border-color: #cc0000;
     background: #f0faff;
 }
 
 .usi-dropzone-active {
-    border-color: #02afef;
+    border-color: #cc0000;
     background: #f0faff;
 }
 
 .usi-dropzone-arrow {
     font-size: 20px;
-    color: #02afef;
+    color: #cc0000;
     display: block;
     margin-bottom: 4px;
 }
@@ -376,7 +376,7 @@
 .usi-dropzone-text {
     font-size: 13.5px;
     font-weight: 600;
-    color: #02afef;
+    color: #cc0000;
     margin: 0;
 }
 

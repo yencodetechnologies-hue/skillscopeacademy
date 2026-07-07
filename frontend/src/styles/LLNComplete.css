@@ -7,7 +7,7 @@
 
 /* HEADER */
 .LLN-header {
-  background: linear-gradient(90deg, #02afef, #0a8fc0);
+  background: linear-gradient(90deg, #cc0000, #0a8fc0);
   color: white;
   padding: 12px 16px;
   font-weight: 500;
@@ -117,7 +117,7 @@
 
 /* BUTTON */
 .continue-btn {
-  background: linear-gradient(90deg, #02afef, #0a8fc0);
+  background: linear-gradient(90deg, #cc0000, #0a8fc0);
   color: white;
   padding: 10px 20px;
   border: none;

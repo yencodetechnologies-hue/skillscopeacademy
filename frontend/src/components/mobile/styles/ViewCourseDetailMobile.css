@@ -29,7 +29,7 @@
 .cdm-back-btn {
   background: none;
   border: none;
-  color: #29b6e8;
+  color: #cc0000;
   font-size: 24px;
   cursor: pointer;
   padding: 0;
@@ -88,7 +88,7 @@
 }
 
 .cdm-hero-code {
-  background: #29b6e8;
+  background: #cc0000;
   color: #0d2240;
   font-size: 10px;
   font-weight: 700;
@@ -129,7 +129,7 @@
 }
 
 .cdm-hero-price-num {
-  color: #29b6e8;
+  color: #cc0000;
   font-size: 20px;
   font-weight: 600;
   margin-top: 5px;
@@ -197,7 +197,7 @@
 }
 
 .cdm-section-title span {
-  color: #29b6e8;
+  color: #cc0000;
 }
 
 .cdm-desc-text {
@@ -228,7 +228,7 @@
 }
 
 .cdm-check {
-  color: #29b6e8;
+  color: #cc0000;
   font-size: 14px;
   flex-shrink: 0;
   margin-top: 1px;
@@ -274,13 +274,13 @@
 }
 
 .cdm-price-big {
-  color: #29b6e8;
+  color: #cc0000;
   font-size: 28px;
   font-weight: 700;
 }
 
 .cdm-price-save {
-  background: #29b6e8;
+  background: #cc0000;
   color: #0d2240;
   font-size: 11px;
   font-weight: 700;
@@ -326,7 +326,7 @@
   justify-content: center;
   gap: 10px;
   width: 100%;
-  background: linear-gradient(180deg, #29b6e8 0%, #1e9bca 100%);
+  background: linear-gradient(180deg, #cc0000 0%, #1e9bca 100%);
   color: #0d2240;
   border: none;
   border-radius: 10px;
@@ -428,7 +428,7 @@
 .cdm-date-cal-mon {
   font-size: 9px;
   text-transform: uppercase;
-  color: #29b6e8;
+  color: #cc0000;
 }
 
 .cdm-date-info {
@@ -507,11 +507,11 @@
 }
 
 .cdm-hb-card {
-  background: #02afef;
+  background: #cc0000;
   background-image: repeating-linear-gradient(
     45deg,
-    #02afef,
-    #02afef 12px,
+    #cc0000,
+    #cc0000 12px,
     #0086b9 12px,
     #0086b9 24px
   );
@@ -552,7 +552,7 @@
 .cdm-hb-title {
   font-size: 16px;
   font-weight: 800;
-  color: #02afef;
+  color: #cc0000;
   margin: 0;
   line-height: 1.2;
   text-transform: uppercase;
@@ -792,7 +792,7 @@
   padding: 10px 16px;
   display: flex;
   gap: 8px;
-  border-top: 2px solid #29b6e8;
+  border-top: 2px solid #cc0000;
   z-index: 100;
 }
 
@@ -922,7 +922,7 @@
 }
 
 .cdm-dot.active {
-  background: #29b6e8;
+  background: #cc0000;
 }
 
 /* ── Desktop: hide ── */

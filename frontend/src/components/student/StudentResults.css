@@ -1,6 +1,6 @@
 /* ===== Results.css ===== */
 :root {
-  --rr-purple:#02afef;
+  --rr-purple:#cc0000;
   --rr-purple-light: #ede9fe;
   --rr-green: #16a34a;
   --rr-green-light: #dcfce7;
@@ -159,7 +159,7 @@
 .rr-feedback-text { font-size: 0.84rem; color: var(--rr-gray-600); line-height: 1.5; background: #fff; border-radius: 8px; padding: 10px 12px; border: 1px solid var(--rr-gray-200); }
 
 .rr-retake-btn {
-  background: linear-gradient(135deg, var(--rr-purple),#02afef);
+  background: linear-gradient(135deg, var(--rr-purple),#cc0000);
   color: #fff;
   border: none;
   border-radius: 8px;

@@ -494,7 +494,7 @@ function Payment({
                     {blockPaymentForExistingEmail && (
                         <span className="error-text">
                             ⚠ {companyEmailTakenMsg}{" "}
-                            <a href="/login" style={{ color: "#02afef", textDecoration: "underline" }}>Login</a>
+                            <a href="/login" style={{ color: "#cc0000", textDecoration: "underline" }}>Login</a>
                             {" "}to continue.
                         </span>
                     )}
@@ -561,8 +561,8 @@ function Payment({
 
             {/* Enrollment Link Info (Only show "No Payment Required" if Pay Later is NOT enabled for the link) */}
             {isEnrollmentLink && (
-                <div className="summary-card" style={{ backgroundColor: "#f3e8ff", borderLeft: "4px solid#02afef" }}>
-                    <div style={{ fontSize: 14, color: "#02afef", fontWeight: 600 }}>
+                <div className="summary-card" style={{ backgroundColor: "#f3e8ff", borderLeft: "4px solid#cc0000" }}>
+                    <div style={{ fontSize: 14, color: "#cc0000", fontWeight: 600 }}>
                         {enrollmentLinkData?.payLater ? "✓ Pay Later Enabled" : "✓ No Payment Required"}
                     </div>
                     <div style={{ fontSize: 12, color: "#6b21b6", marginTop: 4 }}>
@@ -689,7 +689,7 @@ function Payment({
                         {/* PDF preview */}
                         {paymentSlip && paymentSlip.type === "application/pdf" && (
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
-                                <p style={{ fontSize: 12, color: "#02afef", margin: 0 }}>📄 {paymentSlip.name}</p>
+                                <p style={{ fontSize: 12, color: "#cc0000", margin: 0 }}>📄 {paymentSlip.name}</p>
                                 <button
                                     type="button"
                                     onClick={removeSlip}

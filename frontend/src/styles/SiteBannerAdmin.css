@@ -103,7 +103,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background:#02afef;
+  background:#cc0000;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 800;
@@ -205,9 +205,9 @@
 }
 
 .sba-btn--primary {
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
-  border-color: #02afef;
+  border-color: #cc0000;
 }
 
 .sba-btn--primary:hover:not(:disabled) {
@@ -248,7 +248,7 @@
 
 .sba-add-btn {
   width: 100%;
-  background: #02afef;
+  background: #cc0000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -420,7 +420,7 @@
 
 .sba-input:focus {
   outline: none;
-  border-color: #02afef;
+  border-color: #cc0000;
   box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.12);
 }
 
@@ -442,7 +442,7 @@
 }
 
 .sba-img-btn.is-active {
-  border-color: #02afef;
+  border-color: #cc0000;
   background: #f3f0ff;
   color: #5b4cdb;
 }

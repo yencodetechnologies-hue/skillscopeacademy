@@ -60,7 +60,7 @@
 }
 
 .s3-evidence-dropzone:hover {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #faf5ff;
 }
 
@@ -260,7 +260,7 @@
 }
 
 .s3-radio {
-    accent-color:#02afef;
+    accent-color:#cc0000;
     cursor: pointer;
 }
 
@@ -303,7 +303,7 @@
 }
 
 .s3-input:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #fff;
 }
 
@@ -320,7 +320,7 @@
 }
 
 .s3-input-full:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #fff;
 }
 
@@ -338,7 +338,7 @@
 }
 
 .s3-textarea:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #fff;
 }
 
@@ -366,7 +366,7 @@
 }
 
 .s3-checkbox-label input[type="checkbox"] {
-    accent-color:#02afef;
+    accent-color:#cc0000;
     width: 15px;
     height: 15px;
     flex-shrink: 0;
@@ -434,7 +434,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #02afef;
+    background: #cc0000;
     border: none;
     border-radius: 10px;
     padding: 13px 28px;

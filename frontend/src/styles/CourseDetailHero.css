@@ -48,8 +48,8 @@
 }
 
 .course-tag {
-  border: 1.5px solid #06b6d4;
-  color: #06b6d4;
+  border: 1.5px solid #cc0000;
+  color: #cc0000;
   padding: 5px 16px;
   border-radius: 20px;
   font-size: 13px;
@@ -160,7 +160,7 @@
 .btn-book {
   width: 100%;
   padding: 16px;
-  background: #06b6d4;
+  background: #cc0000;
   border: none;
   border-radius: 12px;
   color: #fff;
@@ -215,7 +215,7 @@
 }
 
 .check-icon {
-  color: #06b6d4;
+  color: #cc0000;
   font-weight: 700;
   font-size: 15px;
   flex-shrink: 0;
@@ -310,7 +310,7 @@
 .sticky-price {
   font-size: 24px;
   font-weight: 800;
-  color: #06b6d4;
+  color: #cc0000;
 }
 
 .sticky-btns {
@@ -320,7 +320,7 @@
 }
 
 .sticky-book {
-  background: #06b6d4;
+  background: #cc0000;
   color: #fff;
   border: none;
   padding: 11px 22px;

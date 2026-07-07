@@ -50,7 +50,7 @@ const adminBookingTemplate = (data) => {
   const gatewayRow = gatewayIdValue !== '-' ? `
     <tr>
       <td class="lbl">Gateway Transaction ID</td>
-      <td class="val" style="color: #02afef;"><strong>${gatewayIdValue}</strong></td>
+      <td class="val" style="color: #cc0000;"><strong>${gatewayIdValue}</strong></td>
     </tr>` : '';
 
   // Row for Bank Transfer / Transaction ID
@@ -77,8 +77,8 @@ const adminBookingTemplate = (data) => {
     /* ── Header ── */
     .eb-hdr { background: #0d2240; padding: 16px 24px; }
     .eb-hdr-title { font-size: 16px; font-weight: 700; color: #ffffff; margin: 0 0 2px; }
-    .eb-hdr-sub { font-size: 10px; color: #29b6e8; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin: 0; }
-    .eb-badge { background: #29b6e8; color: #ffffff; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; white-space: nowrap; display: inline-block; line-height: 1; }
+    .eb-hdr-sub { font-size: 10px; color: #cc0000; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin: 0; }
+    .eb-badge { background: #cc0000; color: #ffffff; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; white-space: nowrap; display: inline-block; line-height: 1; }
 
     /* ── Alert bar ── */
     .eb-alert { background: #0a1c33; padding: 9px 24px; font-size: 12px; color: #89c8e8; font-weight: 500; }
@@ -95,10 +95,10 @@ const adminBookingTemplate = (data) => {
     .eb-table td { padding: 8px 14px; border-bottom: 1px solid #f0f0f0; font-size: 12px; color: #1a1a1a; vertical-align: middle; word-break: break-word; }
     .eb-table tr:last-child td { border-bottom: none; }
     .eb-table td.lbl { width: 38%; padding: 8px 14px; font-size: 11px; font-weight: 600; color: #666; background: #fafafa; border-right: 1px solid #f0f0f0; }
-    .eb-table td a { color: #29b6e8; text-decoration: none; }
+    .eb-table td a { color: #cc0000; text-decoration: none; }
 
     /* ── Total row ── */
-    .eb-total-row td { background: #f0f6ff !important; border-top: 2px solid #29b6e8; }
+    .eb-total-row td { background: #f0f6ff !important; border-top: 2px solid #cc0000; }
     .eb-total-row .lbl { font-size: 13px; font-weight: 700; color: #0d2240; }
     .eb-total-row .val { font-size: 14px; font-weight: 700; color: #0d2240; }
 
@@ -122,7 +122,7 @@ const adminBookingTemplate = (data) => {
           </td>
           <td align="right" valign="top">
             <div style="display:inline-block; text-align:right; min-width: 200px;">
-              <span class="eb-badge" style="background:#29b6e8; color:#ffffff; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:6px 0; border-radius:3px; display:block; text-align:center; line-height:1; margin-bottom:8px;">New Booking</span>
+              <span class="eb-badge" style="background:#cc0000; color:#ffffff; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:6px 0; border-radius:3px; display:block; text-align:center; line-height:1; margin-bottom:8px;">New Booking</span>
               <p style="margin:0; font-size:24px; font-weight:700; color:#ffffff; line-height:1; white-space:nowrap;">
                 Booking ID: ${orderNumber}
               </p>

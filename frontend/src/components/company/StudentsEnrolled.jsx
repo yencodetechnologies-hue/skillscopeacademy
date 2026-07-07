@@ -4,7 +4,7 @@ import { API_URL } from "../../data/service";
 
 /* ── Badge helpers ── */
 function sourceLabel(source) {
-  if (source === "Booking Link")  return { text: "Booking Link",  color: "#02afef" };
+  if (source === "Booking Link")  return { text: "Booking Link",  color: "#cc0000" };
   if (source === "Company Link")  return { text: "Company Link",  color: "#0891b2" };
   return                                 { text: source || "—",   color: "#6b7280" };
 }

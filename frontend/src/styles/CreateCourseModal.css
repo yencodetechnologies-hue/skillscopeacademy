@@ -47,7 +47,7 @@
 }
 
 .modal-tabs .active {
-    background: #02afef;
+    background: #cc0000;
     color: white !important;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .create-btn {
-    background: #02afef;
+    background: #cc0000;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -163,7 +163,7 @@
 }
 
 .image-upload-options>button:hover {
-    background: #02afef;
+    background: #cc0000;
     color: white;
     cursor: pointer;
 }
@@ -200,7 +200,7 @@
 }
 
 .add-description-btn:hover{
-    background:linear-gradient(90deg,#02afef,#f107a3);
+    background:linear-gradient(90deg,#cc0000,#f107a3);
     color:white;
 }
 .requirements-section > div > input {
@@ -391,7 +391,7 @@
     cursor: pointer;
 }
 .dynamic-field button:hover {
-    background: #02afef;
+    background: #cc0000;
     color: white;
 }
 
@@ -546,7 +546,7 @@ opacity:0.6;
 }
 
 .pricing-type-option input[type="radio"] {
-    accent-color: #02afef;
+    accent-color: #cc0000;
     margin: 0;
     width: auto !important;
     min-width: 16px;
@@ -554,9 +554,9 @@ opacity:0.6;
 }
 
 .pricing-type-option.active {
-    border-color: #02afef;
+    border-color: #cc0000;
     background: #f3eeff;
-    color: #02afef;
+    color: #cc0000;
 }
 
 .pricing-sub {

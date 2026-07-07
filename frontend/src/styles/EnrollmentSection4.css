@@ -83,7 +83,7 @@
 }
 
 .s4-input:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #fff;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .s4-input-full:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #fff;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .s4-select:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
 }
 
 .s4-textarea {
@@ -137,7 +137,7 @@
 }
 
 .s4-textarea:focus {
-    border-color:#02afef;
+    border-color:#cc0000;
     background: #fff;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .s4-radio {
-    accent-color:#02afef;
+    accent-color:#cc0000;
     cursor: pointer;
 }
 
@@ -173,7 +173,7 @@
 }
 
 .s4-checkbox-label input[type="checkbox"] {
-    accent-color:#02afef;
+    accent-color:#cc0000;
     width: 15px;
     height: 15px;
     flex-shrink: 0;
@@ -238,7 +238,7 @@
 }
 
 .s4-next-btn {
-    background: #02afef;
+    background: #cc0000;
     border: none;
     border-radius: 10px;
     padding: 13px 28px;

@@ -21,7 +21,7 @@ const WHY_ITEMS = [
     { color: "#22d3ee", icon: "✦", text: <><strong className="ab-cyan">Safety Training Academy training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
     { color: "#2563eb", icon: "🎖", text: <>Our trainers have been in the industry for several years, and they are committed, experienced, and extremely qualified in the specific area in which they choose to train and assess.</> },
     { color: "#22c55e", icon: "🛡", text: <><strong>The safety of every student is so important to us</strong> that why we make it our priority. We are located in a well-organized area. We set ourselves apart by ensuring that our students are fully trained.</> },
-    { color: "#02afef", icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
+    { color: "#cc0000", icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
     { color: "#f97316", icon: "📊", text: <>Our equipment for each course is very standard, contributing to the training to be more understandable by every one of our students.</> },
     { color: "#22d3ee", icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At STA, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
     { color: "#2563eb", icon: "📍", text: <>Our training location has easy access to public transport without too much stress. And lastly, you can choose to train in your home place and at a convenient time.</> },
@@ -37,9 +37,9 @@ const MISSION_ITEMS = [
 
 const VALUES = [
     { icon: "✦", bg: "#22d3ee", title: "Easy Accessibility", text: "Our training services are readily accessible to everyone who needs them." },
-    { icon: "🎯", bg: "linear-gradient(135deg,#2563eb,#02afef)", title: "Striving for Excellence", text: "We continually aim for the highest qualities in everything we do.", featured: true },
+    { icon: "🎯", bg: "linear-gradient(135deg,#2563eb,#cc0000)", title: "Striving for Excellence", text: "We continually aim for the highest qualities in everything we do.", featured: true },
     { icon: "🎖", bg: "#22d3ee", title: "Highest Quality", text: "An assurance that a person received quality training from us without negative feedback." },
-    { icon: "👥", bg: "linear-gradient(135deg,#02afef,#ec4899)", title: "Inclusive", text: "We reflect clients views in our actions and critical thinking to serve betters" },
+    { icon: "👥", bg: "linear-gradient(135deg,#cc0000,#ec4899)", title: "Inclusive", text: "We reflect clients views in our actions and critical thinking to serve betters" },
     { icon: "🛡", bg: "#22c55e", title: "Trustworthy", text: "We are open, honest, and committed to the highest standards of ethical behaviour" },
 ]
 

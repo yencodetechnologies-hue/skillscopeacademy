@@ -24,9 +24,9 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
     .cr-body { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; border: 1px solid #e0e0e0; overflow: hidden; font-size: 13px; color: #1a1a1a; }
     .cr-hdr { background: #0d2240; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
     .cr-hdr-title { font-size: 16px; font-weight: 700; color: #ffffff; margin: 0 0 2px; }
-    .cr-hdr-sub { font-size: 10px; color: #29b6e8; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin: 0; }
-    .cr-badge { background: #29b6e8; color: #ffffff; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 11px; border-radius: 2px; white-space: nowrap; }
-    .cr-divider { height: 3px; background: #29b6e8; }
+    .cr-hdr-sub { font-size: 10px; color: #cc0000; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin: 0; }
+    .cr-badge { background: #cc0000; color: #ffffff; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 11px; border-radius: 2px; white-space: nowrap; }
+    .cr-divider { height: 3px; background: #cc0000; }
     .cr-banner { background: #0a1c33; padding: 14px 24px; text-align: center; }
     .cr-banner-text { font-size: 14px; font-weight: 700; color: #ffffff; margin: 0; letter-spacing: 0.2px; }
     .cr-content { padding: 20px 24px; }
@@ -34,7 +34,7 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
     .cr-intro { font-size: 13px; color: #555555; line-height: 1.7; margin: 0 0 16px; }
     .cr-section { border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; margin-bottom: 14px; }
     .cr-section-head { background: #0d2240; padding: 7px 14px; }
-    .cr-section-head span { font-size: 10px; font-weight: 700; color: #29b6e8; letter-spacing: 1px; text-transform: uppercase; }
+    .cr-section-head span { font-size: 10px; font-weight: 700; color: #cc0000; letter-spacing: 1px; text-transform: uppercase; }
     .cr-section-body { padding: 11px 14px; }
     .cr-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
     .cr-table td { padding: 5px 0; vertical-align: top; }

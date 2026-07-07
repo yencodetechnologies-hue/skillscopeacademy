@@ -1,6 +1,6 @@
 /* ===== MyCourses.css ===== */
 :root {
-  --primary: #02afef;
+  --primary: #cc0000;
   --primary-light: #dbeeff;
   --primary-dark: #0a8fc0;
   --green: #16a34a;
@@ -110,7 +110,7 @@
   transition: all 0.2s;
 }
 .mc-btn--purple {
-  background: linear-gradient(135deg, var(--primary),#02afef);
+  background: linear-gradient(135deg, var(--primary),#cc0000);
   color: #fff;
   padding: 10px 18px;
   font-size: 0.9rem;
@@ -222,7 +222,7 @@
 }
 .mc-progress-bar__fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary),#02afef);
+  background: linear-gradient(90deg, var(--primary),#cc0000);
   border-radius: 99px;
   transition: width 0.5s ease;
 }

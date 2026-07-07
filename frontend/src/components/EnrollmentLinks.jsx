@@ -263,7 +263,7 @@ function ViewModal({ link, onClose }) {
                   <tr key={i}>
                     <td>{s.name}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.email}</td>
-                    <td style={{ color: "#29b6e8", fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
+                    <td style={{ color: "#cc0000", fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.date}</td>
                   </tr>
                 ))}
@@ -306,7 +306,7 @@ function StudentsModal({ link, onClose }) {
                   <tr key={i}>
                     <td style={{ fontWeight: 600 }}>{s.name}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.email}</td>
-                    <td style={{ color: "#29b6e8", fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
+                    <td style={{ color: "#cc0000", fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.date}</td>
                   </tr>
                 ))}

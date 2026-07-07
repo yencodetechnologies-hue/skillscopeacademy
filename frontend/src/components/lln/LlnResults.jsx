@@ -136,7 +136,7 @@
 //                   <button
 //                     className="lln-edit-link"
 //                     onClick={() => setIsEditing(true)}
-//                     style={{ background: "none", border: "none", color: "#02afef", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
+//                     style={{ background: "none", border: "none", color: "#cc0000", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
 //                   >
 //                     Change Date
 //                   </button>
@@ -602,7 +602,7 @@ function AssessmentModal({ record, onClose, onRefresh }) {
                   <button
                     className="lln-edit-link"
                     onClick={() => setIsEditing(true)}
-                    style={{ background: "none", border: "none", color: "#02afef", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
+                    style={{ background: "none", border: "none", color: "#cc0000", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
                   >
                     Change Date
                   </button>

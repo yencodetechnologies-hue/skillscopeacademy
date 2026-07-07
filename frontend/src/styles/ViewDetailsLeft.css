@@ -46,7 +46,7 @@ color:#64748b;
 /* COMBO OFFER */
 
 .course-combo-div{
-background:linear-gradient(135deg,#02afef,#ec4899);
+background:linear-gradient(135deg,#cc0000,#ec4899);
 padding:40px;
 border-radius:20px;
 color:white;
@@ -75,7 +75,7 @@ margin-top:20px;
 
 .combo-btn-course{
 background:white;
-color:#02afef;
+color:#cc0000;
 padding:12px 25px;
 border:none;
 border-radius:25px;

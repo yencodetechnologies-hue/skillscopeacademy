@@ -1,13 +1,13 @@
 .llnd-complete-card {
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   margin-top: 20px;
 }
 
 /* HEADER */
 .llnd-header {
-  background: linear-gradient(90deg,#cc0000, #d946ef);
+  background: linear-gradient(90deg,var(--color-brand-primary), #d946ef);
   color: white;
   padding: 12px 16px;
   font-weight: 500;
@@ -74,20 +74,20 @@
 }
 
 .badge.pass {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .badge.fail {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-bg);
+  color: var(--color-error);
 }
 
 /* BUTTON */
 .retry-btn {
   margin-top: 20px;
   padding: 8px 20px;
-  background: #e5e7eb;
+  background: var(--color-border);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -115,7 +115,7 @@
 
 /* BUTTON */
 .continue-btn {
-  background: linear-gradient(90deg,#cc0000, #d946ef);
+  background: linear-gradient(90deg,var(--color-brand-primary), #d946ef);
   color: white;
   padding: 10px 20px;
   border: none;

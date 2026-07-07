@@ -72,17 +72,17 @@
 }
 
 .vac-search-input::placeholder {
-  color: #94a3b8;
+  color: var(--color-text-subtle);
 }
 
 .vac-search-input:focus {
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
 }
 
 .vac-search-clear {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   font-size: 14px;
   cursor: pointer;
   padding: 4px;
@@ -178,7 +178,7 @@
 .vac-course-color {
   width: 6px;
   flex-shrink: 0;
-  background-color: #cc0000;
+  background-color: var(--color-brand-primary);
 }
 
 .vac-course-body {
@@ -224,7 +224,7 @@
 
 .vac-course-orig {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   text-decoration: line-through;
   text-align: right;
 }
@@ -262,8 +262,8 @@
 
 .vac-btn-book {
   flex: 1;
-  background: #cc0000;
-  color: #fff;
+  background: var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   border-radius: 8px;
   padding: 8px;
@@ -290,7 +290,7 @@
 }
 
 .vac-btn-details:active {
-  background: #dbeafe;
+  background: var(--color-info-bg);
 }
 
 /* ── Sticky Bottom Bar ── */
@@ -305,7 +305,7 @@
   padding: 10px 16px;
   display: flex;
   gap: 8px;
-  border-top: 2px solid #cc0000;
+  border-top: 2px solid var(--color-brand-primary);
   z-index: 100;
 }
 

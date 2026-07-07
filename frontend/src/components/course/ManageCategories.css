@@ -118,22 +118,22 @@
 }
 
 .mcc-input:focus {
-  border-color:#cc0000;
+  border-color:var(--color-brand-primary);
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
 }
 
 .mcc-input--error {
-  border-color: #ef4444;
+  border-color: var(--color-error-alt);
 }
 
 .mcc-input--error:focus {
-  border-color: #ef4444;
+  border-color: var(--color-error-alt);
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
 }
 
 .mcc-error-msg {
   font-size: 12px;
-  color: #ef4444;
+  color: var(--color-error-alt);
 }
 
 .mcc-add-btn {
@@ -142,8 +142,8 @@
   gap: 6px;
   height: 38px;
   padding: 0 16px;
-  background:#cc0000;
-  color: #fff;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -156,7 +156,7 @@
 }
 
 .mcc-add-btn:hover {
-  background: #cc0000;
+  background: var(--color-brand-primary);
 }
 
 .mcc-add-btn:active {
@@ -227,7 +227,7 @@
 }
 
 .mcc-drag-handle:hover {
-  color:#cc0000;
+  color:var(--color-brand-primary);
 }
 
 .mcc-drag-handle:active {
@@ -255,7 +255,7 @@
 .mcc-item-count {
   font-size: 12px;
   color: #888;
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
   padding: 2px 8px;
   border-radius: 12px;
   white-space: nowrap;
@@ -277,7 +277,7 @@
   flex: 1;
   height: 36px;
   padding: 0 12px;
-  border: 1.5px solid#cc0000;
+  border: 1.5px solidvar(--color-brand-primary);
   border-radius: 7px;
   font-size: 14px;
   color: #1a1a1a;
@@ -293,7 +293,7 @@
   height: 38px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   background: #fafafa;
   flex-shrink: 0;
 }
@@ -320,7 +320,7 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  color:#cc0000;
+  color:var(--color-brand-primary);
 }
 
 /* ── Image picker (used in add + edit) ────────── */
@@ -357,7 +357,7 @@
 
 .mcc-img-toggle-btn.is-active {
   background: #fff;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
@@ -390,7 +390,7 @@
   background: #fff;
   border: 1.5px dashed #c4b5fd;
   border-radius: 8px;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -401,7 +401,7 @@
 
 .mcc-file-btn:hover {
   background: #f5f3ff;
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
 }
 
 .mcc-file-name {
@@ -415,7 +415,7 @@
 
 .mcc-keep-hint {
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -424,7 +424,7 @@
   height: 56px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   background: #fff;
   flex-shrink: 0;
 }
@@ -432,7 +432,7 @@
 .mcc-save-btn {
   height: 34px;
   padding: 0 14px;
-  background: #16a34a;
+  background: var(--color-success);
   color: #fff;
   border: none;
   border-radius: 7px;
@@ -488,21 +488,21 @@
 }
 
 .mcc-action-btn--edit {
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .mcc-action-btn--edit:hover {
-  background: #ede9fe;
-  color:#cc0000;
+  background: var(--color-brand-tint);
+  color:var(--color-brand-primary);
 }
 
 .mcc-action-btn--delete {
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .mcc-action-btn--delete:hover {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-bg);
+  color: var(--color-error);
 }
 
 /* ── FOOTER ──────────────────────────────────── */
@@ -589,7 +589,7 @@
 .mcc-dialog-confirm {
   height: 38px;
   padding: 0 18px;
-  background: #dc2626;
+  background: var(--color-error);
   color: #fff;
   border: none;
   border-radius: 8px;

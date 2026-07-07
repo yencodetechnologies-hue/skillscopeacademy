@@ -4,8 +4,8 @@
   max-width: 420px;
   padding: 45px;
   border-radius: 20px;
-  color: white;
-  background: #cc0000;
+  color: var(--color-brand-on-primary);
+  background: var(--color-brand-primary);
   display: flex;
   flex-direction: column;
   gap: 20px;

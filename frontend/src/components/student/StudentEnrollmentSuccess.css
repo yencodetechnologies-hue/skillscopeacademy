@@ -12,7 +12,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(135deg, var(--color-success-alt), #059669);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@
 }
 
 .success-message {
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-size: 15px;
     max-width: 400px;
     line-height: 1.6;
@@ -39,7 +39,7 @@
 
 .success-btn {
     padding: 12px 28px;
-    background-color:#cc0000;
+    background-color:var(--color-brand-primary);
     color: white;
     border: none;
     border-radius: 8px;
@@ -51,5 +51,5 @@
 }
 
 .success-btn:hover {
-    background-color: #cc0000;
+    background-color: var(--color-brand-primary);
 }

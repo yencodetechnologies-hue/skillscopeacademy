@@ -121,7 +121,7 @@
 .csm-bulk-check {
   width: 16px;
   height: 16px;
-  border: 2px solid#cc0000;
+  border: 2px solidvar(--color-brand-primary);
   border-radius: 3px;
   background: #fff;
   display: flex;
@@ -132,7 +132,7 @@
 }
 
 .csm-bulk-toggle input:checked + .csm-bulk-check {
-  background:#cc0000;
+  background:var(--color-brand-primary);
 }
 
 .csm-bulk-toggle input:checked + .csm-bulk-check::after {
@@ -188,7 +188,7 @@
 
 .csm-field input:focus,
 .csm-field select:focus {
-  border-color:#cc0000;
+  border-color:var(--color-brand-primary);
 }
 
 .csm-hint {
@@ -234,9 +234,9 @@
 }
 
 .csm-day-btn.active {
-  background:#cc0000;
-  color: #fff;
-  border-color:#cc0000;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
+  border-color:var(--color-brand-primary);
 }
 
 .csm-day-btn.blurred {
@@ -246,16 +246,16 @@
 }
 
 .csm-day-btn:hover:not(.active):not(.blurred) {
-  border-color:#cc0000;
-  color:#cc0000;
+  border-color:var(--color-brand-primary);
+  color:var(--color-brand-primary);
 }
 
 /* ── Add Date Button ── */
 .csm-add-date-btn {
   margin-top: 1rem;
   padding: 0.55rem 1.2rem;
-  background:#cc0000;
-  color: #fff;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   border-radius: 8px;
   font-size: 0.875rem;
@@ -266,7 +266,7 @@
   gap: 6px;
   transition: background 0.15s;
 }
-.csm-add-date-btn:hover { background: #cc0000; }
+.csm-add-date-btn:hover { background: var(--color-brand-primary); }
 
 /* ── Schedule Section ── */
 .csm-schedule-section {
@@ -332,7 +332,7 @@
   transition: all 0.15s;
 }
 .csm-filter-tab:hover { background: #f5f5f5; color: #444; }
-.csm-filter-tab.active { background: #f0ebff; color:#cc0000; font-weight: 500; }
+.csm-filter-tab.active { background: #f0ebff; color:var(--color-brand-primary); font-weight: 500; }
 
 .csm-dot {
   width: 7px;
@@ -343,7 +343,7 @@
 
 .csm-session-inactive {
   opacity: 0.55;
-  background: #f9fafb;
+  background: var(--color-bg);
   border: 1px dashed #d1d5db;
 }
 
@@ -392,7 +392,7 @@
 
 .csm-add-slot-btn {
   font-size: 0.75rem;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   background: none;
   border: none;
   cursor: pointer;
@@ -426,7 +426,7 @@
 
 .csm-tag {
   background: #f0ebff;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   padding: 2px 10px;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -455,7 +455,7 @@
 
 .csm-unsaved-badge {
   background: #fff8e8;
-  color: #d97706;
+  color: var(--cp2-amber);
   font-size: 0.72rem;
   font-weight: 600;
   padding: 3px 10px;
@@ -472,7 +472,7 @@
 
 .csm-edit-btn {
   font-size: 0.78rem;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   background: none;
   border: none;
   cursor: pointer;
@@ -504,7 +504,7 @@
   display: inline-block;
   width: 40px;
   height: 22px;
-  background: #ef4444;
+  background: var(--color-error-alt);
   border-radius: 999px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
   flex-shrink: 0;
@@ -536,13 +536,13 @@
 .csm-status-label {
   font-size: 0.72rem;
   font-weight: 600;
-  color: #dc2626;
+  color: var(--color-error);
   min-width: 62px;
   transition: color 0.2s ease;
 }
 
 .csm-status-switch.is-on .csm-status-label {
-  color: #16a34a;
+  color: var(--color-success);
 }
 
 .csm-status-switch:hover .csm-status-slider {
@@ -559,7 +559,7 @@
   border: none;
   cursor: pointer;
   font-size: 0.9rem;
-  color: #ef4444;
+  color: var(--color-error-alt);
   padding: 2px 4px;
   border-radius: 4px;
   transition: background 0.12s;
@@ -596,11 +596,11 @@
 }
 
 .csm-save-dates-btn.active {
-  background:#cc0000;
-  color: #fff;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   cursor: pointer;
 }
-.csm-save-dates-btn.active:hover { background: #cc0000; }
+.csm-save-dates-btn.active:hover { background: var(--color-brand-primary); }
 
 .csm-cancel-btn {
   padding: 0.6rem 1.2rem;
@@ -685,8 +685,8 @@
 
 .csm-save-changes-btn {
   padding: 0.55rem 1.2rem;
-  background:#cc0000;
-  color: #fff;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   border-radius: 8px;
   font-size: 0.875rem;
@@ -694,7 +694,7 @@
   cursor: pointer;
   transition: background 0.15s;
 }
-.csm-save-changes-btn:hover { background: #cc0000; }
+.csm-save-changes-btn:hover { background: var(--color-brand-primary); }
 .csm-save-changes-btn:disabled { background: #c4b5fd; cursor: not-allowed; }
 
 /* ═══════════════════════════════════════════════

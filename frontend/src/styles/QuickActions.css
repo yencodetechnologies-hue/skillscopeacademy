@@ -34,7 +34,7 @@
 
 .qa__btn--hovered,
 .qa__btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
 }
 
 .qa__btn-left {
@@ -44,7 +44,7 @@
 }
 
 .qa__btn-icon {
-  color: #6b7280;
+  color: var(--color-text-muted);
   display: flex;
   align-items: center;
 }
@@ -52,7 +52,7 @@
 .qa__btn-label {
   font-size: 14px;
   font-weight: 500;
-  color: #111827;
+  color: var(--color-text-primary);
 }
 
 .qa__btn-chevron {

@@ -1,3 +1,4 @@
+import { colors } from '../../constants/theme';
 import { useEffect, useMemo, useRef, useState } from "react"
 import "./VocStep3.css"
 import { API_URL } from "../../data/service"
@@ -382,7 +383,7 @@ function VocStep3({ details = {}, courses, onBack, onComplete }) {
                     </button>
                 </div>
                 {error && (
-                    <p style={{ marginTop: 8, color: "#fee2e2", fontSize: 13, textAlign: "right" }}>
+                    <p style={{ marginTop: 8, color: colors.errorBg, fontSize: 13, textAlign: "right" }}>
                         ⚠ {error}
                     </p>
                 )}

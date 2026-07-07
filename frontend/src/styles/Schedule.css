@@ -3,22 +3,7 @@
    Mobile-first, fully responsive
    ============================================================ */
 
-/* ── Reset / Variables ─────────────────────────────────────── */
-:root {
-  --primary:    #000001;
-  --primary-dk: #4547d0;
-  --bg:         #f4f5fa;
-  --surface:    #ffffff;
-  --border:     #e5e7eb;
-  --text:       #1e1f2e;
-  --muted:      #6b7280;
-  --radius:     10px;
-  --shadow:     0 2px 12px rgba(0,0,0,.08);
-  --shadow-lg:  0 8px 32px rgba(0,0,0,.14);
-  --green:      #10b981;
-  --orange:     #f97316;
-  --red:        #ef4444;
-}
+/* ── Reset ─────────────────────────────────────────────────── */
 
 /* ── Page ──────────────────────────────────────────────────── */
 .sch-page {
@@ -98,7 +83,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f9fafb;
+  background: var(--color-bg);
   border: 1.5px solid var(--border);
   border-left: 4px solid var(--primary);
   border-radius: 6px;
@@ -152,9 +137,9 @@
   border-radius: 3px;
   flex-shrink: 0;
 }
-.dot--scheduled { background: #dbeafe; border: 1px solid #93c5fd; }
+.dot--scheduled { background: var(--color-info-bg); border: 1px solid #93c5fd; }
 .dot--completed { background: #d1fae5; border: 1px solid #6ee7b7; }
-.dot--cancelled { background: #f3f4f6; border: 1px solid #d1d5db; }
+.dot--cancelled { background: var(--color-bg-muted); border: 1px solid #d1d5db; }
 
 /* ── Calendar Wrapper ──────────────────────────────────────── */
 .sch-cal {
@@ -193,7 +178,7 @@
   font-weight: 500;
   transition: background .15s;
 }
-.btn-today:hover { background: #f3f4f6; }
+.btn-today:hover { background: var(--color-bg-muted); }
 
 .btn-arrow {
   background: none;
@@ -206,7 +191,7 @@
   line-height: 1;
   transition: color .15s, background .15s;
 }
-.btn-arrow:hover { color: var(--text); background: #f3f4f6; }
+.btn-arrow:hover { color: var(--text); background: var(--color-bg-muted); }
 
 .tb-title {
   font-size: clamp(.9rem, 2vw, 1.2rem);
@@ -259,7 +244,7 @@
   max-width: 220px;
   transition: background .15s;
 }
-.course-dd-btn:hover { background: #f9fafb; }
+.course-dd-btn:hover { background: var(--color-bg); }
 .dd-label { overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
 .dd-caret { font-size: .65rem; color: var(--muted); flex-shrink: 0; }
 
@@ -285,7 +270,7 @@
   cursor: pointer;
   transition: background .12s;
 }
-.dd-opt:hover { background: #f3f4f6; }
+.dd-opt:hover { background: var(--color-bg-muted); }
 .dd-opt--active { color: var(--primary); font-weight: 600; }
 .dd-check { font-size: .75rem; }
 
@@ -375,10 +360,10 @@
 /* List view */
 .fc-list-table { border-collapse: collapse !important; }
 .fc-list-day-cushion {
-  background: #f9fafb !important;
+  background: var(--color-bg) !important;
   padding: 6px 12px !important;
 }
-.fc-list-event:hover td { background: #f9fafb !important; cursor: pointer; }
+.fc-list-event:hover td { background: var(--color-bg) !important; cursor: pointer; }
 .fc-list-event-dot { display: none !important; }
 .fc-list-event-time { font-size: .8rem !important; color: var(--muted) !important; }
 
@@ -463,8 +448,8 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 22px 22px 18px;
-  background:#cc0000;
-  color: #fff;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
 }
 .modal-head h2 { margin: 0 0 3px; font-size: 1.15rem; font-weight: 700; }
 .modal-head p  { margin: 0; font-size: .82rem; opacity: .85; }
@@ -533,8 +518,8 @@
 /* Assign teacher button */
 .btn-assign {
   width: 100%;
-  background:#cc0000;
-  color: #fff;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   border-radius: 8px;
   padding: 11px;
@@ -576,7 +561,7 @@
   color: var(--text);
   transition: background .15s;
 }
-.btn-cancel:hover { background: #f3f4f6; }
+.btn-cancel:hover { background: var(--color-bg-muted); }
 
 /* ── Toast ─────────────────────────────────────────────────── */
 .sch-toast {

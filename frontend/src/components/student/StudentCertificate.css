@@ -69,7 +69,7 @@
   left: 28%;
   width: 2px;
   height: 44px;
-  background: #94a3b8;
+  background: var(--color-text-subtle);
   z-index: 1;
 }
 .uc-crane-sign {
@@ -95,14 +95,14 @@
   height: 185px;
   background: #dde4ee;
   border-radius: 16px;
-  border: 4px solid #94a3b8;
+  border: 4px solid var(--color-text-subtle);
   overflow: hidden;
   z-index: 2;
 }
 .uc-phone-notch {
   width: 36px;
   height: 6px;
-  background: #94a3b8;
+  background: var(--color-text-subtle);
   border-radius: 3px;
   margin: 8px auto 4px;
 }
@@ -135,7 +135,7 @@
   height: 24px;
   background: repeating-linear-gradient(
     45deg,
-    #f97316 0px, #f97316 10px,
+    var(--color-orange) 0px, var(--color-orange) 10px,
     #fff     10px, #fff    20px
   );
   transform: rotate(-8deg) translateY(-50%);
@@ -154,14 +154,14 @@
 .uc-gear {
   position: absolute;
   border-radius: 50%;
-  background: #94a3b8;
+  background: var(--color-text-subtle);
 }
 .uc-gear-lg {
   width: 46px;
   height: 46px;
   bottom: 0;
   left: 0;
-  box-shadow: 0 0 0 6px #f8fafc, 0 0 0 10px #94a3b8;
+  box-shadow: 0 0 0 6px #f8fafc, 0 0 0 10px var(--color-text-subtle);
   animation: spin 6s linear infinite;
 }
 .uc-gear-sm {
@@ -169,7 +169,7 @@
   height: 30px;
   bottom: 18px;
   left: 32px;
-  box-shadow: 0 0 0 4px #f8fafc, 0 0 0 7px #94a3b8;
+  box-shadow: 0 0 0 4px #f8fafc, 0 0 0 7px var(--color-text-subtle);
   animation: spin 4s linear infinite reverse;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -246,7 +246,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #f97316;
+  background: var(--color-orange);
   animation: blink 1.4s ease-in-out infinite;
 }
 @keyframes blink {

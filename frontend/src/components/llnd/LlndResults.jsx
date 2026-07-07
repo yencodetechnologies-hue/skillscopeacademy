@@ -1,3 +1,4 @@
+import { colors } from '../../constants/theme';
 // import { useState, useEffect } from "react";
 // import "../../styles/LlndResults.css";
 // import { useSearchParams } from "react-router-dom";
@@ -136,7 +137,7 @@
 //                   <button 
 //                     className="lln-edit-link" 
 //                     onClick={() => setIsEditing(true)}
-//                     style={{ background: "none", border: "none", color: "#cc0000", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
+//                     style={{ background: "none", border: "none", color: colors.brandPrimary, cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
 //                   >
 //                     Change Date
 //                   </button>
@@ -654,7 +655,7 @@
 //                     style={{
 //                       background: "none",
 //                       border: "none",
-//                       color: "#cc0000",
+//                       color: colors.brandPrimary,
 //                       cursor: "pointer",
 //                       fontSize: "12px",
 //                       textDecoration: "underline"
@@ -1117,7 +1118,7 @@
 //                   <button 
 //                     className="lln-edit-link" 
 //                     onClick={() => setIsEditing(true)}
-//                     style={{ background: "none", border: "none", color: "#cc0000", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
+//                     style={{ background: "none", border: "none", color: colors.brandPrimary, cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
 //                   >
 //                     Change Date
 //                   </button>
@@ -1642,7 +1643,7 @@ function AssessmentModal({ record, onClose, onRefresh }) {
                     style={{
                       background: "none",
                       border: "none",
-                      color: "#cc0000",
+                      color: colors.brandPrimary,
                       cursor: "pointer",
                       fontSize: "12px",
                       textDecoration: "underline"

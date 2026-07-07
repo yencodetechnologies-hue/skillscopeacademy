@@ -39,7 +39,7 @@
 }
 
 .logo span {
-  color: #cc0000;
+  color: var(--color-brand-primary);
 }
 
 /* NAV LINKS */
@@ -63,7 +63,7 @@
 .nav-links li:hover,
 .nav-links li:hover > i,
 .nav-links li:focus-within {
-  color: #cc0000;
+  color: var(--color-brand-primary);
 }
 
 /* BUTTONS */
@@ -77,8 +77,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background:#cc0000;
-  color: white;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   padding: 13px 26px;
   border-radius: 10px;
@@ -98,9 +98,9 @@
 }
 
 .pub-voc-btn {
-  border: 2px solid #cc0000 !important;
+  border: 2px solid var(--color-brand-primary) !important;
   background: #19354a;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   font-weight: 600;
 }
 
@@ -318,7 +318,7 @@
 
 .mobile-fullmenu-item:hover {
   background: #f7faff;
-  color: #2563eb;
+  color: var(--color-info);
 }
 
 .mobile-fullmenu-buttons {
@@ -333,7 +333,7 @@
 .mobile-fullmenu-buttons button {
   width: 100%;
   padding: 13px;
-  background: #2563eb;
+  background: var(--color-info);
   color: white;
   border: none;
   border-radius: 10px;
@@ -426,8 +426,8 @@
 }
 
 .combo-item:hover {
-  background: #cc0000;
-  color: white;
+  background: var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
 }
 
 .combo-btn-nav {

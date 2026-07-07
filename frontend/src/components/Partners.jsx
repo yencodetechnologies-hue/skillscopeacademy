@@ -193,7 +193,7 @@ function Partners() {
                             </div>
                             <div className="pt-card-body">
                                 <div className="pt-card-title">
-                                    {p.name || <em style={{ color: "#94a3b8" }}>Untitled</em>}
+                                    {p.name || <em style={{ color: colors.textSubtle }}>Untitled</em>}
                                 </div>
                                 {p.link && <div className="pt-card-link" title={p.link}>{p.link}</div>}
                                 <div className="pt-card-actions">

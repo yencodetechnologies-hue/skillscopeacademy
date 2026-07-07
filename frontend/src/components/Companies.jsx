@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { colors } from '../constants/theme';
 import "../styles/Companies.css";
 import axios from "axios";
 import CompanyViewModal from "./CompanyViewModal";
@@ -125,11 +126,11 @@ function LinksModal({ company, onClose }) {
                         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                             <thead>
                                 <tr style={{ borderBottom: "2px solid #e5e7eb", background: "#f9fafb" }}>
-                                    <th style={{ padding: "10px 12px", textAlign: "left", color: "#6b7280", fontWeight: 600 }}>#</th>
-                                    <th style={{ padding: "10px 12px", textAlign: "left", color: "#6b7280", fontWeight: 600 }}>Course</th>
-                                    <th style={{ padding: "10px 12px", textAlign: "left", color: "#6b7280", fontWeight: 600 }}>Session Date</th>
-                                    <th style={{ padding: "10px 12px", textAlign: "center", color: "#6b7280", fontWeight: 600 }}>Used / Max</th>
-                                    <th style={{ padding: "10px 12px", textAlign: "center", color: "#6b7280", fontWeight: 600 }}>Actions</th>
+                                    <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>#</th>
+                                    <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Course</th>
+                                    <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Session Date</th>
+                                    <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Used / Max</th>
+                                    <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,7 +149,7 @@ function LinksModal({ company, onClose }) {
                                                 <td style={{ padding: "12px", textAlign: "center" }}>
                                                     <span style={{
                                                         fontWeight: 700,
-                                                        color: isExpired ? "#e53e3e" : link.usedCount > 0 ? "#f59e0b" : "#16a34a",
+                                                        color: isExpired ? "#e53e3e" : link.usedCount > 0 ? "#f59e0b" : colors.success,
                                                         background: isExpired ? "#fff5f5" : link.usedCount > 0 ? "#fffbeb" : "#f0fdf4",
                                                         padding: "2px 10px", borderRadius: 12, fontSize: 12
                                                     }}>
@@ -158,13 +159,13 @@ function LinksModal({ company, onClose }) {
                                                 <td style={{ padding: "12px", textAlign: "center" }}>
                                                     <div style={{ display: "flex", gap: 6, justifyContent: "center", alignItems: "center" }}>
                                                         <button
-                                                            style={{ padding: "4px 10px", border: "1px solid #ddd", borderRadius: 6, background: "#fff", fontSize: 12, cursor: "pointer", whiteSpace: "nowrap" }}
+                                                            style={{ padding: "4px 10px", border: "1px solid #ddd", borderRadius: 6, background: colors.white, fontSize: 12, cursor: "pointer", whiteSpace: "nowrap" }}
                                                             onClick={() => handleCopy(link.token)}
                                                         >
                                                             {copied === link.token ? "✓ Copied" : "Copy Link"}
                                                         </button>
                                                         <button
-                                                            style={{ padding: "4px 8px", border: "none", background: "none", cursor: "pointer", color: isOpen ? "#cc0000" : "#9ca3af", display: "flex", alignItems: "center" }}
+                                                            style={{ padding: "4px 8px", border: "none", background: "none", cursor: "pointer", color: isOpen ? colors.brandPrimary : "#9ca3af", display: "flex", alignItems: "center" }}
                                                             onClick={() => setOpenToken(isOpen ? null : link.token)}
                                                             title="View students"
                                                         >
@@ -663,12 +664,12 @@ export default function Companies() {
                                     <td>{company.mobileNumber ? company.mobileNumber : <span className="dash">—</span>}</td>
                                     <td>
                                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                            <span style={{ fontWeight: 700, color: company.linkCount > 0 ? "#cc0000" : "#9ca3af" }}>
+                                            <span style={{ fontWeight: 700, color: company.linkCount > 0 ? colors.brandPrimary : "#9ca3af" }}>
                                                 {company.linkCount ?? 0}
                                             </span>
                                             {company.linkCount > 0 && (
                                                 <button
-                                                    style={{ border: "none", background: "none", cursor: "pointer", color: "#cc0000", display: "flex", alignItems: "center", padding: 2 }}
+                                                    style={{ border: "none", background: "none", cursor: "pointer", color: colors.brandPrimary, display: "flex", alignItems: "center", padding: 2 }}
                                                     title="View links"
                                                     onClick={() => setLinksModalCompany(company)}
                                                 >

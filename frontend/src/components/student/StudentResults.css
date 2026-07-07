@@ -1,20 +1,4 @@
 /* ===== Results.css ===== */
-:root {
-  --rr-purple:#cc0000;
-  --rr-purple-light: #ede9fe;
-  --rr-green: #16a34a;
-  --rr-green-light: #dcfce7;
-  --rr-red: #dc2626;
-  --rr-yellow: #ca8a04;
-  --rr-gray-50: #f9fafb;
-  --rr-gray-100: #f3f4f6;
-  --rr-gray-200: #e5e7eb;
-  --rr-gray-400: #9ca3af;
-  --rr-gray-600: #4b5563;
-  --rr-gray-800: #1f2937;
-  --rr-radius: 12px;
-  --rr-shadow: 0 2px 16px rgba(0,0,0,0.08);
-}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 .rr-wrapper {
@@ -159,7 +143,7 @@
 .rr-feedback-text { font-size: 0.84rem; color: var(--rr-gray-600); line-height: 1.5; background: #fff; border-radius: 8px; padding: 10px 12px; border: 1px solid var(--rr-gray-200); }
 
 .rr-retake-btn {
-  background: linear-gradient(135deg, var(--rr-purple),#cc0000);
+  background: linear-gradient(135deg, var(--rr-purple),var(--color-brand-primary));
   color: #fff;
   border: none;
   border-radius: 8px;

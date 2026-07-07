@@ -10,13 +10,13 @@
 .se-page-label {
   font-size: 14px;
   font-weight: 500;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   margin: 0 0 4px;
 }
 
 .se-page-subtitle {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0 0 1.5rem;
   line-height: 1.6;
   max-width: 900px;
@@ -25,7 +25,7 @@
 /* ── Enrolments Card ── */
 .se-card {
   background: #fff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   margin-bottom: 20px;
@@ -44,13 +44,13 @@
 .se-card-heading svg {
   width: 18px;
   height: 18px;
-  color: #374151;
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
 .se-card-desc {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0 0 1.25rem;
 }
 
@@ -68,16 +68,16 @@
 .se-table th {
   text-align: left;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--color-text-muted);
   padding: 10px 12px;
-  border-bottom: 0.5px solid #e5e7eb;
+  border-bottom: 0.5px solid var(--color-border);
   white-space: nowrap;
 }
 
 .se-table td {
   padding: 14px 12px;
   color: #111;
-  border-bottom: 0.5px solid #f3f4f6;
+  border-bottom: 0.5px solid var(--color-bg-muted);
   vertical-align: top;
 }
 
@@ -107,9 +107,9 @@
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
-  border: 0.5px solid #e5e7eb;
-  background: #f3f4f6;
-  color: #374151;
+  border: 0.5px solid var(--color-border);
+  background: var(--color-bg-muted);
+  color: var(--color-text-secondary);
   white-space: nowrap;
 }
 
@@ -127,7 +127,7 @@
 /* ── Pay outstanding card (reuses Payments card styles) ── */
 .se-pay-card {
   background: #fff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
 }
@@ -159,13 +159,13 @@
 .se-pay-heading svg {
   width: 16px;
   height: 16px;
-  color: #374151;
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
 .se-pay-desc {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
   line-height: 1.55;
 }

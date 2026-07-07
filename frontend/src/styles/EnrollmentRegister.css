@@ -28,7 +28,7 @@
 /* Card */
 .er-card {
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 28px 28px 20px;
     margin-bottom: 20px;
@@ -86,7 +86,7 @@
 }
 
 .er-required {
-    color: #dc2626;
+    color: var(--color-error);
     margin-left: 2px;
 }
 
@@ -101,8 +101,8 @@
 .er-input {
     padding: 10px 12px;
     border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
     font-size: 14px;
     outline: none;
     width: 100%;
@@ -111,15 +111,15 @@
 }
 
 .er-input:focus {
-    border-color: #2563eb;
+    border-color: var(--color-info);
     background: #fff;
 }
 
 .er-input-full {
     padding: 10px 12px;
     border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
     font-size: 14px;
     outline: none;
     width: 100%;
@@ -128,15 +128,15 @@
 }
 
 .er-input-full:focus {
-    border-color: #2563eb;
+    border-color: var(--color-info);
     background: #fff;
 }
 
 .er-select {
     padding: 10px 12px;
     border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
     font-size: 14px;
     width: 100%;
     box-sizing: border-box;
@@ -147,17 +147,17 @@
 }
 
 .er-select:focus {
-    border-color: #2563eb;
+    border-color: var(--color-info);
     outline: none;
 }
 
 .er-input-error {
-    border-color: #dc2626 !important;
+    border-color: var(--color-error) !important;
     background: #fef2f2 !important;
 }
 
 .er-label-error {
-    color: #dc2626 !important;
+    color: var(--color-error) !important;
 }
 
 /* Validation Toast */
@@ -169,7 +169,7 @@
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    border: 1px solid #fee2e2;
+    border: 1px solid var(--color-error-bg);
     padding: 24px;
     z-index: 9999;
     animation: erSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -190,7 +190,7 @@
 .er-toast-icon {
     font-size: 24px;
     background: #fef2f2;
-    color: #dc2626;
+    color: var(--color-error);
     width: 40px;
     height: 40px;
     display: flex;
@@ -202,7 +202,7 @@
 .er-toast-title {
     font-size: 16px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
     margin: 0;
 }
 
@@ -216,7 +216,7 @@
 .er-toast-list {
     margin: 8px 0 0;
     padding-left: 20px;
-    color: #dc2626;
+    color: var(--color-error);
     font-weight: 600;
 }
 
@@ -227,8 +227,8 @@
 .er-toast-ok-btn {
     width: 100%;
     padding: 12px;
-    background: #cc0000;
-    color: #ffffff;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
     border: none;
     border-radius: 10px;
     font-size: 14px;
@@ -263,7 +263,7 @@
 }
 
 .er-radio {
-    accent-color: #2563eb;
+    accent-color: var(--color-info);
     cursor: pointer;
 }
 
@@ -299,8 +299,8 @@
 }
 
 .er-submit-btn {
-    background: #cc0000;
-    color: #fff;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
     border: none;
     border-radius: 8px;
     padding: 12px 32px;
@@ -355,9 +355,9 @@
 }
 .er-alert-header { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; }
 .er-alert-icon { width: 44px; height: 44px; background: #fff1f2; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #e11d48; font-size: 22px; }
-.er-alert-title { font-size: 19px; font-weight: 700; color: #111827; }
+.er-alert-title { font-size: 19px; font-weight: 700; color: var(--color-text-primary); }
 .er-alert-message { font-size: 15px; color: #4b5563; line-height: 1.6; margin-bottom: 28px; }
-.er-alert-ok-btn { width: 100%; background: #111827; color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.2s ease; }
+.er-alert-ok-btn { width: 100%; background: var(--color-text-primary); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.2s ease; }
 .er-alert-ok-btn:hover { background: #000; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 @keyframes erFadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes erSlideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }

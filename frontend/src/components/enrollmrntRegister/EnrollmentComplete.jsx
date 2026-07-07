@@ -1,3 +1,4 @@
+import { colors } from '../../constants/theme';
 import "../../styles/EnrollmentComplete.css"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useContext, useEffect, useRef, useState } from "react"
@@ -153,14 +154,14 @@ function EnrollmentComplete() {
                             <p style={{
                                 fontWeight: 700,
                                 fontSize: 15,
-                                color: "#cc0000",
+                                color: colors.brandPrimary,
                                 marginBottom: 4,
                             }}>
                                 📎 Enrollment Links
                             </p>
                             <p style={{
                                 fontSize: 12,
-                                color: "#6b7280",
+                                color: colors.textMuted,
                                 marginBottom: 16,
                                 marginTop: 0,
                             }}>
@@ -193,7 +194,7 @@ function EnrollmentComplete() {
                                             </span>
                                             <span style={{
                                                 background: "#ede9fe",
-                                                color: "#cc0000",
+                                                color: colors.brandPrimary,
                                                 borderRadius: 20,
                                                 padding: "2px 10px",
                                                 fontSize: 11,
@@ -222,8 +223,8 @@ function EnrollmentComplete() {
                                             <button
                                                 onClick={() => handleCopy(link.token)}
                                                 style={{
-                                                    background: isCopied ? "#16a34a" : "#cc0000",
-                                                    color: "white",
+                                                    background: isCopied ? colors.success : colors.brandPrimary,
+                                                    color: isCopied ? colors.white : colors.brandOnPrimary,
                                                     border: "none",
                                                     borderRadius: 6,
                                                     padding: "6px 14px",
@@ -269,7 +270,7 @@ function EnrollmentComplete() {
                                 Redirecting to dashboard in{" "}
                                 <span style={{
                                     fontWeight: "700",
-                                    color: "#cc0000",
+                                    color: colors.brandPrimary,
                                     fontSize: "15px"
                                 }}>
                                     {countdown}s
@@ -287,7 +288,7 @@ function EnrollmentComplete() {
                                     <circle
                                         cx="24" cy="24" r="20"
                                         fill="none"
-                                        stroke="#cc0000"
+                                        stroke={colors.brandPrimary}
                                         strokeWidth="4"
                                         strokeDasharray={`${2 * Math.PI * 20}`}
                                         strokeDashoffset={`${2 * Math.PI * 20 * (1 - countdown / 10)}`}
@@ -300,7 +301,7 @@ function EnrollmentComplete() {
                                         textAnchor="middle"
                                         fontSize="14"
                                         fontWeight="700"
-                                        fill="#cc0000"
+                                        fill={colors.brandPrimary}
                                     >
                                         {countdown}
                                     </text>

@@ -7,7 +7,7 @@
 }
 
 .ab-cyan { color: #22d3ee; }
-.ab-link { color: #2563eb; text-decoration: none; font-weight: 500; }
+.ab-link { color: var(--color-info); text-decoration: none; font-weight: 500; }
 .ab-link:hover { text-decoration: underline; }
 
 /* ── HERO ── */
@@ -128,7 +128,7 @@
 }
 
 .ab-approval {
-    color: #2563eb;
+    color: var(--color-info);
     font-weight: 500;
 }
 
@@ -256,7 +256,7 @@
 
 .ab-facilities-caption p {
     font-size: 13px;
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     margin: 0;
 }
 
@@ -288,8 +288,8 @@
     padding: 18px 24px;
 }
 
-.ab-vision-header { background: linear-gradient(90deg, #22d3ee, #cc0000); }
-.ab-mission-header { background: linear-gradient(90deg,#cc0000, #2563eb); }
+.ab-vision-header { background: linear-gradient(90deg, #22d3ee, var(--color-brand-primary)); }
+.ab-mission-header { background: linear-gradient(90deg,var(--color-brand-primary), var(--color-info)); }
 
 .ab-vm-icon { font-size: 20px; }
 
@@ -381,7 +381,7 @@
 }
 
 .ab-value-featured {
-    background: linear-gradient(135deg, #2563eb,#cc0000);
+    background: linear-gradient(135deg, var(--color-info),var(--color-brand-primary));
     color: #fff;
 }
 
@@ -421,7 +421,7 @@
 
 /* ── CTA ── */
 .ab-cta {
-    background: linear-gradient(135deg, #cc0000 0%, #2563eb 100%);
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-info) 100%);
     padding: 80px 24px;
     text-align: center;
 }

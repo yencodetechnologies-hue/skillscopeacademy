@@ -22,7 +22,7 @@
 }
 
 .v2-header-sub {
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     font-size: 14px;
     margin: 0;
 }
@@ -133,7 +133,7 @@
 }
 
 .v2-course-card {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 18px 20px;
 }
@@ -183,7 +183,7 @@
 }
 
 .v2-delete-btn:hover {
-    color: #ef4444;
+    color: var(--color-error-alt);
 }
 
 /* Date section */
@@ -208,8 +208,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 11px 14px;
     cursor: pointer;
@@ -217,7 +217,7 @@
 }
 
 .v2-date-placeholder {
-    color: #94a3b8;
+    color: var(--color-text-subtle);
 }
 
 .v2-date-value {
@@ -231,7 +231,7 @@
     left: 0;
     right: 0;
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     max-height: 220px;
     overflow-y: auto;
@@ -259,7 +259,7 @@
 
 .v2-date-warning {
     font-size: 12.5px;
-    color: #f59e0b;
+    color: var(--color-warning-alt);
     margin: 6px 0 0;
 }
 

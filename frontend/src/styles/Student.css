@@ -76,7 +76,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: #cc0000;
+  background-color: var(--color-brand-primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -89,7 +89,7 @@ body {
 }
 
 .sm-add-btn:hover {
-  background-color: #0a8fc0;
+  background-color: var(--color-brand-accent);
 }
 
 .sm-add-btn-icon {
@@ -101,7 +101,7 @@ body {
 .sm-card {
   background: #fff;
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   padding: 20px 24px;
 }
 
@@ -160,7 +160,7 @@ body {
 }
 
 .sm-search-input:focus {
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
 }
 
@@ -183,7 +183,7 @@ body {
 }
 
 .sm-status-select:focus {
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
 }
 
 .sm-search-btn {
@@ -203,7 +203,7 @@ body {
 }
 
 .sm-search-btn:hover {
-  background: #f9fafb;
+  background: var(--color-bg);
   border-color: #9ca3af;
 }
 
@@ -215,7 +215,7 @@ body {
 
 .sm-table-header {
   padding: 20px 24px 16px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-bg-muted);
 }
 
 .sm-table-scroll {
@@ -233,7 +233,7 @@ body {
 
 .sm-table thead tr {
   background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .sm-table th {
@@ -241,12 +241,12 @@ body {
   text-align: left;
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-secondary);
   white-space: nowrap;
 }
 
 .sm-table tbody tr {
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-bg-muted);
   transition: background 0.15s;
 }
 
@@ -257,7 +257,7 @@ body {
 .sm-table td {
   padding: 14px 14px;
   vertical-align: middle;
-  color: #374151;
+  color: var(--color-text-secondary);
   font-size: 13px;
 }
 
@@ -287,7 +287,7 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background: #cc0000;
+  background: var(--color-brand-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -313,7 +313,7 @@ body {
 
 /* ── Email / Course ── */
 .sm-email {
-  color: #374151;
+  color: var(--color-text-secondary);
   white-space: nowrap;
 }
 
@@ -322,7 +322,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 /* ── Status Badges ── */
@@ -344,23 +344,23 @@ body {
 }
 
 .badge-completed {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   border: 1px solid #bbf7d0;
 }
 
 .badge-completed .badge-icon {
-  color: #16a34a;
+  color: var(--color-success);
 }
 
 .badge-not-completed {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-bg);
+  color: var(--color-error);
   border: 1px solid #fecaca;
 }
 
 .badge-not-completed .badge-icon {
-  color: #dc2626;
+  color: var(--color-error);
 }
 
 /* ── Payment Badge ── */
@@ -374,13 +374,13 @@ body {
 }
 
 .payment-paid {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .payment-unpaid {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: var(--color-bg-muted);
+  color: var(--color-text-muted);
 }
 
 /* ── Active Badge ── */
@@ -390,15 +390,15 @@ body {
   border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   white-space: nowrap;
 }
 
 /* ── Icon Buttons ── */
 .sm-icon-btn {
   background: none;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   width: 30px;
   height: 30px;
@@ -407,22 +407,22 @@ body {
   justify-content: center;
   cursor: pointer;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   transition: background 0.15s, border-color 0.15s;
   flex-shrink: 0;
 }
 
 .sm-icon-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
   border-color: #d1d5db;
 }
 
 .sm-delete-btn {
-  color: #dc2626;
+  color: var(--color-error);
 }
 
 .sm-delete-btn:hover {
-  background: #fee2e2;
+  background: var(--color-error-bg);
   border-color: #fecaca;
 }
 
@@ -437,19 +437,19 @@ body {
 /* ── Deactivate Button ── */
 .sm-deactivate-btn {
   padding: 5px 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   background: #fff;
   font-size: 12px;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s, border-color 0.15s;
 }
 
 .sm-deactivate-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
 }
 
 /* ── Pagination ── */
@@ -458,14 +458,14 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 14px 24px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--color-border);
   flex-wrap: wrap;
   gap: 12px;
 }
 
 .sm-pagination-info {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .sm-pagination-controls {
@@ -476,18 +476,18 @@ body {
 
 .sm-page-btn {
   padding: 7px 14px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   background: #fff;
   font-size: 13px;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: background 0.15s, opacity 0.15s;
 }
 
 .sm-page-btn:hover:not(:disabled) {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
 }
 
 .sm-page-btn:disabled {
@@ -500,7 +500,7 @@ body {
   font-weight: 600;
   color: #111;
   padding: 7px 14px;
-  border: 1px solid #cc0000;
+  border: 1px solid var(--color-brand-primary);
   border-radius: 8px;
   background: #faf5ff;
   white-space: nowrap;
@@ -511,13 +511,13 @@ body {
 
 /* Active / Inactive badge variants */
 .badge-active {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   border: 1px solid #bbf7d0;
 }
 .badge-inactive {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-bg);
+  color: var(--color-error);
   border: 1px solid #fecaca;
 }
 
@@ -526,8 +526,8 @@ body {
   padding: 4px 10px;
   font-size: 12px;
   border-radius: 6px;
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   border: 1px solid #bbf7d0;
   cursor: pointer;
   font-weight: 500;
@@ -542,14 +542,14 @@ body {
 .sm-loading {
   padding: 2rem;
   text-align: center;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   font-weight: 500;
 }
 .sm-error {
   padding: 1rem;
   text-align: center;
-  color: #dc2626;
-  background: #fee2e2;
+  color: var(--color-error);
+  background: var(--color-error-bg);
   border-radius: 8px;
   margin: 1rem;
 }
@@ -612,7 +612,7 @@ body {
   flex-shrink: 0;
 }
 .modal-close-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
 }
 
 /* ── View Modal: Profile Card ── */
@@ -630,13 +630,13 @@ body {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #cc0000;
+  background: var(--color-brand-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-brand-on-primary);
   flex-shrink: 0;
 }
 .modal-name {
@@ -670,7 +670,7 @@ body {
 .modal-section-title {
   font-size: 14px;
   font-weight: 600;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   margin: 0 0 10px;
   padding-bottom: 6px;
   border-bottom: 1px solid #dbeeff;
@@ -682,7 +682,7 @@ body {
   padding: 6px 0;
   font-size: 13px;
   color: #444;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-bg-muted);
 }
 .modal-detail-row span:first-child {
   color: #888;
@@ -705,14 +705,14 @@ body {
 .modal-input-wrap {
   display: flex;
   align-items: center;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--color-border);
   border-radius: 8px;
   padding: 0 12px;
   background: #fafafa;
   transition: border-color 0.15s;
 }
 .modal-input-wrap:focus-within {
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
   background: #fff;
 }
 .modal-input-icon {
@@ -739,7 +739,7 @@ body {
 .modal-cancel-btn {
   padding: 10px 20px;
   border-radius: 8px;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--color-border);
   background: #fff;
   color: #444;
   font-size: 14px;
@@ -748,21 +748,21 @@ body {
   transition: background 0.15s;
 }
 .modal-cancel-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
 }
 .modal-save-btn {
   padding: 10px 22px;
   border-radius: 8px;
   border: none;
-  background: #cc0000;
-  color: #fff;
+  background: var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
 }
 .modal-save-btn:hover {
-  background: #0a8fc0;
+  background: var(--color-brand-accent);
 }
 .modal-save-btn:disabled,
 .modal-cancel-btn:disabled {
@@ -778,8 +778,8 @@ body {
   line-height: 1.7;
 }
 .modal-delete-warning {
-  color: #dc2626;
-  background: #fee2e2;
+  color: var(--color-error);
+  background: var(--color-error-bg);
   border-radius: 6px;
   padding: 8px 12px;
   margin-top: 10px;
@@ -789,7 +789,7 @@ body {
   padding: 10px 22px;
   border-radius: 8px;
   border: none;
-  background: #dc2626;
+  background: var(--color-error);
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -806,8 +806,8 @@ body {
 
 /* ── Error in modal ── */
 .modal-error {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-bg);
+  color: var(--color-error);
   padding: 8px 12px;
   border-radius: 6px;
   font-size: 13px;

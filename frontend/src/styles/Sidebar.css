@@ -43,8 +43,8 @@
 }
 
 .menu-item.active {
-    background: #cc0000;
-    color: white;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
 }
 
 /* ===== BURGER BUTTON (mobile only) ===== */
@@ -63,7 +63,7 @@
     justify-content: center;
     cursor: pointer;
     font-size: 18px;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 

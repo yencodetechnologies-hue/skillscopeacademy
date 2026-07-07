@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { colors } from '../../constants/theme';
 import { Document, Page, pdfjs } from "react-pdf";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -57,7 +58,7 @@ const PdfViewer = ({ fileUrl }) => {
       {/* PDF */}
       <div
         style={{
-          background: "#fff",
+          background: colors.white,
           padding: 10,
           borderRadius: 10,
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",

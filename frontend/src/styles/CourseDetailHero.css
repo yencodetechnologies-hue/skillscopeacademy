@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ===== BASE ===== */
 .course-detail-hero {
@@ -48,8 +47,8 @@
 }
 
 .course-tag {
-  border: 1.5px solid #cc0000;
-  color: #cc0000;
+  border: 1.5px solid var(--color-brand-primary);
+  color: var(--color-brand-primary);
   padding: 5px 16px;
   border-radius: 20px;
   font-size: 13px;
@@ -100,7 +99,7 @@
 
 .hero-desc {
   font-size: 14px;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   line-height: 1.75;
   margin-top: 16px;
   max-width: 560px;
@@ -136,14 +135,14 @@
 
 .price-old {
   font-size: 20px;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   text-decoration: line-through;
   font-weight: 400;
 }
 
 .save-badge {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
   font-size: 13px;
   font-weight: 700;
   padding: 4px 12px;
@@ -160,10 +159,10 @@
 .btn-book {
   width: 100%;
   padding: 16px;
-  background: #cc0000;
+  background: var(--color-brand-primary);
   border: none;
   border-radius: 12px;
-  color: #fff;
+  color: var(--color-brand-on-primary);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -211,11 +210,11 @@
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 .check-icon {
-  color: #cc0000;
+  color: var(--color-brand-primary);
   font-weight: 700;
   font-size: 15px;
   flex-shrink: 0;
@@ -226,8 +225,8 @@
    =========================== */
 .info-bar {
   background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
   padding: 20px 32px;
 }
 
@@ -246,7 +245,7 @@
 }
 
 .info-item:not(:last-child) {
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--color-border-light);
 }
 
 .info-icon {
@@ -279,7 +278,7 @@
   position: sticky;
   bottom: 0;
   background: #fff;
-  border-top: 2px solid #e2e8f0;
+  border-top: 2px solid var(--color-border-light);
   padding: 14px 32px;
   display: flex;
   align-items: center;
@@ -310,7 +309,7 @@
 .sticky-price {
   font-size: 24px;
   font-weight: 800;
-  color: #cc0000;
+  color: var(--color-brand-primary);
 }
 
 .sticky-btns {
@@ -320,8 +319,8 @@
 }
 
 .sticky-book {
-  background: #cc0000;
-  color: #fff;
+  background: var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   border: none;
   padding: 11px 22px;
   border-radius: 8px;
@@ -339,7 +338,7 @@
 .sticky-call {
   background: #fff;
   color: #0b1a33;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid var(--color-border-light);
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 13px;
@@ -417,7 +416,7 @@
   }
 
   .info-item:nth-child(3) {
-    border-right: 1px solid #e2e8f0;
+    border-right: 1px solid var(--color-border-light);
   }
 
   .sticky-bar {

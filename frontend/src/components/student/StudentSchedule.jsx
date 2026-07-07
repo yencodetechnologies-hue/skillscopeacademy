@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import "./StudentSchedule.css";
 import { API_URL } from "../../data/service";
+import { colors, scheduleTypeColors } from "../../constants/theme";
 
 const DAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 const typeConfig = {
-  theory:    { label: "Theory Class",      color: "#cc0000", bg: "#eef2ff" },
-  practical: { label: "Practical Session", color: "#cc0000", bg: "#f0faff" },
-  exam:      { label: "Exam",              color: "#10b981", bg: "#d1fae5" },
-  general:   { label: "General",           color: "#94a3b8", bg: "#f1f5f9" },
+  theory:    { label: "Theory Class",      ...scheduleTypeColors.theory },
+  practical: { label: "Practical Session", ...scheduleTypeColors.practical },
+  exam:      { label: "Exam",              ...scheduleTypeColors.exam },
+  general:   { label: "General",           color: colors.textSubtle, bg: "#f1f5f9" },
 };
 
 function getDaysInMonth(year, month) { return new Date(year, month + 1, 0).getDate(); }

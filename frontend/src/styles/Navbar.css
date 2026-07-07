@@ -29,8 +29,8 @@
 }
 
 .home-pg-btn:hover {
-    background: #cc0000;
-    color: white;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
 }
 
 /* Desktop: text காட்டு, icon hide */
@@ -110,8 +110,8 @@
 }
 
 .sidebar-inner span:hover {
-    background: #cc0000;
-    color: white;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
 }
 
 /* Close button (xmark) - first span */

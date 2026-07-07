@@ -17,8 +17,8 @@ const studentBookingTemplate = (data) => {
     /* ── Header ── */
     .eb-hdr { background: #0d2240; padding: 16px 24px; }
     .eb-hdr-title { font-size: 16px; font-weight: 700; color: #ffffff; margin: 0 0 2px; }
-    .eb-hdr-sub { font-size: 10px; color: #cc0000; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin: 0; }
-    .eb-badge { background: #cc0000; color: #ffffff; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; white-space: nowrap; display: inline-block; line-height: 1; }
+    .eb-hdr-sub { font-size: 10px; color: #F5A623; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin: 0; }
+    .eb-badge { background: #F5A623; color: #1a1d2e; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; white-space: nowrap; display: inline-block; line-height: 1; }
 
     /* ── Success bar ── */
     .eb-alert { background: #0d2240; border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 24px; font-size: 14px; color: #ffffff; font-weight: 700; text-align: center; }
@@ -48,15 +48,15 @@ const studentBookingTemplate = (data) => {
     .eb-step { display: table; margin-bottom: 12px; }
     .eb-step-num { background: #0d2240; color: #fff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 700; display: table-cell; vertical-align: top; }
     .eb-step-text { font-size: 13px; color: #475569; line-height: 1.5; padding-left: 12px; display: table-cell; vertical-align: top; }
-    .eb-step-text a { color: #cc0000; text-decoration: none; font-weight: 700; }
+    .eb-step-text a { color: #F5A623; text-decoration: none; font-weight: 700; }
 
     /* ── Checklist ── */
     .eb-check-item { margin-bottom: 8px; font-size: 13px; color: #475569; }
-    .eb-check-icon { color: #cc0000; margin-right: 10px; font-weight: bold; font-size: 16px; }
+    .eb-check-icon { color: #F5A623; margin-right: 10px; font-weight: bold; font-size: 16px; }
 
     /* ── Footer ── */
     .eb-footer { background: #f5f7fa; border-top: 1px solid #e0e0e0; padding: 15px 24px; font-size: 10px; color: #999; text-align: center; line-height: 1.6; }
-    .eb-footer a { color: #cc0000; text-decoration: none; }
+    .eb-footer a { color: #F5A623; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -70,7 +70,7 @@ const studentBookingTemplate = (data) => {
           </td>
           <td align="right" valign="top">
             <div style="display:inline-block; text-align:right; min-width: 200px;">
-              <span class="eb-badge" style="background:#cc0000; color:#ffffff; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:6px 0; border-radius:3px; display:block; text-align:center; line-height:1; margin-bottom:8px;">Confirmed</span>
+              <span class="eb-badge" style="background:#F5A623; color:#1a1d2e; font-size:16px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:6px 0; border-radius:3px; display:block; text-align:center; line-height:1; margin-bottom:8px;">Confirmed</span>
               <p style="margin:0; font-size:24px; font-weight:700; color:#ffffff; line-height:1; white-space:nowrap;">
                 Booking ID: ${orderNumber}
               </p>

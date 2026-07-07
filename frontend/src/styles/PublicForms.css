@@ -27,7 +27,7 @@
   width: 96px;
   height: 6px;
   border-radius: 99px;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
+  background: linear-gradient(90deg, #22c55e, var(--color-success));
   margin-bottom: 40px;
 }
 
@@ -106,7 +106,7 @@
 .pf-handbook-body h2 {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   margin: 0 0 10px;
 }
 
@@ -162,8 +162,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-error-bg);
+  color: var(--color-error);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,14 +181,14 @@
 }
 
 .pf-doc-arrow {
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   font-size: 0.9rem;
   flex-shrink: 0;
   transition: color 0.2s ease;
 }
 
 .pf-doc-item:hover .pf-doc-arrow {
-  color: #cc0000;
+  color: var(--color-brand-primary);
 }
 
 /* Empty / loading states */

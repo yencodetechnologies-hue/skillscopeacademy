@@ -1,11 +1,5 @@
-
-@media (max-width:768px){
-.auth-card{
-display:none;
-}
-}
-:root{
-    --btn-bg:#cc0000;
-    --btn-color:#fff;
-    --btn-radius:10px;
+@media (max-width: 768px) {
+  .auth-card {
+    display: none;
+  }
 }

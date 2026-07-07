@@ -40,7 +40,7 @@
 }
 
 .promo-links-promo{
-  color:#2563eb;
+  color:var(--color-info);
   font-weight:600;
 }
 @media(max-width:1024px){

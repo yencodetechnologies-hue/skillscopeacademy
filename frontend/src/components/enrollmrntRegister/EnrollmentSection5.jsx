@@ -1,3 +1,4 @@
+import { colors } from '../../constants/theme';
 import { useRef, useEffect, useState } from "react"
 import "../../styles/EnrollmentSection5.css"
 import { useNavigate } from "react-router-dom"
@@ -253,7 +254,7 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
 
     const deleteButtonStyle = {
         position: "absolute", top: -8, right: -8,
-        background: "red", color: "#fff", border: "none",
+        background: "red", color: colors.white, border: "none",
         borderRadius: "50%", width: 20, height: 20,
         cursor: "pointer", fontSize: 12, zIndex: 1
     }

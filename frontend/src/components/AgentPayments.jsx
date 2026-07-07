@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { colors } from '../constants/theme';
 import '../styles/CompanyPayment.css';
 import { API_URL } from "../data/service";
 
@@ -72,9 +73,9 @@ export default function AgentPayments() {
 
       {error && (
         <div style={{
-          backgroundColor: "#fee2e2",
+          backgroundColor: colors.errorBg,
           border: "1px solid #fecaca",
-          color: "#dc2626",
+          color: colors.error,
           padding: "12px",
           borderRadius: "6px",
           marginBottom: "1rem"
@@ -156,7 +157,7 @@ export default function AgentPayments() {
                       cursor: "pointer",
                       transition: "background-color 0.2s"
                     }}
-                    onMouseEnter={(e) => e.target.parentElement.style.backgroundColor = "#f3f4f6"}
+                    onMouseEnter={(e) => e.target.parentElement.style.backgroundColor = colors.bgMuted}
                     onMouseLeave={(e) => e.target.parentElement.style.backgroundColor = "white"}
                     onClick={() => setViewedUser(user)}
                   >
@@ -172,8 +173,8 @@ export default function AgentPayments() {
                         borderRadius: "4px",
                         fontSize: "12px",
                         fontWeight: 500,
-                        backgroundColor: user.llndStatus === "Completed" ? "#dcfce7" : "#fef3c7",
-                        color: user.llndStatus === "Completed" ? "#16a34a" : "#b45309"
+                        backgroundColor: user.llndStatus === "Completed" ? colors.successBg : "#fef3c7",
+                        color: user.llndStatus === "Completed" ? colors.success : "#b45309"
                       }}>
                         {user.llndStatus}
                       </span>
@@ -184,8 +185,8 @@ export default function AgentPayments() {
                         borderRadius: "4px",
                         fontSize: "12px",
                         fontWeight: 500,
-                        backgroundColor: user.enrollmentForm === "Approved" ? "#dcfce7" : user.enrollmentForm === "Submitted" ? "#dbeafe" : "#fef3c7",
-                        color: user.enrollmentForm === "Approved" ? "#16a34a" : user.enrollmentForm === "Submitted" ? "#1d4ed8" : "#b45309"
+                        backgroundColor: user.enrollmentForm === "Approved" ? colors.successBg : user.enrollmentForm === "Submitted" ? colors.infoBg : "#fef3c7",
+                        color: user.enrollmentForm === "Approved" ? colors.success : user.enrollmentForm === "Submitted" ? colors.infoHover : "#b45309"
                       }}>
                         {user.enrollmentForm || "Pending"}
                       </span>
@@ -211,8 +212,8 @@ export default function AgentPayments() {
                     padding: "8px 12px",
                     borderRadius: "4px",
                     border: currentPage === page ? "none" : "1px solid #e5e7eb",
-                    backgroundColor: currentPage === page ? "#cc0000" : "white",
-                    color: currentPage === page ? "white" : "#666",
+                    backgroundColor: currentPage === page ? colors.brandPrimary : "white",
+                    color: currentPage === page ? colors.brandOnPrimary : "#666",
                     cursor: "pointer",
                     fontSize: "12px"
                   }}

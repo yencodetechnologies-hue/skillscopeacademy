@@ -38,10 +38,10 @@
 
 /* ===== PASSAGE (AUDIO + IMAGE BOX) ===== */
 .language-passage {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   padding: 16px;
   border-radius: 12px;
-  background: #f9fafb;
+  background: var(--color-bg);
   margin-bottom: 20px;
 }
 
@@ -99,7 +99,7 @@
 
 .language-select:focus {
   outline: none;
-  border-color:#cc0000;
+  border-color:var(--color-brand-primary);
 }
 
 /* ===== FOOTER ===== */
@@ -124,7 +124,7 @@
 
 /* PREVIOUS */
 .prev-btn {
-  background: #e5e7eb;
+  background: var(--color-border);
 }
 
 .prev-btn:hover {
@@ -133,13 +133,13 @@
 
 /* NEXT */
 .next-btn {
-  background:#cc0000;
-  color: white;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
   font-size: 14px;
 }
 
 .next-btn:hover {
-  background: #cc0000;
+  background: var(--color-brand-primary);
 }
 
 /* DISABLED */

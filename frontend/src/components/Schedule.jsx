@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { colors } from '../constants/theme';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -18,9 +19,9 @@ function authHeaders() {
 
 
 const COURSE_COLORS = [
-  "#f97316","#cc0000","#cc0000","#10b981",
+  "#f97316",colors.brandPrimary,colors.brandPrimary,colors.successAlt,
   "#f59e0b","#ef4444","#3b82f6","#ec4899",
-  "#14b8a6","#cc0000","#84cc16","#f43f5e",
+  "#14b8a6",colors.brandPrimary,"#84cc16","#f43f5e",
 ];
 
 const VIEWS = [
@@ -148,7 +149,7 @@ function Schedule() {
   /* ── map schedule → FC event ── */
   const toFCEvent = useCallback((item) => {
     const dateStr = new Date(item.date).toISOString().split("T")[0];
-    const color   = colorMap[item.course?.id] || "#cc0000";
+    const color   = colorMap[item.course?.id] || colors.brandPrimary;
     return {
       id:              item.sessionId,
       title:           item.course?.title || "Course",
@@ -156,7 +157,7 @@ function Schedule() {
       end:             `${dateStr}T${to24(item.endTime)}`,
       backgroundColor: color,
       borderColor:     color,
-      textColor:       "#fff",
+      textColor:       colors.white,
       extendedProps: {
         code:        item.course?.title?.split(" ")[0] || "",
         description: item.course?.title || "",
@@ -190,7 +191,7 @@ function Schedule() {
     try {
       const res   = await fetch(`${API_URL}/api/schedules/course/${courseId}`);
       const data  = await res.json();
-      const color = colorMap[courseId] || "#cc0000";
+      const color = colorMap[courseId] || colors.brandPrimary;
       const fc    = [];
       data.forEach(schedule => {
         schedule.sessions?.forEach(s => {
@@ -204,7 +205,7 @@ function Schedule() {
             end:             `${dateStr}T${s.endTime}:00`,
             backgroundColor: color,
             borderColor:     color,
-            textColor:       "#fff",
+            textColor:       colors.white,
             extendedProps: {
               code:        course?.title?.split(" ")[0] || "",
               description: course?.title || "",

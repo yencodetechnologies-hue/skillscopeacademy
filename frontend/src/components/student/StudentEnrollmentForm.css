@@ -1,21 +1,4 @@
 /* ===== EnrollmentForm.css ===== */
-:root {
-  --ef-purple:#cc0000;
-  --ef-purple-light: #ede9fe;
-  --ef-purple-dark: #cc0000;
-  --ef-green: #16a34a;
-  --ef-green-light: #dcfce7;
-  --ef-red: #dc2626;
-  --ef-red-light: #fee2e2;
-  --ef-gray-50: #f9fafb;
-  --ef-gray-100: #f3f4f6;
-  --ef-gray-200: #e5e7eb;
-  --ef-gray-400: #9ca3af;
-  --ef-gray-600: #4b5563;
-  --ef-gray-800: #1f2937;
-  --ef-radius: 12px;
-  --ef-shadow: 0 2px 16px rgba(0,0,0,0.08);
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -83,7 +66,7 @@
 }
 .ef-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--ef-purple),#cc0000);
+  background: linear-gradient(90deg, var(--ef-purple),var(--color-brand-primary));
   border-radius: 99px;
   transition: width 0.4s ease;
 }
@@ -332,7 +315,7 @@
   transition: all 0.2s;
 }
 .ef-btn--primary {
-  background: linear-gradient(135deg, var(--ef-purple),#cc0000);
+  background: linear-gradient(135deg, var(--ef-purple),var(--color-brand-primary));
   color: #fff;
   flex: 1;
   max-width: 200px;

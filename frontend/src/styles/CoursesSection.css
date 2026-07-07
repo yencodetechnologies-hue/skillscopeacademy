@@ -16,7 +16,7 @@
     margin-top: 28px;
 }
 .cs-label {
-  font-size: 12px; font-weight: 700; color: #cc0000;
+  font-size: 12px; font-weight: 700; color: var(--color-brand-primary);
   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
 }
 .cs-title { font-size: 28px; font-weight: 700; color: #0d2240; margin-bottom: 6px; }
@@ -55,7 +55,7 @@
   background: rgba(255,255,255,0.06);
 }
 .cs-tab-btn--active {
-  background: #cc0000 !important;
+  background: var(--color-brand-primary) !important;
   color: #0d2240 !important;
 }
 .cs-tab-count {
@@ -102,13 +102,13 @@
   cursor: pointer;
   transition: border-color 0.2s;
 }
-.cs-more:hover { border-color: #cc0000; }
+.cs-more:hover { border-color: var(--color-brand-primary); }
 .cs-more-plus {
   width: 42px; height: 42px;
   border-radius: 50%;
   background: #e8f4fd;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; color: #cc0000; line-height: 1;
+  font-size: 22px; color: var(--color-brand-primary); line-height: 1;
 }
 .cs-more-title { font-size: 14px; font-weight: 700; color: #0d2240; }
 .cs-more-sub { font-size: 12px; color: #4a7096; }
@@ -121,7 +121,7 @@
   text-decoration: none;
   transition: background 0.2s;
 }
-.cs-more-btn:hover { background: #cc0000; color: #0d2240; }
+.cs-more-btn:hover { background: var(--color-brand-primary); color: #0d2240; }
 
 /* SHOW MORE */
 .cs-show-more-wrap {
@@ -141,7 +141,7 @@
   font-family: 'Inter', sans-serif;
   transition: background 0.2s;
 }
-.cs-show-more-btn:hover { background: #cc0000; color: #0d2240; }
+.cs-show-more-btn:hover { background: var(--color-brand-primary); color: #0d2240; }
 
 /* RESPONSIVE */
 @media (max-width: 1200px) {

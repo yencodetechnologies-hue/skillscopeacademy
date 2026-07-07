@@ -22,7 +22,7 @@
 }
 
 .v1-header-sub {
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     font-size: 14px;
     margin: 0;
 }
@@ -85,7 +85,7 @@
 }
 
 .v1-input::placeholder {
-    color: #94a3b8;
+    color: var(--color-text-subtle);
 }
 
 /* Select */

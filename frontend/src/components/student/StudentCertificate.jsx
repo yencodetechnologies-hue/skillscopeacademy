@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { colors } from '../../constants/theme';
 import "./StudentCertificate.css";
 
 
@@ -16,8 +17,8 @@ export default function StudentCertificate() {
             <div className="uc-crane-cable" />
             <div className="uc-crane-sign">
               <svg width="38" height="34" viewBox="0 0 38 34">
-                <polygon points="19,3 35,31 3,31" fill="#f97316" stroke="#fff" strokeWidth="2" />
-                <text x="19" y="26" textAnchor="middle" fontSize="15" fontWeight="700" fill="#fff">!</text>
+                <polygon points="19,3 35,31 3,31" fill={colors.orange} stroke={colors.white} strokeWidth="2" />
+                <text x="19" y="26" textAnchor="middle" fontSize="15" fontWeight="700" fill={colors.white}>!</text>
               </svg>
             </div>
           </div>

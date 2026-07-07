@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 import "./StudentResults.css";
 import { API_URL } from "../../data/service";
+import { colors, statusColors } from "../../constants/theme";
 
 const statusConfig = {
-  "Competent": { color: "#16a34a", bg: "#dcfce7", label: "Competent" },
-  "Not Yet Competent": { color: "#dc2626", bg: "#fee2e2", label: "Not Yet Competent" },
-  "Pending": { color: "#ca8a04", bg: "#fef9c3", label: "Pending" },
+  "Competent": { ...statusColors.competent, label: "Competent" },
+  "Not Yet Competent": { ...statusColors.notYetCompetent, label: "Not Yet Competent" },
+  "Pending": { ...statusColors.pending, label: "Pending" },
 };
 
 function ScoreRing({ score }) {
   const r = 28, circ = 2 * Math.PI * r;
   const pct = Math.min(score, 100);
   const dashOffset = circ - (pct / 100) * circ;
-  const color = score >= 80 ? "#16a34a" : score >= 60 ? "#ca8a04" : "#dc2626";
+  const color = score >= 80 ? colors.success : score >= 60 ? colors.warning : colors.error;
   return (
     <svg className="rr-ring" width="72" height="72" viewBox="0 0 72 72">
-      <circle cx="36" cy="36" r={r} fill="none" stroke="#e5e7eb" strokeWidth="6" />
+      <circle cx="36" cy="36" r={r} fill="none" stroke={colors.border} strokeWidth="6" />
       <circle cx="36" cy="36" r={r} fill="none" stroke={color} strokeWidth="6"
         strokeDasharray={circ} strokeDashoffset={dashOffset}
         strokeLinecap="round" transform="rotate(-90 36 36)" />

@@ -58,7 +58,7 @@
     width: 46px;
     height: 46px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #cc0000 0%, #0a8fc0 100%);
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-accent) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,7 +69,7 @@
 .cvm-company-name {
     font-size: 18px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
     margin: 0 0 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -78,7 +78,7 @@
 
 .cvm-company-tagline {
     font-size: 13px;
-    color: #6B7280;
+    color: var(--color-text-muted);
     margin: 0;
 }
 
@@ -87,8 +87,8 @@
     height: 34px;
     border-radius: 8px;
     border: none;
-    background: #F3F4F6;
-    color: #6B7280;
+    background: var(--color-bg-muted);
+    color: var(--color-text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,8 +97,8 @@
     transition: background 0.15s, color 0.15s;
 }
 .cvm-close-btn:hover {
-    background: #E5E7EB;
-    color: #111827;
+    background: var(--color-border);
+    color: var(--color-text-primary);
 }
 
 /* ── Scrollable Body ── */
@@ -121,7 +121,7 @@
 /* ── Description ── */
 .cvm-desc {
     font-size: 13.5px;
-    color: #6B7280;
+    color: var(--color-text-muted);
     line-height: 1.6;
     margin: 0;
 }
@@ -131,7 +131,7 @@
     display: flex;
     align-items: center;
     gap: 0;
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 14px 18px;
     background: #FAFAFA;
@@ -143,18 +143,18 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #374151;
+    color: var(--color-text-secondary);
     font-size: 13.5px;
     text-decoration: none;
     font-weight: 500;
 }
-.cvm-profile-email:hover { color: #cc0000; }
+.cvm-profile-email:hover { color: var(--color-brand-primary); }
 .cvm-profile-email svg { color: #9CA3AF; }
 
 .cvm-profile-divider {
     width: 1px;
     height: 32px;
-    background: #E5E7EB;
+    background: var(--color-border);
     margin: 0 6px;
     flex-shrink: 0;
 }
@@ -163,7 +163,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #6B7280;
+    color: var(--color-text-muted);
 }
 .cvm-profile-joined svg { flex-shrink: 0; color: #9CA3AF; }
 .cvm-profile-joined > div {
@@ -180,7 +180,7 @@
     letter-spacing: 0.04em;
 }
 .cvm-joined-date {
-    color: #374151;
+    color: var(--color-text-secondary);
     font-weight: 600;
     font-size: 13px;
 }
@@ -209,7 +209,7 @@
 }
 .cvm-badge-inactive {
     background: #FEF2F2;
-    color: #DC2626;
+    color: var(--color-error);
 }
 .cvm-badge-paylater {
     background: #FEF3C7;
@@ -228,8 +228,8 @@
     flex-wrap: wrap;
     gap: 24px;
     padding: 12px 16px;
-    background: #F9FAFB;
-    border: 1px solid #E5E7EB;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     margin-bottom: 12px;
 }
@@ -245,14 +245,14 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #6B7280;
+    color: var(--color-text-muted);
     margin-bottom: 2px;
 }
 
 .cvm-meta-value {
     font-size: 14px;
     font-weight: 600;
-    color: #111827;
+    color: var(--color-text-primary);
 }
 
 /* ── Stats Row ── */
@@ -263,7 +263,7 @@
 }
 
 .cvm-stat-card {
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 16px 18px;
     display: flex;
@@ -285,38 +285,38 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.cvm-icon-purple { background: linear-gradient(135deg, #cc0000, #0a8fc0); }
-.cvm-icon-blue   { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
-.cvm-icon-gray   { background: linear-gradient(135deg, #9CA3AF, #6B7280); }
+.cvm-icon-purple { background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent)); }
+.cvm-icon-blue   { background: linear-gradient(135deg, var(--color-info), var(--color-info-hover)); }
+.cvm-icon-gray   { background: linear-gradient(135deg, #9CA3AF, var(--color-text-muted)); }
 .cvm-icon-gray svg { stroke: white; }
 
 .cvm-stat-num {
     font-size: 26px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
     line-height: 1;
 }
 .cvm-stat-label {
     font-size: 13px;
-    color: #6B7280;
+    color: var(--color-text-muted);
     margin-top: 2px;
 }
 
 /* ── Section ── */
 .cvm-section {
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
 }
 
 .cvm-section-header {
     padding: 14px 18px 12px;
-    border-bottom: 1px solid #F3F4F6;
+    border-bottom: 1px solid var(--color-bg-muted);
     background: #FAFAFA;
 }
 .cvm-section-title {
     font-size: 14px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
     margin: 0 0 4px;
 }
 .cvm-section-sub {
@@ -340,32 +340,32 @@
 }
 
 .cvm-main-table thead tr {
-    background: #F9FAFB;
+    background: var(--color-bg);
 }
 .cvm-main-table th {
     padding: 10px 12px;
     text-align: left;
     font-size: 11px;
     font-weight: 700;
-    color: #6B7280;
+    color: var(--color-text-muted);
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    border-bottom: 1px solid #E5E7EB;
+    border-bottom: 1px solid var(--color-border);
     white-space: nowrap;
 }
 .cvm-main-table td {
     padding: 12px 12px;
-    border-bottom: 1px solid #F3F4F6;
-    color: #374151;
+    border-bottom: 1px solid var(--color-bg-muted);
+    color: var(--color-text-secondary);
     vertical-align: top;
 }
 .cvm-main-table tbody tr:last-child td { border-bottom: none; }
-.cvm-main-table tbody tr:hover { background: #F9FAFB; }
+.cvm-main-table tbody tr:hover { background: var(--color-bg); }
 
 /* ── Student Info in Table ── */
 .cvm-stu-name {
     font-weight: 600;
-    color: #111827;
+    color: var(--color-text-primary);
     font-size: 13px;
 }
 .cvm-stu-meta {
@@ -375,7 +375,7 @@
 }
 .cvm-stu-date {
     font-size: 12px;
-    color: #374151;
+    color: var(--color-text-secondary);
     white-space: nowrap;
 }
 
@@ -391,14 +391,14 @@
 
 .cvm-tag-pending     { background: #FEF3C7; color: #B45309; }
 .cvm-tag-completed   { background: #ECFDF5; color: #059669; }
-.cvm-tag-active      { background: #EEF2FF; color: #cc0000; }
-.cvm-tag-inactive    { background: #F3F4F6; color: #9CA3AF; }
+.cvm-tag-active      { background: #EEF2FF; color: var(--color-brand-primary); }
+.cvm-tag-inactive    { background: var(--color-bg-muted); color: #9CA3AF; }
 .cvm-tag-submitted   { background: #E0F2FE; color: #0369A1; }
-.cvm-tag-not-submitted { background: #FEF2F2; color: #DC2626; }
-.cvm-tag-not-completed { background: #FEF2F2; color: #DC2626; }
+.cvm-tag-not-submitted { background: #FEF2F2; color: var(--color-error); }
+.cvm-tag-not-completed { background: #FEF2F2; color: var(--color-error); }
 .cvm-tag-unpaid      { background: #FEF3C7; color: #B45309; }
 .cvm-tag-paid        { background: #ECFDF5; color: #059669; }
-.cvm-tag-no          { background: #F3F4F6; color: #9CA3AF; }
+.cvm-tag-no          { background: var(--color-bg-muted); color: #9CA3AF; }
 .cvm-tag-yes         { background: #ECFDF5; color: #059669; }
 
 /* ── Orders Section ── */
@@ -409,7 +409,7 @@
 }
 
 .cvm-order-block {
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
@@ -426,7 +426,7 @@
     flex-wrap: wrap;
     gap: 8px;
 }
-.cvm-order-header:hover { background: #F9FAFB; }
+.cvm-order-header:hover { background: var(--color-bg); }
 
 .cvm-order-left {
     display: flex;
@@ -434,12 +434,12 @@
     gap: 6px;
     flex-wrap: wrap;
 }
-.cvm-order-label { font-size: 13.5px; font-weight: 600; color: #111827; }
-.cvm-order-date  { font-size: 13.5px; font-weight: 600; color: #111827; }
+.cvm-order-label { font-size: 13.5px; font-weight: 600; color: var(--color-text-primary); }
+.cvm-order-date  { font-size: 13.5px; font-weight: 600; color: var(--color-text-primary); }
 .cvm-order-pay-tag {
     font-size: 11.5px;
-    color: #6B7280;
-    background: #F3F4F6;
+    color: var(--color-text-muted);
+    background: var(--color-bg-muted);
     border-radius: 6px;
     padding: 2px 8px;
     font-weight: 500;
@@ -453,7 +453,7 @@
 .cvm-order-amount {
     font-size: 14px;
     font-weight: 700;
-    color: #cc0000;
+    color: var(--color-brand-primary);
 }
 .cvm-order-status {
     font-size: 11.5px;
@@ -476,7 +476,7 @@
 
 /* ── Course Block inside Order ── */
 .cvm-course-block {
-    border-top: 1px solid #F3F4F6;
+    border-top: 1px solid var(--color-bg-muted);
     padding: 12px 16px;
 }
 
@@ -490,8 +490,8 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #cc0000;
-    color: white;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
     font-size: 12px;
     font-weight: 700;
     display: flex;
@@ -499,7 +499,7 @@
     justify-content: center;
     flex-shrink: 0;
 }
-.cvm-course-name { font-size: 14px; font-weight: 600; color: #111827; }
+.cvm-course-name { font-size: 14px; font-weight: 600; color: var(--color-text-primary); }
 
 .cvm-course-meta {
     display: flex;
@@ -513,7 +513,7 @@
     align-items: center;
     gap: 5px;
     font-size: 12.5px;
-    color: #6B7280;
+    color: var(--color-text-muted);
     margin-right: auto;
 }
 .cvm-enrolled-count svg { stroke: #9CA3AF; }
@@ -521,23 +521,23 @@
 .cvm-icon-btn {
     width: 28px;
     height: 28px;
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     border-radius: 6px;
     background: #fff;
-    color: #6B7280;
+    color: var(--color-text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background 0.12s, color 0.12s;
 }
-.cvm-icon-btn:hover { background: #F3F4F6; color: #111827; }
+.cvm-icon-btn:hover { background: var(--color-bg-muted); color: var(--color-text-primary); }
 
 /* ── Sub-student table (inside order) ── */
 .cvm-student-table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
 }
 
@@ -547,7 +547,7 @@
     font-size: 12.5px;
     min-width: 680px;
 }
-.cvm-student-table thead tr { background: #F9FAFB; }
+.cvm-student-table thead tr { background: var(--color-bg); }
 .cvm-student-table th {
     padding: 8px 10px;
     font-size: 10.5px;
@@ -555,22 +555,22 @@
     color: #9CA3AF;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    border-bottom: 1px solid #E5E7EB;
+    border-bottom: 1px solid var(--color-border);
     white-space: nowrap;
     text-align: left;
 }
 .cvm-student-table td {
     padding: 10px 10px;
-    border-bottom: 1px solid #F3F4F6;
-    color: #374151;
+    border-bottom: 1px solid var(--color-bg-muted);
+    color: var(--color-text-secondary);
     vertical-align: top;
 }
 .cvm-student-table tbody tr:last-child td { border-bottom: none; }
-.cvm-student-table tbody tr:hover { background: #F9FAFB; }
+.cvm-student-table tbody tr:hover { background: var(--color-bg); }
 
 /* ── Course Link Cards ── */
 .cvm-link-card {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 14px 16px;
     background: #fff;
@@ -594,13 +594,13 @@
 .cvm-link-course-name {
     font-size: 14px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
     margin: 0 0 4px;
 }
 
 .cvm-link-course-meta {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--color-text-muted);
     margin: 0;
 }
 
@@ -612,11 +612,11 @@
     white-space: nowrap;
     flex-shrink: 0;
 }
-.cvm-link-badge-avail { background: #dcfce7; color: #16a34a; }
-.cvm-link-badge-full  { background: #fee2e2; color: #dc2626; }
+.cvm-link-badge-avail { background: var(--color-success-bg); color: var(--color-success); }
+.cvm-link-badge-full  { background: var(--color-error-bg); color: var(--color-error); }
 
 .cvm-link-url-box {
-    background: #f3f4f6;
+    background: var(--color-bg-muted);
     border-radius: 6px;
     padding: 8px 12px;
     font-size: 12px;
@@ -641,13 +641,13 @@
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    background: #cc0000;
-    color: #fff;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
     transition: background 0.15s;
 }
-.cvm-link-btn-copy:hover { background: #0a8fc0; }
+.cvm-link-btn-copy:hover { background: var(--color-brand-accent); }
 .cvm-link-btn-copy--disabled {
-    background: #e5e7eb;
+    background: var(--color-border);
     color: #9ca3af;
     cursor: not-allowed;
 }
@@ -660,14 +660,14 @@
     border: 1px solid #e0e7ff;
     cursor: pointer;
     background: #f0faff;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     transition: all 0.15s;
 }
 .cvm-link-btn-students:hover,
 .cvm-link-btn-students--active {
-    background: #cc0000;
-    color: #fff;
-    border-color: #cc0000;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
+    border-color: var(--color-brand-primary);
 }
 
 .cvm-link-students-panel {
@@ -684,7 +684,7 @@
     border-bottom: 1px solid #e0e7ff;
     font-size: 13px;
     font-weight: 700;
-    color: #cc0000;
+    color: var(--color-brand-primary);
 }
 
 .cvm-link-students-empty {
@@ -771,7 +771,7 @@
 }
 
 .cvm-purchase-card {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 14px 16px;
     background: #fafafa;
@@ -789,13 +789,13 @@
     margin: 0 0 4px;
     font-size: 14px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
 }
 
 .cvm-purchase-meta {
     margin: 0;
     font-size: 12px;
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 
 .cvm-purchase-right {
@@ -808,7 +808,7 @@
 .cvm-purchase-amount {
     font-size: 15px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
 }
 
 .cvm-purchase-badge {
@@ -830,25 +830,25 @@
 
 .cvm-purchase-badge-failed {
     background: #fef2f2;
-    color: #dc2626;
+    color: var(--color-error);
 }
 
 .cvm-purchase-txn {
     margin: 8px 0 0;
     font-size: 11px;
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 
 .cvm-purchase-courses {
     margin: 10px 0 0;
     padding-left: 18px;
     font-size: 13px;
-    color: #374151;
+    color: var(--color-text-secondary);
     line-height: 1.6;
 }
 
 .cvm-purchase-session {
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-weight: 400;
 }
 

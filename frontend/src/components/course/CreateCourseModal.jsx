@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { colors } from '../../constants/theme';
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
@@ -534,7 +535,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                                         : undefined,
                                             }}
                                         />
-                                        <small style={{ color: "#6b7280", fontSize: 12 }}>
+                                        <small style={{ color: colors.textMuted, fontSize: 12 }}>
                                             Page URL: <code>/course/{formik.values.slug || "your-slug"}</code>
                                         </small>
                                         {formik.touched.slug && formik.errors.slug && (

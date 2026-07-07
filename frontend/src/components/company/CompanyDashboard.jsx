@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { colors } from '../../constants/theme';
 import { useNavigate } from "react-router-dom";
 import "./CompanyDashboard.css";
 import { API_URL } from "../../data/service";
@@ -111,9 +112,9 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
   }, [companyId, token])
 
   const statusStyle = (s) => {
-    if (s === "paid")     return { background: "#1f2937", color: "#fff" }
-    if (s === "pending")  return { background: "#f3f4f6", color: "#374151" }
-    if (s === "failed")   return { background: "#fee2e2", color: "#dc2626" }
+    if (s === "paid")     return { background: "#1f2937", color: colors.white }
+    if (s === "pending")  return { background: colors.bgMuted, color: "#374151" }
+    if (s === "failed")   return { background: colors.errorBg, color: colors.error }
     return                       { background: "#fff7ed", color: "#c2410c" }
   }
   const statusText = (s) => {
@@ -138,12 +139,12 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
         background: "#f5f3ff",
         borderBottom: "1px solid #e0e7ff",
       }}>
-        <span style={{ fontWeight: 600, fontSize: 13, color: "#cc0000" }}>
+        <span style={{ fontWeight: 600, fontSize: 13, color: colors.brandPrimary }}>
           👥 Students via this link
         </span>
         <button
           onClick={onClose}
-          style={{ background: "none", border: "none", cursor: "pointer", fontSize: 16, color: "#6b7280", lineHeight: 1 }}
+          style={{ background: "none", border: "none", cursor: "pointer", fontSize: 16, color: colors.textMuted, lineHeight: 1 }}
         >✕</button>
       </div>
 
@@ -157,11 +158,11 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
-                <th style={{ textAlign: "left", padding: "6px 8px", color: "#6b7280", fontWeight: 600 }}>Student</th>
-                <th style={{ textAlign: "left", padding: "6px 8px", color: "#6b7280", fontWeight: 600 }}>Amount</th>
-                <th style={{ textAlign: "left", padding: "6px 8px", color: "#6b7280", fontWeight: 600 }}>Payment</th>
-                <th style={{ textAlign: "left", padding: "6px 8px", color: "#6b7280", fontWeight: 600 }}>LLN</th>
-                <th style={{ textAlign: "left", padding: "6px 8px", color: "#6b7280", fontWeight: 600 }}>Enrolled</th>
+                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Student</th>
+                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Amount</th>
+                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Payment</th>
+                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>LLN</th>
+                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Enrolled</th>
               </tr>
             </thead>
             <tbody>
@@ -169,7 +170,7 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
                 <tr key={s.id} style={{ borderBottom: "1px solid #f3f4f6" }}>
                   <td style={{ padding: "7px 8px" }}>
                     <div style={{ fontWeight: 600, color: "#111" }}>{s.name}</div>
-                    <div style={{ fontSize: 11, color: "#6b7280" }}>{s.email}</div>
+                    <div style={{ fontSize: 11, color: colors.textMuted }}>{s.email}</div>
                   </td>
                   <td style={{ padding: "7px 8px", color: "#374151" }}>{s.amount}</td>
                   <td style={{ padding: "7px 8px" }}>
@@ -183,14 +184,14 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
                   </td>
                   <td style={{ padding: "7px 8px" }}>
                     <span style={{
-                      background: s.llnd === "Completed" ? "#dcfce7" : "#f3f4f6",
-                      color: s.llnd === "Completed" ? "#16a34a" : "#6b7280",
+                      background: s.llnd === "Completed" ? colors.successBg : colors.bgMuted,
+                      color: s.llnd === "Completed" ? colors.success : colors.textMuted,
                       padding: "2px 8px", borderRadius: 6, fontSize: 11, fontWeight: 600,
                     }}>
                       {s.llnd}
                     </span>
                   </td>
-                  <td style={{ padding: "7px 8px", color: "#6b7280", whiteSpace: "nowrap" }}>{s.enrolled}</td>
+                  <td style={{ padding: "7px 8px", color: colors.textMuted, whiteSpace: "nowrap" }}>{s.enrolled}</td>
                 </tr>
               ))}
             </tbody>
@@ -254,7 +255,7 @@ function CourseLinkCards({ companyId }) {
               border: "1px solid #e5e7eb",
               borderRadius: "10px",
               padding: "14px 16px",
-              background: isFull ? "#f9fafb" : "#fff",
+              background: isFull ? "#f9fafb" : colors.white,
               opacity: isFull ? 0.85 : 1,
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px" }}>
@@ -269,15 +270,15 @@ function CourseLinkCards({ companyId }) {
                 <span style={{
                   fontSize: "11px", fontWeight: "600",
                   padding: "3px 10px", borderRadius: "20px",
-                  background: isFull ? "#fee2e2" : "#dcfce7",
-                  color: isFull ? "#dc2626" : "#16a34a",
+                  background: isFull ? colors.errorBg : colors.successBg,
+                  color: isFull ? colors.error : colors.success,
                 }}>
                   {link.usedCount}/{link.maxUses} used {isFull ? "· Full" : "· Available"}
                 </span>
               </div>
 
               <div style={{
-                marginTop: "10px", background: "#f3f4f6", borderRadius: "6px",
+                marginTop: "10px", background: colors.bgMuted, borderRadius: "6px",
                 padding: "8px 12px", fontSize: "12px", color: "#555", wordBreak: "break-all",
               }}>
                 {url}
@@ -292,8 +293,8 @@ function CourseLinkCards({ companyId }) {
                     padding: "7px 16px", fontSize: "13px", fontWeight: "600",
                     borderRadius: "8px", border: "none",
                     cursor: isFull ? "not-allowed" : "pointer",
-                    background: isFull ? "#e5e7eb" : "#cc0000",
-                    color: isFull ? "#999" : "#fff",
+                    background: isFull ? colors.border : colors.brandPrimary,
+                    color: isFull ? "#999" : colors.white,
                   }}
                 >
                   {copiedToken === link.token ? "Copied!" : "Copy Link"}
@@ -305,8 +306,8 @@ function CourseLinkCards({ companyId }) {
                     padding: "7px 16px", fontSize: "13px", fontWeight: "600",
                     borderRadius: "8px", border: "1px solid #e0e7ff",
                     cursor: "pointer",
-                    background: isOpen ? "#cc0000" : "#f5f3ff",
-                    color: isOpen ? "#fff" : "#cc0000",
+                    background: isOpen ? colors.brandPrimary : "#f5f3ff",
+                    color: isOpen ? colors.brandOnPrimary : colors.brandPrimary,
                     transition: "all 0.15s",
                   }}
                 >
@@ -391,7 +392,7 @@ function PurchasedCoursesCard() {
               status === "Paid"
                 ? { background: "#ecfdf5", color: "#059669" }
                 : status === "Failed"
-                  ? { background: "#fef2f2", color: "#dc2626" }
+                  ? { background: "#fef2f2", color: colors.error }
                   : { background: "#fef3c7", color: "#b45309" };
             return (
               <div key={order._id} className="cd-purchase-item">

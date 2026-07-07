@@ -11,7 +11,7 @@
 .cd-page-label {
   font-size: 14px;
   font-weight: 500;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   margin: 0 0 4px;
 }
 
@@ -31,7 +31,7 @@
 
 .cd-card {
   background: #ffffff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
 }
@@ -45,7 +45,7 @@
 
 .cd-card-label {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .cd-card-icon {
@@ -64,7 +64,7 @@
 
 .cd-card-desc {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   line-height: 1.55;
   margin: 0;
 }
@@ -72,7 +72,7 @@
 /* ── Enrolment Link Card ── */
 .cd-enroll-card {
   background: #ffffff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 16px;
@@ -91,19 +91,19 @@
 .cd-enroll-heading svg {
   width: 16px;
   height: 16px;
-  color: #374151;
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
 .cd-enroll-desc {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   line-height: 1.55;
   margin: 0 0 16px;
 }
 
 .cd-enroll-url-box {
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 8px;
   padding: 10px 14px;
   font-size: 13px;
@@ -123,7 +123,7 @@
   border-radius: 8px;
   background: #ffffff;
   font-size: 13px;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -131,7 +131,7 @@
 /* ── Purchased courses ── */
 .cd-purchases-card {
   background: #ffffff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 16px;
@@ -146,7 +146,7 @@
 
 .cd-purchases-desc {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   line-height: 1.55;
   margin: 0 0 14px;
 }
@@ -164,7 +164,7 @@
 }
 
 .cd-purchase-item {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 12px 14px;
   background: #fafafa;
@@ -182,33 +182,33 @@
   margin: 0 0 4px;
   font-size: 13px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-primary);
 }
 
 .cd-purchase-date {
   margin: 0;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .cd-purchase-amount {
   margin: 6px 0 0;
   font-size: 14px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-primary);
 }
 
 .cd-purchase-txn {
   margin: 8px 0 0;
   font-size: 11px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .cd-purchase-courses {
   margin: 10px 0 0;
   padding-left: 18px;
   font-size: 13px;
-  color: #374151;
+  color: var(--color-text-secondary);
   line-height: 1.6;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .cd-copy-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
 }
 
 .cd-copy-btn svg {
@@ -230,7 +230,7 @@
 /* ── Quick Links Card ── */
 .cd-quick-card {
   background: #ffffff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
 }
@@ -244,15 +244,15 @@
 
 .cd-quick-desc {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0 0 14px;
 }
 
 .cd-quick-divider {
-  border-top: 0.5px solid #e5e7eb;
+  border-top: 0.5px solid var(--color-border);
   padding-top: 12px;
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 /* ── Responsive ── */

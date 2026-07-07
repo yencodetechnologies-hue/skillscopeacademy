@@ -11,7 +11,7 @@
 .dashboard-welcome {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   margin: 0 0 6px;
 }
 
@@ -29,7 +29,7 @@
 
 .dashboard-subtitle {
   font-size: 0.95rem;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -193,7 +193,7 @@
 
 /* Quick Actions */
 .quick-actions-card {
-  background: linear-gradient(135deg, #cc0000,#cc0000);
+  background: linear-gradient(135deg, var(--color-brand-primary),var(--color-brand-primary));
   border-radius: 16px;
   padding: 24px 20px;
 }
@@ -221,7 +221,7 @@
   padding: 14px 18px;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--color-text-primary);
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
   text-align: left;

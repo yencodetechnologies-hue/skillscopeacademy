@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
+import { colors } from '../../constants/theme';
 import "./StudentsEnrolled.css";
 import { API_URL } from "../../data/service";
 
 /* ── Badge helpers ── */
 function sourceLabel(source) {
-  if (source === "Booking Link")  return { text: "Booking Link",  color: "#cc0000" };
+  if (source === "Booking Link")  return { text: "Booking Link",  color: colors.brandPrimary };
   if (source === "Company Link")  return { text: "Company Link",  color: "#0891b2" };
-  return                                 { text: source || "—",   color: "#6b7280" };
+  return                                 { text: source || "—",   color: colors.textMuted };
 }
 
 /* ── Enrolments Table ── */
@@ -48,12 +49,12 @@ function EnrolmentsTable({ students }) {
                     }}>{src.text}</span>
                   </td>
                   <td>
-                    <span className="se-badge" style={s.llnd === "Completed" ? { background: "#1f2937", color: "#fff", border: "none" } : {}}>
+                    <span className="se-badge" style={s.llnd === "Completed" ? { background: "#1f2937", color: colors.white, border: "none" } : {}}>
                       {s.llnd}
                     </span>
                   </td>
                   <td>
-                    <span className="se-badge" style={s.form === "Submitted" ? { background: "#1f2937", color: "#fff", border: "none" } : {}}>
+                    <span className="se-badge" style={s.form === "Submitted" ? { background: "#1f2937", color: colors.white, border: "none" } : {}}>
                       {s.form}
                     </span>
                   </td>

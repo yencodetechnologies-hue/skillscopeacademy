@@ -76,7 +76,7 @@ margin-bottom:25px;
 .company-cart-subtotal {
     font-size: 14px;
     font-weight: 600;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     min-width: 80px;
 }
 
@@ -107,7 +107,7 @@ margin-bottom:25px;
 
 .company-slot-selected {
     background: #f0fdf4;
-    color: #16a34a;
+    color: var(--color-success);
     font-size: 12px;
     padding: 2px 8px;
     border-radius: 20px;
@@ -118,12 +118,12 @@ margin-bottom:25px;
     padding: 14px 16px;
     background: #faf8ff;
     font-size: 15px;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     border-top: 1.5px solid #e8e0f8;
 }
 
 .course-optgroup{
-    color:#cc0000;
+    color:var(--color-brand-primary);
     font-weight:600;
 }
 
@@ -147,7 +147,7 @@ margin-bottom:25px;
     transition: border-color 0.2s;
 }
 .cs-dropdown__trigger--open {
-    border-color:#cc0000;
+    border-color:var(--color-brand-primary);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -161,7 +161,7 @@ margin-bottom:25px;
     left: 0;
     right: 0;
     background: #fff;
-    border: 1px solid#cc0000;
+    border: 1px solidvar(--color-brand-primary);
     border-top: none;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -188,7 +188,7 @@ margin-bottom:25px;
     padding: 8px 12px 4px;
     font-size: 12px;
     font-weight: 700;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     background: #f0faff;
@@ -202,7 +202,7 @@ margin-bottom:25px;
     transition: background 0.15s;
 }
 .cs-dropdown__option:hover { background: #f3f0ff; }
-.cs-dropdown__option--selected { background: #ede9fe; color:#cc0000; font-weight: 500; }
+.cs-dropdown__option--selected { background: var(--color-brand-tint); color:var(--color-brand-primary); font-weight: 500; }
 
 .course-select{
   width:100%;
@@ -221,7 +221,7 @@ margin-bottom:25px;
   -webkit-appearance: radio;
   width: 19px;
   height: 16px;
-  accent-color:#cc0000;
+  accent-color:var(--color-brand-primary);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -238,7 +238,7 @@ gap:25px;
 }
 
 .date-section{
-border:1px solid #e5e7eb;
+border:1px solid var(--color-border);
 border-radius:12px;
 padding:20px;
 }
@@ -264,11 +264,11 @@ transition:0.3s;
 }
 
 .slot-card:hover{
-border-color:#cc0000;
+border-color:var(--color-brand-primary);
 }
 
 .slot-card.active{
-border:2px solid#cc0000;
+border:2px solidvar(--color-brand-primary);
 background:#f3f0ff;
 box-shadow:0 0 0 2px rgba(124,58,237,0.2);
 }
@@ -284,7 +284,7 @@ margin-bottom:10px;
 }
 
 .spots{
-color:#cc0000;
+color:var(--color-brand-primary);
 font-size:14px;
 }
 
@@ -292,7 +292,7 @@ font-size:14px;
 display:block;
 margin:15px auto;
 border:none;
-color:#cc0000;
+color:var(--color-brand-primary);
 cursor:pointer;
 padding:12px 24px;
 font-weight:600;
@@ -302,8 +302,8 @@ cursor:pointer;
 background:#f4f0ff;
 }
 .show-more-btn-cs:hover{
-color: white;
-background:#cc0000;
+color: var(--color-brand-on-primary);
+background:var(--color-brand-primary);
 }
 
 /* ===== ENROLMENT TYPE ===== */
@@ -316,7 +316,7 @@ background:#cc0000;
 }
 
 .form-required {
-  color: #ef4444;
+  color: var(--color-error-alt);
   margin-left: 3px;
 }
 
@@ -331,7 +331,7 @@ background:#cc0000;
   align-items: center;
   gap: 14px;
   padding: 16px 20px;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid var(--color-border-light);
   border-radius: 12px;
   cursor: pointer;
   background: #f8fafc;
@@ -340,7 +340,7 @@ background:#cc0000;
 }
 
 .enrol-type-card:hover {
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
   background: #f0f8ff;
 }
 
@@ -385,7 +385,7 @@ background:#cc0000;
 .company-order-title {
     font-size: 14px;
     font-weight: 700;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     margin-bottom: 10px;
 }
 .company-order-row {
@@ -405,7 +405,7 @@ background:#cc0000;
 }
 .company-order-detail {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 .company-order-nodate {
     color: #e53e3e;
@@ -414,12 +414,12 @@ background:#cc0000;
 .company-order-price {
     font-size: 13px;
     font-weight: 600;
-    color: #cc0000;
+    color: var(--color-brand-primary);
 }
 .company-order-total {
     margin-top: 10px;
     font-size: 15px;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     text-align: right;
 }
 
@@ -431,7 +431,7 @@ background:#cc0000;
     border: 1px solid #bbf7d0;
     border-radius: 8px;
     font-size: 13px;
-    color: #16a34a;
+    color: var(--color-success);
     cursor: pointer;
     font-weight: 600;
     display: flex;
@@ -439,7 +439,7 @@ background:#cc0000;
     gap: 8px;
 }
 .company-slot-reopen span {
-    color: #cc0000;
+    color: var(--color-brand-primary);
     text-decoration: underline;
     margin-left: auto;
     font-weight: 600;
@@ -451,10 +451,10 @@ background:#cc0000;
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    border: 1.5px solid#cc0000;
+    border: 1.5px solidvar(--color-brand-primary);
     border-radius: 8px;
     background: #fff;
-    color:#cc0000;
+    color:var(--color-brand-primary);
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -475,7 +475,7 @@ background:#cc0000;
     transition: background 0.15s;
 }
 .cs-cal-clear:hover {
-    background: #fee2e2;
+    background: var(--color-error-bg);
     color: #e53e3e;
 }
 
@@ -507,7 +507,7 @@ background:#cc0000;
 
 .cs-cal-nav {
     background: none;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 6px;
     width: 28px;
     height: 28px;
@@ -521,8 +521,8 @@ background:#cc0000;
 }
 .cs-cal-nav:hover {
     background: #f3f0ff;
-    border-color:#cc0000;
-    color:#cc0000;
+    border-color:var(--color-brand-primary);
+    color:var(--color-brand-primary);
 }
 
 .cs-cal-grid {
@@ -550,20 +550,20 @@ background:#cc0000;
 }
 
 .cs-cal-day--avail {
-    background: #ede9fe;
-    color: #cc0000;
+    background: var(--color-brand-tint);
+    color: var(--color-brand-primary);
     cursor: pointer;
     font-weight: 600;
 }
 
 .cs-cal-day--avail:hover {
-    background:#cc0000;
-    color: #fff;
+    background:var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
 }
 
 .cs-cal-day--selected {
-    background: #cc0000!important;
-    color: #fff !important;
+    background: var(--color-brand-primary)!important;
+    color: var(--color-brand-on-primary) !important;
     font-weight: 600;
 }
 
@@ -586,7 +586,7 @@ background:#cc0000;
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: var(--color-primary, #2563eb);
+    background: var(--color-primary, var(--color-info));
     color: white;
     border: none;
     border-radius: 8px;
@@ -596,7 +596,7 @@ background:#cc0000;
     transition: background 0.2s;
 }
 .add-course-btn:hover {
-    background: var(--color-primary-dark, #1d4ed8);
+    background: var(--color-primary-dark, var(--color-info-hover));
 }
 
 .add-course-dropdown {
@@ -609,7 +609,7 @@ background:#cc0000;
 
 .cs-date-chip {
     min-width: 15%;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 8px 10px;
     cursor: pointer;
@@ -618,12 +618,12 @@ background:#cc0000;
     transition: all 0.15s;
 }
 .cs-date-chip:hover {
-    border-color:#cc0000;
+    border-color:var(--color-brand-primary);
     background: #faf8ff;
 }
 .cs-date-chip--active {
-    border-color:#cc0000;
-    background: #ede9fe;
+    border-color:var(--color-brand-primary);
+    background: var(--color-brand-tint);
 }
 .cs-date-chip__day {
     font-size: 11px;
@@ -637,7 +637,7 @@ background:#cc0000;
 }
 .cs-date-chip__slots {
     font-size: 11px;
-    color:#cc0000;
+    color:var(--color-brand-primary);
     margin-top: 3px;
 }
 
@@ -676,7 +676,7 @@ background:#cc0000;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     background: #eef2ff;
     padding: 4px 10px;
     border-radius: 20px;
@@ -689,7 +689,7 @@ background:#cc0000;
     margin: 0 0 16px;
 }
 .cs-locked-booking__card {
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border-light);
     border-radius: 10px;
     padding: 14px 16px;
     margin-bottom: 10px;
@@ -699,7 +699,7 @@ background:#cc0000;
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     margin: 0 0 6px;
 }
 .cs-locked-booking__value {
@@ -715,7 +715,7 @@ background:#cc0000;
 }
 .cs-locked-booking__slots {
     font-size: 13px;
-    color: #16a34a;
+    color: var(--color-success);
     font-weight: 600;
     margin: 8px 0 0;
 }

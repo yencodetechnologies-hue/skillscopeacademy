@@ -12,7 +12,7 @@
 
 .clients-title {
     font-size: 20px;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     margin-bottom: 40px;
     font-weight: 700;
     text-align: center;

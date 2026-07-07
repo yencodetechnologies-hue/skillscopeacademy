@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { colors } from '../constants/theme';
 import '../styles/CompanyPayment.css';
 import { API_URL } from "../data/service";
 
@@ -148,7 +149,7 @@ function CoursesModal({ row, onClose }) {
           ) : (
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
               <thead>
-                <tr style={{ background: "#f3f4f6" }}>
+                <tr style={{ background: colors.bgMuted }}>
                   <th style={thStyle}>Course</th>
                   <th style={thStyle}>Code</th>
                   <th style={thStyle}>Qty</th>
@@ -219,7 +220,7 @@ function StudentsModal({ paymentId, companyName, onClose }) {
               ? <p style={{ color: "#888", fontSize: 13 }}>No students enrolled yet.</p>
               : <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                   <thead>
-                    <tr style={{ background: "#f3f4f6" }}>
+                    <tr style={{ background: colors.bgMuted }}>
                       <th style={thStyle}>Name</th>
                       <th style={thStyle}>Email</th>
                       <th style={thStyle}>Course</th>
@@ -235,8 +236,8 @@ function StudentsModal({ paymentId, companyName, onClose }) {
                         <td style={tdStyle}>
                           <span style={{
                             padding: "2px 8px", borderRadius: 12, fontSize: 11, fontWeight: 600,
-                            background: s.payment === "success" ? "#dcfce7" : "#fef9c3",
-                            color:      s.payment === "success" ? "#16a34a" : "#92400e",
+                            background: s.payment === "success" ? colors.successBg : colors.warningBg,
+                            color:      s.payment === "success" ? colors.success : "#92400e",
                           }}>
                             {s.payment === "success" ? "Paid" : "Pending"}
                           </span>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { colors } from '../constants/theme';
 import "../styles/EnrollmentForms.css";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
@@ -11,7 +12,7 @@ function DocViewer({ url, alt, className, style }) {
   if (!url) return null;
   if (/\.pdf($|\?)/i.test(url)) {
     return (
-      <a href={url} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: '#cc0000', color: '#fff', borderRadius: 6, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+      <a href={url} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: colors.brandPrimary, color: colors.brandOnPrimary, borderRadius: 6, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
         📄 Open PDF
       </a>
     );
@@ -77,9 +78,9 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
     : new Date().toISOString().slice(0, 10);
 
   const statusConfig = {
-    Approved: { bg: "#f0fdf4", border: "#bbf7d0", color: "#16a34a", icon: "✓" },
+    Approved: { bg: "#f0fdf4", border: "#bbf7d0", color: colors.success, icon: "✓" },
     Pending:  { bg: "#fffbeb", border: "#fde68a", color: "#d97706", icon: "⏱" },
-    Rejected: { bg: "#fef2f2", border: "#fecaca", color: "#dc2626", icon: "✕" },
+    Rejected: { bg: "#fef2f2", border: "#fecaca", color: colors.error, icon: "✕" },
   };
   const sc = statusConfig[form.status] || statusConfig.Pending;
 
@@ -161,7 +162,7 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         border: "1px solid #cbd5e1",
                         borderRadius: 6,
                         color: "#1e293b",
-                        background: "#fff",
+                        background: colors.white,
                         outline: "none",
                         height: 28,
                         cursor: "pointer",
@@ -179,8 +180,8 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         padding: "3px 10px",
                         borderRadius: 6,
                         border: "none",
-                        background: "#16a34a",
-                        color: "#fff",
+                        background: colors.success,
+                        color: colors.white,
                         cursor: savingDate ? "not-allowed" : "pointer",
                         height: 28,
                         opacity: savingDate ? 0.7 : 1,
@@ -197,7 +198,7 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         padding: "3px 10px",
                         borderRadius: 6,
                         border: "1px solid #e2e8f0",
-                        background: "#fff",
+                        background: colors.white,
                         color: "#64748b",
                         cursor: "pointer",
                         height: 28,
@@ -222,14 +223,14 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         padding: "2px 8px",
                         borderRadius: 5,
                         border: "1px solid #cbd5e1",
-                        background: "#fff",
+                        background: colors.white,
                         color: "#475569",
                         cursor: "pointer",
                         lineHeight: 1.4,
                         transition: "all 0.15s",
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "#f1f5f9"; e.currentTarget.style.borderColor = "#94a3b8"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "#cbd5e1"; }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "#f1f5f9"; e.currentTarget.style.borderColor = colors.textSubtle; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = colors.white; e.currentTarget.style.borderColor = "#cbd5e1"; }}
                     >
                       <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M11.5 2.5a2.121 2.121 0 0 1 3 3L5 15l-4 1 1-4 9.5-9.5z"/>

@@ -22,7 +22,7 @@
 
 .checkbox-group input[type="checkbox"] {
     margin-top: 2px;
-    accent-color:#cc0000; /* matches the purple Continue button */
+    accent-color:var(--color-brand-primary); /* matches the purple Continue button */
     width: 15px;
     height: 15px;
     flex-shrink: 0;
@@ -42,7 +42,7 @@
     align-items: center;
     gap: 6px;
     font-size: 12.5px;
-    color: #dc2626;
+    color: var(--color-error);
     font-weight: 500;
     padding-left: 2px;
     animation: fadeInDown 0.2s ease;
@@ -51,7 +51,7 @@
 .error-icon {
     font-size: 13px;
     line-height: 1;
-    color: #dc2626;
+    color: var(--color-error);
 }
 
 @keyframes fadeInDown {
@@ -101,7 +101,7 @@
 }
 
 .result-box span {
-  color: #2563eb;
+  color: var(--color-info);
   font-weight: 600;
 }
 
@@ -125,7 +125,7 @@
 }
 
 .badge.fail {
-  background: #fee2e2;
+  background: var(--color-error-bg);
   color: #991b1b;
 }
 
@@ -162,7 +162,7 @@
 /* button */
 .continue-btn {
   margin-top: 20px;
-  background: linear-gradient(90deg, #cc0000, #ec4899);
+  background: linear-gradient(90deg, var(--color-brand-primary), #ec4899);
   color: white;
   border: none;
   padding: 12px 20px;

@@ -1,17 +1,4 @@
 /* ===== Schedule.css ===== */
-:root {
-  --sc-purple:#cc0000;
-  --sc-purple-light: #ede9fe;
-  --sc-gray-50: #f9fafb;
-  --sc-gray-100: #f3f4f6;
-  --sc-gray-200: #e5e7eb;
-  --sc-gray-400: #9ca3af;
-  --sc-gray-600: #4b5563;
-  --sc-gray-800: #1f2937;
-  --sc-blue: #2563eb;
-  --sc-radius: 12px;
-  --sc-shadow: 0 2px 16px rgba(0,0,0,0.08);
-}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 .sc-wrapper {

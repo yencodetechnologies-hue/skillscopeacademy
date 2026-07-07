@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from '../constants/theme';
 import { useEffect, useState } from "react";
 import "../styles/StudentDashboard.css";
 import LLNDAssessment from "../components/llnd/LLNDAssessment";
@@ -176,7 +177,7 @@ export default function StudentDashboard() {
           <div className="alert alert-danger">
             <span className="alert-icon">❌</span>
             <div className="alert-body">
-              <span className="alert-badge" style={{ background: "#fee2e2", color: "#dc2626" }}>Rejected</span>
+              <span className="alert-badge" style={{ background: colors.errorBg, color: colors.error }}>Rejected</span>
               <p className="alert-title">Enrollment Form Submitted</p>
               <p className="alert-desc">
                 Your form has been received and is currently being reviewed by our team.
@@ -193,7 +194,7 @@ export default function StudentDashboard() {
           <div className="alert alert-success">
             <span className="alert-icon">✅</span>
             <div className="alert-body">
-              <span className="alert-badge" style={{ background: "#dcfce7", color: "#166534" }}>Approved</span>
+              <span className="alert-badge" style={{ background: colors.successBg, color: "#166534" }}>Approved</span>
               <p className="alert-title">Enrollment Form Submitted</p>
               <p className="alert-desc">
                 Your form has been received and is currently being reviewed by our team.
@@ -210,7 +211,7 @@ export default function StudentDashboard() {
           <div className="alert alert-warning">
             <span className="alert-icon">⏳</span>
             <div className="alert-body">
-              <span className="alert-badge" style={{ background: "#fef9c3", color: "#ca8a04" }}>Awaiting Review</span>
+              <span className="alert-badge" style={{ background: colors.warningBg, color: colors.warning }}>Awaiting Review</span>
               <p className="alert-title">Enrollment Form Submitted</p>
               <p className="alert-desc">
                 Your form has been received and is currently being reviewed by our team.

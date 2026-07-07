@@ -1,0 +1,179 @@
+/* ============================================================
+   Design Tokens — single source of truth for all frontend styles
+   Change a value here to update every page across the app.
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --color-brand-primary: #F5A623;
+  --color-brand-accent: #0a1d33;
+  --color-brand-dark: #0a1d33;
+  --color-brand-primary-hover: #D4920E;
+  --color-brand-light: #FFF4D6;
+  --color-brand-tint: #FFF8E7;
+  --color-brand-on-primary: #1a1d2e;
+
+  /* Semantic */
+  --color-success: #16a34a;
+  --color-success-bg: #dcfce7;
+  --color-success-alt: #10b981;
+  --color-error: #dc2626;
+  --color-error-bg: #fee2e2;
+  --color-error-alt: #ef4444;
+  --color-warning: #ca8a04;
+  --color-warning-bg: #fef9c3;
+  --color-warning-alt: #f59e0b;
+  --color-info: #2563eb;
+  --color-info-bg: #dbeafe;
+  --color-info-hover: #1d4ed8;
+  --color-orange: #f97316;
+
+  /* Neutrals */
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-muted: #6b7280;
+  --color-text-subtle: #94a3b8;
+  --color-border: #e5e7eb;
+  --color-border-light: #e2e8f0;
+  --color-surface: #ffffff;
+  --color-bg: #f9fafb;
+  --color-bg-alt: #f4f5fa;
+  --color-bg-muted: #f3f4f6;
+
+  /* Gray scale (shared across pages) */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #cbd5e1;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Layout */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --border-radius: 12px;
+  --card-radius: 14px;
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.14);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --transition: 0.18s ease;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font: var(--font-body);
+
+  /* Buttons (global) */
+  --btn-bg: var(--color-brand-primary);
+  --btn-color: var(--color-brand-on-primary);
+  --btn-radius: var(--radius-md);
+
+  /* Legacy aliases — brand */
+  --brand: var(--color-brand-primary);
+  --brand-dark: var(--color-brand-primary);
+  --brand-light: var(--color-brand-tint);
+  --primary: var(--color-brand-primary);
+  --primary-color: var(--color-brand-primary);
+  --primary-light: #FFF4D6;
+  --primary-dark: var(--color-brand-accent);
+  --primary-dk: var(--color-brand-accent);
+  --purple: var(--color-brand-primary);
+  --purple-light: var(--color-brand-tint);
+  --purple-hover: var(--color-brand-accent);
+  --accent: var(--color-warning-alt);
+
+  /* Legacy aliases — semantic */
+  --green: var(--color-success);
+  --green-light: var(--color-success-bg);
+  --red: var(--color-error-alt);
+  --red-light: var(--color-error-bg);
+  --red-bg: var(--color-error-bg);
+  --yellow: var(--color-warning);
+  --yellow-light: var(--color-warning-bg);
+  --blue: var(--color-info);
+  --blue-light: var(--color-info-bg);
+  --orange: var(--color-orange);
+
+  /* Legacy aliases — neutrals */
+  --text: var(--color-text-primary);
+  --text-dark: var(--color-text-primary);
+  --text-light: var(--color-text-muted);
+  --muted: var(--color-text-muted);
+  --border: var(--color-border);
+  --border-gray: var(--color-border);
+  --bg: var(--color-bg);
+  --bg-gray: var(--color-bg);
+  --surface: var(--color-surface);
+  --white: var(--color-surface);
+
+  /* Legacy aliases — student schedule (--sc-*) */
+  --sc-purple: var(--color-brand-primary);
+  --sc-purple-light: var(--color-brand-tint);
+  --sc-gray-50: var(--gray-50);
+  --sc-gray-100: var(--gray-100);
+  --sc-gray-200: var(--gray-200);
+  --sc-gray-400: var(--gray-400);
+  --sc-gray-600: var(--gray-600);
+  --sc-gray-800: var(--gray-800);
+  --sc-blue: var(--color-info);
+  --sc-radius: var(--radius-lg);
+  --sc-shadow: var(--shadow-sm);
+
+  /* Legacy aliases — student results (--rr-*) */
+  --rr-purple: var(--color-brand-primary);
+  --rr-purple-light: var(--color-brand-tint);
+  --rr-green: var(--color-success);
+  --rr-green-light: var(--color-success-bg);
+  --rr-red: var(--color-error);
+  --rr-yellow: var(--color-warning);
+  --rr-gray-50: var(--gray-50);
+  --rr-gray-100: var(--gray-100);
+  --rr-gray-200: var(--gray-200);
+  --rr-gray-400: var(--gray-400);
+  --rr-gray-600: var(--gray-600);
+  --rr-gray-800: var(--gray-800);
+  --rr-radius: var(--radius-lg);
+  --rr-shadow: var(--shadow-sm);
+
+  /* Legacy aliases — enrollment form (--ef-*) */
+  --ef-purple: var(--color-brand-primary);
+  --ef-purple-light: var(--color-brand-tint);
+  --ef-purple-dark: var(--color-brand-primary);
+  --ef-green: var(--color-success);
+  --ef-green-light: var(--color-success-bg);
+  --ef-red: var(--color-error);
+  --ef-red-light: var(--color-error-bg);
+  --ef-gray-50: var(--gray-50);
+  --ef-gray-100: var(--gray-100);
+  --ef-gray-200: var(--gray-200);
+  --ef-gray-400: var(--gray-400);
+  --ef-gray-600: var(--gray-600);
+  --ef-gray-800: var(--gray-800);
+  --ef-radius: var(--radius-lg);
+  --ef-shadow: var(--shadow-sm);
+
+  /* Legacy aliases — company payment (--cp2-*) */
+  --cp2-indigo: var(--color-brand-primary);
+  --cp2-green: var(--color-success);
+  --cp2-amber: #d97706;
+  --cp2-sky: var(--color-brand-primary);
+  --cp2-red: var(--color-error);
+  --cp2-border: var(--color-border);
+  --cp2-bg: var(--color-bg);
+  --cp2-card: var(--color-surface);
+  --cp2-text: var(--color-text-primary);
+  --cp2-muted: var(--color-text-muted);
+  --cp2-radius: var(--radius-lg);
+
+  /* Legacy aliases — carousel */
+  --font-head: var(--font-display);
+  --radius: var(--radius-xl);
+}

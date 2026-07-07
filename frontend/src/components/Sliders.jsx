@@ -168,7 +168,7 @@ function Sliders() {
                                 {!s.active && <span className="sl-inactive-pill">Hidden</span>}
                             </div>
                             <div className="sl-card-body">
-                                <div className="sl-card-title">{s.title || <em style={{ color: "#94a3b8" }}>Untitled</em>}</div>
+                                <div className="sl-card-title">{s.title || <em style={{ color: colors.textSubtle }}>Untitled</em>}</div>
                                 {s.link && <div className="sl-card-link" title={s.link}>{s.link}</div>}
                                 <div className="sl-card-actions">
                                     <button className="sl-btn sl-btn--ghost" onClick={() => toggleActive(s)}>

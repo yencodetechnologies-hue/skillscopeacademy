@@ -77,7 +77,7 @@
 .trust-divider {
     width: 1px;
     height: 48px;
-    background: #e5e7eb;
+    background: var(--color-border);
     flex-shrink: 0;
 }
 

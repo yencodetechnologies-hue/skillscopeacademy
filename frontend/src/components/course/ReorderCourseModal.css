@@ -132,11 +132,11 @@
 
 .rco-category-item--active {
     background: #f5f3ff;
-    border-left-color:#cc0000;
+    border-left-color:var(--color-brand-primary);
 }
 
 .rco-category-item--active .rco-category-name {
-    color:#cc0000;
+    color:var(--color-brand-primary);
     font-weight: 500;
 }
 
@@ -148,15 +148,15 @@
 .rco-category-count {
     font-size: 12px;
     color: #888;
-    background: #f3f4f6;
+    background: var(--color-bg-muted);
     padding: 2px 10px;
     border-radius: 12px;
     white-space: nowrap;
 }
 
 .rco-category-item--active .rco-category-count {
-    background: #ede9fe;
-    color:#cc0000;
+    background: var(--color-brand-tint);
+    color:var(--color-brand-primary);
 }
 
 /* ── COURSES SECTION ─────────────────────────── */
@@ -167,26 +167,26 @@
 .rco-courses-heading {
     font-size: 13px;
     font-weight: 600;
-    color:#cc0000;
+    color:var(--color-brand-primary);
     margin: 0;
     padding: 14px 20px 8px;
 }
 
 .rco-reordering-tag {
     font-weight: 400;
-    color: #f59e0b;
+    color: var(--color-warning-alt);
     font-size: 12px;
 }
 
 .rco-saving-tag {
     font-weight: 400;
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-size: 12px;
 }
 
 .rco-saved-tag {
     font-weight: 500;
-    color: #16a34a;
+    color: var(--color-success);
     font-size: 12px;
 }
 
@@ -234,7 +234,7 @@
 }
 
 .rco-course-item:hover .rco-drag-handle {
-    color:#cc0000;
+    color:var(--color-brand-primary);
 }
 
 .rco-course-title {

@@ -67,6 +67,6 @@
 .no-courses {
   text-align: center;
   padding: 80px;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   font-size: 18px;
 }

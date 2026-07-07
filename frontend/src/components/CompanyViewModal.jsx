@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { colors } from '../constants/theme';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/CompanyViewModal.css"
@@ -70,15 +71,15 @@ function LinkCard({ link, students }) {
 
     const payBg = (p) => {
         if (p === "Paid") return { background: "#ecfdf5", color: "#059669" };
-        if (p === "Failed") return { background: "#fef2f2", color: "#dc2626" };
+        if (p === "Failed") return { background: "#fef2f2", color: colors.error };
         return { background: "#fef3c7", color: "#b45309" };
     };
     const llndBg = (l) => l === "Completed"
         ? { background: "#ecfdf5", color: "#059669" }
-        : { background: "#f3f4f6", color: "#6b7280" };
+        : { background: colors.bgMuted, color: colors.textMuted };
     const formBg = (f) => f === "Submitted"
         ? { background: "#e0f2fe", color: "#0369a1" }
-        : { background: "#fef2f2", color: "#dc2626" };
+        : { background: "#fef2f2", color: colors.error };
 
     return (
         <div className="cvm-link-card" style={{ opacity: isFull ? 0.85 : 1 }}>
@@ -117,7 +118,7 @@ function LinkCard({ link, students }) {
                 </button>
                 <button
                     className="cvm-link-btn-students"
-                    style={{ background: "#f5f3ff", color: "#cc0000", border: "1px solid#cc000033" }}
+                    style={{ background: "#f5f3ff", color: colors.brandPrimary, border: `1px solid ${colors.brandPrimary}33` }}
                     onClick={() => window.open(url, "_blank")}
                 >
                     Open Link ↗
@@ -421,9 +422,9 @@ export default function CompanyViewModal({ company, onClose }) {
                             <PurchasesSection purchases={purchases} />
 
                             {/* ── General Enrolment Link ── */}
-                            <div className="cvm-section" style={{ border: "1px solid#cc000033", background: "#f5f3ff44" }}>
+                            <div className="cvm-section" style={{ border: `1px solid ${colors.brandPrimary}33`, background: "#f5f3ff44" }}>
                                 <div className="cvm-section-header" style={{ background: "#f5f3ff88" }}>
-                                    <h3 className="cvm-section-title" style={{ color: "#cc0000" }}>General Enrolment Link</h3>
+                                    <h3 className="cvm-section-title" style={{ color: colors.brandPrimary }}>General Enrolment Link</h3>
                                     <p className="cvm-section-sub">
                                         Share this link with employees. They can select any course and enroll themselves under your company account.
                                     </p>

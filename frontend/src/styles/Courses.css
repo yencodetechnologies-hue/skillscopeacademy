@@ -24,7 +24,7 @@
 
 .courses-container > div > p {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--color-text-muted);
     margin: 0;
 }
 
@@ -37,13 +37,13 @@
 .course-management-div > p {
     height: fit-content;
     background-color: #ffffff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
     padding: 9px 16px;
     font-size: 14px;
-    color: #374151;
+    color: var(--color-text-secondary);
     white-space: nowrap;
     display: flex;
     align-items: center;
@@ -52,20 +52,20 @@
 }
 
 .course-management-div > p:hover {
-    border-color: #cc0000;
-    color: #cc0000;
+    border-color: var(--color-brand-primary);
+    color: var(--color-brand-primary);
 }
 
 /* Last button = Create New Course (purple) */
 .course-management-div > p:last-child {
-    background: #cc0000;
-    color: white;
-    border-color: #cc0000;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
+    border-color: var(--color-brand-primary);
     font-weight: 600;
 }
 
 .course-management-div > p:last-child:hover {
-    background: #0a8fc0;
+    background: var(--color-brand-accent);
     color: white;
 }
 
@@ -74,7 +74,7 @@
 .courses-search-wrapper {
     margin: 24px 32px 0 32px;
     background: white;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 20px 24px;
 }
@@ -82,13 +82,13 @@
 .courses-search-wrapper h3 {
     font-size: larger;
     font-weight: 600;
-    color: #111827;
+    color: var(--color-text-primary);
     margin: 0 0 2px 0;
 }
 
 .courses-search-wrapper > p {
     font-size: 13px;
-    color: #6b7280;
+    color: var(--color-text-muted);
     margin: 0 0 16px 0;
 }
 
@@ -105,18 +105,18 @@
 
 .courses-search input {
     padding: 10px 10px 10px 20px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     width: 100%;
     font-size: 14px;
-    color: #374151;
+    color: var(--color-text-secondary);
     outline: none;
     transition: border-color 0.2s;
     box-sizing: border-box;
 }
 
 .courses-search input:focus {
-    border-color: #cc0000;
+    border-color: var(--color-brand-primary);
 }
 
 .search-icon {
@@ -130,10 +130,10 @@
 
 .status-select {
     padding: 10px 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     font-size: 14px;
-    color: #374151;
+    color: var(--color-text-secondary);
     background: white;
     cursor: pointer;
     outline: none;
@@ -146,18 +146,18 @@
     gap: 6px;
     padding: 10px 18px;
     background: white;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     font-size: 14px;
-    color: #374151;
+    color: var(--color-text-secondary);
     cursor: pointer;
     font-weight: 500;
     transition: all 0.2s;
 }
 
 .search-btn:hover {
-    border-color: #cc0000;
-    color: #cc0000;
+    border-color: var(--color-brand-primary);
+    color: var(--color-brand-primary);
 }
 
 /* ===== COURSES LIST ===== */
@@ -172,7 +172,7 @@
 .courses-heading {
     font-size: 20px;
     font-weight: 700;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     margin: 0 0 14px 0;
 }
 
@@ -189,7 +189,7 @@
     justify-content: space-between;
     align-items: center;
     background: white;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 16px 24px;
     transition: box-shadow 0.2s;
@@ -215,11 +215,11 @@
 }
 
 .course-catagory-btn {
-    background-color: #f3f4f6;
+    background-color: var(--color-bg-muted);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 12px;
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-weight: 500;
     width: fit-content;
 }
@@ -234,12 +234,12 @@
 }
 
 .premium-badge {
-    background: linear-gradient(90deg, #cc0000, #0a8fc0);
+    background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
     color: white;
 }
 
 .standard-badge {
-    background: linear-gradient(90deg, #f43f5e,#cc0000);
+    background: linear-gradient(90deg, #f43f5e,var(--color-brand-primary));
     color: white;
 }
 
@@ -253,7 +253,7 @@
 .course-title {
     font-size: 17px;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-text-primary);
     margin: 2px 0 0 0;
 }
 
@@ -285,7 +285,7 @@
 }
 
 .discount-price {
-    color: #cc0000;
+    color: var(--color-brand-primary);
     font-weight: 700;
 }
 
@@ -298,7 +298,7 @@
 
 .enrolled-students {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-weight: 400;
 }
 
@@ -350,7 +350,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     cursor: pointer;
     background: white;
@@ -359,28 +359,28 @@
 }
 
 .course-actions button:hover {
-    border-color: #cc0000;
+    border-color: var(--color-brand-primary);
 }
 
 .edit-btn {
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 
 .edit-btn:hover {
-    color: #cc0000 !important;
+    color: var(--color-brand-primary) !important;
 }
 
 .delete-btn {
-    color: #ef4444 !important;
+    color: var(--color-error-alt) !important;
 }
 
 .delete-btn:hover {
-    border-color: #ef4444 !important;
+    border-color: var(--color-error-alt) !important;
     background: #fff1f2 !important;
 }
 
 .calendar-btn {
-    color: #cc0000 !important;
+    color: var(--color-brand-primary) !important;
 }
 
 /* ===== MODAL ===== */

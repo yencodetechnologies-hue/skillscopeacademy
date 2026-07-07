@@ -1,3 +1,4 @@
+import { colors } from '../constants/theme';
 // EnrollmentLinks.jsx
 import { useState, useEffect, useRef } from "react";
 import QRCode from "qrcode";
@@ -23,7 +24,7 @@ const formatDate = (iso) => {
 function QRImage({ value, size = 168 }) {
   const [src, setSrc] = useState("");
   useEffect(() => {
-    QRCode.toDataURL(value, { width: size, margin: 2, color: { dark: "#000", light: "#fff" } })
+    QRCode.toDataURL(value, { width: size, margin: 2, color: { dark: "#000", light: colors.white } })
       .then(setSrc)
       .catch(console.error);
   }, [value, size]);
@@ -263,7 +264,7 @@ function ViewModal({ link, onClose }) {
                   <tr key={i}>
                     <td>{s.name}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.email}</td>
-                    <td style={{ color: "#cc0000", fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
+                    <td style={{ color: colors.brandPrimary, fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.date}</td>
                   </tr>
                 ))}
@@ -306,7 +307,7 @@ function StudentsModal({ link, onClose }) {
                   <tr key={i}>
                     <td style={{ fontWeight: 600 }}>{s.name}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.email}</td>
-                    <td style={{ color: "#cc0000", fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
+                    <td style={{ color: colors.brandPrimary, fontWeight: 600 }}>{s.bookingId ? s.bookingId.slice(-8).toUpperCase() : "—"}</td>
                     <td style={{ color: "var(--gray-500)" }}>{s.date}</td>
                   </tr>
                 ))}

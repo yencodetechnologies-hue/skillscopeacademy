@@ -68,7 +68,7 @@
 .review-avatar {
   font-size: 40px;
   font-weight: 700;
-  color: #f59e0b;
+  color: var(--color-warning-alt);
   width: 60px;
   height: 60px;
   background: #fef3c7;
@@ -104,9 +104,9 @@
 
 .review-btn {
   margin-top: 10px;
-  border: 2px solid #cc0000;
+  border: 2px solid var(--color-brand-primary);
   background: white;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   padding: 8px 18px;
   border-radius: 30px;
   cursor: pointer;
@@ -118,8 +118,8 @@
 }
 
 .review-btn:hover {
-  background: #cc0000;
-  color: white;
+  background: var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
 }
 
 @media (max-width: 768px) {

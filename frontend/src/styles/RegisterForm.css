@@ -78,7 +78,7 @@
 .form-input:focus,
 .login-box input:focus {
   outline: none;
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
   background: #fff;
 }
 
@@ -101,7 +101,7 @@
 
 .role-select:focus {
   outline: none;
-  border-color: #cc0000;
+  border-color: var(--color-brand-primary);
 }
 
 /* ── Validation errors ── */
@@ -136,7 +136,7 @@
 }
 
 .options input[type="checkbox"] {
-  accent-color: #cc0000;
+  accent-color: var(--color-brand-primary);
   width: 15px;
   height: 15px;
   flex-shrink: 0;
@@ -149,12 +149,12 @@
   padding: 13px;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: var(--color-brand-on-primary);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
-  background: #cc0000;
+  background: var(--color-brand-primary);
   transition: opacity 0.2s, transform 0.1s;
 }
 

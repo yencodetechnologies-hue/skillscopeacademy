@@ -4,8 +4,8 @@
     align-items: center;
 }
 .week-navigation > button {
-    background: #cc0000;
-    color: white;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
     border: none;
     padding: 5px 10px;
     border-radius: 6px;
@@ -30,10 +30,10 @@
     justify-content: center;
 }
 .calendar-day {
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 .booking-count {
-    color: #cc0000;
+    color: var(--color-brand-primary);
     bottom: 1px;
     font-weight: 700;
 }
@@ -61,13 +61,13 @@
 }
 .day-hoverable:hover,
 .day-active {
-    box-shadow: 0 0 0 2px #cc0000;
-    border-color: #cc0000;
+    box-shadow: 0 0 0 2px var(--color-brand-primary);
+    border-color: var(--color-brand-primary);
     background: #f0faff;
 }
 .day-hint {
     font-size: 11px;
-    color: #cc0000;
+    color: var(--color-brand-primary);
     font-weight: 600;
     margin-top: 2px;
     letter-spacing: 0.3px;
@@ -95,8 +95,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 14px 20px;
-    background:#cc0000;
-    color: #fff;
+    background:var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
 }
 .daily-modal-title {
     font-size: 15px;
@@ -146,7 +146,7 @@
 .daily-modal-table td {
     padding: 9px 12px;
     border-bottom: 1px solid #f0f4f8;
-    color: #374151;
+    color: var(--color-text-secondary);
     vertical-align: middle;
 }
 .daily-modal-table tr:last-child td { border-bottom: none; }
@@ -172,7 +172,7 @@
     font-weight: 600;
     white-space: nowrap;
 }
-.type-badge.type-individual { background: #dbeafe; color: #1d4ed8; }
+.type-badge.type-individual { background: var(--color-info-bg); color: var(--color-info-hover); }
 .type-badge.type-company    { background: #d1fae5; color: #065f46; }
 .type-badge.type-agent      { background: #fef3c7; color: #92400e; }
 
@@ -183,7 +183,7 @@
     font-weight: 600;
 }
 .status-badge.status-active   { background: #d1fae5; color: #065f46; }
-.status-badge.status-inactive { background: #fee2e2; color: #991b1b; }
+.status-badge.status-inactive { background: var(--color-error-bg); color: #991b1b; }
 
 .daily-modal-pagination {
     display: flex;
@@ -195,8 +195,8 @@
     background: #f8fbff;
 }
 .daily-modal-pagination button {
-    background: #cc0000;
-    color: #fff;
+    background: var(--color-brand-primary);
+    color: var(--color-brand-on-primary);
     border: none;
     border-radius: 6px;
     padding: 5px 14px;
@@ -213,7 +213,7 @@
 }
 .daily-modal-pagination span {
     font-size: 13px;
-    color: #6b7280;
+    color: var(--color-text-muted);
 }
 .daily-modal-loading,
 .daily-modal-empty {

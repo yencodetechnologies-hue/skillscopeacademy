@@ -25,7 +25,7 @@ padding:0 20px;
 /* FORM BOX */
 
 .contact-form-box{
-background:linear-gradient(135deg,#cc0000,#cc0000);
+background:linear-gradient(135deg,var(--color-brand-primary),var(--color-brand-primary));
 padding:40px;
 border-radius:20px;
 color:white;
@@ -104,19 +104,19 @@ border-radius:30px;
 }
 
 .llnd-btn{
-background:#cc0000;
+background:var(--color-brand-primary);
 border:none;
 padding:12px 25px;
 border-radius:30px;
-color:white;
+color: var(--color-brand-on-primary);
 }
 
 .voc-btn{
-background:#cc0000;
+background:var(--color-brand-primary);
 border:none;
 padding:12px 25px;
 border-radius:30px;
-color:white;
+color: var(--color-brand-on-primary);
 }
 .entrol-btn-landing{
     margin: 0px;

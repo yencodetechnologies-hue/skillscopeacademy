@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { colors } from '../../constants/theme';
 import "./CompanyPayments.css";
 import { API_URL } from "../../data/service";
 
@@ -302,7 +303,7 @@ function PayModal({ selected, payments, grouped = [], company, onClose, onSucces
                 onChange={e => setReceiptFile(e.target.files[0])}
               />
               {receiptFile && (
-                <p style={{ fontSize: 12, color: "#16a34a", marginTop: 4 }}>✅ {receiptFile.name}</p>
+                <p style={{ fontSize: 12, color: colors.success, marginTop: 4 }}>✅ {receiptFile.name}</p>
               )}
             </div>
           </div>
@@ -353,7 +354,7 @@ function PaymentDetailsModal({ group, onClose }) {
                 return (
                   <div key={i} style={{ marginBottom: 12, paddingBottom: 8, borderBottom: i < group.rows.length - 1 ? "1px solid #e5e7eb" : "none" }}>
                     <div style={{ fontWeight: 600 }}>{row.course}</div>
-                    <div style={{ fontSize: 12, color: "#6b7280" }}>Quantity: {max} (Enrolled: {enrolled})</div>
+                    <div style={{ fontSize: 12, color: colors.textMuted }}>Quantity: {max} (Enrolled: {enrolled})</div>
                   </div>
                 );
               })}
@@ -363,8 +364,8 @@ function PaymentDetailsModal({ group, onClose }) {
               {group.rows.map((row, i) => (
                 <div key={i} style={{ marginBottom: 12, paddingBottom: 8, borderBottom: i < group.rows.length - 1 ? "1px solid #e5e7eb" : "none" }}>
                   <div style={{ fontWeight: 600 }}>{row.name}</div>
-                  <div style={{ fontSize: 12, color: "#6b7280" }}>{row.email}</div>
-                  <div style={{ fontSize: 12, color: "#6b7280" }}>Course: {row.course}</div>
+                  <div style={{ fontSize: 12, color: colors.textMuted }}>{row.email}</div>
+                  <div style={{ fontSize: 12, color: colors.textMuted }}>Course: {row.course}</div>
                 </div>
               ))}
             </div>
@@ -496,7 +497,7 @@ export function PaymentsTable({ payments = [], company, onRefresh }) {
                       <button
                         type="button"
                         onClick={() => setDetailsGroup(group)}
-                        style={{ border: "none", background: "none", cursor: "pointer", padding: 0, color: "#2563eb", fontSize: 16, lineHeight: 1 }}
+                        style={{ border: "none", background: "none", cursor: "pointer", padding: 0, color: colors.info, fontSize: 16, lineHeight: 1 }}
                         aria-label="View payment details"
                       >
                         👁
@@ -549,9 +550,9 @@ export function PaymentsTable({ payments = [], company, onRefresh }) {
 
 // ── Source label helper ───────────────────────────────────────────────────────
 function sourceLabel(source) {
-  if (source === "Booking Link")  return { text: "Booking Link",  color: "#cc0000" };
+  if (source === "Booking Link")  return { text: "Booking Link",  color: colors.brandPrimary };
   if (source === "Company Link")  return { text: "Company Link",  color: "#0891b2" };
-  return                                 { text: source || "—",   color: "#6b7280" };
+  return                                 { text: source || "—",   color: colors.textMuted };
 }
 
 function payStatusBadge(status) {
@@ -677,7 +678,7 @@ function StudentsTable({ students, company, loading, onRefresh }) {
                     </td>
                     <td>
                       <div style={{ fontWeight: 600, fontSize: 13 }}>{s.name}</div>
-                      <div style={{ fontSize: 11, color: "#6b7280" }}>{s.email}</div>
+                      <div style={{ fontSize: 11, color: colors.textMuted }}>{s.email}</div>
                     </td>
                     <td>{s.course}</td>
                     <td>{s.amount}</td>

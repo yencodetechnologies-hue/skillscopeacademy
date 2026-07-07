@@ -1,4 +1,5 @@
 import * as React from "react";
+import { colors } from '../constants/theme';
 import { useState, useEffect, useRef } from "react";
 import "../styles/Student.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -90,7 +91,7 @@ function ViewModal({ student, onClose, onRefresh, onUpdateStudent }) {
           <div className="modal-detail-row"><span>Course</span><span>{student.course || "—"}</span></div>
           <div className="modal-detail-row"><span>Type</span><span>{student.type || "—"}</span></div>
           <div className="modal-detail-row"><span>Booking Date</span><span>{student.courseBookingDate || "—"}</span></div>
-          <div className="modal-detail-row"><span>Booking ID</span><span style={{ fontWeight: '700', color: '#cc0000' }}>{student.bookingId || "—"}</span></div>
+          <div className="modal-detail-row"><span>Booking ID</span><span style={{ fontWeight: '700', color: colors.brandPrimary }}>{student.bookingId || "—"}</span></div>
           <div className="modal-detail-row"><span>Register Date</span><span>{student.registerDate || "—"}</span></div>
           <div className="modal-detail-row"><span>Last Login</span><span>{student.lastLogin || "Never"}</span></div>
         </div>
@@ -541,7 +542,7 @@ function AddStudentModal({ onClose, onSave }) {
                 }
                 .custom-dropdown-group {
                   background: #e0f2fe; /* Light blue from Screenshot 2 */
-                  color: #cc0000; /* Sky blue text */
+                  color: ${colors.brandPrimary}; /* Brand accent text */
                   font-weight: 700;
                   padding: 10px 15px;
                   font-size: 11px;
@@ -567,7 +568,7 @@ function AddStudentModal({ onClose, onSave }) {
                 }
                 .custom-dropdown-option:hover {
                   background: #f8fafc;
-                  color: #cc0000;
+                  color: ${colors.brandPrimary};
                   padding-left: 20px;
                 }
                 .custom-dropdown-placeholder { color: #94a3b8; }
@@ -645,13 +646,13 @@ function AddStudentModal({ onClose, onSave }) {
                   }
                   .date-chip--active {
                     background: #f5f3ff;
-                    border-color:#cc0000;
-                    color:#cc0000;
+                    border-color:${colors.brandPrimary};
+                    color:${colors.brandPrimary};
                   }
                   .date-chip__day { font-size: 11px; font-weight: 600; text-transform: uppercase; }
                   .date-chip__date { font-size: 14px; font-weight: 700; margin: 2px 0; }
                   .date-chip__session { font-size: 10px; color: #64748b; }
-                  .date-chip--active .date-chip__session { color:#cc0000; }
+                  .date-chip--active .date-chip__session { color:${colors.brandPrimary}; }
                   
                   .session-cards-wrap {
                     display: grid;
@@ -669,10 +670,10 @@ function AddStudentModal({ onClose, onSave }) {
                     flex-direction: column;
                     gap: 5px;
                   }
-                  .session-card:hover { border-color:#cc0000; background: #fdfcff; }
+                  .session-card:hover { border-color:${colors.brandPrimary}; background: #fdfcff; }
                   .session-card--active {
                     background: #f5f3ff;
-                    border-color:#cc0000;
+                    border-color:${colors.brandPrimary};
                   }
                   .session-card__time {
                     font-weight: 600;
@@ -683,7 +684,7 @@ function AddStudentModal({ onClose, onSave }) {
                   }
                   .session-card__slots {
                     font-size: 12px;
-                    color:#cc0000;
+                    color:${colors.brandPrimary};
                     font-weight: 500;
                     padding-left: 24px;
                   }
@@ -1207,7 +1208,7 @@ setDeleteStudent(null);
                         <div className="sm-time">{s.registerTime}</div>
                       </td>
                       <td className="sm-booking-id">
-                        <div className="sm-date" style={{ fontWeight: '600', color: '#cc0000' }}>
+                        <div className="sm-date" style={{ fontWeight: '600', color: colors.brandPrimary }}>
                           {s.bookingId || "—"}
                         </div>
                       </td>
@@ -1232,7 +1233,7 @@ setDeleteStudent(null);
                           </div>
                         )}
                         {s.type === "Agent" && (
-                          <div style={{ fontSize: "0.75rem", fontWeight: 600, color: "#cc0000" }}>
+                          <div style={{ fontSize: "0.75rem", fontWeight: 600, color: colors.brandPrimary }}>
                             {s.agentName || "Agent"}
                           </div>
                         )}
@@ -1285,7 +1286,7 @@ setDeleteStudent(null);
                         </div>
                       </td>
                       <td>
-                        <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: "12px", fontWeight: "600", color: "#cc0000" }}>
+                        <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: "12px", fontWeight: "600", color: colors.brandPrimary }}>
                           {s.gatewayTransactionId && s.gatewayTransactionId !== "—" ? s.gatewayTransactionId : (s.paymentMethod === "Card Payment" ? "—" : "-")}
                         </div>
                       </td>

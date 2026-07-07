@@ -1,3 +1,4 @@
+import { colors } from '../../constants/theme';
 // import { useState, useEffect } from "react";
 // import "../../styles/LlnResults.css";
 // import { useSearchParams } from "react-router-dom";
@@ -136,7 +137,7 @@
 //                   <button
 //                     className="lln-edit-link"
 //                     onClick={() => setIsEditing(true)}
-//                     style={{ background: "none", border: "none", color: "#cc0000", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
+//                     style={{ background: "none", border: "none", color: colors.brandPrimary, cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
 //                   >
 //                     Change Date
 //                   </button>
@@ -602,7 +603,7 @@ function AssessmentModal({ record, onClose, onRefresh }) {
                   <button
                     className="lln-edit-link"
                     onClick={() => setIsEditing(true)}
-                    style={{ background: "none", border: "none", color: "#cc0000", cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
+                    style={{ background: "none", border: "none", color: colors.brandPrimary, cursor: "pointer", fontSize: "12px", textDecoration: "underline" }}
                   >
                     Change Date
                   </button>

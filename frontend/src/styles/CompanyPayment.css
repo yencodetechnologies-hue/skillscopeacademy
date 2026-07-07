@@ -1,18 +1,3 @@
-/* ── Variables ── */
-:root {
-  --cp2-indigo: #cc0000;
-  --cp2-green:  #16a34a;
-  --cp2-amber:  #d97706;
-  --cp2-sky:    #cc0000;
-  --cp2-red:    #dc2626;
-  --cp2-border: #e5e7eb;
-  --cp2-bg:     #f9fafb;
-  --cp2-card:   #ffffff;
-  --cp2-text:   #111827;
-  --cp2-muted:  #6b7280;
-  --cp2-radius: 12px;
-}
-
 /* ── Wrap ── */
 
 .cp2-pagination {
@@ -26,24 +11,24 @@
 
 .cp2-page-btn {
   padding: 6px 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   background: #fff;
   border-radius: 6px;
   font-size: 13px;
   cursor: pointer;
-  color: #374151;
+  color: var(--color-text-secondary);
   transition: all 0.15s;
 }
 
 .cp2-page-btn:hover:not(:disabled) {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
   border-color: #d1d5db;
 }
 
 .cp2-page-btn--active {
-  background: #cc0000;
-  color: #fff;
-  border-color: #cc0000;
+  background: var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
+  border-color: var(--color-brand-primary);
   font-weight: 600;
 }
 
@@ -252,7 +237,7 @@
 .cp2-table tbody tr:last-child td { border-bottom: none; }
 .cp2-table tbody tr:hover td { background: #fafafa; }
 .cp2-row-confirmed td { background: #f0fdf4; }
-.cp2-row-confirmed:hover td { background: #dcfce7 !important; }
+.cp2-row-confirmed:hover td { background: var(--color-success-bg) !important; }
 
 .cp2-td-muted   { color: var(--cp2-muted); font-size: 12px; }
 .cp2-td-mono    { font-family: monospace; font-size: 12px; color: var(--cp2-muted); }
@@ -264,7 +249,7 @@
 .cp2-course-pill {
   display: inline-block;
   background: #dbeeff;
-  color: #cc0000;
+  color: var(--color-brand-primary);
   padding: 2px 8px;
   border-radius: 20px;
   font-size: 12px;
@@ -288,10 +273,10 @@
   white-space: nowrap;
 }
 
-.cp2-badge--confirmed { background: #dcfce7; color: #15803d; }
+.cp2-badge--confirmed { background: var(--color-success-bg); color: #15803d; }
 .cp2-badge--success   { background: #d1fae5; color: #065f46; }
 .cp2-badge--pending   { background: #fef3c7; color: #92400e; }
-.cp2-badge--failed    { background: #fee2e2; color: #b91c1c; }
+.cp2-badge--failed    { background: var(--color-error-bg); color: #b91c1c; }
 
 /* ── View Button ── */
 .cp2-view-btn {
@@ -507,7 +492,7 @@
   align-self: flex-start;
 }
 
-.cp2-open-btn:hover { background: #cc0000; }
+.cp2-open-btn:hover { background: var(--color-brand-primary); }
 
 .cp2-no-receipt {
   display: flex;

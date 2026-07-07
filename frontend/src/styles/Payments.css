@@ -1,11 +1,3 @@
-:root {
-  --primary-color: #cc0000;
-  --bg-gray: #f9fafb;
-  --text-dark: #111827;
-  --text-light: #6b7280;
-  --border-gray: #e5e7eb;
-}
-
 .payment-container {
   padding: 24px;
   background-color: #f8f9fc;
@@ -26,7 +18,7 @@
 
 .payment-header p {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -53,7 +45,7 @@
 .stat-label {
   font-size: 13px;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin-bottom: 12px;
 }
 
@@ -80,17 +72,17 @@
 .table-header h3 {
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
 .refresh-btn {
   padding: 8px 16px;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 13px;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -99,7 +91,7 @@
 }
 
 .refresh-btn:hover {
-  background: #e5e7eb;
+  background: var(--color-border);
 }
 
 /* --- Table Styling --- */
@@ -114,9 +106,9 @@
 
 .payment-table th {
   padding: 12px;
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-  color: #6b7280;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -126,9 +118,9 @@
 
 .payment-table td {
   padding: 12px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--color-bg-muted);
   vertical-align: middle;
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 .payment-table tr:hover td {
@@ -143,13 +135,13 @@
 
 .student-info .name {
   font-weight: 600;
-  color: #111827;
+  color: var(--color-text-primary);
   font-size: 13px;
 }
 
 .email-muted, .td-muted, .time-muted {
   font-size: 11px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .course-info {
@@ -159,7 +151,7 @@
 
 .course-name-bold {
   font-weight: 600;
-  color: #111827;
+  color: var(--color-text-primary);
   font-size: 11px;
   line-height: 1.3;
   max-width: 280px;
@@ -169,12 +161,12 @@
 .td-mono {
   font-family: 'Courier New', Courier, monospace;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .amount-bold {
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-primary);
 }
 
 /* Status Badges */
@@ -188,23 +180,23 @@
 }
 
 .status-badge.verified { background: #ecfdf5; color: #059669; }
-.status-badge.pending { background: #fffbeb; color: #d97706; }
-.status-badge.failed { background: #fef2f2; color: #dc2626; }
+.status-badge.pending { background: #fffbeb; color: var(--cp2-amber); }
+.status-badge.failed { background: #fef2f2; color: var(--color-error); }
 
 /* Action Buttons */
 .review-btn {
   padding: 6px 14px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 12px;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .review-btn:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
   border-color: #d1d5db;
 }
 
@@ -268,13 +260,13 @@
 .modal-header h3 {
   font-size: 22px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text-primary);
   margin: 0 0 4px;
 }
 
 .modal-header p {
   font-size: 14px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -312,7 +304,7 @@
 .info-card-v2 h4 {
   font-size: 12px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0 0 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -321,11 +313,11 @@
 .info-card-v2 p {
   margin: 6px 0;
   font-size: 14px;
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 .info-card-v2 strong {
-  color: #111827;
+  color: var(--color-text-primary);
   display: block;
   font-size: 15px;
   margin-bottom: 2px;
@@ -342,7 +334,7 @@
 .transaction-section-v2 h4 {
   font-size: 12px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 0 0 16px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -357,13 +349,13 @@
 .detail-item .label {
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-secondary);
   margin-bottom: 4px;
 }
 
 .detail-item .value {
   font-size: 14px;
-  color: #111827;
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -380,7 +372,7 @@
 
 /* Receipt Section */
 .receipt-section-v2 {
-  border: 2px dashed #e5e7eb;
+  border: 2px dashed var(--color-border);
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
@@ -396,7 +388,7 @@
 .receipt-header span {
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-secondary);
 }
 
 .download-btn {
@@ -405,19 +397,19 @@
   gap: 8px;
   padding: 8px 16px;
   background: white;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.download-btn:hover { background: #f9fafb; border-color: #d1d5db; }
+.download-btn:hover { background: var(--color-bg); border-color: #d1d5db; }
 
 .receipt-preview-v2 {
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
   border-radius: 12px;
   min-height: 250px;
   display: flex;
@@ -442,13 +434,13 @@
 
 .status-bar-v2.rejected {
   background: #fef2f2;
-  border: 1px solid #fee2e2;
+  border: 1px solid var(--color-error-bg);
 }
 
 .status-bar-v2 .icon {
   width: 24px;
   height: 24px;
-  background: #10b981;
+  background: var(--color-success-alt);
   color: white;
   border-radius: 50%;
   display: flex;
@@ -458,7 +450,7 @@
 }
 
 .status-bar-v2.rejected .icon {
-  background: #dc2626;
+  background: var(--color-error);
 }
 
 .status-bar-v2 .text h5 {
@@ -483,7 +475,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  background: #f9fafb;
+  background: var(--color-bg);
 }
 
 .btn-base {
@@ -496,10 +488,10 @@
   outline: none;
 }
 
-.btn-close { background: white; border: 1px solid #e5e7eb; color: #374151; }
-.btn-reject { background: #fee2e2; border: none; color: #dc2626; }
-.btn-confirm { background: #cc0000; border: none; color: white; }
+.btn-close { background: white; border: 1px solid var(--color-border); color: var(--color-text-secondary); }
+.btn-reject { background: var(--color-error-bg); border: none; color: var(--color-error); }
+.btn-confirm { background: var(--color-brand-primary); border: none; color: var(--color-brand-on-primary); }
 
-.btn-close:hover { background: #f9fafb; }
+.btn-close:hover { background: var(--color-bg); }
 .btn-reject:hover { background: #fecaca; }
-.btn-confirm:hover { background: #cc0000; }
+.btn-confirm:hover { background: var(--color-brand-primary); }

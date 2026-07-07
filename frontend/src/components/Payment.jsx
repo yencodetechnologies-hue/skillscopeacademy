@@ -1,3 +1,4 @@
+import { colors } from '../constants/theme';
 import { useState, useEffect, useRef } from "react"
 import "../styles/Payment.css"
 import * as Yup from "yup"
@@ -494,7 +495,7 @@ function Payment({
                     {blockPaymentForExistingEmail && (
                         <span className="error-text">
                             ⚠ {companyEmailTakenMsg}{" "}
-                            <a href="/login" style={{ color: "#cc0000", textDecoration: "underline" }}>Login</a>
+                            <a href="/login" style={{ color: colors.brandPrimary, textDecoration: "underline" }}>Login</a>
                             {" "}to continue.
                         </span>
                     )}
@@ -561,8 +562,8 @@ function Payment({
 
             {/* Enrollment Link Info (Only show "No Payment Required" if Pay Later is NOT enabled for the link) */}
             {isEnrollmentLink && (
-                <div className="summary-card" style={{ backgroundColor: "#f3e8ff", borderLeft: "4px solid#cc0000" }}>
-                    <div style={{ fontSize: 14, color: "#cc0000", fontWeight: 600 }}>
+                <div className="summary-card" style={{ backgroundColor: "#f3e8ff", borderLeft: `4px solid ${colors.brandPrimary}` }}>
+                    <div style={{ fontSize: 14, color: colors.brandPrimary, fontWeight: 600 }}>
                         {enrollmentLinkData?.payLater ? "✓ Pay Later Enabled" : "✓ No Payment Required"}
                     </div>
                     <div style={{ fontSize: 12, color: "#6b21b6", marginTop: 4 }}>
@@ -682,19 +683,19 @@ function Payment({
                                         alignItems: "center", justifyContent: "center",
                                     }}
                                 >✕</button>
-                                <p style={{ fontSize: 12, color: "#16a34a", marginTop: 4 }}>✅ {paymentSlip.name}</p>
+                                <p style={{ fontSize: 12, color: colors.success, marginTop: 4 }}>✅ {paymentSlip.name}</p>
                             </div>
                         )}
 
                         {/* PDF preview */}
                         {paymentSlip && paymentSlip.type === "application/pdf" && (
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
-                                <p style={{ fontSize: 12, color: "#cc0000", margin: 0 }}>📄 {paymentSlip.name}</p>
+                                <p style={{ fontSize: 12, color: colors.brandPrimary, margin: 0 }}>📄 {paymentSlip.name}</p>
                                 <button
                                     type="button"
                                     onClick={removeSlip}
                                     style={{
-                                        background: "#fee2e2", color: "#dc2626",
+                                        background: colors.errorBg, color: colors.error,
                                         border: "none", borderRadius: 6,
                                         padding: "2px 8px", fontSize: 11, cursor: "pointer",
                                     }}

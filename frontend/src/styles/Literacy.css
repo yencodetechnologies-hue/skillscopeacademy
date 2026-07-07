@@ -78,7 +78,7 @@
 
 .literacy-select:focus {
   outline: none;
-  border-color:#cc0000;
+  border-color:var(--color-brand-primary);
 }
 
 /* FOOTER */
@@ -103,7 +103,7 @@
 
 /* PREVIOUS */
 .literacy-prev-btn {
-  background: #e5e7eb;
+  background: var(--color-border);
 }
 
 .literacy-prev-btn:hover {
@@ -112,12 +112,12 @@
 
 /* NEXT */
 .literacy-next-btn {
-  background:#cc0000;
-  color: white;
+  background:var(--color-brand-primary);
+  color: var(--color-brand-on-primary);
 }
 
 .literacy-next-btn:hover {
-  background: #cc0000;
+  background: var(--color-brand-primary);
 }
 
 /* DISABLED */
@@ -144,7 +144,7 @@
 }
 
 .literacy-scenario-box {
-  background: #f9fafb;
+  background: var(--color-bg);
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -163,7 +163,7 @@
 
 /* FORM */
 .incident-form {
-  background: #e5e7eb;
+  background: var(--color-border);
   padding: 15px;
   border-radius: 8px;
 }
@@ -191,7 +191,7 @@
   padding: 6px;
   border: none;
   border-radius: 4px;
-  background: #f3f4f6;
+  background: var(--color-bg-muted);
   font-size: 14px;
 }
 .literacy-mcq-box {
@@ -237,11 +237,11 @@
 }
 
 .mcq-option:hover {
-  border-color:#cc0000;
+  border-color:var(--color-brand-primary);
 }
 
 .mcq-option input {
-  accent-color:#cc0000;
+  accent-color:var(--color-brand-primary);
 }
 
 .mcq-option span {
@@ -257,7 +257,7 @@
 .literacy-icons span {
   width: 45px;
   height: 45px;
-  background: #2563eb;
+  background: var(--color-info);
   color: white;
   display: flex;
   align-items: center;

@@ -10,7 +10,7 @@
 .cr-page-label {
   font-size: 14px;
   font-weight: 500;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   margin: 0 0 4px;
 }
 
@@ -30,7 +30,7 @@
   align-items: center;
   gap: 8px;
   background: #fff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 8px;
   padding: 9px 14px;
   width: 280px;
@@ -66,7 +66,7 @@
 /* Card */
 .cr-card {
   background: #fff;
-  border: 0.5px solid #e5e7eb;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
@@ -77,7 +77,7 @@
 .cr-card-code {
   font-size: 12px;
   font-weight: 500;
-  color:#cc0000;
+  color:var(--color-brand-primary);
   margin: 0;
 }
 
@@ -98,7 +98,7 @@
 
 .cr-card-meta {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   margin: 4px 0 0;
   line-height: 1.5;
 }
@@ -116,11 +116,11 @@
   border-radius: 8px;
   margin-bottom: 10px;
 }
-.cr-card-duration { font-size: 13px; color: #6b7280; margin: 4px 0; }
+.cr-card-duration { font-size: 13px; color: var(--color-text-muted); margin: 4px 0; }
 .cr-loading, .cr-empty {
   text-align: center;
   padding: 40px;
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 

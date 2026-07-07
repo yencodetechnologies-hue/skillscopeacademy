@@ -152,18 +152,11 @@ connectDB();
 const app = express();
 app.set("trust proxy", 1);
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-
-  "http://localhost:3000",
-  "https://safety-training-academy.netlify.app",
-  "https://api.octosofttechnologies.in",
-  "https://safetytrainingacademy.vercel.app",
-  "https://www.safetytrainingacademy.edu.au",
-  "https://safetytrainingacademy.edu.au",
-  "https://booking.safetytrainingacademy.edu.au",
-  "http://72.61.236.154:8000",
+  'https://skillscopeacademy.vercel.app',
+  'https://skillscopeacademy.yencodetechnologies.in',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
 ];
 
 // Combine with origins from .env
@@ -252,9 +245,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 7001;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
-  require("./jobs/reviewsCron").startReviewsCron();
+  // require("./jobs/reviewsCron").startReviewsCron();
 });

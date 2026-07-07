@@ -1,6 +1,7 @@
 
 /* ===== BASE ===== */
 .footer {
+  background: var(--color-brand-accent);
   color: var(--color-surface);
   font-family: 'Barlow', sans-serif;
 }

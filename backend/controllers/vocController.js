@@ -66,8 +66,8 @@ const buildVocStudentHtml = (data) => {
     /* ── Header ── */
     .eb-hdr { background: #0d2240; padding: 24px 30px; text-align: center; }
     .eb-hdr h1 { margin: 0; font-size: 22px; font-weight: 700; color: #ffffff; }
-    .eb-hdr-sub { margin: 6px 0 0; font-size: 11px; color: #F5A623; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; }
-    .eb-divider { height: 3px; background: #F5A623; }
+    .eb-hdr-sub { margin: 6px 0 0; font-size: 11px; color: #F57C00; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; }
+    .eb-divider { height: 3px; background: #F57C00; }
 
     /* ── Body ── */
     .eb-content { padding: 28px 30px; }
@@ -101,7 +101,7 @@ const buildVocStudentHtml = (data) => {
 
     /* ── Footer ── */
     .eb-footer { background: #f5f7fa; border-top: 1px solid #e0e0e0; padding: 14px 30px; font-size: 10px; color: #999; text-align: center; line-height: 1.7; }
-    .eb-footer a { color: #F5A623; text-decoration: none; }
+    .eb-footer a { color: #F57C00; text-decoration: none; }
     .eb-footer strong { color: #555; }
   </style>
 </head>

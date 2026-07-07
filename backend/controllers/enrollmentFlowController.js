@@ -981,7 +981,7 @@
 // <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f4;padding:20px 0;">
 // <tr><td align="center">
 // <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-// <tr><td style="background:#0d2240;color:#ffffff;padding:24px 30px;text-align:center;border-bottom:4px solid #F5A623;">
+// <tr><td style="background:#0d2240;color:#ffffff;padding:24px 30px;text-align:center;border-bottom:4px solid #F57C00;">
 //     <h1 style="margin:0;font-size:22px;font-weight:700;">Booking Confirmed!</h1>
 // </td></tr>
 // <tr><td style="padding:30px;">
@@ -2050,7 +2050,7 @@ exports.getAllPayments = async (req, res) => {
       stats: [
         { label: "Pending Verification", value: stats.pending, color: "#f39c12" },
         { label: "Verified Payments", value: stats.success, color: "#27ae60" },
-        { label: "Total Verified Amount", value: `$${stats.totalAmount}`, color: "#F5A623" }
+        { label: "Total Verified Amount", value: `$${stats.totalAmount}`, color: "#F57C00" }
       ]
     });
 
@@ -2103,7 +2103,7 @@ exports.updatePaymentStatus = async (req, res) => {
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f4;padding:20px 0;">
 <tr><td align="center">
 <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-<tr><td style="background:#0d2240;color:#ffffff;padding:24px 30px;text-align:center;border-bottom:4px solid #F5A623;">
+<tr><td style="background:#0d2240;color:#ffffff;padding:24px 30px;text-align:center;border-bottom:4px solid #F57C00;">
     <h1 style="margin:0;font-size:22px;font-weight:700;">Booking Confirmed!</h1>
 </td></tr>
 <tr><td style="padding:30px;">

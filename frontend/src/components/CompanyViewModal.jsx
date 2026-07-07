@@ -72,7 +72,7 @@ function LinkCard({ link, students }) {
     const payBg = (p) => {
         if (p === "Paid") return { background: "#ecfdf5", color: "#059669" };
         if (p === "Failed") return { background: "#fef2f2", color: colors.error };
-        return { background: "#fef3c7", color: "#b45309" };
+        return { background: colors.warningBg, color: "#b45309" };
     };
     const llndBg = (l) => l === "Completed"
         ? { background: "#ecfdf5", color: "#059669" }

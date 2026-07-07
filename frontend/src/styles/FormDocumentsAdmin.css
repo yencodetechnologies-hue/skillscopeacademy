@@ -44,9 +44,9 @@
 }
 
 .fda-error {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
+  background: var(--color-error-bg);
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error-border);
   padding: 0.65rem 1rem;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -61,7 +61,7 @@
 
 .fda-card {
   position: relative;
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border-light);
   border-radius: 12px;
   overflow: hidden;
@@ -80,7 +80,7 @@
 
 .fda-card--skeleton {
   min-height: 260px;
-  background: linear-gradient(90deg, #eef2f7 25%, var(--color-border-light) 50%, #eef2f7 75%);
+  background: linear-gradient(90deg, var(--color-panel-blue) 25%, var(--color-border-light) 50%, var(--color-panel-blue) 75%);
   background-size: 200% 100%;
   animation: fda-shimmer 1.4s infinite;
   border: none;
@@ -117,7 +117,7 @@
   margin: 1.75rem 0 1rem;
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0f1e3d;
+  color: var(--color-navy-hero);
 }
 
 .fda-group-title:first-of-type {
@@ -135,8 +135,8 @@
   letter-spacing: 0.03em;
   padding: 3px 9px;
   border-radius: 999px;
-  background: #eef2f7;
-  color: #475569;
+  background: var(--color-panel-blue);
+  color: var(--color-slate-600);
 }
 
 .fda-section-tag--featured {
@@ -149,7 +149,7 @@
   align-items: center;
   justify-content: center;
   height: 90px;
-  background: #fef2f2;
+  background: var(--color-error-bg);
   color: var(--color-error);
   font-size: 2rem;
 }
@@ -187,7 +187,7 @@
 .fda-card-link {
   margin: 0;
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-slate-500);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -202,19 +202,19 @@
 
 .fda-btn {
   border: 1px solid var(--color-border-light);
-  background: #f8fafc;
+  background: var(--color-slate-50);
   border-radius: 6px;
   padding: 0.35rem 0.55rem;
   font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
-  color: #0f172a;
+  color: var(--color-slate-900);
   font-family: inherit;
   transition: background 0.15s;
 }
 
 .fda-btn:hover:not(:disabled) {
-  background: #eef2f7;
+  background: var(--color-panel-blue);
 }
 
 .fda-btn:disabled {
@@ -235,27 +235,27 @@
 }
 
 .fda-btn--primary:hover:not(:disabled) {
-  background: #0f1e3d;
+  background: var(--color-navy-hero);
 }
 
 .fda-btn--danger {
-  border-color: #fecaca;
-  color: #b91c1c;
-  background: #fff;
+  border-color: var(--color-error-border);
+  color: var(--color-error-dark);
+  background: var(--color-surface);
 }
 
 .fda-btn--danger:hover {
-  background: #fef2f2;
+  background: var(--color-error-bg);
 }
 
 .fda-empty {
   grid-column: 1 / -1;
-  background: #fff;
-  border: 2px dashed #cbd5e1;
+  background: var(--color-surface);
+  border: 2px dashed var(--gray-300);
   border-radius: 12px;
   padding: 3rem 1.5rem;
   text-align: center;
-  color: #64748b;
+  color: var(--color-slate-500);
   font-size: 0.9rem;
 }
 
@@ -263,7 +263,7 @@
 .fda-aside {
   position: sticky;
   top: 1.5rem;
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border-light);
   border-radius: 12px;
   padding: 1.1rem;
@@ -303,7 +303,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #9ca3af;
+  color: var(--gray-400);
 }
 
 .fda-aside-list ol {
@@ -318,7 +318,7 @@
   gap: 0.5rem;
   padding: 0.4rem 0;
   font-size: 0.8rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--color-slate-100);
 }
 
 .fda-aside-list li:last-child {
@@ -330,7 +330,7 @@
   height: 22px;
   border-radius: 50%;
   background: #e6f7fd;
-  color: #0f1e3d;
+  color: var(--color-navy-hero);
   font-size: 0.72rem;
   font-weight: 800;
   display: flex;
@@ -343,14 +343,14 @@
   margin-left: auto;
   font-size: 0.65rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--gray-400);
   text-transform: uppercase;
 }
 
 .fda-aside-empty {
   margin: 0;
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--gray-400);
 }
 
 /* Modal */
@@ -371,7 +371,7 @@
   width: 440px;
   max-width: calc(100vw - 2rem);
   max-height: 90vh;
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
@@ -398,7 +398,7 @@
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  color: #64748b;
+  color: var(--color-slate-500);
   line-height: 1;
 }
 
@@ -411,9 +411,9 @@
 }
 
 .fda-modal-error {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
+  background: var(--color-error-bg);
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error-border);
   padding: 0.6rem 0.75rem;
   border-radius: 8px;
   font-size: 0.8rem;
@@ -423,7 +423,7 @@
 .fda-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--color-slate-600);
   margin-top: 0.35rem;
 }
 
@@ -458,7 +458,7 @@
   padding: 0.35rem 0.7rem;
   border: 1.5px solid var(--color-border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--color-surface);
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
@@ -468,7 +468,7 @@
 .fda-img-btn.is-active {
   border-color: var(--color-brand-primary);
   background: #e6f7fd;
-  color: #0f1e3d;
+  color: var(--color-navy-hero);
 }
 
 .fda-file {
@@ -507,7 +507,7 @@
   transform: translate(-50%, -50%);
   width: 360px;
   max-width: calc(100vw - 2rem);
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   padding: 1.25rem;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
@@ -521,7 +521,7 @@
 .fda-confirm p {
   margin: 0 0 1rem;
   font-size: 0.88rem;
-  color: #64748b;
+  color: var(--color-slate-500);
 }
 
 .fda-confirm-actions {

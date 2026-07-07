@@ -582,7 +582,7 @@ function AddStudentModal({ onClose, onSave }) {
                     ? (courses.find(c => c._id === form.courseId)?.title + " - $" + (courses.find(c => c._id === form.courseId)?.sellingPrice || 0))
                     : "Select a course"}
                 </span>
-                <span style={{ fontSize: '10px', color: '#64748b' }}>{courseOpen ? "▲" : "▼"}</span>
+                <span style={{ fontSize: '10px', color: colors.slate500 }}>{courseOpen ? "▲" : "▼"}</span>
               </div>
               
               {courseOpen && (
@@ -710,7 +710,7 @@ function AddStudentModal({ onClose, onSave }) {
 
               <div className="date-chips-wrap">
                 {loadingSessions ? (
-                  <p style={{ fontSize: '13px', color: '#64748b' }}>⏳ Loading sessions...</p>
+                  <p style={{ fontSize: '13px', color: colors.slate500 }}>⏳ Loading sessions...</p>
                 ) : sessions.length > 0 ? (
                   Object.entries(
                     sessions.reduce((acc, s) => {
@@ -740,7 +740,7 @@ function AddStudentModal({ onClose, onSave }) {
 
               {selectedDate && (
                 <>
-                  <h3 className="session-heading" style={{ fontSize: '13px', color: '#64748b' }}>
+                  <h3 className="session-heading" style={{ fontSize: '13px', color: colors.slate500 }}>
                     Sessions on {new Date(selectedDate).toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
                   </h3>
                   <div className="session-cards-wrap">
@@ -803,7 +803,7 @@ function AddStudentModal({ onClose, onSave }) {
               borderRadius: '8px', 
               padding: '10px',
               textAlign: 'center',
-              background: '#f8fafc'
+              background: colors.slate50
             }}>
               <input 
                 type="file" 
@@ -811,7 +811,7 @@ function AddStudentModal({ onClose, onSave }) {
                 onChange={handleFileChange}
                 style={{ fontSize: '12px' }}
               />
-              <p style={{ fontSize: '10px', color: '#64748b', marginTop: '5px' }}>
+              <p style={{ fontSize: '10px', color: colors.slate500, marginTop: '5px' }}>
                 Upload proof of bank transfer or receipt
               </p>
             </div>
@@ -1196,7 +1196,7 @@ setDeleteStudent(null);
               <tbody>
                 {displayStudents.length === 0 ? (
                   <tr>
-                    <td colSpan={17} style={{ textAlign: "center", padding: "2rem", color: "#888" }}>
+                    <td colSpan={17} style={{ textAlign: "center", padding: "2rem", color: colors.textIcon }}>
                       No students found.
                     </td>
                   </tr>
@@ -1247,7 +1247,7 @@ setDeleteStudent(null);
                       <td>{s.phone}</td>
                       <td className="sm-course">
                         <div style={{ fontWeight: 500 }}>{s.courseTitle || "—"}</div>
-                        <div style={{ fontSize: "0.75rem", color: "#888" }}>{s.courseCategory || ""}</div>
+                        <div style={{ fontSize: "0.75rem", color: colors.textIcon }}>{s.courseCategory || ""}</div>
                       </td>
                       <td>{s.courseBookingDate}</td>
                       <td>

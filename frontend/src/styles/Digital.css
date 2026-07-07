@@ -8,7 +8,7 @@
 /* TITLE */
 .digital-title {
   background: linear-gradient(90deg, var(--color-brand-accent), var(--color-info));
-  color: white;
+  color: var(--color-surface);
   padding: 10px 14px;
   border-radius: 6px;
   font-size: 14px;
@@ -68,7 +68,7 @@
 
 .draggable.green {
   background: var(--color-success-alt);
-  color: white;
+  color: var(--color-surface);
   font-weight: 500;
   padding: 15px;
 }
@@ -95,10 +95,10 @@
 
 /* DROP ZONE */
 .drop-zone {
-  border: 2px dashed #cbd5e1;
+  border: 2px dashed var(--gray-300);
   border-radius: 12px;
   padding: 9px;
-  background: #f8fafc;
+  background: var(--color-slate-50);
   font-size: 14px;
   width: 160px;
   text-align: center;
@@ -119,7 +119,7 @@
 }
 
 .drop-zone.filled:hover {
-  border-color: #059669;
+  border-color: var(--color-success-alt);
   background: #a7f3d0;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .reset-btn:hover {
-  background: #d1d5db;
+  background: var(--color-border-input);
 }
 
 /* DEVICE */
@@ -230,7 +230,7 @@
 }
 
 .digital-footer button:first-child:hover {
-  background: #d1d5db;
+  background: var(--color-border-input);
 }
 
 .digital-footer button:last-child {
@@ -244,7 +244,7 @@
 
 .digital-footer span {
   font-size: 13px;
-  color: #555;
+  color: var(--color-text-dim);
 }
 
 .digital-footer button:disabled {
@@ -349,7 +349,7 @@
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    background: #ffffff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border-light);
     border-radius: 10px;
     padding: 8px 6px;

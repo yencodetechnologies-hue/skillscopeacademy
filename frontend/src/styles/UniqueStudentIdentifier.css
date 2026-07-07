@@ -2,7 +2,7 @@
 
 .usi-banner {
   background: linear-gradient(135deg, #003d82 0%, #005cbf 100%);
-  color: #fff;
+  color: var(--color-surface);
   text-align: center;
   padding: 52px 24px;
 }
@@ -46,7 +46,7 @@
 .usi-left p {
   font-size: 15px;
   line-height: 1.78;
-  color: #444;
+  color: var(--color-text-body);
   margin-bottom: 14px;
 }
 
@@ -90,7 +90,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-surface);
   color: #26c6da;
   font-size: 11px;
   font-weight: 800;
@@ -102,7 +102,7 @@
 }
 .usi-icon-label {
   font-size: 11px;
-  color: #555;
+  color: var(--color-text-dim);
   text-align: center;
   max-width: 72px;
   line-height: 1.3;
@@ -126,7 +126,7 @@
   gap: 10px;
   font-size: 15px;
   line-height: 1.75;
-  color: #444;
+  color: var(--color-text-body);
   margin-bottom: 8px;
 }
 .usi-check {
@@ -151,7 +151,7 @@
 .usi-more-info p {
   font-size: 15px;
   line-height: 1.75;
-  color: #444;
+  color: var(--color-text-body);
   margin-bottom: 4px;
 }
 
@@ -169,7 +169,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .usi-step-header {
@@ -182,18 +182,18 @@
   color: #003d82;
   font-weight: 700;
   font-size: 16px;
-  background: #fff;
+  background: var(--color-surface);
   transition: background 0.15s;
 }
 .usi-step-card.open .usi-step-header {
   background: #26c6da;
-  color: #fff;
+  color: var(--color-surface);
 }
 .usi-step-card.open .usi-step-header .usi-step-toggle {
-  color: #fff;
+  color: var(--color-surface);
 }
 .usi-step-toggle {
-  color: #555;
+  color: var(--color-text-dim);
   display: flex;
   align-items: center;
 }
@@ -202,8 +202,8 @@
   padding: 18px 20px;
   font-size: 14px;
   line-height: 1.75;
-  color: #444;
-  border-top: 1px solid #f0f0f0;
+  color: var(--color-text-body);
+  border-top: 1px solid var(--color-bg-panel);
 }
 .usi-step-body p {
   margin-bottom: 10px;
@@ -227,7 +227,7 @@
   gap: 10px;
   font-size: 14px;
   line-height: 1.7;
-  color: #444;
+  color: var(--color-text-body);
   padding: 5px 0;
   border-bottom: 1px solid #f4f4f4;
 }
@@ -244,7 +244,7 @@
 .usi-important p {
   font-size: 14px;
   line-height: 1.7;
-  color: #444;
+  color: var(--color-text-body);
   margin-bottom: 10px;
 }
 .usi-important p:last-child {

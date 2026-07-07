@@ -10,7 +10,7 @@ const typeConfig = {
   theory:    { label: "Theory Class",      ...scheduleTypeColors.theory },
   practical: { label: "Practical Session", ...scheduleTypeColors.practical },
   exam:      { label: "Exam",              ...scheduleTypeColors.exam },
-  general:   { label: "General",           color: colors.textSubtle, bg: "#f1f5f9" },
+  general:   { label: "General",           color: colors.textSubtle, bg: colors.slate100 },
 };
 
 function getDaysInMonth(year, month) { return new Date(year, month + 1, 0).getDate(); }

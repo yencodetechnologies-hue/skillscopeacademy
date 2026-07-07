@@ -12,7 +12,7 @@
 }
 
 .course-modal {
-    background: white;
+    background: var(--color-surface);
     width: 75%;
     border-radius: 12px;
     padding: 25px;
@@ -37,7 +37,7 @@
 
 .modal-tabs button {
     border: none;
-    background: #eee;
+    background: var(--color-border-soft);
     padding: 6px 12px;
     border-radius: 20px;
     cursor: pointer;
@@ -59,14 +59,14 @@
 
 .form-grid input {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     width: 100%;
 }
 
 .form-grid select {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     width: 100%;
     
@@ -75,7 +75,7 @@
 .details-section textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     margin-bottom: 10px;
 }
@@ -96,7 +96,7 @@
 .seo-section textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     margin-top: 6px;
 }
@@ -112,7 +112,7 @@
     display: block;
     margin-top: 4px;
     font-size: 12px;
-    color: #9ca3af;
+    color: var(--gray-400);
     line-height: 1.4;
 }
 
@@ -140,7 +140,7 @@
 }
 
 .cancel-btn {
-    background: #eee;
+    background: var(--color-border-soft);
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
@@ -155,7 +155,7 @@
 }
 
 .image-upload-options>button {
-    background: #eee;
+    background: var(--color-border-soft);
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
@@ -178,14 +178,14 @@
 
 .form-group>input, .form-group>select{
    padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     width: 100%;
     margin-top: 5px;
 }
 .course-description {
     font-size: 0.8em;
-    color: #555;
+    color: var(--color-text-dim);
     margin-top: 5px;
 }
 .add-description-btn{
@@ -201,28 +201,28 @@
 
 .add-description-btn:hover{
     background:linear-gradient(90deg,var(--color-brand-primary),#f107a3);
-    color:white;
+    color:var(--color-surface);
 }
 .requirements-section > div > input {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     width: 100%;
     margin-top: 5px;
 }
 .handbook-card{
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 10px;
     margin-top: 15px;
 }
 .handbook-card{
-  border:1px solid #ddd;
+  border:1px solid var(--color-border-muted);
   border-radius:14px;
   padding:30px;
   max-width:650px;
-  background:#fff;
+  background:var(--color-surface);
 }
 
 .handbook-header{
@@ -261,7 +261,7 @@
 .upload-btn{
   position:relative;
   display:inline-block;
-  border:1px solid #ddd;
+  border:1px solid var(--color-border-muted);
   padding:12px 18px;
   border-radius:10px;
   cursor:pointer;
@@ -293,7 +293,7 @@
 .divider span{
   flex:1;
   height:1px;
-  background:#ddd;
+  background:var(--color-border-muted);
 }
 
 .divider p{
@@ -308,7 +308,7 @@
   border-radius:18px;
   padding:28px;
   margin-bottom:25px;
-  background:#fff;
+  background:var(--color-surface);
 }
 
 .combo-header{
@@ -346,7 +346,7 @@
   font-size:14px;
   padding:6px 12px;
   border-radius:999px;
-  color:white;
+  color:var(--color-surface);
   font-weight:600;
 }
 
@@ -356,7 +356,7 @@
 
 .purple{
   background:linear-gradient(90deg,#7c3aed,#c026d3) !important;
-  color: white !important;
+  color: var(--color-surface) !important;
 }
 
 .experience{
@@ -381,7 +381,7 @@
 .dynamic-field input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
 }
 .dynamic-field button {    background: #f3f3f3;
@@ -418,7 +418,7 @@ margin-top:20px;
 }
 
 .combo-expanded small {
-    color: #888;
+    color: var(--color-text-icon);
     font-size: 12px;
     margin-top: 4px;
     display: block;
@@ -429,7 +429,7 @@ margin-top:20px;
 padding:20px;
 border-radius:12px;
 border:2px solid #22c55e;
-background:#f0fdf4;
+background:var(--color-success-panel);
 
 display:flex;
 flex-direction:column;
@@ -440,7 +440,7 @@ gap:10px;
 .no-exp{
 
 border:2px solid var(--color-error-alt);
-background:#fef2f2;
+background:var(--color-error-bg);
 
 }
 
@@ -448,7 +448,7 @@ background:#fef2f2;
 
 padding:10px;
 border-radius:8px;
-border:1px solid #ddd;
+border:1px solid var(--color-border-muted);
 
 }
 
@@ -500,7 +500,7 @@ color:#166534;
 .preview-card.red{
 
 background:var(--color-error-bg);
-color:#b91c1c;
+color:var(--color-error-dark);
 
 }
 
@@ -540,7 +540,7 @@ opacity:0.6;
     font-weight: 500;
     font-size: 14px;
     transition: all 0.2s;
-    background: #fafafa;
+    background: var(--color-bg-subtle);
     min-width: fit-content;
     flex: 1;
 }
@@ -562,7 +562,7 @@ opacity:0.6;
 .pricing-sub {
     font-size: 13px;
     font-weight: 600;
-    color: #555;
+    color: var(--color-text-dim);
     margin: 14px 0 6px 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;

@@ -8,7 +8,7 @@
 .qa__title {
   font-size: 15px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--color-surface);
   margin-bottom: 14px;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .qa__btn {
-  background: #ffffff;
+  background: var(--color-surface);
   border: none;
   border-radius: 10px;
   padding: 13px 16px;
@@ -56,7 +56,7 @@
 }
 
 .qa__btn-chevron {
-  color: #9ca3af;
+  color: var(--gray-400);
   display: flex;
   align-items: center;
 }

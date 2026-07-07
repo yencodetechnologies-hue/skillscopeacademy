@@ -2,7 +2,7 @@
 /* ===== BASE ===== */
 .footer {
   background: var(--color-brand-dark);
-  color: #fff;
+  color: var(--color-surface);
   font-family: 'Inter', sans-serif;
 }
 
@@ -35,7 +35,7 @@
   border-radius: 12px;
   overflow: hidden;
   flex-shrink: 0;
-  background: #fff;
+  background: var(--color-surface);
 }
 .footer-logo-img img {
   width: 100%;
@@ -48,7 +48,7 @@
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #fff;
+  color: var(--color-surface);
   line-height: 1.2;
 }
 .footer-logo-text span { color: var(--color-brand-primary); }
@@ -97,7 +97,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--color-surface);
   font-size: 13px;
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s;
@@ -106,7 +106,7 @@
 .footer-social-btn:hover {
   background: var(--color-brand-primary);
   border-color: var(--color-brand-primary);
-  color: #0d2240;
+  color: var(--color-navy-deep);
 }
 
 /* ===== LINK COLS ===== */

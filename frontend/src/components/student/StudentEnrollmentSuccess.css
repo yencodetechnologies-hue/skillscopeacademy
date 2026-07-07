@@ -12,12 +12,12 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-success-alt), #059669);
+    background: linear-gradient(135deg, var(--color-success-alt), var(--color-success-alt));
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 40px;
-    color: white;
+    color: var(--color-surface);
     margin-bottom: 24px;
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
@@ -40,7 +40,7 @@
 .success-btn {
     padding: 12px 28px;
     background-color:var(--color-brand-primary);
-    color: white;
+    color: var(--color-surface);
     border: none;
     border-radius: 8px;
     cursor: pointer;

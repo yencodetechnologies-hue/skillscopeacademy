@@ -8,7 +8,7 @@
 /* HEADER */
 .LLN-header {
   background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
-  color: white;
+  color: var(--color-surface);
   padding: 12px 16px;
   font-weight: 500;
 }
@@ -34,14 +34,14 @@
 }
 
 .sub-text {
-  color: #555;
+  color: var(--color-text-dim);
   font-size: 14px;
 }
 
 .attempt {
   margin-top: 10px;
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-faint);
 }
 
 .score {
@@ -61,7 +61,7 @@
 .section-row {
   display: flex;
   justify-content: space-between;
-  background: #fff;
+  background: var(--color-surface);
   padding: 10px 14px;
   border-radius: 6px;
   font-size: 14px;
@@ -95,7 +95,7 @@
 }
 
 .retry-btn:hover {
-  background: #d1d5db;
+  background: var(--color-border-input);
 }
 
 /* FAIL BG (existing yellow) */
@@ -118,7 +118,7 @@
 /* BUTTON */
 .continue-btn {
   background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
-  color: white;
+  color: var(--color-surface);
   padding: 10px 20px;
   border: none;
   border-radius: 6px;

@@ -316,7 +316,7 @@ export default function ManageCategories({ isOpen, onClose, onRefresh }) {
                 {/* Category list */}
                 <div className="mcc-list">
                     {loading ? (
-                        <p style={{ textAlign: "center", color: "#888", padding: "20px" }}>Loading...</p>
+                        <p style={{ textAlign: "center", color: colors.textIcon, padding: "20px" }}>Loading...</p>
                     ) : (
                         categories.map((cat, index) => {
                             const isEditing = editingId === cat._id;

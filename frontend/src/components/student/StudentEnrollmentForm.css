@@ -12,7 +12,7 @@
 
 /* ===== Header Card ===== */
 .ef-header-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: var(--ef-radius);
   box-shadow: var(--ef-shadow);
   padding: 20px 24px;
@@ -44,7 +44,7 @@
   font-weight: 700;
   padding: 4px 12px;
   border-radius: 20px;
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--color-success-border);
   white-space: nowrap;
 }
 
@@ -83,7 +83,7 @@
   height: 36px;
   border-radius: 50%;
   border: 2px solid var(--ef-gray-200);
-  background: #fff;
+  background: var(--color-surface);
   color: var(--ef-gray-400);
   font-size: 0.82rem;
   font-weight: 600;
@@ -97,7 +97,7 @@
 .ef-step--active {
   background: var(--ef-purple);
   border-color: var(--ef-purple);
-  color: #fff;
+  color: var(--color-surface);
   box-shadow: 0 0 0 3px var(--ef-purple-light);
 }
 .ef-step--done {
@@ -121,7 +121,7 @@
 
 /* Section card */
 .ef-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: var(--ef-radius);
   box-shadow: var(--ef-shadow);
   border: 1px solid var(--ef-gray-200);
@@ -177,7 +177,7 @@
 .ef-input:focus {
   border-color: var(--ef-purple);
   box-shadow: 0 0 0 3px var(--ef-purple-light);
-  background: #fff;
+  background: var(--color-surface);
 }
 .ef-input--error { border-color: var(--ef-red); }
 .ef-error {
@@ -316,13 +316,13 @@
 }
 .ef-btn--primary {
   background: linear-gradient(135deg, var(--ef-purple),var(--color-brand-primary));
-  color: #fff;
+  color: var(--color-surface);
   flex: 1;
   max-width: 200px;
 }
 .ef-btn--primary:hover { opacity: 0.9; transform: translateY(-1px); }
 .ef-btn--outline {
-  background: #fff;
+  background: var(--color-surface);
   border: 2px solid var(--ef-gray-200);
   color: var(--ef-gray-600);
 }
@@ -333,7 +333,7 @@
 .ef-success {
   text-align: center;
   padding: 60px 20px;
-  background: #fff;
+  background: var(--color-surface);
   border-radius: var(--ef-radius);
   box-shadow: var(--ef-shadow);
   margin-top: 40px;

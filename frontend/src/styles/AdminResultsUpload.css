@@ -20,7 +20,7 @@
 
 /* ─── Search Card ───────────────────────────────────────────────────────────── */
 .ru-search-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   margin-bottom: 1.25rem;
@@ -44,13 +44,13 @@
 .ru-select {
   padding: .55rem .75rem; border: 1.5px solid var(--color-border);
   border-radius: 8px; font-family: inherit; font-size: .875rem;
-  outline: none; background: #fff; cursor: pointer; transition: border-color .2s;
+  outline: none; background: var(--color-surface); cursor: pointer; transition: border-color .2s;
 }
 .ru-select:focus { border-color: var(--color-brand-primary); }
 
 /* ─── Table Card ────────────────────────────────────────────────────────────── */
 .ru-table-card {
-  background: #fff; border-radius: 12px;
+  background: var(--color-surface); border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden;
 }
 .ru-table-head { padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid #f0f0f5; }
@@ -61,10 +61,10 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 .ru-table thead th {
   background: #f8f8fc; padding: .7rem 1rem;
   text-align: left; font-weight: 600; color: var(--color-text-secondary);
-  white-space: nowrap; border-bottom: 1px solid #eee;
+  white-space: nowrap; border-bottom: 1px solid var(--color-border-soft);
 }
 .ru-table tbody tr { border-bottom: 1px solid var(--color-bg-muted); transition: background .15s; }
-.ru-table tbody tr:hover { background: #fafafa; }
+.ru-table tbody tr:hover { background: var(--color-bg-subtle); }
 .ru-table tbody td { padding: .7rem 1rem; vertical-align: middle; }
 
 /* ─── Badges ─────────────────────────────────────────────────────────────────
@@ -81,11 +81,11 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   white-space: nowrap;    /* ← prevents 2-line wrapping */
   line-height: 1.5;
 }
-.ru-badge--completed     { background: var(--color-success-bg); color: #15803d; }
+.ru-badge--completed     { background: var(--color-success-bg); color: var(--color-success-dark); }
 .ru-badge--not-completed { background: var(--color-error-bg); color: var(--color-error); }
 .ru-badge--active        { background: var(--color-info-bg); color: var(--color-info-hover); }
 .ru-badge--inactive      { background: var(--color-bg-muted); color: var(--color-text-muted); }
-.ru-badge--paid          { background: var(--color-success-bg); color: #15803d; }
+.ru-badge--paid          { background: var(--color-success-bg); color: var(--color-success-dark); }
 .ru-badge--unpaid        { background: var(--color-warning-bg); color: #a16207; }
 .ru-badge--verified      { background: var(--color-warning-bg); color: #a16207; }
 .ru-badge--not-verified  { background: var(--color-error-bg); color: var(--color-error); }
@@ -99,10 +99,10 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   width: 32px; height: 32px; border-radius: 50%;
   background: linear-gradient(135deg, var(--color-brand-primary), #a29bfe);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 700; color: #fff; font-size: .8rem; flex-shrink: 0;
+  font-weight: 700; color: var(--color-surface); font-size: .8rem; flex-shrink: 0;
 }
 .ru-student-name { font-weight: 600; color: #1a1d2e; }
-.ru-student-nick { font-size: .72rem; color: #9ca3af; }
+.ru-student-nick { font-size: .72rem; color: var(--gray-400); }
 
 /* ─── Action Buttons ────────────────────────────────────────────────────────── */
 .ru-actions { display: flex; gap: 6px; align-items: center; }
@@ -114,7 +114,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 }
 .ru-btn-upload:hover { background: #5a4bd1; transform: translateY(-1px); }
 .ru-btn-upload:disabled {
-  background: #d1d5db; color: #9ca3af; cursor: not-allowed; transform: none;
+  background: var(--color-border-input); color: var(--gray-400); cursor: not-allowed; transform: none;
 }
 
 /* ─── Pagination ────────────────────────────────────────────────────────────── */
@@ -127,38 +127,38 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 .ru-page-indicator { font-size: .8rem; color: var(--color-text-secondary); }
 .ru-page-btn {
   padding: 5px 14px; border: 1.5px solid var(--color-border); border-radius: 7px;
-  background: #fff; cursor: pointer; font-size: .8rem; font-family: inherit;
+  background: var(--color-surface); cursor: pointer; font-size: .8rem; font-family: inherit;
   transition: all .15s;
 }
 .ru-page-btn:hover:not(:disabled) { border-color: var(--color-brand-primary); color: var(--color-brand-primary); }
 .ru-page-btn:disabled { opacity: .4; cursor: not-allowed; }
 
 /* ─── Loading / Empty ───────────────────────────────────────────────────────── */
-.ru-loading { padding: 2rem; text-align: center; color: #9ca3af; }
-.ru-empty   { padding: 2rem; text-align: center; color: #9ca3af; }
+.ru-loading { padding: 2rem; text-align: center; color: var(--gray-400); }
+.ru-empty   { padding: 2rem; text-align: center; color: var(--gray-400); }
 .ru-error   { color: var(--color-error-alt) !important; }
 
 /* ─── Table Cell Helpers ────────────────────────────────────────────────────── */
 .ru-date-primary   { font-size: .8rem; font-weight: 500; }
-.ru-date-secondary { font-size: .72rem; color: #9ca3af; }
+.ru-date-secondary { font-size: .72rem; color: var(--gray-400); }
 .ru-type-primary   { font-size: .8rem; }
 .ru-type-company   { font-size: .72rem; font-weight: 600; color: var(--color-brand-primary); }
 .ru-email          { font-size: .8rem; color: #4b5563; }
 .ru-phone          { font-size: .8rem; }
 .ru-course-title   { font-weight: 500; font-size: .8rem; }
-.ru-course-cat     { font-size: .72rem; color: #9ca3af; }
+.ru-course-cat     { font-size: .72rem; color: var(--gray-400); }
 .ru-schedule       { font-size: .8rem; white-space: nowrap; }
 
 /* ─── Warning Modal ─────────────────────────────────────────────────────────── */
 .ru-warn-modal {
-  background: #fff; border-radius: 16px;
+  background: var(--color-surface); border-radius: 16px;
   width: 100%; max-width: 420px;
   box-shadow: 0 20px 60px rgba(0,0,0,.2);
   animation: ru-slide-up .25s ease;
   overflow: hidden;
 }
 .ru-warn-top {
-  background: linear-gradient(135deg, #fff7ed, #fef3c7);
+  background: linear-gradient(135deg, var(--color-surface)7ed, var(--color-warning-bg));
   padding: 1.75rem 1.5rem 1.25rem;
   text-align: center;
   border-bottom: 1px solid #fde68a;
@@ -173,7 +173,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   font-size: .82rem; font-weight: 500;
 }
 .ru-warn-check-row.fail { background: var(--color-error-bg); color: var(--color-error); }
-.ru-warn-check-row.pass { background: var(--color-success-bg); color: #15803d; }
+.ru-warn-check-row.pass { background: var(--color-success-bg); color: var(--color-success-dark); }
 .ru-warn-check-row .wc-icon { font-size: 1rem; flex-shrink: 0; }
 .ru-warn-footer {
   padding: .85rem 1.5rem 1.25rem;
@@ -181,7 +181,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 }
 .ru-warn-close-btn {
   padding: .55rem 2rem; border: none; border-radius: 8px;
-  background: var(--color-warning-alt); color: #fff; cursor: pointer;
+  background: var(--color-warning-alt); color: var(--color-surface); cursor: pointer;
   font-family: inherit; font-size: .875rem; font-weight: 600;
   transition: background .2s;
 }
@@ -194,7 +194,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   z-index: 1000; padding: 1rem;
 }
 .ru-modal {
-  background: #fff; border-radius: 16px;
+  background: var(--color-surface); border-radius: 16px;
   width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0,0,0,.2); animation: ru-slide-up .25s ease;
 }
@@ -210,7 +210,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 .ru-modal-header p  { margin: 0; font-size: .8rem; color: var(--color-text-muted); }
 .ru-modal-close {
   background: none; border: none; font-size: 1.1rem; cursor: pointer;
-  color: #9ca3af; padding: 4px; border-radius: 6px;
+  color: var(--gray-400); padding: 4px; border-radius: 6px;
   transition: background .15s, color .15s;
 }
 .ru-modal-close:hover { background: var(--color-bg-muted); color: var(--color-text-secondary); }
@@ -218,10 +218,10 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 /* Student info bar */
 .ru-modal-student-bar {
   margin: 1rem 1.5rem;
-  background: linear-gradient(135deg, #f0faff, #dbeeff);
+  background: linear-gradient(135deg, var(--color-sky-highlight), #dbeeff);
   border-radius: 10px; padding: .85rem 1rem;
   display: flex; align-items: center; gap: .75rem;
-  border: 1px solid #ddd6fe;
+  border: 1px solid var(--color-border-muted)6fe;
 }
 .ru-modal-student-bar .ru-avatar { width: 40px; height: 40px; font-size: 1rem; }
 .ru-modal-student-bar-info h4 { margin: 0 0 2px; font-size: .9rem; font-weight: 700; }
@@ -238,7 +238,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   width: 100%; padding: .6rem .75rem;
   border: 1.5px solid var(--color-border); border-radius: 8px;
   font-family: inherit; font-size: .875rem; outline: none;
-  transition: border-color .2s; box-sizing: border-box; background: #fff;
+  transition: border-color .2s; box-sizing: border-box; background: var(--color-surface);
 }
 .ru-input:focus,
 .ru-mselect:focus,
@@ -270,7 +270,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 }
 .ru-btn-cancel {
   padding: .55rem 1.25rem; border: 1.5px solid var(--color-border);
-  border-radius: 8px; background: #fff; cursor: pointer;
+  border-radius: 8px; background: var(--color-surface); cursor: pointer;
   font-family: inherit; font-size: .875rem; transition: all .15s;
 }
 .ru-btn-cancel:hover { border-color: var(--color-brand-primary); color: var(--color-brand-primary); }
@@ -286,7 +286,7 @@ table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
 /* Success */
 .ru-success {
   margin: 0 1.5rem .75rem;
-  background: var(--color-success-bg); color: #15803d;
+  background: var(--color-success-bg); color: var(--color-success-dark);
   padding: .6rem 1rem; border-radius: 8px;
   font-size: .85rem; font-weight: 500;
 }

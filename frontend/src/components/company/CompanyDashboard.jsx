@@ -113,7 +113,7 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
 
   const statusStyle = (s) => {
     if (s === "paid")     return { background: "#1f2937", color: colors.white }
-    if (s === "pending")  return { background: colors.bgMuted, color: "#374151" }
+    if (s === "pending")  return { background: colors.bgMuted, color: colors.textSecondary }
     if (s === "failed")   return { background: colors.errorBg, color: colors.error }
     return                       { background: "#fff7ed", color: "#c2410c" }
   }
@@ -151,9 +151,9 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
       {/* Content */}
       <div style={{ padding: "10px 14px" }}>
         {loading ? (
-          <p style={{ fontSize: 13, color: "#888", margin: 0 }}>Loading...</p>
+          <p style={{ fontSize: 13, color: colors.textIcon, margin: 0 }}>Loading...</p>
         ) : students.length === 0 ? (
-          <p style={{ fontSize: 13, color: "#888", margin: 0 }}>No students enrolled via this link yet.</p>
+          <p style={{ fontSize: 13, color: colors.textIcon, margin: 0 }}>No students enrolled via this link yet.</p>
         ) : (
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
             <thead>
@@ -172,7 +172,7 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
                     <div style={{ fontWeight: 600, color: "#111" }}>{s.name}</div>
                     <div style={{ fontSize: 11, color: colors.textMuted }}>{s.email}</div>
                   </td>
-                  <td style={{ padding: "7px 8px", color: "#374151" }}>{s.amount}</td>
+                  <td style={{ padding: "7px 8px", color: colors.textSecondary }}>{s.amount}</td>
                   <td style={{ padding: "7px 8px" }}>
                     <span style={{
                       ...statusStyle(s.paymentStatus),
@@ -231,7 +231,7 @@ function CourseLinkCards({ companyId }) {
     setOpenToken(prev => prev === token ? null : token)
   }
 
-  if (loading) return <p style={{ marginTop: "20px", color: "#888" }}>Loading course links...</p>
+  if (loading) return <p style={{ marginTop: "20px", color: colors.textIcon }}>Loading course links...</p>
   if (links.length === 0) return null
 
   return (
@@ -255,7 +255,7 @@ function CourseLinkCards({ companyId }) {
               border: "1px solid #e5e7eb",
               borderRadius: "10px",
               padding: "14px 16px",
-              background: isFull ? "#f9fafb" : colors.white,
+              background: isFull ? colors.bg : colors.white,
               opacity: isFull ? 0.85 : 1,
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px" }}>
@@ -263,7 +263,7 @@ function CourseLinkCards({ companyId }) {
                   <p style={{ fontWeight: "600", fontSize: "14px", color: "#111", margin: 0, marginBottom: "10px" }}>
                     {link.courseName}
                   </p>
-                  <p style={{ fontSize: "12px", color: "#666", margin: "2px 0 0" }}>
+                  <p style={{ fontSize: "12px", color: colors.textFaint, margin: "2px 0 0" }}>
                     {link.courseCode} {link.sessionDate ? `· ${new Date(link.sessionDate).toLocaleDateString("en-AU")}` : ""} {link.startTime ? `· ${link.startTime} - ${link.endTime}` : ""}
                   </p>
                 </div>
@@ -393,7 +393,7 @@ function PurchasedCoursesCard() {
                 ? { background: "#ecfdf5", color: "#059669" }
                 : status === "Failed"
                   ? { background: "#fef2f2", color: colors.error }
-                  : { background: "#fef3c7", color: "#b45309" };
+                  : { background: colors.warningBg, color: "#b45309" };
             return (
               <div key={order._id} className="cd-purchase-item">
                 <div className="cd-purchase-item-top">

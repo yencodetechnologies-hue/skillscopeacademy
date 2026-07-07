@@ -1179,10 +1179,10 @@ function BookNow() {
             <div className="enroll-card" style={{ textAlign: "center", padding: 40 }}>
                 <div style={{ fontSize: 52, marginBottom: 16 }}>🔒</div>
                 <h2 style={{ color: colors.error, marginBottom: 8 }}>Link Expired</h2>
-                <p style={{ color: "#666", marginBottom: 4 }}>
+                <p style={{ color: colors.textFaint, marginBottom: 4 }}>
                     All enrollment slots for this course have been filled.
                 </p>
-                <p style={{ color: "#666" }}>
+                <p style={{ color: colors.textFaint }}>
                     Please contact your company administrator for assistance.
                 </p>
             </div>
@@ -1195,7 +1195,7 @@ function BookNow() {
             <div className="enroll-card" style={{ textAlign: "center", padding: 40 }}>
                 <div style={{ fontSize: 52, marginBottom: 16 }}>❌</div>
                 <h2 style={{ color: colors.error, marginBottom: 8 }}>Invalid Link</h2>
-                <p style={{ color: "#666" }}>This enrollment link is not valid.</p>
+                <p style={{ color: colors.textFaint }}>This enrollment link is not valid.</p>
             </div>
         </section>
     )
@@ -1213,7 +1213,7 @@ function BookNow() {
             <div className="enroll-card" style={{ textAlign: "center", padding: 40 }}>
                 <div style={{ fontSize: 52, marginBottom: 16 }}>❌</div>
                 <h2 style={{ color: colors.error, marginBottom: 8 }}>Enrollment Link Error</h2>
-                <p style={{ color: "#666" }}>{enrollmentLinkError}</p>
+                <p style={{ color: colors.textFaint }}>{enrollmentLinkError}</p>
             </div>
         </section>
     )

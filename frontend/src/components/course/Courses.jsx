@@ -218,11 +218,11 @@ function Courses() {
                                                     <>
                                                         <p className="discount-price" style={{ color: "green" }}>
                                                             ${course.withExperiencePrice}
-                                                            <span style={{ fontSize: "11px", color: "#888" }}>(w/ exp)</span>
+                                                            <span style={{ fontSize: "11px", color: colors.textIcon }}>(w/ exp)</span>
                                                         </p>
                                                         <p className="discount-price" style={{ color: "red" }}>
                                                             ${course.withoutExperiencePrice}
-                                                            <span style={{ fontSize: "11px", color: "#888" }}>(w/o exp)</span>
+                                                            <span style={{ fontSize: "11px", color: colors.textIcon }}>(w/o exp)</span>
                                                         </p>
                                                     </>
                                                 ) : (

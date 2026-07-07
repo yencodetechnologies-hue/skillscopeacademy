@@ -13,7 +13,7 @@
 
 /* Card */
 .enrollment-card {
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 16px;
   border: 1px solid #e5e5e5;
   padding: 2.5rem 2rem;
@@ -54,13 +54,13 @@
 .enrollment-title {
   font-size: 22px;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0 0 0.5rem;
 }
 
 .enrollment-subtitle {
   font-size: 15px;
-  color: #666;
+  color: var(--color-text-faint);
   margin: 0 0 2rem;
   line-height: 1.6;
 }
@@ -77,7 +77,7 @@
 .summary-label {
   font-size: 12px;
   font-weight: 600;
-  color: #888;
+  color: var(--color-text-icon);
   margin: 0 0 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -97,12 +97,12 @@
 
 .summary-row-key {
   font-size: 14px;
-  color: #888;
+  color: var(--color-text-icon);
 }
 
 .summary-row-value {
   font-size: 14px;
-  color: #222;
+  color: var(--color-text-primary);
   font-weight: 500;
   max-width: 60%;
   text-align: right;
@@ -121,7 +121,7 @@
 .summary-total-label {
   font-size: 14px;
   font-weight: 600;
-  color: #222;
+  color: var(--color-text-primary);
 }
 
 .summary-total-value {
@@ -149,7 +149,7 @@
 /* Button */
 .back-btn-enrl-wrap {
   background: #6c47ff;
-  color: #fff;
+  color: var(--color-surface);
   border: none;
   border-radius: 10px;
   padding: 0.75rem 1.75rem;

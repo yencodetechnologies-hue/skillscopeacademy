@@ -24,7 +24,7 @@
 
 /* ── Main Card ── */
 .py-card {
-  background: #fff;
+  background: var(--color-surface);
   border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
@@ -50,7 +50,7 @@
   gap: 8px;
   font-size: 15px;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0 0 4px;
 }
 
@@ -84,7 +84,7 @@
   height: 32px;
   border: 0.5px solid var(--color-border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--color-surface);
   cursor: pointer;
   color: var(--color-text-secondary);
 }
@@ -105,7 +105,7 @@
   padding: 0 14px;
   border: 0.5px solid var(--color-border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--color-surface);
   font-size: 13px;
   color: var(--color-text-secondary);
   cursor: pointer;
@@ -125,7 +125,7 @@
   border-radius: 8px;
   background: #1f2937;
   font-size: 13px;
-  color: #fff;
+  color: var(--color-surface);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -135,7 +135,7 @@
 }
 
 .py-btn-primary:disabled {
-  background: #9ca3af;
+  background: var(--gray-400);
   cursor: not-allowed;
 }
 
@@ -168,7 +168,7 @@
 
 .py-table td {
   padding: 12px 12px;
-  color: #111;
+  color: var(--color-text-primary);
   border-bottom: 0.5px solid var(--color-bg-muted);
   vertical-align: middle;
 }
@@ -178,7 +178,7 @@
 }
 
 .py-table tr.py-row-paid td {
-  color: #9ca3af;
+  color: var(--gray-400);
 }
 
 .py-col-check {
@@ -211,7 +211,7 @@
 
 .py-badge-paid {
   background: #1f2937;
-  color: #fff;
+  color: var(--color-surface);
 }
 
 .py-badge-failed {
@@ -221,7 +221,7 @@
 }
 
 .py-badge-notpaid {
-  background: #fff7ed;
+  background: var(--color-surface)7ed;
   color: #c2410c;
   border: 0.5px solid #fed7aa;
 }
@@ -237,14 +237,14 @@
   z-index: 1000;
 }
 .pm-modal {
-  background: white; border-radius: 16px;
+  background: var(--color-surface); border-radius: 16px;
   width: 90%; max-width: 560px;
   max-height: 90vh; overflow-y: auto;
   padding: 28px;
 }
 .pm-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
 .pm-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-.pm-subtitle { font-size: 13px; color: #555; line-height: 1.5; }
+.pm-subtitle { font-size: 13px; color: var(--color-text-dim); line-height: 1.5; }
 .pm-close { background: none; border: none; font-size: 18px; cursor: pointer; }
 
 .pm-billing-box {
@@ -253,20 +253,20 @@
 }
 .pm-billing-label { font-size: 11px; font-weight: 700; color:var(--color-brand-primary); margin-bottom: 12px; letter-spacing: 1px; }
 .pm-billing-row { margin-bottom: 10px; }
-.pm-billing-key { font-size: 12px; color: #888; display: block; margin-bottom: 3px; }
+.pm-billing-key { font-size: 12px; color: var(--color-text-icon); display: block; margin-bottom: 3px; }
 .pm-billing-val {
   border: 1px solid var(--color-border); border-radius: 8px;
-  padding: 10px 14px; font-size: 14px; background: #fafafa;
+  padding: 10px 14px; font-size: 14px; background: var(--color-bg-subtle);
 }
 
 .pm-method-row { display: flex; gap: 10px; margin-bottom: 20px; }
 .pm-method-btn {
   flex: 1; padding: 12px; border: 1px solid var(--color-border);
-  border-radius: 10px; background: white; cursor: pointer;
+  border-radius: 10px; background: var(--color-surface); cursor: pointer;
   font-size: 14px; font-weight: 500;
 }
 .pm-method-active {
-  background: #111; color: white; border-color: #111;
+  background: var(--color-text-primary); color: var(--color-surface); border-color: var(--color-text-primary);
 }
 
 .pm-form { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
@@ -278,10 +278,10 @@
 }
 .pm-field-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-.pm-bank-desc { font-size: 13px; color: #444; line-height: 1.6; }
+.pm-bank-desc { font-size: 13px; color: var(--color-text-body); line-height: 1.6; }
 .pm-bank-details {
   border: 1px solid var(--color-border); border-radius: 10px;
-  padding: 16px; background: #fafafa;
+  padding: 16px; background: var(--color-bg-subtle);
 }
 .pm-bank-title { font-weight: 600; margin-bottom: 10px; }
 .pm-bank-row {
@@ -289,7 +289,7 @@
   font-size: 13px; padding: 4px 0;
 }
 .pm-bank-ref-note {
-  font-size: 12px; color: #555;
+  font-size: 12px; color: var(--color-text-dim);
   background: var(--color-bg-muted); border-radius: 8px;
   padding: 12px; line-height: 1.6;
 }
@@ -298,11 +298,11 @@
 
 .pm-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 .pm-cancel {
-  background: white; border: 1px solid var(--color-border);
+  background: var(--color-surface); border: 1px solid var(--color-border);
   border-radius: 8px; padding: 10px 20px; cursor: pointer;
 }
 .pm-pay-btn {
-  background: #111; color: white;
+  background: var(--color-text-primary); color: var(--color-surface);
   border: none; border-radius: 8px;
   padding: 10px 24px; font-weight: 600; cursor: pointer;
 }
@@ -311,8 +311,8 @@
 .pm-card-note {
   font-size: 12px;
   color: var(--color-text-muted);
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  background: var(--color-success-panel);
+  border: 1px solid var(--color-success-border);
   border-radius: 8px;
   padding: 8px 12px;
   margin-top: 4px;

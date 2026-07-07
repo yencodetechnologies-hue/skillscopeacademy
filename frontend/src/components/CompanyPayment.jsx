@@ -65,7 +65,7 @@ function ReceiptModal({ row, onClose, onConfirm }) {
             </div>
             <div className="cp2-info-box">
               <div className="cp2-info-label">Gateway Transaction ID</div>
-              <div className="cp2-info-val" style={{ fontFamily: "monospace", fontSize: 13, color: (!row.transactionId || row.transactionId === "—") ? "#000" : "inherit" }}>
+              <div className="cp2-info-val" style={{ fontFamily: "monospace", fontSize: 13, color: (!row.transactionId || row.transactionId === "—") ? colors.black : "inherit" }}>
                 {(!row.transactionId || row.transactionId === "—") ? "—" : row.transactionId}
               </div>
             </div>
@@ -129,7 +129,7 @@ function ReceiptModal({ row, onClose, onConfirm }) {
   );
 }
 
-const thStyle = { padding: "8px 10px", textAlign: "left", fontWeight: 600, color: "#374151", fontSize: 12 };
+const thStyle = { padding: "8px 10px", textAlign: "left", fontWeight: 600, color: colors.textSecondary, fontSize: 12 };
 const tdStyle = { padding: "8px 10px", color: "#4b5563" };
 
 function CoursesModal({ row, onClose }) {
@@ -145,7 +145,7 @@ function CoursesModal({ row, onClose }) {
         </div>
         <div className="cp2-modal-body">
           {row.courses.length === 0 ? (
-            <p style={{ color: "#888", fontSize: 13 }}>No course data found.</p>
+            <p style={{ color: colors.textIcon, fontSize: 13 }}>No course data found.</p>
           ) : (
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
               <thead>
@@ -213,11 +213,11 @@ function StudentsModal({ paymentId, companyName, onClose }) {
           <button className="cp2-modal-close" onClick={onClose}>✕</button>
         </div>
         <div className="cp2-modal-body">
-          {loading && <p style={{ color: "#888", textAlign: "center" }}>Loading...</p>}
+          {loading && <p style={{ color: colors.textIcon, textAlign: "center" }}>Loading...</p>}
           {error   && <p style={{ color: "red",  textAlign: "center" }}>{error}</p>}
           {data && (
             data.enrolledStudents.length === 0
-              ? <p style={{ color: "#888", fontSize: 13 }}>No students enrolled yet.</p>
+              ? <p style={{ color: colors.textIcon, fontSize: 13 }}>No students enrolled yet.</p>
               : <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                   <thead>
                     <tr style={{ background: colors.bgMuted }}>
@@ -514,7 +514,7 @@ const CompanyPayment = () => {
                       <td className="cp2-td-muted">{r.mobile}</td>
                       <td className="cp2-td-center">{renderCoursesCell(r)}</td>
                       <td className="cp2-td-amount">${Number(r.amount).toFixed(2)}</td>
-                      <td className="cp2-td-mono" style={{ fontSize: 11, color: (!r.transactionId || r.transactionId === "—") ? "#000" : "inherit" }}>
+                      <td className="cp2-td-mono" style={{ fontSize: 11, color: (!r.transactionId || r.transactionId === "—") ? colors.black : "inherit" }}>
                         {(!r.transactionId || r.transactionId === "—") ? "—" : r.transactionId}
                       </td>
                       <td className="cp2-td-method">{r.paymentMethod}</td>

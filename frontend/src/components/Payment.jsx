@@ -639,7 +639,7 @@ function Payment({
                     </div>
 
                     <div className="form-group">
-                        <label>Payment slip upload * <span style={{ fontSize: 11, color: "#888", fontWeight: 400 }}>(Max {MAX_FILE_SIZE_MB}MB)</span></label>
+                        <label>Payment slip upload * <span style={{ fontSize: 11, color: colors.textIcon, fontWeight: 400 }}>(Max {MAX_FILE_SIZE_MB}MB)</span></label>
                         <input
                             type="file"
                             accept="image/*,application/pdf"
@@ -667,7 +667,7 @@ function Payment({
                                         objectFit: "contain",
                                         borderRadius: 8,
                                         border: "1px solid #e5e7eb",
-                                        background: "#f9fafb",
+                                        background: colors.bg,
                                         display: "block",
                                     }}
                                 />

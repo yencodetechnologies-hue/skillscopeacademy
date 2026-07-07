@@ -31,7 +31,7 @@
 .lln-stats-grid-3 { grid-template-columns: repeat(3, 1fr); }
 
 .lln-stat-card {
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 20px 24px;
@@ -58,7 +58,7 @@
 
 /* ─── Table Card ────────────────────────────────────────────────────────────── */
 .lln-card {
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 14px;
   overflow: hidden;
@@ -97,7 +97,7 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #9ca3af;
+  color: var(--gray-400);
   display: flex;
   align-items: center;
 }
@@ -115,9 +115,9 @@
 }
 .lln-search-input:focus {
   border-color: var(--color-brand-primary);
-  background: #fff;
+  background: var(--color-surface);
 }
-.lln-search-input::placeholder { color: #9ca3af; }
+.lln-search-input::placeholder { color: var(--gray-400); }
 
 .lln-toolbar-right {
   display: flex;
@@ -131,7 +131,7 @@
   border-radius: 10px;
   font-size: 13.5px;
   color: var(--color-text-secondary);
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
+  background: var(--color-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
   -webkit-appearance: none;
   appearance: none;
   outline: none;
@@ -150,13 +150,13 @@
   outline: none;
 }
 .lln-btn-outline {
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
 }
 .lln-btn-outline:hover:not(:disabled) {
   background: var(--color-bg-muted);
-  border-color: #d1d5db;
+  border-color: var(--color-border-input);
 }
 .lln-btn-outline:disabled {
   opacity: 0.45;
@@ -204,14 +204,14 @@
   font-size: 12.5px;
   font-weight: 600;
   color: var(--color-text-muted);
-  background: #fff;
+  background: var(--color-surface);
   white-space: nowrap;
 }
 .lln-table tbody tr {
   border-bottom: 1px solid var(--color-bg-muted);
   transition: background 0.1s;
 }
-.lln-table tbody tr:hover { background: #fafafa; }
+.lln-table tbody tr:hover { background: var(--color-bg-subtle); }
 .lln-table td {
   padding: 13px 16px;
   color: var(--color-text-secondary);
@@ -257,14 +257,14 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
-.lln-badge-passed  { background: var(--color-success-bg); color: #15803d; }
+.lln-badge-passed  { background: var(--color-success-bg); color: var(--color-success-dark); }
 .lln-badge-passed .lln-badge-dot { background: var(--color-success); }
 .lln-badge-failed  { background: var(--color-error-bg); color: var(--color-error); }
 .lln-badge-failed .lln-badge-dot { background: var(--color-error); }
 
 .lln-badge-status { border-radius: 8px; }
-.lln-badge-status-approved       { background: var(--color-success-bg); color: #15803d; }
-.lln-badge-status-pending-review { background: #fef3c7; color: #92400e; }
+.lln-badge-status-approved       { background: var(--color-success-bg); color: var(--color-success-dark); }
+.lln-badge-status-pending-review { background: var(--color-warning-bg); color: #92400e; }
 .lln-badge-status-failed         { background: var(--color-error-bg); color: var(--color-error); }
 
 /* ─── Pagination ────────────────────────────────────────────────────────────── */
@@ -294,7 +294,7 @@
   box-sizing: border-box;
 }
 .lln-modal {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 16px;
   width: 100%;
   max-width: 480px;
@@ -330,7 +330,7 @@
   background: none;
   border: none;
   font-size: 17px;
-  color: #9ca3af;
+  color: var(--gray-400);
   cursor: pointer;
   padding: 2px 6px;
   border-radius: 6px;
@@ -402,8 +402,8 @@
   padding: 12px 14px;
   margin-bottom: 10px;
 }
-.lln-section-pass { background: #f0fdf4; border: 1px solid #bbf7d0; }
-.lln-section-fail { background: #fef2f2; border: 1px solid #fecaca; }
+.lln-section-pass { background: var(--color-success-panel); border: 1px solid var(--color-success-border); }
+.lln-section-fail { background: var(--color-error-bg); border: 1px solid var(--color-error-border); }
 
 .lln-section-bar-header {
   display: flex;
@@ -420,7 +420,7 @@
   align-items: center;
   justify-content: center;
   background: var(--color-success);
-  color: #fff;
+  color: var(--color-surface);
   font-size: 10px;
   flex-shrink: 0;
 }

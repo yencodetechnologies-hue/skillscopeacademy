@@ -5,7 +5,7 @@
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  background: #f0f8ff;
+  background: var(--color-sky-panel);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   padding-bottom: 70px;
   min-height: 100vh;
@@ -19,7 +19,7 @@
 
 /* ── Top Bar ── */
 .cdm-topbar {
-  background: #0d2240;
+  background: var(--color-navy-deep);
   padding: 10px 16px;
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@
 }
 
 .cdm-topbar-title {
-  color: #fff;
+  color: var(--color-surface);
   font-size: 13px;
   font-weight: 600;
   flex: 1;
@@ -57,7 +57,7 @@
 
 /* ── Hero Image ── */
 .cdm-hero-img {
-  background: #0d2240;
+  background: var(--color-navy-deep);
   height: 200px;
   position: relative;
   overflow: hidden;
@@ -89,7 +89,7 @@
 
 .cdm-hero-code {
   background: var(--color-brand-primary);
-  color: #0d2240;
+  color: var(--color-navy-deep);
   font-size: 10px;
   font-weight: 700;
   padding: 3px 10px;
@@ -99,7 +99,7 @@
 }
 
 .cdm-hero-title {
-  color: #fff;
+  color: var(--color-surface);
   font-size: 17px;
   font-weight: 700;
   line-height: 1.3;
@@ -143,8 +143,8 @@
 
 /* ── Quick Facts ── */
 .cdm-quick-facts {
-  background: #fff;
-  border-bottom: 1px solid #bae0f7;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-sky-light);
   padding: 10px 16px;
   display: flex;
   overflow-x: auto;
@@ -170,18 +170,18 @@
 .cdm-fact-val {
   font-size: 11px;
   font-weight: 700;
-  color: #0d2240;
+  color: var(--color-navy-deep);
   white-space: nowrap;
 }
 
 .cdm-fact-label {
   font-size: 9px;
-  color: #4a7096;
+  color: var(--color-link-muted);
 }
 
 /* ── Section ── */
 .cdm-section {
-  background: #fff;
+  background: var(--color-surface);
   margin-bottom: 8px;
   padding: 14px 16px;
   overflow: hidden;
@@ -190,10 +190,10 @@
 .cdm-section-title {
   font-size: 14px;
   font-weight: 700;
-  color: #0d2240;
+  color: var(--color-navy-deep);
   margin-bottom: 10px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #e8f4fd;
+  border-bottom: 1px solid var(--color-sky-wash);
 }
 
 .cdm-section-title span {
@@ -202,7 +202,7 @@
 
 .cdm-desc-text {
   font-size: 13px;
-  color: #4a7096;
+  color: var(--color-link-muted);
   line-height: 1.6;
 }
 
@@ -215,12 +215,12 @@
 
 .cdm-checklist li {
   font-size: 13px;
-  color: #4a7096;
+  color: var(--color-link-muted);
   padding: 6px 0;
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  border-bottom: 1px solid #f0f8ff;
+  border-bottom: 1px solid var(--color-sky-panel);
 }
 
 .cdm-checklist li:last-child {
@@ -261,7 +261,7 @@
 
 /* ── Price Section ── */
 .cdm-price-section {
-  background: #0d2240;
+  background: var(--color-navy-deep);
   padding: 14px 16px;
   margin-bottom: 8px;
 }
@@ -281,7 +281,7 @@
 
 .cdm-price-save {
   background: var(--color-brand-primary);
-  color: #0d2240;
+  color: var(--color-navy-deep);
   font-size: 11px;
   font-weight: 700;
   padding: 3px 8px;
@@ -327,7 +327,7 @@
   gap: 10px;
   width: 100%;
   background: linear-gradient(180deg, var(--color-brand-primary) 0%, #1e9bca 100%);
-  color: #0d2240;
+  color: var(--color-navy-deep);
   border: none;
   border-radius: 10px;
   padding: 13px 16px;
@@ -388,7 +388,7 @@
   display: flex;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #f0f8ff;
+  border-bottom: 1px solid var(--color-sky-panel);
   gap: 10px;
    cursor: pointer;
     transition: background 0.15s;
@@ -403,8 +403,8 @@
 }
 
 .cdm-date-cal {
-  background: #0d2240;
-  color: #fff;
+  background: var(--color-navy-deep);
+  color: var(--color-surface);
   border-radius: 8px;
   width: 42px;
   height: 42px;
@@ -439,12 +439,12 @@
 .cdm-date-name {
   font-size: 12px;
   font-weight: 600;
-  color: #0d2240;
+  color: var(--color-navy-deep);
 }
 
 .cdm-date-time {
   font-size: 11px;
-  color: #4a7096;
+  color: var(--color-link-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -466,12 +466,12 @@
 
 .cdm-date-spots.low {
   color: var(--cp2-amber);
-  background: #fef3c7;
+  background: var(--color-warning-bg);
 }
 
 .cdm-book-slot-btn {
-  background: #0d2240;
-  color: #fff;
+  background: var(--color-navy-deep);
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   padding: 7px 12px;
@@ -496,7 +496,7 @@
 .cdm-skeleton-slot {
   height: 52px;
   border-radius: 8px;
-  background: linear-gradient(90deg, #e8f4fd 25%, #d1ebfa 50%, #e8f4fd 75%);
+  background: linear-gradient(90deg, var(--color-sky-wash) 25%, #d1ebfa 50%, var(--color-sky-wash) 75%);
   background-size: 200% 100%;
   animation: cdm-shimmer 1.4s infinite;
 }
@@ -523,7 +523,7 @@
 }
 
 .cdm-hb-inner {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 12px;
   position: relative;
@@ -561,7 +561,7 @@
 .cdm-hb-subtitle {
   font-size: 8px;
   font-weight: 700;
-  color: #000;
+  color: var(--color-black);
   margin-top: 4px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
@@ -618,11 +618,11 @@
     left: 50%;
     transform: translateX(-50%);
     background: #00AEEF;
-    color: white;
+    color: var(--color-surface);
     padding: 10px 20px;
     border-radius: 25px;
     font-weight: 700;
-    border: 1.5px solid white;
+    border: 1.5px solid var(--color-surface);
     padding: 6px 16px;
     border-radius: 30px;
     background: rgba(0,0,0,0.3);
@@ -633,12 +633,12 @@
 
 .cdm-no-sessions {
   text-align: center;
-  color: #4a7096;
+  color: var(--color-link-muted);
   font-size: 13px;
   padding: 20px;
-  background: #f0f8ff;
+  background: var(--color-sky-panel);
   border-radius: 10px;
-  border: 1px solid #bae0f7;
+  border: 1px solid var(--color-sky-light);
 }
 
 /* ── See more / See less button ── */
@@ -647,8 +647,8 @@
   width: 100%;
   margin-top: 8px;
   padding: 10px;
-  background: #f0f8ff;
-  border: 1px solid #bae0f7;
+  background: var(--color-sky-panel);
+  border: 1px solid var(--color-sky-light);
   border-radius: 10px;
   color: #0d7aad;
   font-size: 13px;
@@ -681,8 +681,8 @@
   width: 100%;
   min-width: calc(100vw - 64px);
   max-width: 416px;
-  background: #f0f8ff;
-  border: 1px solid #bae0f7;
+  background: var(--color-sky-panel);
+  border: 1px solid var(--color-sky-light);
   border-radius: 12px;
   overflow: hidden;
   scroll-snap-align: start;
@@ -693,10 +693,10 @@
   text-align: center;
   font-size: 11px;
   font-weight: 600;
-  color: #4a7096;
+  color: var(--color-link-muted);
   padding: 8px;
-  border-top: 1px solid #bae0f7;
-  background: #e8f4fd;
+  border-top: 1px solid var(--color-sky-light);
+  background: var(--color-sky-wash);
 }
 
 /* ── Trust Badges ── */
@@ -707,8 +707,8 @@
 }
 
 .cdm-trust-badge {
-  background: #f0f8ff;
-  border: 1px solid #bae0f7;
+  background: var(--color-sky-panel);
+  border: 1px solid var(--color-sky-light);
   border-radius: 8px;
   padding: 8px 10px;
   display: flex;
@@ -725,7 +725,7 @@
 
 .cdm-trust-text {
   font-size: 11px;
-  color: #0d2240;
+  color: var(--color-navy-deep);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -746,8 +746,8 @@
 }
 
 .cdm-review-card {
-  background: #f0f8ff;
-  border: 1px solid #bae0f7;
+  background: var(--color-sky-panel);
+  border: 1px solid var(--color-sky-light);
   border-radius: 10px;
   padding: 12px;
   min-width: 260px;
@@ -766,7 +766,7 @@
 .cdm-review-name {
   font-size: 12px;
   font-weight: 600;
-  color: #0d2240;
+  color: var(--color-navy-deep);
 }
 
 .cdm-review-stars {
@@ -776,7 +776,7 @@
 
 .cdm-review-text {
   font-size: 12px;
-  color: #4a7096;
+  color: var(--color-link-muted);
   line-height: 1.5;
 }
 
@@ -788,7 +788,7 @@
   transform: translateX(-50%);
   width: 100%;
   max-width: 480px;
-  background: #0d2240;
+  background: var(--color-navy-deep);
   padding: 10px 16px;
   display: flex;
   gap: 8px;
@@ -810,8 +810,8 @@
 }
 
 .cdm-sticky-call {
-  background: #fff;
-  color: #0d2240;
+  background: var(--color-surface);
+  color: var(--color-navy-deep);
   border: none;
   border-radius: 10px;
   padding: 12px 14px;
@@ -836,7 +836,7 @@
   gap: 10px;
   margin-bottom: 10px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #e8f4fd;
+  border-bottom: 1px solid var(--color-sky-wash);
 }
 
 .cdm-section-header .cdm-section-title {
@@ -867,10 +867,10 @@
   max-width: 26px;
   flex-shrink: 0;
   border-radius: 50%;
-  border: 1px solid #bae0f7;
+  border: 1px solid var(--color-sky-light);
   outline: none;
-  background: #f0f8ff;
-  color: #0d2240;
+  background: var(--color-sky-panel);
+  color: var(--color-navy-deep);
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
@@ -916,7 +916,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #bae0f7;
+  background: var(--color-sky-light);
   cursor: pointer;
   transition: background 0.3s;
 }

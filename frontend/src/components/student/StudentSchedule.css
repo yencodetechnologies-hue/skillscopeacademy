@@ -43,7 +43,7 @@
   padding: 6px 12px;
   border: 1px solid var(--sc-gray-200);
   border-radius: 7px;
-  background: #fff;
+  background: var(--color-surface);
   font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.15s;
@@ -74,7 +74,7 @@
   text-transform: capitalize;
 }
 .sc-view-btn--active {
-  background: #fff;
+  background: var(--color-surface);
   color: var(--sc-gray-800);
   font-weight: 700;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
@@ -86,7 +86,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 14px;
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--sc-gray-200);
   border-radius: var(--sc-radius);
   padding: 10px 16px;
@@ -99,7 +99,7 @@
 
 /* Calendar shell */
 .sc-calendar {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: var(--sc-radius);
   box-shadow: var(--sc-shadow);
   border: 1px solid var(--sc-gray-200);
@@ -137,7 +137,7 @@
 .sc-cal-cell--empty { cursor: default; background: var(--sc-gray-50); }
 .sc-cal-cell--today .sc-cal-num {
   background: var(--sc-purple);
-  color: #fff;
+  color: var(--color-surface);
   border-radius: 50%;
   width: 24px;
   height: 24px;
@@ -182,7 +182,7 @@
 .sc-week-date { font-size: 1rem; font-weight: 700; color: var(--sc-gray-800); }
 .sc-week-date--today {
   background: var(--sc-purple);
-  color: #fff;
+  color: var(--color-surface);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -214,7 +214,7 @@
 }
 .sc-day-num--today {
   background: var(--sc-purple);
-  color: #fff;
+  color: var(--color-surface);
   border-radius: 50%;
   width: 70px;
   height: 70px;
@@ -270,7 +270,7 @@
 .sc-list-dayname { font-size: 0.82rem; font-weight: 600; color: var(--sc-gray-800); }
 .sc-today-tag {
   background: var(--sc-purple);
-  color: #fff;
+  color: var(--color-surface);
   font-size: 0.65rem;
   font-weight: 700;
   padding: 1px 7px;
@@ -319,7 +319,7 @@
   padding: 16px;
 }
 .sc-modal {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: var(--sc-radius);
   width: 100%;
   max-width: 420px;

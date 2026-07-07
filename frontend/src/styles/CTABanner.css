@@ -14,7 +14,7 @@
 .cta-title {
   font-size: 28px;
   font-weight: 700;
-  color: #0d2240;
+  color: var(--color-navy-deep);
   margin-bottom: 8px;
   line-height: 1.2;
 }
@@ -34,8 +34,8 @@
 }
 
 .cta-btn-dark {
-  background: #0d2240;
-  color: #fff;
+  background: var(--color-navy-deep);
+  color: var(--color-surface);
   border: none;
   border-radius: 10px;
   padding: 14px 32px;
@@ -51,8 +51,8 @@
 }
 
 .cta-btn-white {
-  background: #fff;
-  color: #0d2240;
+  background: var(--color-surface);
+  color: var(--color-navy-deep);
   border: none;
   border-radius: 10px;
   padding: 14px 28px;
@@ -67,7 +67,7 @@
   transition: background 0.2s;
 }
 .cta-btn-white:hover {
-  background: #f0f8ff;
+  background: var(--color-sky-panel);
 }
 
 /* RESPONSIVE */

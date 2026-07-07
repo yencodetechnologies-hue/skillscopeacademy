@@ -16,7 +16,7 @@
 
 .cr-page-subtitle {
   font-size: 15px;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0 0 1.25rem;
 }
 
@@ -29,7 +29,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #fff;
+  background: var(--color-surface);
   border: 0.5px solid var(--color-border);
   border-radius: 8px;
   padding: 9px 14px;
@@ -39,7 +39,7 @@
 .cr-search-box svg {
   width: 15px;
   height: 15px;
-  color: #9ca3af;
+  color: var(--gray-400);
   flex-shrink: 0;
 }
 
@@ -47,13 +47,13 @@
   border: none;
   outline: none;
   font-size: 14px;
-  color: #111;
+  color: var(--color-text-primary);
   background: transparent;
   width: 100%;
 }
 
 .cr-search-input::placeholder {
-  color: #9ca3af;
+  color: var(--gray-400);
 }
 
 /* Grid */
@@ -65,7 +65,7 @@
 
 /* Card */
 .cr-card {
-  background: #fff;
+  background: var(--color-surface);
   border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
@@ -84,7 +84,7 @@
 .cr-card-title {
   font-size: 15px;
   font-weight: 500;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0;
   line-height: 1.4;
 }
@@ -92,7 +92,7 @@
 .cr-card-price {
   font-size: 15px;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -105,7 +105,7 @@
 
 .cr-card-category {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--gray-400);
   margin: 2px 0 0;
 }
 

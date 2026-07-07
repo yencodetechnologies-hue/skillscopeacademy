@@ -18,7 +18,7 @@
 .pf-page-title {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #0f1e3d;
+  color: var(--color-navy-hero);
   margin: 0 0 14px;
   letter-spacing: -0.01em;
 }
@@ -32,9 +32,9 @@
 }
 
 .pf-error {
-  background: #fef2f2;
+  background: var(--color-error-bg);
   color: #991b1b;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--color-error-border);
   padding: 12px 16px;
   border-radius: 10px;
   margin-bottom: 24px;
@@ -57,7 +57,7 @@
 }
 
 .pf-handbook-card {
-  background: white;
+  background: var(--color-surface);
   border: 1px solid #e5e9f2;
   border-radius: 16px;
   overflow: hidden;
@@ -75,7 +75,7 @@
 }
 
 .pf-handbook-banner {
-  background: #0f1e3d;
+  background: var(--color-navy-hero);
   padding: 28px 28px 22px;
 }
 
@@ -130,7 +130,7 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  background: white;
+  background: var(--color-surface);
   border: 1px solid #e5e9f2;
   border-radius: 16px;
   box-shadow: 0 4px 6px -1px rgba(15, 30, 61, 0.06);
@@ -177,7 +177,7 @@
   font-weight: 700;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: #0f1e3d;
+  color: var(--color-navy-hero);
 }
 
 .pf-doc-arrow {
@@ -193,18 +193,18 @@
 
 /* Empty / loading states */
 .pf-empty-card {
-  background: white;
-  border: 1px dashed #cbd5e1;
+  background: var(--color-surface);
+  border: 1px dashed var(--gray-300);
   border-radius: 16px;
   padding: 40px 24px;
   text-align: center;
-  color: #64748b;
+  color: var(--color-slate-500);
   width: 100%;
 }
 
 .pf-empty-card i {
   font-size: 1.8rem;
-  color: #cbd5e1;
+  color: var(--gray-300);
   margin-bottom: 10px;
   display: block;
 }

@@ -11,11 +11,11 @@
 .all-courses-header h2 {
   font-size: 32px;
   font-weight: 700;
-  color: #0f1e3d;
+  color: var(--color-navy-hero);
 }
 
 .all-courses-header p {
-  color: #64748b;
+  color: var(--color-slate-500);
   font-size: 14px;
   margin-top: 4px;
 }
@@ -54,7 +54,7 @@
 .course-card-skeleton {
   height: 380px;
   border-radius: 12px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--color-bg-panel) 25%, #e0e0e0 50%, var(--color-bg-panel) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }

@@ -16,7 +16,7 @@
 
 /* ── Container ── */
 .csm-container {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 16px;
   width: 100%;
   max-width: 600px;
@@ -33,10 +33,10 @@
   align-items: flex-start;
   gap: 10px;
   padding: 1.25rem 1.5rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-bg-panel);
   position: sticky;
   top: 0;
-  background: #fff;
+  background: var(--color-surface);
   z-index: 10;
   border-radius: 16px 16px 0 0;
 }
@@ -53,13 +53,13 @@
 .csm-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0 0 2px;
 }
 
 .csm-subtitle {
   font-size: 0.78rem;
-  color: #888;
+  color: var(--color-text-icon);
   margin: 0;
   line-height: 1.4;
 }
@@ -72,7 +72,7 @@
   height: 30px;
   cursor: pointer;
   font-size: 0.8rem;
-  color: #666;
+  color: var(--color-text-faint);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@
 /* ── Form Card ── */
 .csm-form-card {
   margin: 1rem 1.5rem;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border-soft);
   border-radius: 12px;
   padding: 1.25rem;
 }
@@ -100,7 +100,7 @@
 .csm-add-title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 /* Bulk toggle checkbox */
@@ -109,7 +109,7 @@
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
-  color: #555;
+  color: var(--color-text-dim);
   cursor: pointer;
   user-select: none;
 }
@@ -123,7 +123,7 @@
   height: 16px;
   border: 2px solidvar(--color-brand-primary);
   border-radius: 3px;
-  background: #fff;
+  background: var(--color-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,7 +137,7 @@
 
 .csm-bulk-toggle input:checked + .csm-bulk-check::after {
   content: "✓";
-  color: #fff;
+  color: var(--color-surface);
   font-size: 10px;
   font-weight: 700;
 }
@@ -169,7 +169,7 @@
 .csm-field label {
   font-size: 0.78rem;
   font-weight: 500;
-  color: #555;
+  color: var(--color-text-dim);
 }
 
 .csm-field input,
@@ -178,8 +178,8 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   font-size: 0.875rem;
-  color: #222;
-  background: #fff;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
   outline: none;
   transition: border-color 0.15s;
   width: 100%;
@@ -212,7 +212,7 @@
 .csm-day-picker-wrap > label {
   font-size: 0.78rem;
   font-weight: 500;
-  color: #555;
+  color: var(--color-text-dim);
 }
 
 .csm-day-picker {
@@ -225,9 +225,9 @@
   padding: 0.35rem 0.8rem;
   border: 1px solid #d1c4f7;
   border-radius: 8px;
-  background: #fff;
+  background: var(--color-surface);
   font-size: 0.8rem;
-  color: #555;
+  color: var(--color-text-dim);
   cursor: pointer;
   transition: all 0.15s;
   font-weight: 500;
@@ -286,7 +286,7 @@
 .csm-section-title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -303,7 +303,7 @@
   align-items: center;
   gap: 6px;
   font-size: 0.78rem;
-  color: #666;
+  color: var(--color-text-faint);
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
@@ -324,14 +324,14 @@
   background: transparent;
   border-radius: 6px;
   font-size: 0.78rem;
-  color: #888;
+  color: var(--color-text-icon);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
   transition: all 0.15s;
 }
-.csm-filter-tab:hover { background: #f5f5f5; color: #444; }
+.csm-filter-tab:hover { background: #f5f5f5; color: var(--color-text-body); }
 .csm-filter-tab.active { background: #f0ebff; color:var(--color-brand-primary); font-weight: 500; }
 
 .csm-dot {
@@ -344,7 +344,7 @@
 .csm-session-inactive {
   opacity: 0.55;
   background: var(--color-bg);
-  border: 1px dashed #d1d5db;
+  border: 1px dashed var(--color-border-input);
 }
 
 /* ── No session ── */
@@ -360,7 +360,7 @@
 /* ── Date Block ── */
 .csm-date-block {
   margin-bottom: 1rem;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border-soft);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -371,11 +371,11 @@
   justify-content: space-between;
   gap: 8px;
   padding: 0.65rem 1rem;
-  background: #fafafa;
-  border-bottom: 1px solid #eee;
+  background: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border-soft);
   font-size: 0.85rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-primary);
   flex-wrap: wrap;
 }
 
@@ -386,7 +386,7 @@
 
 .csm-session-count {
   font-size: 0.75rem;
-  color: #888;
+  color: var(--color-text-icon);
   font-weight: 400;
 }
 
@@ -436,13 +436,13 @@
 
 .csm-time {
   font-size: 0.8rem;
-  color: #555;
+  color: var(--color-text-dim);
   white-space: nowrap;
 }
 
 .csm-avl-slot {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--color-text-faint);
   min-width: 60px;
   text-align: center;
   line-height: 1.3;
@@ -454,7 +454,7 @@
 }
 
 .csm-unsaved-badge {
-  background: #fff8e8;
+  background: var(--color-surface)8e8;
   color: var(--cp2-amber);
   font-size: 0.72rem;
   font-weight: 600;
@@ -518,7 +518,7 @@
   left: 2px;
   width: 18px;
   height: 18px;
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
   transition: transform 0.2s ease;
@@ -564,7 +564,7 @@
   border-radius: 4px;
   transition: background 0.12s;
 }
-.csm-delete:hover { background: #fef2f2; }
+.csm-delete:hover { background: var(--color-error-bg); }
 
 /* ── Footer ── */
 .csm-footer {
@@ -573,8 +573,8 @@
   justify-content: flex-end;
   gap: 10px;
   padding: 1rem 1.5rem;
-  border-top: 1px solid #f0f0f0;
-  background: #fff;
+  border-top: 1px solid var(--color-bg-panel);
+  background: var(--color-surface);
   border-radius: 0 0 16px 16px;
   position: sticky;
   bottom: 0;
@@ -604,12 +604,12 @@
 
 .csm-cancel-btn {
   padding: 0.6rem 1.2rem;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-muted);
   border-radius: 10px;
   font-size: 0.875rem;
   cursor: pointer;
-  color: #444;
+  color: var(--color-text-body);
   transition: background 0.15s;
 }
 .csm-cancel-btn:hover { background: #f5f5f5; }
@@ -630,7 +630,7 @@
 }
 
 .csm-edit-modal {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 14px;
   width: 100%;
   max-width: 420px;
@@ -651,13 +651,13 @@
 .csm-edit-header h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0 0 4px;
 }
 
 .csm-edit-header p {
   font-size: 0.78rem;
-  color: #888;
+  color: var(--color-text-icon);
   margin: 0;
 }
 
@@ -672,7 +672,7 @@
 .csm-edit-date-val {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #222;
+  color: var(--color-text-primary);
   margin: 0;
 }
 

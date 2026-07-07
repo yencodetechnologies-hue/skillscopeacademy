@@ -1,6 +1,6 @@
 .promo-bar{
   width:100%;
-  background:#ffffff;
+  background:var(--color-surface);
   padding:40px 20px;
   display: none;
 }
@@ -28,7 +28,7 @@
 .promo-title-promo{
   font-size:34px;
   font-weight:700;
-  color:#1e293b;
+  color:var(--color-slate-800);
   margin-bottom:15px;
 }
 
@@ -36,7 +36,7 @@
 
 .promo-links-promo{
   font-size:18px;
-  color:#333;
+  color:var(--color-text-primary);
 }
 
 .promo-links-promo{

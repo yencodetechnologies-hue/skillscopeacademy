@@ -129,7 +129,7 @@ body {
 
 .btn-refresh:hover {
   background: var(--gray-100);
-  border-color: var(--gray-300, #d1d5db);
+  border-color: var(--gray-300, var(--color-border-input));
 }
 
 .btn-add {
@@ -329,12 +329,12 @@ body {
 
 .card-btn.edit:hover {
   background: var(--gray-100);
-  border-color: var(--gray-300, #d1d5db);
+  border-color: var(--gray-300, var(--color-border-input));
 }
 
 .card-btn.deactivate:hover {
   background: var(--gray-100);
-  border-color: var(--gray-300, #d1d5db);
+  border-color: var(--gray-300, var(--color-border-input));
 }
 
 .card-btn.delete {

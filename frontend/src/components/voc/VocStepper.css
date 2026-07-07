@@ -19,7 +19,7 @@
     height: 44px;
     border-radius: 50%;
     background: var(--color-border);
-    color: #888;
+    color: var(--color-text-icon);
     font-size: 16px;
     font-weight: 700;
     display: flex;
@@ -35,7 +35,7 @@
 
 .vs-done {
     background: #22c55e;
-    color: #fff;
+    color: var(--color-surface);
 }
 
 .vs-check {
@@ -46,7 +46,7 @@
 .vs-label {
     font-size: 12px;
     font-weight: 700;
-    color: #888;
+    color: var(--color-text-icon);
     letter-spacing: 0.5px;
     text-align: center;
 }

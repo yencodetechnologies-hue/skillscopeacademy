@@ -12,7 +12,7 @@
 
 /* Card */
 .ec-card {
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -22,7 +22,7 @@
 
 /* Gradient Header */
 .ec-header {
-    background: linear-gradient(135deg, #0d2240 0%, var(--color-brand-primary) 60%, var(--color-brand-primary) 100%);
+    background: linear-gradient(135deg, var(--color-navy-deep) 0%, var(--color-brand-primary) 60%, var(--color-brand-primary) 100%);
     padding: 40px 32px 32px;
     text-align: center;
     display: flex;
@@ -53,7 +53,7 @@
 .ec-title {
     font-size: 20px;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0;
     line-height: 1.4;
 }
@@ -73,19 +73,19 @@
 
 .ec-message {
     font-size: 14px;
-    color: #444;
+    color: var(--color-text-body);
     line-height: 1.7;
     margin: 0 0 12px;
 }
 
 .ec-message strong {
-    color: #111;
+    color: var(--color-text-primary);
     font-weight: 600;
 }
 
 .ec-divider {
     border: none;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-bg-panel);
     margin: 20px 0;
 }
 
@@ -96,26 +96,26 @@
 
 .ec-regards {
     font-size: 14px;
-    color: #444;
+    color: var(--color-text-body);
     margin: 0 0 6px;
 }
 
 .ec-org-name {
     font-size: 15px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 2px;
 }
 
 .ec-org-role {
     font-size: 13.5px;
-    color: #666;
+    color: var(--color-text-faint);
     margin: 0 0 6px;
 }
 
 .ec-org-phone {
     font-size: 14px;
-    color: #333;
+    color: var(--color-text-primary);
     margin: 0 0 4px;
 }
 

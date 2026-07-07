@@ -201,7 +201,7 @@ import { colors } from '../constants/theme';
 //                 <PublicNavbar courses={courses} />
 //                 <div className="cdp-loading" style={{ padding: "4rem 2rem", textAlign: "center" }}>
 //                     <h2>Course not available</h2>
-//                     <p style={{ marginTop: "1rem", color: "#666" }}>
+//                     <p style={{ marginTop: "1rem", color: colors.textFaint }}>
 //                         This course is no longer offered. Browse our current courses below.
 //                     </p>
 //                     <button
@@ -1171,7 +1171,7 @@ const handleViewPDF = (pdfUrl) => {
                 <PublicNavbar courses={courses} />
                 <div className="cdp-loading" style={{ padding: "4rem 2rem", textAlign: "center" }}>
                     <h2>Course not available</h2>
-                    <p style={{ marginTop: "1rem", color: "#666" }}>
+                    <p style={{ marginTop: "1rem", color: colors.textFaint }}>
                         This course is no longer offered. Browse our current courses below.
                     </p>
                     <button

@@ -12,7 +12,7 @@
 .cp2-page-btn {
   padding: 6px 12px;
   border: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 6px;
   font-size: 13px;
   cursor: pointer;
@@ -22,7 +22,7 @@
 
 .cp2-page-btn:hover:not(:disabled) {
   background: var(--color-bg-muted);
-  border-color: #d1d5db;
+  border-color: var(--color-border-input);
 }
 
 .cp2-page-btn--active {
@@ -51,7 +51,7 @@
 }
 
 .cp2-refresh-btn {
-  background: white;
+  background: var(--color-surface);
   border: 1px solid var(--cp2-border);
   border-radius: 8px;
   padding: 8px 16px;
@@ -235,8 +235,8 @@
 }
 
 .cp2-table tbody tr:last-child td { border-bottom: none; }
-.cp2-table tbody tr:hover td { background: #fafafa; }
-.cp2-row-confirmed td { background: #f0fdf4; }
+.cp2-table tbody tr:hover td { background: var(--color-bg-subtle); }
+.cp2-row-confirmed td { background: var(--color-success-panel); }
 .cp2-row-confirmed:hover td { background: var(--color-success-bg) !important; }
 
 .cp2-td-muted   { color: var(--cp2-muted); font-size: 12px; }
@@ -273,10 +273,10 @@
   white-space: nowrap;
 }
 
-.cp2-badge--confirmed { background: var(--color-success-bg); color: #15803d; }
+.cp2-badge--confirmed { background: var(--color-success-bg); color: var(--color-success-dark); }
 .cp2-badge--success   { background: #d1fae5; color: #065f46; }
-.cp2-badge--pending   { background: #fef3c7; color: #92400e; }
-.cp2-badge--failed    { background: var(--color-error-bg); color: #b91c1c; }
+.cp2-badge--pending   { background: var(--color-warning-bg); color: #92400e; }
+.cp2-badge--failed    { background: var(--color-error-bg); color: var(--color-error-dark); }
 
 /* ── View Button ── */
 .cp2-view-btn {
@@ -293,7 +293,7 @@
 
 .cp2-view-btn:hover {
   background: var(--cp2-indigo);
-  color: white;
+  color: var(--color-surface);
   border-color: var(--cp2-indigo);
 }
 
@@ -320,8 +320,8 @@
 }
 
 .cp2-mc-confirmed {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
+  background: var(--color-success-panel);
+  border-color: var(--color-success-border);
 }
 
 .cp2-mc-top {
@@ -374,7 +374,7 @@
 }
 
 .cp2-modal {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   width: 100%;
   max-width: 540px;
@@ -482,7 +482,7 @@
 
 .cp2-open-btn {
   background: var(--cp2-indigo);
-  color: white;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   padding: 9px 16px;
@@ -516,7 +516,7 @@
 
 .cp2-no-receipt-sub {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--gray-400);
 }
 
 /* Modal Footer */
@@ -530,7 +530,7 @@
 }
 
 .cp2-cancel-btn {
-  background: white;
+  background: var(--color-surface);
   border: 1px solid var(--cp2-border);
   border-radius: 8px;
   padding: 9px 20px;
@@ -544,7 +544,7 @@
 
 .cp2-confirm-btn {
   background: var(--cp2-green);
-  color: white;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   padding: 9px 20px;
@@ -554,7 +554,7 @@
   transition: background 0.15s;
 }
 
-.cp2-confirm-btn:hover    { background: #15803d; }
+.cp2-confirm-btn:hover    { background: var(--color-success-dark); }
 .cp2-confirm-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .cp2-already-confirmed {

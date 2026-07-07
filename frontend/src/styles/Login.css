@@ -11,7 +11,7 @@
 
 .back-btn-login:hover {
   background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-primary)) !important;
-  color: white !important;
+  color: var(--color-surface) !important;
 }
 .welcome{
   color: var(--color-brand-primary);

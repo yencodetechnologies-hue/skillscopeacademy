@@ -15,7 +15,7 @@
 body {
   font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: #f5f5f7;
-  color: #111;
+  color: var(--color-text-primary);
 }
 
 .ef-stats > .stat-card{
@@ -41,13 +41,13 @@ body {
 .sm-page-title {
   font-size: 28px;
   font-weight: 700;
-  color: #111;
+  color: var(--color-text-primary);
   letter-spacing: -0.5px;
 }
 
 .sm-page-subtitle {
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-faint);
 }
 
 /* ── Section Header ── */
@@ -62,12 +62,12 @@ body {
 .sm-section-title {
   font-size: 18px;
   font-weight: 700;
-  color: #111;
+  color: var(--color-text-primary);
 }
 
 .sm-section-subtitle {
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-faint);
   margin-top: 2px;
 }
 
@@ -77,7 +77,7 @@ body {
   align-items: center;
   gap: 6px;
   background-color: var(--color-brand-primary);
-  color: #fff;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
@@ -99,7 +99,7 @@ body {
 
 /* ── Cards ── */
 .sm-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   border: 1px solid var(--color-border);
   padding: 20px 24px;
@@ -115,12 +115,12 @@ body {
 .sm-card-title {
   font-size: 15px;
   font-weight: 700;
-  color: #111;
+  color: var(--color-text-primary);
 }
 
 .sm-card-subtitle {
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-faint);
   margin-top: 2px;
 }
 
@@ -143,18 +143,18 @@ body {
   position: absolute;
   left: 12px;
   font-size: 14px;
-  color: #9ca3af;
+  color: var(--gray-400);
   pointer-events: none;
 }
 
 .sm-search-input {
   width: 100%;
   padding: 9px 12px 9px 36px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border-input);
   border-radius: 8px;
   font-size: 14px;
-  color: #111;
-  background: #fff;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
   outline: none;
   transition: border-color 0.2s;
 }
@@ -165,16 +165,16 @@ body {
 }
 
 .sm-search-input::placeholder {
-  color: #9ca3af;
+  color: var(--gray-400);
 }
 
 .sm-status-select {
   padding: 9px 32px 9px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border-input);
   border-radius: 8px;
   font-size: 14px;
-  color: #111;
-  background: #fff;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
   outline: none;
   cursor: pointer;
   appearance: auto;
@@ -191,12 +191,12 @@ body {
   align-items: center;
   gap: 6px;
   padding: 9px 18px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border-input);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
-  background: #fff;
-  color: #111;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s;
@@ -204,7 +204,7 @@ body {
 
 .sm-search-btn:hover {
   background: var(--color-bg);
-  border-color: #9ca3af;
+  border-color: var(--gray-400);
 }
 
 /* ── Table Card ── */
@@ -232,7 +232,7 @@ body {
 }
 
 .sm-table thead tr {
-  background: #fff;
+  background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -251,7 +251,7 @@ body {
 }
 
 .sm-table tbody tr:hover {
-  background: #fafafa;
+  background: var(--color-bg-subtle);
 }
 
 .sm-table td {
@@ -264,13 +264,13 @@ body {
 /* ── Date / Time ── */
 .sm-date {
   font-weight: 500;
-  color: #111;
+  color: var(--color-text-primary);
   white-space: nowrap;
 }
 
 .sm-time {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--gray-400);
   margin-top: 2px;
   white-space: nowrap;
 }
@@ -301,13 +301,13 @@ body {
 
 .sm-student-name {
   font-weight: 500;
-  color: #111;
+  color: var(--color-text-primary);
   white-space: nowrap;
 }
 
 .sm-student-nick {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--gray-400);
   margin-top: 1px;
 }
 
@@ -346,7 +346,7 @@ body {
 .badge-completed {
   background: var(--color-success-bg);
   color: var(--color-success);
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--color-success-border);
 }
 
 .badge-completed .badge-icon {
@@ -356,7 +356,7 @@ body {
 .badge-not-completed {
   background: var(--color-error-bg);
   color: var(--color-error);
-  border: 1px solid #fecaca;
+  border: 1px solid var(--color-error-border);
 }
 
 .badge-not-completed .badge-icon {
@@ -414,7 +414,7 @@ body {
 
 .sm-icon-btn:hover {
   background: var(--color-bg-muted);
-  border-color: #d1d5db;
+  border-color: var(--color-border-input);
 }
 
 .sm-delete-btn {
@@ -423,7 +423,7 @@ body {
 
 .sm-delete-btn:hover {
   background: var(--color-error-bg);
-  border-color: #fecaca;
+  border-color: var(--color-error-border);
 }
 
 /* ── Actions Cell ── */
@@ -439,7 +439,7 @@ body {
   padding: 5px 10px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--color-surface);
   font-size: 12px;
   font-weight: 500;
   color: var(--color-text-secondary);
@@ -478,7 +478,7 @@ body {
   padding: 7px 14px;
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--color-surface);
   font-size: 13px;
   font-weight: 500;
   color: var(--color-text-secondary);
@@ -498,7 +498,7 @@ body {
 .sm-page-indicator {
   font-size: 13px;
   font-weight: 600;
-  color: #111;
+  color: var(--color-text-primary);
   padding: 7px 14px;
   border: 1px solid var(--color-brand-primary);
   border-radius: 8px;
@@ -513,12 +513,12 @@ body {
 .badge-active {
   background: var(--color-success-bg);
   color: var(--color-success);
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--color-success-border);
 }
 .badge-inactive {
   background: var(--color-error-bg);
   color: var(--color-error);
-  border: 1px solid #fecaca;
+  border: 1px solid var(--color-error-border);
 }
 
 /* Activate button (green) */
@@ -528,14 +528,14 @@ body {
   border-radius: 6px;
   background: var(--color-success-bg);
   color: var(--color-success);
-  border: 1px solid #bbf7d0;
+  border: 1px solid var(--color-success-border);
   cursor: pointer;
   font-weight: 500;
   white-space: nowrap;
   transition: background 0.15s;
 }
 .sm-activate-btn:hover {
-  background: #bbf7d0;
+  background: var(--color-success-border);
 }
 
 /* Loading / Error states */
@@ -568,7 +568,7 @@ body {
 
 /* ── Modal Box ── */
 .modal-overlay>.modal-box {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 14px;
   padding: 28px;
   width: 100%;
@@ -592,12 +592,12 @@ body {
 .modal-title {
   font-size: 18px;
   font-weight: 700;
-  color: #111;
+  color: var(--color-text-primary);
   margin: 0 0 4px;
 }
 .modal-subtitle {
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-icon);
   margin: 0;
 }
 .modal-close-btn {
@@ -605,7 +605,7 @@ body {
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #888;
+  color: var(--color-text-icon);
   padding: 2px 6px;
   border-radius: 6px;
   transition: background 0.15s;
@@ -643,17 +643,17 @@ body {
   font-size: 16px;
   font-weight: 700;
   margin: 0 0 2px;
-  color: #111;
+  color: var(--color-text-primary);
 }
 .modal-nick {
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-icon);
   margin: 0 0 4px;
 }
 .modal-email-line,
 .modal-phone-line {
   font-size: 13px;
-  color: #555;
+  color: var(--color-text-dim);
   margin: 2px 0;
 }
 .modal-badges {
@@ -681,11 +681,11 @@ body {
   align-items: center;
   padding: 6px 0;
   font-size: 13px;
-  color: #444;
+  color: var(--color-text-body);
   border-bottom: 1px solid var(--color-bg-muted);
 }
 .modal-detail-row span:first-child {
-  color: #888;
+  color: var(--color-text-icon);
 }
 
 /* ── Edit Modal: Form ── */
@@ -698,7 +698,7 @@ body {
 .modal-label {
   font-size: 13px;
   font-weight: 500;
-  color: #444;
+  color: var(--color-text-body);
   margin-top: 10px;
   margin-bottom: 4px;
 }
@@ -708,12 +708,12 @@ body {
   border: 1.5px solid var(--color-border);
   border-radius: 8px;
   padding: 0 12px;
-  background: #fafafa;
+  background: var(--color-bg-subtle);
   transition: border-color 0.15s;
 }
 .modal-input-wrap:focus-within {
   border-color: var(--color-brand-primary);
-  background: #fff;
+  background: var(--color-surface);
 }
 .modal-input-icon {
   font-size: 15px;
@@ -726,7 +726,7 @@ body {
   outline: none;
   padding: 10px 0;
   font-size: 14px;
-  color: #111;
+  color: var(--color-text-primary);
   width: 100%;
 }
 
@@ -740,8 +740,8 @@ body {
   padding: 10px 20px;
   border-radius: 8px;
   border: 1.5px solid var(--color-border);
-  background: #fff;
-  color: #444;
+  background: var(--color-surface);
+  color: var(--color-text-body);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -774,7 +774,7 @@ body {
 .modal-delete-body {
   padding: 12px 0 20px;
   font-size: 14px;
-  color: #444;
+  color: var(--color-text-body);
   line-height: 1.7;
 }
 .modal-delete-warning {
@@ -790,14 +790,14 @@ body {
   border-radius: 8px;
   border: none;
   background: var(--color-error);
-  color: #fff;
+  color: var(--color-surface);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
 }
 .modal-delete-confirm-btn:hover {
-  background: #b91c1c;
+  background: var(--color-error-dark);
 }
 .modal-delete-confirm-btn:disabled {
   opacity: 0.6;

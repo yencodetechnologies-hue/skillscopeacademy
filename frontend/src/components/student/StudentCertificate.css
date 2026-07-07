@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
+  background: var(--color-slate-50);
   padding: 2rem 1.5rem;
   position: relative;
   overflow: hidden;
@@ -16,7 +16,7 @@
 .uc-bg-grid {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--gray-300) 1px, transparent 1px);
   background-size: 28px 28px;
   opacity: 0.45;
   pointer-events: none;
@@ -49,7 +49,7 @@
   transform: translateX(-50%);
   width: 6px;
   height: 80px;
-  background: #64748b;
+  background: var(--color-slate-500);
   border-radius: 3px;
   z-index: 1;
 }
@@ -59,7 +59,7 @@
   left: 18%;
   right: 8%;
   height: 6px;
-  background: #64748b;
+  background: var(--color-slate-500);
   border-radius: 3px;
   z-index: 1;
 }
@@ -115,12 +115,12 @@
 .uc-line {
   height: 5px;
   border-radius: 3px;
-  background: #cbd5e1;
+  background: var(--gray-300);
   animation: pulse 2.5s ease-in-out infinite;
 }
 .uc-line-0 { background: var(--color-info-border); animation-delay: 0s; }
 .uc-line-1 { background: #c4b5fd; animation-delay: 0.3s; }
-.uc-line-2 { background: #cbd5e1; animation-delay: 0.6s; }
+.uc-line-2 { background: var(--gray-300); animation-delay: 0.6s; }
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.45; }
@@ -136,7 +136,7 @@
   background: repeating-linear-gradient(
     45deg,
     var(--color-orange) 0px, var(--color-orange) 10px,
-    #fff     10px, #fff    20px
+    var(--color-surface)     10px, var(--color-surface)    20px
   );
   transform: rotate(-8deg) translateY(-50%);
   z-index: 5;
@@ -161,7 +161,7 @@
   height: 46px;
   bottom: 0;
   left: 0;
-  box-shadow: 0 0 0 6px #f8fafc, 0 0 0 10px var(--color-text-subtle);
+  box-shadow: 0 0 0 6px var(--color-slate-50), 0 0 0 10px var(--color-text-subtle);
   animation: spin 6s linear infinite;
 }
 .uc-gear-sm {
@@ -169,7 +169,7 @@
   height: 30px;
   bottom: 18px;
   left: 32px;
-  box-shadow: 0 0 0 4px #f8fafc, 0 0 0 7px var(--color-text-subtle);
+  box-shadow: 0 0 0 4px var(--color-slate-50), 0 0 0 7px var(--color-text-subtle);
   animation: spin 4s linear infinite reverse;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -210,8 +210,8 @@
   right: 12px;
   width: 26px;
   height: 26px;
-  background: #64748b;
-  color: #fff;
+  background: var(--color-slate-500);
+  color: var(--color-surface);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -233,7 +233,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #fff7ed;
+  background: var(--color-surface)7ed;
   color: #c2410c;
   font-size: 12px;
   font-weight: 600;
@@ -257,7 +257,7 @@
 .uc-title {
   font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 700;
-  color: #1e293b;
+  color: var(--color-slate-800);
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin: 0;
@@ -265,7 +265,7 @@
 
 .uc-desc {
   font-size: 15px;
-  color: #64748b;
+  color: var(--color-slate-500);
   line-height: 1.7;
   margin: 0;
 }

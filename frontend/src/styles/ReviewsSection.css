@@ -1,6 +1,6 @@
 .reviews-section {
   padding: 50px 0;
-  background: #f8fafc;
+  background: var(--color-slate-50);
   overflow: hidden;
 }
 
@@ -52,7 +52,7 @@
 
 /* Card */
 .review-card {
-  background: white;
+  background: var(--color-surface);
   border: 2px solid #bfdbfe;
   border-radius: 20px;
   padding: 30px;
@@ -71,7 +71,7 @@
   color: var(--color-warning-alt);
   width: 60px;
   height: 60px;
-  background: #fef3c7;
+  background: var(--color-warning-bg);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -82,7 +82,7 @@
 .reviewer-name {
   font-size: 16px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-slate-800);
   margin: 0;
 }
 
@@ -92,7 +92,7 @@
 
 .review-text {
   font-size: 14px;
-  color: #475569;
+  color: var(--color-slate-600);
   line-height: 1.5;
   flex: 1;
   display: -webkit-box;
@@ -105,7 +105,7 @@
 .review-btn {
   margin-top: 10px;
   border: 2px solid var(--color-brand-primary);
-  background: white;
+  background: var(--color-surface);
   color: var(--color-brand-primary);
   padding: 8px 18px;
   border-radius: 30px;

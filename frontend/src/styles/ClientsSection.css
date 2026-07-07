@@ -1,6 +1,6 @@
 .clients-section {
     padding: 40px 0;
-    background: #0d2240;
+    background: var(--color-navy-deep);
     overflow: hidden;
 }
 
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: var(--color-surface);
     border-radius: 12px;
     padding: 16px;
 }

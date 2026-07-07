@@ -66,7 +66,7 @@ export default function AgentPayments() {
     <div style={{ padding: "2rem" }}>
       <div style={{ marginBottom: "2rem" }}>
         <h1 style={{ fontSize: "28px", fontWeight: 600, marginBottom: "8px" }}>Agent Payments</h1>
-        <p style={{ color: "#666", fontSize: "14px" }}>
+        <p style={{ color: colors.textFaint, fontSize: "14px" }}>
           Agent-linked registrations and payment details
         </p>
       </div>
@@ -137,7 +137,7 @@ export default function AgentPayments() {
               fontSize: "14px"
             }}>
               <thead>
-                <tr style={{ backgroundColor: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
+                <tr style={{ backgroundColor: colors.bg, borderBottom: "1px solid #e5e7eb" }}>
                   <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Date</th>
                   <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Name</th>
                   <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Email</th>
@@ -173,7 +173,7 @@ export default function AgentPayments() {
                         borderRadius: "4px",
                         fontSize: "12px",
                         fontWeight: 500,
-                        backgroundColor: user.llndStatus === "Completed" ? colors.successBg : "#fef3c7",
+                        backgroundColor: user.llndStatus === "Completed" ? colors.successBg : colors.warningBg,
                         color: user.llndStatus === "Completed" ? colors.success : "#b45309"
                       }}>
                         {user.llndStatus}
@@ -185,7 +185,7 @@ export default function AgentPayments() {
                         borderRadius: "4px",
                         fontSize: "12px",
                         fontWeight: 500,
-                        backgroundColor: user.enrollmentForm === "Approved" ? colors.successBg : user.enrollmentForm === "Submitted" ? colors.infoBg : "#fef3c7",
+                        backgroundColor: user.enrollmentForm === "Approved" ? colors.successBg : user.enrollmentForm === "Submitted" ? colors.infoBg : colors.warningBg,
                         color: user.enrollmentForm === "Approved" ? colors.success : user.enrollmentForm === "Submitted" ? colors.infoHover : "#b45309"
                       }}>
                         {user.enrollmentForm || "Pending"}
@@ -213,7 +213,7 @@ export default function AgentPayments() {
                     borderRadius: "4px",
                     border: currentPage === page ? "none" : "1px solid #e5e7eb",
                     backgroundColor: currentPage === page ? colors.brandPrimary : "white",
-                    color: currentPage === page ? colors.brandOnPrimary : "#666",
+                    color: currentPage === page ? colors.brandOnPrimary : colors.textFaint,
                     cursor: "pointer",
                     fontSize: "12px"
                   }}
@@ -263,7 +263,7 @@ export default function AgentPayments() {
                   border: "none",
                   fontSize: "24px",
                   cursor: "pointer",
-                  color: "#666"
+                  color: colors.textFaint
                 }}
               >
                 ✕

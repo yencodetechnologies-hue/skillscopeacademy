@@ -16,7 +16,7 @@ height:fit-content;
 background:linear-gradient(135deg,var(--color-brand-primary),var(--color-info));
 padding:40px;
 border-radius:20px;
-color:white;
+color:var(--color-surface);
 text-align:center;
 position:relative;
 overflow:hidden;
@@ -65,7 +65,7 @@ margin-top:5px;
 /* COURSE DETAILS BOX */
 
 .course-details-box{
-background:white;
+background:var(--color-surface);
 padding:30px;
 border-radius:20px;
 box-shadow:0 10px 20px rgba(0,0,0,0.05);
@@ -84,7 +84,7 @@ align-items:center;
 padding:15px;
 border-radius:15px;
 margin-bottom:10px;
-background:#f1f5f9;
+background:var(--color-slate-100);
 }
 
 .detail-item span{
@@ -100,7 +100,7 @@ margin-top:20px;
 border:none;
 border-radius:30px;
 background:linear-gradient(90deg,var(--color-brand-primary),var(--color-info));
-color:white;
+color:var(--color-surface);
 font-weight:600;
 cursor:pointer;
 }
@@ -112,7 +112,7 @@ margin-top:10px;
 border:none;
 border-radius:30px;
 background:linear-gradient(90deg,var(--color-error-alt),var(--color-text-primary));
-color:white;
+color:var(--color-surface);
 font-weight:600;
 cursor:pointer;
 }
@@ -127,13 +127,13 @@ padding:0;
 
 .course-benefits li{
 margin:8px 0;
-color:#475569;
+color:var(--color-slate-600);
 }
 
 /* HELP CARD */
 
 .help-card{
-background:white;
+background:var(--color-surface);
 padding:25px;
 border-radius:20px;
 box-shadow:0 10px 20px rgba(0,0,0,0.05);

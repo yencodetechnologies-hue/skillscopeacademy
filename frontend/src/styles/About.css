@@ -2,11 +2,11 @@
 
 .ab-page {
     font-family: 'Segoe UI', sans-serif;
-    color: #1a1a1a;
-    background: #fff;
+    color: var(--color-text-primary);
+    background: var(--color-surface);
 }
 
-.ab-cyan { color: #22d3ee; }
+.ab-cyan { color: var(--color-cyan-accent); }
 .ab-link { color: var(--color-info); text-decoration: none; font-weight: 500; }
 .ab-link:hover { text-decoration: underline; }
 
@@ -42,7 +42,7 @@
 .ab-hero-title {
     font-size: clamp(40px, 7vw, 64px);
     font-weight: 800;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0 0 16px;
     position: relative;
 }
@@ -76,13 +76,13 @@
 .ab-about-heading {
     font-size: clamp(22px, 3vw, 32px);
     font-weight: 800;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 24px;
     line-height: 1.3;
 }
 
 .ab-about-card {
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 14px;
     padding: 24px 24px 20px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
@@ -90,7 +90,7 @@
 
 .ab-about-text {
     font-size: 14px;
-    color: #444;
+    color: var(--color-text-body);
     line-height: 1.75;
     margin: 0 0 18px;
 }
@@ -98,7 +98,7 @@
 .ab-about-subheading {
     font-size: 14px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 14px;
 }
 
@@ -112,16 +112,16 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    background: #f8fafc;
+    background: var(--color-slate-50);
     border-radius: 8px;
     padding: 11px 14px;
     font-size: 14px;
-    color: #222;
+    color: var(--color-text-primary);
     line-height: 1.5;
 }
 
 .ab-course-check {
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-size: 16px;
     flex-shrink: 0;
     margin-top: 1px;
@@ -133,7 +133,7 @@
 }
 
 .ab-extra {
-    color: #555;
+    color: var(--color-text-dim);
 }
 
 /* Building image */
@@ -154,7 +154,7 @@
 
 .ab-building-caption {
     background: rgba(15,23,42,0.85);
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-size: 12.5px;
     font-weight: 500;
     padding: 12px 16px;
@@ -163,7 +163,7 @@
 
 /* ── WHY CHOOSE US ── */
 .ab-why {
-    background: #f8fafc;
+    background: var(--color-slate-50);
     padding: 72px 24px;
 }
 
@@ -175,7 +175,7 @@
 .ab-why-title {
     font-size: clamp(22px, 3.5vw, 36px);
     font-weight: 800;
-    color: #111;
+    color: var(--color-text-primary);
     text-align: center;
     margin: 0 0 48px;
     line-height: 1.3;
@@ -191,7 +191,7 @@
 .ab-why-right { flex: 1; flex-shrink: 0; }
 
 .ab-why-card {
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 14px;
     padding: 24px 24px 16px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
@@ -215,12 +215,12 @@
     justify-content: center;
     font-size: 18px;
     flex-shrink: 0;
-    color: #fff;
+    color: var(--color-surface);
 }
 
 .ab-why-text {
     font-size: 14px;
-    color: #444;
+    color: var(--color-text-body);
     line-height: 1.7;
     margin: 0;
     padding-top: 6px;
@@ -244,7 +244,7 @@
 
 .ab-facilities-caption {
     background: rgba(15,23,42,0.88);
-    color: #fff;
+    color: var(--color-surface);
     padding: 16px 20px;
 }
 
@@ -288,7 +288,7 @@
     padding: 18px 24px;
 }
 
-.ab-vision-header { background: linear-gradient(90deg, #22d3ee, var(--color-brand-primary)); }
+.ab-vision-header { background: linear-gradient(90deg, var(--color-cyan-accent), var(--color-brand-primary)); }
 .ab-mission-header { background: linear-gradient(90deg,var(--color-brand-primary), var(--color-info)); }
 
 .ab-vm-icon { font-size: 20px; }
@@ -296,18 +296,18 @@
 .ab-vm-title {
     font-size: 17px;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0;
 }
 
 .ab-vm-body {
-    background: #fff;
+    background: var(--color-surface);
     padding: 22px 24px;
 }
 
 .ab-vm-text {
     font-size: 14px;
-    color: #555;
+    color: var(--color-text-dim);
     line-height: 1.75;
     margin: 0;
 }
@@ -320,7 +320,7 @@
 }
 
 .ab-mission-check {
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-size: 16px;
     flex-shrink: 0;
     margin-top: 2px;
@@ -328,22 +328,22 @@
 
 .ab-mission-text {
     font-size: 14px;
-    color: #444;
+    color: var(--color-text-body);
     line-height: 1.6;
     margin: 0;
 }
 
 /* ── OUR VALUES ── */
 .ab-values {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     padding: 72px 24px;
     text-align: center;
 }
 
 .ab-values-badge {
     display: inline-block;
-    background: #22d3ee;
-    color: #0f172a;
+    background: var(--color-cyan-accent);
+    color: var(--color-slate-900);
     font-size: 12px;
     font-weight: 800;
     padding: 8px 20px;
@@ -355,7 +355,7 @@
 .ab-values-title {
     font-size: clamp(26px, 4vw, 40px);
     font-weight: 800;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 40px;
 }
 
@@ -368,7 +368,7 @@
 }
 
 .ab-value-card {
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 14px;
     padding: 28px 22px;
     text-align: left;
@@ -382,7 +382,7 @@
 
 .ab-value-featured {
     background: linear-gradient(135deg, var(--color-info),var(--color-brand-primary));
-    color: #fff;
+    color: var(--color-surface);
 }
 
 .ab-value-icon {
@@ -393,24 +393,24 @@
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    color: #fff;
+    color: var(--color-surface);
     margin-bottom: 16px;
 }
 
 .ab-value-title {
     font-size: 16px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 10px;
 }
 
 .ab-value-featured .ab-value-title {
-    color: #fff;
+    color: var(--color-surface);
 }
 
 .ab-value-text {
     font-size: 14px;
-    color: #555;
+    color: var(--color-text-dim);
     line-height: 1.65;
     margin: 0;
 }
@@ -429,7 +429,7 @@
 .ab-cta-title {
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 800;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0 0 14px;
 }
 
@@ -463,13 +463,13 @@
 }
 
 .ab-cta-white {
-    background: #fff;
-    color: #0f172a;
+    background: var(--color-surface);
+    color: var(--color-slate-900);
 }
 
 .ab-cta-outline {
     background: transparent;
-    color: #fff;
+    color: var(--color-surface);
     border: 2px solid rgba(255,255,255,0.7);
 }
 

@@ -380,7 +380,7 @@ import { colors } from '../../constants/theme';
 //                   <tr key={row.id}>
 //                     <td className="lln-td-date">
 //                       <div style={{ fontWeight: '600', color: '#334155' }}>{d}</div>
-//                       <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>{t}</div>
+//                       <div style={{ fontSize: '11px', color: colors.slate500, marginTop: '2px' }}>{t}</div>
 //                     </td>
 //                     <td>
 //                       <span className="lln-student-name">{row.student}</span>
@@ -905,7 +905,7 @@ import { colors } from '../../constants/theme';
 //                   <tr key={row.id || row._id}>
 //                     <td className="lln-td-date">
 //                       <div style={{ fontWeight: "600", color: "#334155" }}>{d}</div>
-//                       <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px" }}>{t}</div>
+//                       <div style={{ fontSize: "11px", color: colors.slate500, marginTop: "2px" }}>{t}</div>
 //                     </td>
 //                     <td>
 //                       <span className="lln-student-name">{row.student}</span>
@@ -1361,7 +1361,7 @@ import { colors } from '../../constants/theme';
 //                   <tr key={row.id}>
 //                     <td className="lln-td-date">
 //                       <div style={{ fontWeight: '600', color: '#334155' }}>{d}</div>
-//                       <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>{t}</div>
+//                       <div style={{ fontSize: '11px', color: colors.slate500, marginTop: '2px' }}>{t}</div>
 //                     </td>
 //                     <td>
 //                       <span className="lln-student-name">{row.student}</span>
@@ -1893,7 +1893,7 @@ export default function LlndResults() {
                   <tr key={row.id || row._id}>
                     <td className="lln-td-date">
                       <div style={{ fontWeight: "600", color: "#334155" }}>{d}</div>
-                      <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px" }}>{t}</div>
+                      <div style={{ fontSize: "11px", color: colors.slate500, marginTop: "2px" }}>{t}</div>
                     </td>
                     <td>
                       <span className="lln-student-name">{row.student}</span>

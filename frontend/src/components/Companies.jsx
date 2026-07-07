@@ -119,13 +119,13 @@ function LinksModal({ company, onClose }) {
                 </div>
                 <div className="modal-body" style={{ maxHeight: "70vh", overflowY: "auto" }}>
                     {loading ? (
-                        <p style={{ color: "#888", padding: 20 }}>Loading...</p>
+                        <p style={{ color: colors.textIcon, padding: 20 }}>Loading...</p>
                     ) : links.length === 0 ? (
-                        <p style={{ color: "#888", textAlign: "center", padding: 40 }}>No links generated for this company yet.</p>
+                        <p style={{ color: colors.textIcon, textAlign: "center", padding: 40 }}>No links generated for this company yet.</p>
                     ) : (
                         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                             <thead>
-                                <tr style={{ borderBottom: "2px solid #e5e7eb", background: "#f9fafb" }}>
+                                <tr style={{ borderBottom: "2px solid #e5e7eb", background: colors.bg }}>
                                     <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>#</th>
                                     <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Course</th>
                                     <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Session Date</th>
@@ -194,7 +194,7 @@ function LinksModal({ company, onClose }) {
                                                                         <tr key={si} style={{ borderTop: "1px solid #ede9fe" }}>
                                                                             <td style={{ padding: "6px 8px", fontWeight: 600, color: "#1a1a2e" }}>{s.name}</td>
                                                                             <td style={{ padding: "6px 8px", color: "#555" }}>{s.email}</td>
-                                                                            <td style={{ padding: "6px 8px", color: "#374151" }}>{s.course}</td>
+                                                                            <td style={{ padding: "6px 8px", color: colors.textSecondary }}>{s.course}</td>
                                                                             <td style={{ padding: "6px 8px", color: "#9ca3af" }}>{s.enrolled}</td>
                                                                         </tr>
                                                                     ))}

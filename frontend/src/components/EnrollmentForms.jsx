@@ -161,7 +161,7 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         padding: "3px 8px",
                         border: "1px solid #cbd5e1",
                         borderRadius: 6,
-                        color: "#1e293b",
+                        color: colors.slate800,
                         background: colors.white,
                         outline: "none",
                         height: 28,
@@ -199,7 +199,7 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         borderRadius: 6,
                         border: "1px solid #e2e8f0",
                         background: colors.white,
-                        color: "#64748b",
+                        color: colors.slate500,
                         cursor: "pointer",
                         height: 28,
                       }}
@@ -224,12 +224,12 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                         borderRadius: 5,
                         border: "1px solid #cbd5e1",
                         background: colors.white,
-                        color: "#475569",
+                        color: colors.slate600,
                         cursor: "pointer",
                         lineHeight: 1.4,
                         transition: "all 0.15s",
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "#f1f5f9"; e.currentTarget.style.borderColor = colors.textSubtle; }}
+                      onMouseEnter={e => { e.currentTarget.style.background = colors.slate100; e.currentTarget.style.borderColor = colors.textSubtle; }}
                       onMouseLeave={e => { e.currentTarget.style.background = colors.white; e.currentTarget.style.borderColor = "#cbd5e1"; }}
                     >
                       <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -2,12 +2,12 @@
 
 .cp-page {
     font-family: 'Segoe UI', sans-serif;
-    color: #1a1a1a;
-    background: #fff;
+    color: var(--color-text-primary);
+    background: var(--color-surface);
 }
 
 .cp-cyan {
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
 }
 
 /* ── HERO ── */
@@ -48,7 +48,7 @@
 .cp-hero-title {
     font-size: clamp(36px, 6vw, 56px);
     font-weight: 800;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0 0 16px;
     position: relative;
 }
@@ -98,14 +98,14 @@
 .cp-help-title {
     font-size: clamp(24px, 3.5vw, 36px);
     font-weight: 800;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 16px;
     line-height: 1.3;
 }
 
 .cp-help-text {
     font-size: 15px;
-    color: #555;
+    color: var(--color-text-dim);
     line-height: 1.7;
     margin: 0 0 28px;
 }
@@ -115,7 +115,7 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    background: #fff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 18px 20px;
@@ -135,19 +135,19 @@
 }
 
 .cp-icon-blue {
-    background: linear-gradient(135deg, #22d3ee, var(--color-info));
+    background: linear-gradient(135deg, var(--color-cyan-accent), var(--color-info));
 }
 
 .cp-contact-card-label {
     font-size: 12.5px;
-    color: #888;
+    color: var(--color-text-icon);
     margin: 0 0 3px;
 }
 
 .cp-contact-card-value {
     font-size: 18px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0;
 }
 
@@ -164,7 +164,7 @@
 
 /* ── FORM SECTION ── */
 .cp-form-section {
-    background: linear-gradient(160deg, #0f172a 0%, #1a2744 100%);
+    background: linear-gradient(160deg, var(--color-slate-900) 0%, #1a2744 100%);
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322d3ee' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     padding: 72px 24px;
 }
@@ -194,7 +194,7 @@
 .cp-training-title {
     font-size: 18px;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0;
 }
 
@@ -212,7 +212,7 @@
 }
 
 .cp-training-link {
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-size: 14px;
     text-decoration: none;
     font-weight: 500;
@@ -232,21 +232,21 @@
 .cp-address-name {
     font-size: 14px;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0 0 4px;
 }
 
 .cp-address-line {
     font-size: 13.5px;
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-weight: 500;
     margin: 0 0 14px;
 }
 
 .cp-direction-btn {
     display: block;
-    background: linear-gradient(90deg, #22d3ee, var(--color-info));
-    color: #fff;
+    background: linear-gradient(90deg, var(--color-cyan-accent), var(--color-info));
+    color: var(--color-surface);
     text-decoration: none;
     font-size: 13px;
     font-weight: 700;
@@ -271,7 +271,7 @@
 
 .cp-form-intro {
     font-size: 15px;
-    color: #222;
+    color: var(--color-text-primary);
     font-weight: 500;
     line-height: 1.6;
     margin: 0 0 6px;
@@ -279,7 +279,7 @@
 
 .cp-form-note {
     font-size: 13px;
-    color: #888;
+    color: var(--color-text-icon);
     margin: 0 0 22px;
 }
 
@@ -294,19 +294,19 @@
 .cp-label {
     font-size: 13px;
     font-weight: 600;
-    color: #333;
+    color: var(--color-text-primary);
     display: block;
     margin-bottom: 6px;
 }
 
 .cp-input {
     width: 100%;
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 12px 14px;
     font-size: 14px;
-    color: #333;
+    color: var(--color-text-primary);
     outline: none;
     box-sizing: border-box;
     font-family: inherit;
@@ -314,8 +314,8 @@
 }
 
 .cp-input:focus {
-    border-color: #22d3ee;
-    background: #fff;
+    border-color: var(--color-cyan-accent);
+    background: var(--color-surface);
 }
 
 .cp-input::placeholder {
@@ -324,12 +324,12 @@
 
 .cp-textarea {
     width: 100%;
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 12px 14px;
     font-size: 14px;
-    color: #333;
+    color: var(--color-text-primary);
     outline: none;
     box-sizing: border-box;
     font-family: inherit;
@@ -338,8 +338,8 @@
 }
 
 .cp-textarea:focus {
-    border-color: #22d3ee;
-    background: #fff;
+    border-color: var(--color-cyan-accent);
+    background: var(--color-surface);
 }
 
 .cp-textarea::placeholder {
@@ -349,8 +349,8 @@
 .cp-submit-btn {
     display: block;
     width: 100%;
-    background: #0f172a;
-    color: #fff;
+    background: var(--color-slate-900);
+    color: var(--color-surface);
     border: none;
     border-radius: 10px;
     padding: 15px;
@@ -386,13 +386,13 @@
 
 .cp-success p {
     font-size: 15px;
-    color: #555;
+    color: var(--color-text-dim);
 }
 
 /* ── MAP SECTION ── */
 .cp-map-section {
     padding: 72px 24px;
-    background: #fff;
+    background: var(--color-surface);
     text-align: center;
 }
 
@@ -412,13 +412,13 @@
 .cp-map-title {
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 800;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 10px;
 }
 
 .cp-map-sub {
     font-size: 15px;
-    color: #666;
+    color: var(--color-text-faint);
     margin: 0 0 32px;
 }
 
@@ -448,7 +448,7 @@
 }
 
 .cp-info-card {
-    background: #fff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 14px;
     padding: 28px 20px;
@@ -468,7 +468,7 @@
 }
 
 .cp-icon-cyan {
-    background: linear-gradient(135deg, #22d3ee, var(--color-brand-primary));
+    background: linear-gradient(135deg, var(--color-cyan-accent), var(--color-brand-primary));
 }
 
 .cp-icon-purple {
@@ -478,13 +478,13 @@
 .cp-info-title {
     font-size: 16px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 8px;
 }
 
 .cp-info-text {
     font-size: 14px;
-    color: #555;
+    color: var(--color-text-dim);
     margin: 0 0 3px;
     line-height: 1.6;
 }
@@ -499,7 +499,7 @@
 .cp-cta-title {
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 800;
-    color: #fff;
+    color: var(--color-surface);
     margin: 0 0 14px;
 }
 
@@ -534,13 +534,13 @@
 }
 
 .cp-cta-white {
-    background: #fff;
-    color: #0f172a;
+    background: var(--color-surface);
+    color: var(--color-slate-900);
 }
 
 .cp-cta-outline {
     background: transparent;
-    color: #fff;
+    color: var(--color-surface);
     border: 2px solid rgba(255,255,255,0.7);
 }
 

@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px 32px;
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     gap: 8px;
@@ -53,7 +53,7 @@
 .trust-title {
     font-size: 15px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0;
     line-height: 1.3;
 }

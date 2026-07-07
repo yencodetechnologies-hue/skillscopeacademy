@@ -215,8 +215,8 @@ function EnrollmentComplete() {
                                                     borderRadius: 6,
                                                     padding: "6px 10px",
                                                     fontSize: 11,
-                                                    color: "#374151",
-                                                    background: "#f9fafb",
+                                                    color: colors.textSecondary,
+                                                    background: colors.bg,
                                                     outline: "none",
                                                 }}
                                             />
@@ -265,7 +265,7 @@ function EnrollmentComplete() {
                                 marginTop: "20px",
                                 marginBottom: "8px",
                                 fontSize: "13px",
-                                color: "#666"
+                                color: colors.textFaint
                             }}>
                                 Redirecting to dashboard in{" "}
                                 <span style={{

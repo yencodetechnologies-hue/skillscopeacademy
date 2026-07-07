@@ -2,9 +2,9 @@
 /* ===== BAR ===== */
 .sb-bar {
     margin-top: 40px;
-  background: #fff;
+  background: var(--color-surface);
   padding: 20px 80px;
-  border-bottom: 1px solid #bae0f7;
+  border-bottom: 1px solid var(--color-sky-light);
   display: flex;
   align-items: center;
   gap: 20px;
@@ -49,8 +49,8 @@
 
 /* CHIP */
 .sb-chip {
-  background: #f0f8ff;
-  border: 1px solid #bae0f7;
+  background: var(--color-sky-panel);
+  border: 1px solid var(--color-sky-light);
   border-radius: 10px;
   padding: 8px 14px;
   flex-shrink: 0;
@@ -68,8 +68,8 @@
 
 /* DATE BOX */
 .sb-date {
-  background: #0d2240;
-  color: #fff;
+  background: var(--color-navy-deep);
+  color: var(--color-surface);
   border-radius: 6px;
   width: 34px;
   height: 34px;
@@ -86,10 +86,10 @@
 /* INFO */
 .sb-info { flex: 1; min-width: 0; text-align: left; }
 .sb-course {
-  font-size: 12px; font-weight: 600; color: #0d2240;
+  font-size: 12px; font-weight: 600; color: var(--color-navy-deep);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.sb-detail { font-size: 11px; color: #4a7096; margin-top: 1px; white-space: nowrap; }
+.sb-detail { font-size: 11px; color: var(--color-link-muted); margin-top: 1px; white-space: nowrap; }
 
 /* SPOTS PILL */
 .sb-spots {
@@ -127,7 +127,7 @@
 .sb-skeleton-date,
 .sb-skeleton-line,
 .sb-skeleton-pill {
-  background: linear-gradient(90deg, #e8f4fd 25%, #d0eaf8 50%, #e8f4fd 75%);
+  background: linear-gradient(90deg, var(--color-sky-wash) 25%, #d0eaf8 50%, var(--color-sky-wash) 75%);
   background-size: 800px 100%;
   animation: sb-shimmer 1.4s infinite linear;
   border-radius: 6px;

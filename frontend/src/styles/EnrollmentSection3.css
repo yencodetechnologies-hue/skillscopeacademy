@@ -10,21 +10,21 @@
 }
 
 .s3-evidence-card {
-    border: 1.5px dashed #d1d5db;
+    border: 1.5px dashed var(--color-border-input);
     border-radius: 10px;
     padding: 14px;
-    background: #fafafa;
+    background: var(--color-bg-subtle);
     transition: border-color 0.2s, background 0.2s;
 }
 
 .s3-evidence-card-done {
     border-color: #86efac;
-    background: #f0fdf4;
+    background: var(--color-success-panel);
 }
 
 .s3-evidence-card-error {
     border-color: #f87171;
-    background: #fff5f5;
+    background: var(--color-surface)5f5;
 }
 
 .s3-evidence-label-row {
@@ -50,11 +50,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1.5px dashed #d1d5db;
+    border: 1.5px dashed var(--color-border-input);
     border-radius: 8px;
     padding: 18px 12px;
     cursor: pointer;
-    background: #fff;
+    background: var(--color-surface);
     text-align: center;
     transition: border-color 0.2s, background 0.2s;
 }
@@ -64,9 +64,9 @@
     background: #faf5ff;
 }
 
-.s3-evidence-arrow { font-size: 20px; color: #9ca3af; margin-bottom: 4px; }
+.s3-evidence-arrow { font-size: 20px; color: var(--gray-400); margin-bottom: 4px; }
 .s3-evidence-dropzone-text { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin: 0; }
-.s3-evidence-dropzone-hint { font-size: 11px; color: #9ca3af; margin: 2px 0 0 0; }
+.s3-evidence-dropzone-hint { font-size: 11px; color: var(--gray-400); margin: 2px 0 0 0; }
 
 .s3-evidence-preview {
     position: relative;
@@ -99,7 +99,7 @@
     height: 22px;
     border-radius: 50%;
     background: var(--color-error-alt);
-    color: #fff;
+    color: var(--color-surface);
     border: none;
     cursor: pointer;
     font-size: 12px;
@@ -160,7 +160,7 @@
 
 .s3-input-error {
     border-color: var(--color-error) !important;
-    background: #fef2f2 !important;
+    background: var(--color-error-bg) !important;
 }
 
 .s3-label-error {
@@ -172,7 +172,7 @@
     margin: 0 auto;
     padding: 24px 16px;
     font-family: 'Segoe UI', sans-serif;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
 }
 
 /* Section Header */
@@ -194,7 +194,7 @@
 
 /* Card */
 .s3-card {
-    background: #fff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 24px 28px;
@@ -205,33 +205,33 @@
 .s3-card-title {
     font-size: 15px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 8px;
 }
 
 .s3-info-text {
     font-size: 13.5px;
-    color: #555;
+    color: var(--color-text-dim);
     line-height: 1.6;
     margin: 0;
 }
 
 .s3-subtitle {
     font-size: 13.5px;
-    color: #555;
+    color: var(--color-text-dim);
     margin: 0 0 16px;
 }
 
 .s3-hint {
     font-size: 13px;
-    color: #888;
+    color: var(--color-text-icon);
     margin: 8px 0 0;
     line-height: 1.5;
 }
 
 .s3-divider {
     border: none;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-bg-panel);
     margin: 16px 0;
 }
 
@@ -255,7 +255,7 @@
     align-items: center;
     gap: 7px;
     font-size: 14px;
-    color: #222;
+    color: var(--color-text-primary);
     cursor: pointer;
 }
 
@@ -281,7 +281,7 @@
 .s3-label {
     font-size: 13.5px;
     font-weight: 600;
-    color: #111;
+    color: var(--color-text-primary);
 }
 
 .s3-required {
@@ -304,7 +304,7 @@
 
 .s3-input:focus {
     border-color:var(--color-brand-primary);
-    background: #fff;
+    background: var(--color-surface);
 }
 
 .s3-input-full {
@@ -321,7 +321,7 @@
 
 .s3-input-full:focus {
     border-color:var(--color-brand-primary);
-    background: #fff;
+    background: var(--color-surface);
 }
 
 .s3-textarea {
@@ -339,7 +339,7 @@
 
 .s3-textarea:focus {
     border-color:var(--color-brand-primary);
-    background: #fff;
+    background: var(--color-surface);
 }
 
 .s3-file-input {
@@ -360,7 +360,7 @@
     align-items: center;
     gap: 8px;
     font-size: 13.5px;
-    color: #333;
+    color: var(--color-text-primary);
     cursor: pointer;
     margin-top: 12px;
 }
@@ -385,13 +385,13 @@
     border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 20px 20px 16px;
-    background: #fafafa;
+    background: var(--color-bg-subtle);
 }
 
 .s3-qual-title {
     font-size: 14px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 14px;
 }
 
@@ -414,13 +414,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #fff;
-    border: 1px solid #d1d5db;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-input);
     border-radius: 8px;
     padding: 11px 22px;
     font-size: 14px;
     font-weight: 500;
-    color: #333;
+    color: var(--color-text-primary);
     cursor: pointer;
     font-family: inherit;
     transition: background 0.2s;

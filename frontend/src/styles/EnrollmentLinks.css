@@ -206,7 +206,7 @@ body {
 
 .el-badge.active   { background: var(--green-light);  color: var(--green); }
 .el-badge.inactive { background: var(--gray-100);     color: var(--gray-500); }
-.el-badge.pay-later{ background: #f0fdf4;             color: #15803d; border: 1px solid #bbf7d0; }
+.el-badge.pay-later{ background: var(--color-success-panel);             color: var(--color-success-dark); border: 1px solid var(--color-success-border); }
 .el-badge.agent    { background: #fefce8;             color: #a16207; border: 1px solid #fde68a; }
 
 /* ── Action Icons ── */
@@ -233,7 +233,7 @@ body {
 }
 
 .el-icon-btn:hover { background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-300); }
-.el-icon-btn.red   { color: var(--red); border-color: #fecaca; }
+.el-icon-btn.red   { color: var(--red); border-color: var(--color-error-border); }
 .el-icon-btn.red:hover { background: var(--red-light); border-color: var(--red); }
 .el-icon-btn.purple-icon { color: var(--primary); border-color: var(--primary-light); }
 .el-icon-btn.purple-icon:hover { background: var(--primary-light); }
@@ -429,7 +429,7 @@ body {
   gap: 6px;
 }
 
-.el-btn-danger:hover { background: #b91c1c; }
+.el-btn-danger:hover { background: var(--color-error-dark); }
 
 /* ── View Modal ── */
 .el-qr-wrap {

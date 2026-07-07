@@ -306,7 +306,7 @@ export default function VocSubmissions() {
                             <tbody>
                                 {paginated.length === 0 ? (
                                     <tr>
-                                        <td colSpan={12} style={{ textAlign: "center", padding: "2rem", color: "#888" }}>
+                                        <td colSpan={12} style={{ textAlign: "center", padding: "2rem", color: colors.textIcon }}>
                                             No VOC submissions found.
                                         </td>
                                     </tr>
@@ -332,7 +332,7 @@ export default function VocSubmissions() {
                                                     {s.courses?.length || 0} course{(s.courses?.length || 0) !== 1 ? "s" : ""}
                                                 </div>
                                                 {s.courses?.[0]?.name && (
-                                                    <div style={{ fontSize: "0.75rem", color: "#888" }}>{s.courses[0].name}</div>
+                                                    <div style={{ fontSize: "0.75rem", color: colors.textIcon }}>{s.courses[0].name}</div>
                                                 )}
                                             </td>
                                             <td>

@@ -10,7 +10,7 @@
 .hero-wrapper {
   background: #0b1a33;
   padding: 52px 32px;
-  color: #fff;
+  color: var(--color-surface);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -62,13 +62,13 @@
   font-size: 40px;
   font-weight: 800;
   line-height: 1.2;
-  color: #fff;
+  color: var(--color-surface);
   margin-bottom: 12px;
 }
 
 .hero-sub-meta {
   font-size: 14px;
-  color: #64748b;
+  color: var(--color-slate-500);
   margin-bottom: 20px;
 }
 
@@ -85,11 +85,11 @@
   align-items: center;
   gap: 7px;
   font-size: 14px;
-  color: #cbd5e1;
+  color: var(--gray-300);
 }
 
 .meta-item strong {
-  color: #fff;
+  color: var(--color-surface);
   font-weight: 700;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .price-card-hero {
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 20px;
   padding: 28px;
   color: #0b1a33;
@@ -151,7 +151,7 @@
 
 .price-note {
   font-size: 13px;
-  color: #64748b;
+  color: var(--color-slate-500);
   line-height: 1.5;
   margin-bottom: 20px;
 }
@@ -201,7 +201,7 @@
   display: flex;
   flex-direction: column;
   gap: 11px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--color-slate-100);
   padding-top: 16px;
 }
 
@@ -224,7 +224,7 @@
    INFO BAR
    =========================== */
 .info-bar {
-  background: #f8fafc;
+  background: var(--color-slate-50);
   border-top: 1px solid var(--color-border-light);
   border-bottom: 1px solid var(--color-border-light);
   padding: 20px 32px;
@@ -268,7 +268,7 @@
 
 .info-text span {
   font-size: 11px;
-  color: #64748b;
+  color: var(--color-slate-500);
 }
 
 /* ===========================
@@ -277,7 +277,7 @@
 .sticky-bar {
   position: sticky;
   bottom: 0;
-  background: #fff;
+  background: var(--color-surface);
   border-top: 2px solid var(--color-border-light);
   padding: 14px 32px;
   display: flex;
@@ -301,7 +301,7 @@
 
 .sticky-meta {
   font-size: 11px;
-  color: #64748b;
+  color: var(--color-slate-500);
   display: flex;
   gap: 12px;
 }
@@ -336,7 +336,7 @@
 }
 
 .sticky-call {
-  background: #fff;
+  background: var(--color-surface);
   color: #0b1a33;
   border: 1.5px solid var(--color-border-light);
   padding: 10px 16px;
@@ -349,7 +349,7 @@
 }
 
 .sticky-call:hover {
-  background: #f1f5f9;
+  background: var(--color-slate-100);
 }
 
 /* ===========================

@@ -19,7 +19,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 101;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 14px;
   width: 540px;
   max-width: calc(100vw - 32px);
@@ -37,21 +37,21 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 20px 20px 14px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-bg-panel);
   flex-shrink: 0;
 }
 
 .mcc-title {
   font-size: 16px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   margin: 0 0 3px;
   font-family: inherit;
 }
 
 .mcc-subtitle {
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-faint);
   margin: 0;
 }
 
@@ -60,7 +60,7 @@
   border: none;
   padding: 4px;
   cursor: pointer;
-  color: #888;
+  color: var(--color-text-icon);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -70,18 +70,18 @@
 }
 
 .mcc-close-btn:hover {
-  background: #f0f0f0;
-  color: #333;
+  background: var(--color-bg-panel);
+  color: var(--color-text-primary);
 }
 
 /* ── ADD CARD (name row + image picker) ──────── */
 .mcc-add-card {
   padding: 14px 20px 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-bg-panel);
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: #fafafa;
+  background: var(--color-bg-subtle);
 }
 
 /* Name + Add button row inside add card */
@@ -106,7 +106,7 @@
   border: 1.5px solid #d0d0d0;
   border-radius: 8px;
   font-size: 14px;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
   box-sizing: border-box;
@@ -179,7 +179,7 @@
 }
 
 .mcc-list::-webkit-scrollbar-thumb {
-  background: #ddd;
+  background: var(--color-border-muted);
   border-radius: 3px;
 }
 
@@ -246,7 +246,7 @@
 .mcc-item-name {
   font-size: 14px;
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -254,7 +254,7 @@
 
 .mcc-item-count {
   font-size: 12px;
-  color: #888;
+  color: var(--color-text-icon);
   background: var(--color-bg-muted);
   padding: 2px 8px;
   border-radius: 12px;
@@ -265,7 +265,7 @@
 .mcc-inactive-badge {
   font-size: 11px;
   color: #b45309;
-  background: #fef3c7;
+  background: var(--color-warning-bg);
   padding: 2px 8px;
   border-radius: 12px;
   white-space: nowrap;
@@ -280,7 +280,7 @@
   border: 1.5px solidvar(--color-brand-primary);
   border-radius: 7px;
   font-size: 14px;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   outline: none;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
   font-family: inherit;
@@ -294,7 +294,7 @@
   border-radius: 8px;
   object-fit: cover;
   border: 1px solid var(--color-border);
-  background: #fafafa;
+  background: var(--color-bg-subtle);
   flex-shrink: 0;
 }
 
@@ -302,7 +302,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #cbd5e1;
+  color: var(--gray-300);
 }
 
 /* ── Edit panel (image picker beneath the row) ── */
@@ -312,7 +312,7 @@
   gap: 8px;
   padding: 10px 12px 6px;
   margin-top: 2px;
-  border-top: 1px dashed #ddd6fe;
+  border-top: 1px dashed var(--color-border-muted)6fe;
 }
 
 .mcc-edit-panel-label {
@@ -356,7 +356,7 @@
 }
 
 .mcc-img-toggle-btn.is-active {
-  background: #fff;
+  background: var(--color-surface);
   color:var(--color-brand-primary);
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
@@ -387,7 +387,7 @@
   gap: 6px;
   height: 34px;
   padding: 0 14px;
-  background: #fff;
+  background: var(--color-surface);
   border: 1.5px dashed #c4b5fd;
   border-radius: 8px;
   color: var(--color-brand-primary);
@@ -406,7 +406,7 @@
 
 .mcc-file-name {
   font-size: 12.5px;
-  color: #555;
+  color: var(--color-text-dim);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -425,7 +425,7 @@
   border-radius: 8px;
   object-fit: cover;
   border: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   flex-shrink: 0;
 }
 
@@ -433,7 +433,7 @@
   height: 34px;
   padding: 0 14px;
   background: var(--color-success);
-  color: #fff;
+  color: var(--color-surface);
   border: none;
   border-radius: 7px;
   font-size: 13px;
@@ -445,14 +445,14 @@
 }
 
 .mcc-save-btn:hover {
-  background: #15803d;
+  background: var(--color-success-dark);
 }
 
 .mcc-cancel-btn {
   height: 34px;
   padding: 0 14px;
   background: none;
-  color: #555;
+  color: var(--color-text-dim);
   border: 1.5px solid #d0d0d0;
   border-radius: 7px;
   font-size: 13px;
@@ -508,16 +508,16 @@
 /* ── FOOTER ──────────────────────────────────── */
 .mcc-footer {
   padding: 12px 20px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--color-bg-panel);
   font-size: 12px;
-  color: #888;
+  color: var(--color-text-icon);
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
 .mcc-footer strong {
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .mcc-footer-hint {
@@ -538,7 +538,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 201;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 12px;
   width: 380px;
   max-width: calc(100vw - 32px);
@@ -550,14 +550,14 @@
 .mcc-dialog-title {
   font-size: 16px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   margin: 0 0 10px;
   font-family: inherit;
 }
 
 .mcc-dialog-body {
   font-size: 14px;
-  color: #555;
+  color: var(--color-text-dim);
   line-height: 1.6;
   margin: 0 0 20px;
 }
@@ -572,7 +572,7 @@
   height: 38px;
   padding: 0 18px;
   background: none;
-  color: #555;
+  color: var(--color-text-dim);
   border: 1.5px solid #d0d0d0;
   border-radius: 8px;
   font-size: 14px;
@@ -590,7 +590,7 @@
   height: 38px;
   padding: 0 18px;
   background: var(--color-error);
-  color: #fff;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -601,7 +601,7 @@
 }
 
 .mcc-dialog-confirm:hover {
-  background: #b91c1c;
+  background: var(--color-error-dark);
 }
 
 /* ── ANIMATIONS ──────────────────────────────── */

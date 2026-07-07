@@ -28,7 +28,7 @@ padding:0 20px;
 background:linear-gradient(135deg,var(--color-brand-primary),var(--color-brand-primary));
 padding:40px;
 border-radius:20px;
-color:white;
+color:var(--color-surface);
 }
 
 .contact-form-box h2{
@@ -62,8 +62,8 @@ resize:none;
 /* SEND BUTTON */
 
 .send-btn{
-background:#0f172a;
-color:white;
+background:var(--color-slate-900);
+color:var(--color-surface);
 border:none;
 padding:12px 25px;
 border-radius:30px;
@@ -73,12 +73,12 @@ cursor:pointer;
 /* RIGHT CONTENT */
 
 .enroll-content{
-color:white;
+color:var(--color-surface);
 }
 
 .enroll-content h2{
 font-size:40px;
-color:#22d3ee;
+color:var(--color-cyan-accent);
 margin-bottom:15px;
 }
 
@@ -96,8 +96,8 @@ gap:15px;
 }
 
 .enrol-btn{
-background:#0f172a;
-color:white;
+background:var(--color-slate-900);
+color:var(--color-surface);
 border:none;
 padding:12px 25px;
 border-radius:30px;

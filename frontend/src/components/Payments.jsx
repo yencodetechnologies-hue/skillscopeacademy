@@ -349,7 +349,7 @@ const Payment = () => {
                   padding: '6px 10px', borderRadius: '4px',
                   border: currentPage === page ? `2px solid ${colors.brandPrimary}` : '1px solid #ddd',
                   background: currentPage === page ? colors.brandPrimary : '#f5f5f5',
-                  color: currentPage === page ? colors.brandOnPrimary : '#000',
+                  color: currentPage === page ? colors.brandOnPrimary : colors.black,
                   cursor: 'pointer',
                   fontWeight: currentPage === page ? '500' : 'normal',
                   minWidth: '32px', fontSize: '13px',
@@ -371,7 +371,7 @@ const Payment = () => {
               Next →
             </button>
 
-            <span style={{ marginLeft: '10px', fontSize: '12px', color: '#666' }}>
+            <span style={{ marginLeft: '10px', fontSize: '12px', color: colors.textFaint }}>
               Page {currentPage} of {totalPages} · {filteredPayments.length} records
             </span>
           </div>
@@ -420,7 +420,7 @@ const Payment = () => {
                     <div className="label">
                       {selectedPayment.method === "Bank Transfer" ? "Bank Transfer ID:" : "Gateway Transaction ID:"}
                     </div>
-                    <div className="value mono-box" style={{ color: (selectedPayment.method === "Pay Later" || !selectedPayment.gatewayTransId) ? '#000' : 'inherit' }}>
+                    <div className="value mono-box" style={{ color: (selectedPayment.method === "Pay Later" || !selectedPayment.gatewayTransId) ? colors.black : 'inherit' }}>
                       {selectedPayment.method === "Bank Transfer" 
                         ? (selectedPayment.transId && selectedPayment.transId !== "—" ? selectedPayment.transId : selectedPayment.gatewayTransId || "—")
                         : (selectedPayment.method === "Pay Later" ? "—" : (selectedPayment.gatewayTransId && selectedPayment.gatewayTransId !== "—" ? selectedPayment.gatewayTransId : selectedPayment.transId || "—"))
@@ -479,7 +479,7 @@ const Payment = () => {
                   )}
                 </div>
                 
-                <p style={{ fontSize: '13px', color: '#6b7280', margin: '0 0 12px' }}>
+                <p style={{ fontSize: '13px', color: colors.textMuted, margin: '0 0 12px' }}>
                   File: {selectedPayment.slipUrl ? selectedPayment.slipUrl.split('/').pop() : "No receipt uploaded"}
                 </p>
 
@@ -488,7 +488,7 @@ const Payment = () => {
                     /\.pdf($|\?)/i.test(selectedPayment.slipUrl) ? (
                       <div style={{ textAlign: 'center' }}>
                         <span style={{ fontSize: '48px' }}>📄</span>
-                        <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '10px' }}>PDF Document</p>
+                        <p style={{ fontSize: '14px', color: colors.textMuted, marginTop: '10px' }}>PDF Document</p>
                       </div>
                     ) : (
                       <img 

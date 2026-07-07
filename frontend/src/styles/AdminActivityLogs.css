@@ -31,7 +31,7 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 14px;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .activity-logs-filters input[type="search"] {
@@ -54,7 +54,7 @@
 }
 
 .activity-logs-table-wrap {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
@@ -104,7 +104,7 @@
 
 .activity-logs-empty {
   text-align: center;
-  color: #9ca3af;
+  color: var(--gray-400);
   padding: 32px !important;
 }
 
@@ -134,7 +134,7 @@
 
 .action-toggle,
 .action-status_change {
-  background: #fef3c7;
+  background: var(--color-warning-bg);
   color: #92400e;
 }
 
@@ -185,7 +185,7 @@
   padding: 6px 14px;
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--color-surface);
   cursor: pointer;
 }
 

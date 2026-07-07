@@ -1,7 +1,7 @@
 /* ===== VOC PAGE ===== */
 .voc-page {
     min-height: 100vh;
-    background: #f8fafc;
+    background: var(--color-slate-50);
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -13,7 +13,7 @@
 
 /* Done screen */
 .voc-done {
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 14px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     max-width: 780px;
@@ -30,21 +30,21 @@
 .voc-done h2 {
     font-size: 24px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 12px;
 }
 
 .voc-done p {
     font-size: 15px;
-    color: #555;
+    color: var(--color-text-dim);
     line-height: 1.6;
 }
 
 .voc-done-home-btn {
     display: inline-block;
     margin-top: 28px;
-    background: #0f172a;
-    color: #fff;
+    background: var(--color-slate-900);
+    color: var(--color-surface);
     border: none;
     border-radius: 10px;
     padding: 12px 26px;
@@ -57,7 +57,7 @@
 }
 
 .voc-done-home-btn:hover {
-    background: #1e293b;
+    background: var(--color-slate-800);
     transform: translateY(-1px);
 }
 

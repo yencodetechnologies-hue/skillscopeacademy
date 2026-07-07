@@ -31,7 +31,7 @@
 }
 
 .stat-card {
-  background: white;
+  background: var(--color-surface);
   padding: 24px 16px;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.04);
@@ -56,7 +56,7 @@
 
 /* Table Section */
 .table-section {
-  background: white;
+  background: var(--color-surface);
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.04);
@@ -124,7 +124,7 @@
 }
 
 .payment-table tr:hover td {
-  background-color: #fafafa;
+  background-color: var(--color-bg-subtle);
 }
 
 /* Cell Content Styling */
@@ -179,9 +179,9 @@
   text-transform: capitalize;
 }
 
-.status-badge.verified { background: #ecfdf5; color: #059669; }
-.status-badge.pending { background: #fffbeb; color: var(--cp2-amber); }
-.status-badge.failed { background: #fef2f2; color: var(--color-error); }
+.status-badge.verified { background: #ecfdf5; color: var(--color-success-alt); }
+.status-badge.pending { background: var(--color-surface)beb; color: var(--cp2-amber); }
+.status-badge.failed { background: var(--color-error-bg); color: var(--color-error); }
 
 /* Action Buttons */
 .review-btn {
@@ -197,7 +197,7 @@
 
 .review-btn:hover {
   background: var(--color-bg-muted);
-  border-color: #d1d5db;
+  border-color: var(--color-border-input);
 }
 
 /* Pagination Section */
@@ -238,7 +238,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--color-surface);
   width: 100%;
   max-width: 850px; /* Wider as requested */
   border-radius: 20px;
@@ -274,7 +274,7 @@
   background: none;
   border: none;
   font-size: 24px;
-  color: #9ca3af;
+  color: var(--gray-400);
   cursor: pointer;
   padding: 4px;
   line-height: 1;
@@ -299,7 +299,7 @@
 }
 
 .info-card-v2.student { background: #f8f5ff; } /* Light purple */
-.info-card-v2.course { background: #fff5fc; } /* Light pink */
+.info-card-v2.course { background: var(--color-surface)5fc; } /* Light pink */
 
 .info-card-v2 h4 {
   font-size: 12px;
@@ -360,9 +360,9 @@
 }
 
 .detail-item .value.bold { font-weight: 700; font-size: 15px; }
-.detail-item .value.amount { color: #059669; font-weight: 700; font-size: 16px; }
+.detail-item .value.amount { color: var(--color-success-alt); font-weight: 700; font-size: 16px; }
 .detail-item .value.mono-box {
-  background: white;
+  background: var(--color-surface);
   padding: 4px 10px;
   border-radius: 6px;
   font-family: monospace;
@@ -396,7 +396,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: white;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 13px;
@@ -406,7 +406,7 @@
   transition: all 0.2s;
 }
 
-.download-btn:hover { background: var(--color-bg); border-color: #d1d5db; }
+.download-btn:hover { background: var(--color-bg); border-color: var(--color-border-input); }
 
 .receipt-preview-v2 {
   background: var(--color-bg-muted);
@@ -433,7 +433,7 @@
 }
 
 .status-bar-v2.rejected {
-  background: #fef2f2;
+  background: var(--color-error-bg);
   border: 1px solid var(--color-error-bg);
 }
 
@@ -441,7 +441,7 @@
   width: 24px;
   height: 24px;
   background: var(--color-success-alt);
-  color: white;
+  color: var(--color-surface);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -468,7 +468,7 @@
   color: #047857;
 }
 
-.status-bar-v2.rejected .text p { color: #b91c1c; }
+.status-bar-v2.rejected .text p { color: var(--color-error-dark); }
 
 .modal-footer-v2 {
   padding: 16px 32px 32px;
@@ -488,10 +488,10 @@
   outline: none;
 }
 
-.btn-close { background: white; border: 1px solid var(--color-border); color: var(--color-text-secondary); }
+.btn-close { background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-secondary); }
 .btn-reject { background: var(--color-error-bg); border: none; color: var(--color-error); }
 .btn-confirm { background: var(--color-brand-primary); border: none; color: var(--color-brand-on-primary); }
 
 .btn-close:hover { background: var(--color-bg); }
-.btn-reject:hover { background: #fecaca; }
+.btn-reject:hover { background: var(--color-error-border); }
 .btn-confirm:hover { background: var(--color-brand-primary); }

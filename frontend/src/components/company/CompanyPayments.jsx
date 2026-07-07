@@ -493,7 +493,7 @@ export function PaymentsTable({ payments = [], company, onRefresh }) {
                   <td>{group.date}</td>
                   <td>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: "#374151" }}>{subjectLabel}</span>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: colors.textSecondary }}>{subjectLabel}</span>
                       <button
                         type="button"
                         onClick={() => setDetailsGroup(group)}

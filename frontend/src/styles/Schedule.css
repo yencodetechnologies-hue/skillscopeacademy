@@ -104,7 +104,7 @@
   gap: 6px;
   width: 100%;
   background: var(--primary);
-  color: #fff;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   padding: 10px 14px;
@@ -139,7 +139,7 @@
 }
 .dot--scheduled { background: var(--color-info-bg); border: 1px solid var(--color-info-border); }
 .dot--completed { background: #d1fae5; border: 1px solid #6ee7b7; }
-.dot--cancelled { background: var(--color-bg-muted); border: 1px solid #d1d5db; }
+.dot--cancelled { background: var(--color-bg-muted); border: 1px solid var(--color-border-input); }
 
 /* ── Calendar Wrapper ──────────────────────────────────────── */
 .sch-cal {
@@ -222,7 +222,7 @@
   white-space: nowrap;
   transition: background .15s, border-color .15s;
 }
-.btn-del-old:hover { background: #fef2f2; border-color: var(--red); color: var(--red); }
+.btn-del-old:hover { background: var(--color-error-bg); border-color: var(--red); color: var(--red); }
 
 /* Course dropdown */
 .course-dd {
@@ -294,7 +294,7 @@
 .view-tab:not(:last-child) { border-right: 1px solid var(--border); }
 .view-tab--on {
   background: var(--primary);
-  color: #fff;
+  color: var(--color-surface);
 }
 
 /* Loading bar */
@@ -316,7 +316,7 @@
   font-size: .83rem !important;
 }
 .fc th {
-  background: #fafafa;
+  background: var(--color-bg-subtle);
   font-weight: 600;
   color: var(--muted);
   font-size: .78rem;
@@ -331,7 +331,7 @@
 }
 .fc-day-today .fc-daygrid-day-number {
   background: var(--primary);
-  color: #fff !important;
+  color: var(--color-surface) !important;
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -456,7 +456,7 @@
 .modal-x {
   background: rgba(255,255,255,.2);
   border: none;
-  color: #fff;
+  color: var(--color-surface);
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -501,7 +501,7 @@
   padding: 8px 10px;
   font-size: .875rem;
   color: var(--text);
-  background: #fafafa;
+  background: var(--color-bg-subtle);
   outline: none;
   transition: border-color .15s, box-shadow .15s;
   width: 100%;
@@ -511,7 +511,7 @@
 .f-group select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(91,94,244,.12);
-  background: #fff;
+  background: var(--color-surface);
 }
 .req-star { color: var(--red); }
 
@@ -580,8 +580,8 @@
   from { transform: translateY(16px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
 }
-.sch-toast--success { background: var(--green); color: #fff; }
-.sch-toast--error   { background: var(--red);   color: #fff; }
+.sch-toast--success { background: var(--green); color: var(--color-surface); }
+.sch-toast--error   { background: var(--red);   color: var(--color-surface); }
 
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE

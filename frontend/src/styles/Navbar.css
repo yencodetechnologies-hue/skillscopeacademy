@@ -1,8 +1,8 @@
 /* ===== BASE NAVBAR ===== */
 .navbar {
     height: 70px;
-    background: white;
-    border-bottom: 1px solid #eee;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border-soft);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,7 +58,7 @@
 .burger-icon {
     cursor: pointer;
     font-size: 18px;
-    color: #444;
+    color: var(--color-text-body);
 }
 
 /* Mobile burger icon - desktop-ல் hide */
@@ -76,11 +76,11 @@
     height: 100vh;
     height: 100dvh;
     /* dynamic viewport height - address bar hide ஆனாலும் சரியா இருக்கும் */
-    background: white;
+    background: var(--color-surface);
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.12);
     z-index: 999;
     transition: right 0.3s ease;
-    border-left: 1px solid #eee;
+    border-left: 1px solid var(--color-border-soft);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     /* iOS smooth scroll */
@@ -100,7 +100,7 @@
 .sidebar-inner span {
     cursor: pointer;
     font-size: 22px;
-    color: #444;
+    color: var(--color-text-body);
     display: flex;
     align-items: center;
     gap: 14px;
@@ -118,13 +118,13 @@
 .sidebar-inner span:first-child {
     align-self: flex-end;
     font-size: 20px;
-    color: #888;
+    color: var(--color-text-icon);
     padding: 4px 8px;
 }
 
 .sidebar-inner span:first-child:hover {
     background: #f5f5f5;
-    color: #333;
+    color: var(--color-text-primary);
 }
 
 /* Sidebar open-ஆ இருக்கும்போது body scroll lock */

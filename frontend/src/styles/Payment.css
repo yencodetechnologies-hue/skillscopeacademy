@@ -4,7 +4,7 @@ margin-top:20px;
 
 .payment-header>.payment-header{
 background:linear-gradient(90deg,var(--color-brand-primary),#ec4899);
-color:white;
+color:var(--color-surface);
 padding:16px 20px;
 border-radius:8px 8px 0 0;
 }
@@ -25,7 +25,7 @@ margin-bottom:20px;
 }
 .input-error {
   border-color: var(--color-error-alt) !important;
-  background-color: #fff5f5 !important;
+  background-color: var(--color-surface)5f5 !important;
 }
 .error-text {
   color: var(--color-error);
@@ -41,13 +41,13 @@ width:100%;
 padding:10px;
 border-radius:6px;
 font-size: 14px;
-border:1px solid #ddd;
+border:1px solid var(--color-border-muted);
 }
 
 .terms{
 display:flex;
 gap:10px;
-background:#fff7ed;
+background:var(--color-surface)7ed;
 padding:10px;
 border-radius:6px;
 font-size:14px;
@@ -81,7 +81,7 @@ margin-bottom:20px;
 }
 
 .method-card{
-border:1px solid #ddd;
+border:1px solid var(--color-border-muted);
 padding:15px;
 border-radius:8px;
 display:flex;
@@ -103,7 +103,7 @@ margin:0;
 }
 
 .bank-details{
-border:1px solid #ddd;
+border:1px solid var(--color-border-muted);
 padding:20px;
 border-radius:8px;
 margin-bottom:20px;
@@ -122,7 +122,7 @@ margin-top:10px;
 }
 
 .payment-warning{
-background:#fef3c7;
+background:var(--color-warning-bg);
 padding:12px;
 border-radius:6px;
 font-size:14px;
@@ -141,7 +141,7 @@ cursor:pointer;
 
 .btn-primary{
 background:linear-gradient(90deg,var(--color-brand-primary),#ec4899);
-color:white;
+color:var(--color-surface);
 border:none;
 padding:10px 16px;
 border-radius:6px;
@@ -196,7 +196,7 @@ height:24px;
   width: 100%;
   padding: 14px;
   background: var(--color-info);
-  color: white;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -218,7 +218,7 @@ height:24px;
 .payment-success {
   background: var(--color-success-bg);
   border: 1px solid var(--color-success);
-  color: #15803d;
+  color: var(--color-success-dark);
   padding: 12px;
   border-radius: 8px;
   margin-top: 12px;
@@ -228,7 +228,7 @@ height:24px;
 .payment-error {
   background: var(--color-error-bg);
   border: 1px solid var(--color-error);
-  color: #b91c1c;
+  color: var(--color-error-dark);
   padding: 12px;
   border-radius: 8px;
   margin-top: 12px;
@@ -237,7 +237,7 @@ height:24px;
 
 /* Payment Error Card */
 .payment-error-card {
-    background: #fff5f5;
+    background: var(--color-surface)5f5;
     border: 1px solid #feb2b2;
     border-radius: 8px;
     padding: 16px;
@@ -279,7 +279,7 @@ height:24px;
 }
 
 .try-again-btn {
-    background: white;
+    background: var(--color-surface);
     border: 1px solid #c53030;
     color: #c53030;
     padding: 8px 16px;
@@ -289,7 +289,7 @@ height:24px;
 }
 
 .try-again-btn:hover {
-    background: #fff5f5;
+    background: var(--color-surface)5f5;
 }
 
 /* Payment Success */
@@ -313,7 +313,7 @@ height:24px;
 }
 
 .prev-btn {
-    background: white;
+    background: var(--color-surface);
     border: 1px solid #cbd5e0;
     color: #4a5568;
     padding: 12px 24px;
@@ -328,7 +328,7 @@ height:24px;
 
 .pay-continue-btn {
     background: #6b46c1;
-    color: white;
+    color: var(--color-surface);
     border: none;
     padding: 12px 28px;
     border-radius: 8px;

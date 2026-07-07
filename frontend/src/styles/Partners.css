@@ -7,7 +7,7 @@
 .pt-page {
     padding: 24px 28px 60px;
     font-family: 'Segoe UI', sans-serif;
-    color: #0f172a;
+    color: var(--color-slate-900);
 }
 
 .pt-header {
@@ -28,12 +28,12 @@
 .pt-sub {
     margin: 4px 0 0;
     font-size: 13.5px;
-    color: #64748b;
+    color: var(--color-slate-500);
 }
 
 .pt-add-btn {
-    background: #0f172a;
-    color: #fff;
+    background: var(--color-slate-900);
+    color: var(--color-surface);
     border: none;
     border-radius: 8px;
     padding: 10px 18px;
@@ -42,12 +42,12 @@
     font-family: inherit;
     transition: background 0.15s;
 }
-.pt-add-btn:hover { background: #1e293b; }
+.pt-add-btn:hover { background: var(--color-slate-800); }
 
 .pt-error {
-    background: #fef2f2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
+    background: var(--color-error-bg);
+    color: var(--color-error-dark);
+    border: 1px solid var(--color-error-border);
     padding: 10px 14px;
     border-radius: 8px;
     margin-bottom: 12px;
@@ -61,7 +61,7 @@
 }
 
 .pt-card {
-    background: #fff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border-light);
     border-radius: 12px;
     overflow: hidden;
@@ -74,7 +74,7 @@
 
 .pt-card-skeleton {
     height: 200px;
-    background: linear-gradient(90deg, #eef2f7 25%, var(--color-border-light) 50%, #eef2f7 75%);
+    background: linear-gradient(90deg, var(--color-panel-blue) 25%, var(--color-border-light) 50%, var(--color-panel-blue) 75%);
     background-size: 200% 100%;
     animation: pt-shimmer 1.5s infinite;
     border: none;
@@ -90,7 +90,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 2 / 1;
-    background: #f8fafc;
+    background: var(--color-slate-50);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@
     top: 8px;
     left: 8px;
     background: rgba(15, 23, 42, 0.85);
-    color: #fff;
+    color: var(--color-surface);
     font-size: 11px;
     font-weight: 600;
     padding: 3px 8px;
@@ -124,18 +124,18 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--color-slate-100);
 }
 
 .pt-card-title {
     font-size: 14px;
     font-weight: 600;
-    color: #111;
+    color: var(--color-text-primary);
 }
 
 .pt-card-link {
     font-size: 12px;
-    color: #64748b;
+    color: var(--color-slate-500);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -150,44 +150,44 @@
 .pt-btn {
     flex: 1;
     border: 1px solid var(--color-border-light);
-    background: #f8fafc;
+    background: var(--color-slate-50);
     border-radius: 6px;
     padding: 6px 10px;
     font-size: 12.5px;
     cursor: pointer;
-    color: #0f172a;
+    color: var(--color-slate-900);
     font-family: inherit;
     transition: background 0.15s;
 }
-.pt-btn:hover { background: #eef2f7; }
+.pt-btn:hover { background: var(--color-panel-blue); }
 
 .pt-btn--ghost {
     background: transparent;
-    border: 1px solid #d1d5db;
-    color: #475569;
+    border: 1px solid var(--color-border-input);
+    color: var(--color-slate-600);
 }
 
 .pt-btn--primary {
-    background: #0f172a;
-    color: #fff;
-    border-color: #0f172a;
+    background: var(--color-slate-900);
+    color: var(--color-surface);
+    border-color: var(--color-slate-900);
 }
-.pt-btn--primary:hover { background: #1e293b; }
+.pt-btn--primary:hover { background: var(--color-slate-800); }
 
 .pt-btn--danger {
-    background: #fff;
-    border-color: #fecaca;
-    color: #b91c1c;
+    background: var(--color-surface);
+    border-color: var(--color-error-border);
+    color: var(--color-error-dark);
 }
-.pt-btn--danger:hover { background: #fef2f2; }
+.pt-btn--danger:hover { background: var(--color-error-bg); }
 
 .pt-empty {
-    background: #fff;
-    border: 1px dashed #cbd5e1;
+    background: var(--color-surface);
+    border: 1px dashed var(--gray-300);
     border-radius: 12px;
     padding: 60px 24px;
     text-align: center;
-    color: #64748b;
+    color: var(--color-slate-500);
     font-size: 14.5px;
 }
 
@@ -208,7 +208,7 @@
     width: 480px;
     max-width: calc(100vw - 32px);
     max-height: 88vh;
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
@@ -221,7 +221,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--color-slate-100);
 }
 .pt-modal-header h3 {
     margin: 0;
@@ -233,7 +233,7 @@
     border: none;
     font-size: 18px;
     cursor: pointer;
-    color: #64748b;
+    color: var(--color-slate-500);
 }
 
 .pt-modal-body {
@@ -261,7 +261,7 @@
 .pt-label {
     font-size: 12px;
     font-weight: 600;
-    color: #475569;
+    color: var(--color-slate-600);
     margin-top: 4px;
     text-transform: uppercase;
     letter-spacing: 0.4px;
@@ -269,23 +269,23 @@
 
 .pt-input {
     width: 100%;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--gray-300);
     border-radius: 8px;
     padding: 9px 12px;
     font-size: 13.5px;
     font-family: inherit;
-    color: #0f172a;
-    background: #fff;
+    color: var(--color-slate-900);
+    background: var(--color-surface);
 }
 .pt-input:focus {
     outline: none;
-    border-color: #0f172a;
+    border-color: var(--color-slate-900);
     box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.15);
 }
 
 .pt-img-toggle {
     display: inline-flex;
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     padding: 3px;
     border-radius: 8px;
     width: fit-content;
@@ -298,12 +298,12 @@
     font-size: 12.5px;
     border-radius: 6px;
     cursor: pointer;
-    color: #475569;
+    color: var(--color-slate-600);
     font-family: inherit;
 }
 .pt-img-toggle-btn.is-active {
-    background: #fff;
-    color: #0f172a;
+    background: var(--color-surface);
+    color: var(--color-slate-900);
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
@@ -312,7 +312,7 @@
     border: 1px solid var(--color-border-light);
     border-radius: 10px;
     overflow: hidden;
-    background: #f8fafc;
+    background: var(--color-slate-50);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -334,7 +334,7 @@
     justify-content: flex-end;
     gap: 8px;
     padding: 12px 20px;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--color-slate-100);
 }
 
 /* ── Confirm dialog ─────────────────────────────────── */
@@ -346,7 +346,7 @@
     transform: translate(-50%, -50%);
     width: 380px;
     max-width: calc(100vw - 32px);
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.18);
@@ -359,7 +359,7 @@
 .pt-confirm p {
     margin: 0 0 16px;
     font-size: 13.5px;
-    color: #475569;
+    color: var(--color-slate-600);
 }
 .pt-confirm-actions {
     display: flex;

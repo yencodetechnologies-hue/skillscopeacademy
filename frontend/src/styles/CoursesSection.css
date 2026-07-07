@@ -1,5 +1,5 @@
 .cs-wrap {
-  background: #fff;
+  background: var(--color-surface);
   font-family: 'Inter', sans-serif;
 }
 
@@ -19,14 +19,14 @@
   font-size: 12px; font-weight: 700; color: var(--color-brand-primary);
   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
 }
-.cs-title { font-size: 28px; font-weight: 700; color: #0d2240; margin-bottom: 6px; }
-.cs-sub { font-size: 15px; color: #4a7096; }
+.cs-title { font-size: 28px; font-weight: 700; color: var(--color-navy-deep); margin-bottom: 6px; }
+.cs-sub { font-size: 15px; color: var(--color-link-muted); }
 
 /* TAB WRAPPER — ✅ clip overflow so tabs never wrap to second line */
 /* TAB NAV — ✅ wrap to multiple lines, no scroll */
 .cs-tab-nav {
   display: flex;
-  background: #0d2240;
+  background: var(--color-navy-deep);
   border-radius: 14px 14px 0 0;
   flex-wrap: wrap;
 }
@@ -56,7 +56,7 @@
 }
 .cs-tab-btn--active {
   background: var(--color-brand-primary) !important;
-  color: #0d2240 !important;
+  color: var(--color-navy-deep) !important;
 }
 .cs-tab-count {
   font-size: 10px;
@@ -69,16 +69,16 @@
 }
 .cs-tab-btn--active .cs-tab-count {
   background: rgba(13,34,64,0.25);
-  color: #0d2240;
+  color: var(--color-navy-deep);
 }
 
 /* PANELS */
 .cs-panels-wrap {
-  border: 2px solid #0d2240;
+  border: 2px solid var(--color-navy-deep);
   border-top: none;
   border-radius: 0 0 14px 14px;
   padding: 22px;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 /* GRID */
@@ -91,7 +91,7 @@
 /* MORE CARD */
 .cs-more {
   background: #f4faff;
-  border: 1.5px dashed #bae0f7;
+  border: 1.5px dashed var(--color-sky-light);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -106,22 +106,22 @@
 .cs-more-plus {
   width: 42px; height: 42px;
   border-radius: 50%;
-  background: #e8f4fd;
+  background: var(--color-sky-wash);
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; color: var(--color-brand-primary); line-height: 1;
 }
-.cs-more-title { font-size: 14px; font-weight: 700; color: #0d2240; }
-.cs-more-sub { font-size: 12px; color: #4a7096; }
+.cs-more-title { font-size: 14px; font-weight: 700; color: var(--color-navy-deep); }
+.cs-more-sub { font-size: 12px; color: var(--color-link-muted); }
 .cs-more-btn {
   margin-top: 6px;
-  background: #0d2240; color: #fff;
+  background: var(--color-navy-deep); color: var(--color-surface);
   font-size: 12px; font-weight: 700;
   padding: 9px 22px;
   border-radius: 10px;
   text-decoration: none;
   transition: background 0.2s;
 }
-.cs-more-btn:hover { background: var(--color-brand-primary); color: #0d2240; }
+.cs-more-btn:hover { background: var(--color-brand-primary); color: var(--color-navy-deep); }
 
 /* SHOW MORE */
 .cs-show-more-wrap {
@@ -130,8 +130,8 @@
   margin-top: 20px;
 }
 .cs-show-more-btn {
-  background: #0d2240;
-  color: #fff;
+  background: var(--color-navy-deep);
+  color: var(--color-surface);
   border: none;
   border-radius: 10px;
   padding: 12px 32px;
@@ -141,7 +141,7 @@
   font-family: 'Inter', sans-serif;
   transition: background 0.2s;
 }
-.cs-show-more-btn:hover { background: var(--color-brand-primary); color: #0d2240; }
+.cs-show-more-btn:hover { background: var(--color-brand-primary); color: var(--color-navy-deep); }
 
 /* RESPONSIVE */
 @media (max-width: 1200px) {

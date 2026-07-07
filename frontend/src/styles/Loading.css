@@ -34,13 +34,13 @@
 .lo-message {
   font-size: 15px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-slate-800);
   margin: 0 0 4px;
 }
 
 .lo-sub {
   font-size: 13px;
-  color: #64748b;
+  color: var(--color-slate-500);
   margin: 0;
 }
 

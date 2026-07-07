@@ -12,7 +12,7 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 32px 32px 0 32px;
-    background: #f0faff;
+    background: var(--color-sky-highlight);
 }
 
 .courses-container h1 {
@@ -36,7 +36,7 @@
 
 .course-management-div > p {
     height: fit-content;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 8px;
     cursor: pointer;
@@ -66,14 +66,14 @@
 
 .course-management-div > p:last-child:hover {
     background: var(--color-brand-accent);
-    color: white;
+    color: var(--color-surface);
 }
 
 /* ===== SEARCH SECTION ===== */
 
 .courses-search-wrapper {
     margin: 24px 32px 0 32px;
-    background: white;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 20px 24px;
@@ -124,7 +124,7 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #9ca3af;
+    color: var(--gray-400);
     font-size: 14px;
 }
 
@@ -134,7 +134,7 @@
     border-radius: 8px;
     font-size: 14px;
     color: var(--color-text-secondary);
-    background: white;
+    background: var(--color-surface);
     cursor: pointer;
     outline: none;
     min-width: 130px;
@@ -145,7 +145,7 @@
     align-items: center;
     gap: 6px;
     padding: 10px 18px;
-    background: white;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 8px;
     font-size: 14px;
@@ -188,7 +188,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 16px 24px;
@@ -235,16 +235,16 @@
 
 .premium-badge {
     background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent));
-    color: white;
+    color: var(--color-surface);
 }
 
 .standard-badge {
     background: linear-gradient(90deg, #f43f5e,var(--color-brand-primary));
-    color: white;
+    color: var(--color-surface);
 }
 
 .drag-handle {
-    color: #9ca3af;
+    color: var(--gray-400);
     font-size: 14px;
     cursor: grab;
     margin-right: 2px;
@@ -275,13 +275,13 @@
 }
 
 .course-info span {
-    color: #9ca3af;
+    color: var(--gray-400);
     font-size: 12px;
 }
 
 .original-price {
     text-decoration: line-through;
-    color: #9ca3af;
+    color: var(--gray-400);
 }
 
 .discount-price {
@@ -353,7 +353,7 @@
     border: 1px solid var(--color-border);
     border-radius: 8px;
     cursor: pointer;
-    background: white;
+    background: var(--color-surface);
     transition: all 0.2s;
     font-size: 15px;
 }
@@ -376,7 +376,7 @@
 
 .delete-btn:hover {
     border-color: var(--color-error-alt) !important;
-    background: #fff1f2 !important;
+    background: var(--color-surface)1f2 !important;
 }
 
 .calendar-btn {
@@ -399,7 +399,7 @@
 }
 
 .modal {
-    background: white;
+    background: var(--color-surface);
     padding: 30px;
     border-radius: 12px;
     width: 500px;
@@ -422,7 +422,7 @@
 
 .course-form input {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-muted);
     border-radius: 6px;
 }
 

@@ -59,7 +59,7 @@
 
 /* ───── Search Card ───── */
 .search-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 14px;
   border: 1px solid var(--color-border);
   padding: 22px 26px;
@@ -97,7 +97,7 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #9CA3AF;
+  color: var(--gray-400);
   display: flex;
   align-items: center;
 }
@@ -127,7 +127,7 @@
   font-family: 'Nunito', sans-serif;
   font-weight: 600;
   color: var(--color-text-secondary);
-  background: white;
+  background: var(--color-surface);
   cursor: pointer;
   outline: none;
   appearance: none;
@@ -147,7 +147,7 @@
   align-items: center;
   gap: 7px;
   padding: 10px 18px;
-  background: white;
+  background: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: 9px;
   font-size: 14px;
@@ -160,13 +160,13 @@
 
 .btn-search:hover {
   border-color: var(--color-brand-primary);
-  background: #f0faff;
+  background: var(--color-sky-highlight);
   color: var(--color-brand-primary);
 }
 
 /* ───── Table Card ───── */
 .table-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 14px;
   border: 1px solid var(--color-border);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -204,7 +204,7 @@ table {
 thead tr {
   border-top: 1px solid var(--color-bg-muted);
   border-bottom: 1px solid var(--color-bg-muted);
-  background: #FAFAFA;
+  background: var(--color-bg-subtle);
 }
 
 thead th {
@@ -239,7 +239,7 @@ tbody td {
 }
 
 .cell-date-time {
-  color: #9CA3AF;
+  color: var(--gray-400);
   font-size: 12px;
   font-weight: 500;
   margin-top: 2px;
@@ -269,7 +269,7 @@ tbody td {
 }
 
 .dash {
-  color: #D1D5DB;
+  color: var(--color-border-input);
   font-size: 16px;
 }
 
@@ -317,13 +317,13 @@ tbody td {
 }
 
 .btn-icon-view { color: var(--color-brand-primary); }
-.btn-icon-view:hover { background: #f0faff; }
+.btn-icon-view:hover { background: var(--color-sky-highlight); }
 
 .btn-icon-edit { color: var(--color-text-secondary); }
 .btn-icon-edit:hover { background: var(--color-bg-muted); }
 
 .btn-icon-delete { color: var(--color-error-alt); }
-.btn-icon-delete:hover { background: #FEF2F2; }
+.btn-icon-delete:hover { background: var(--color-error-bg); }
 
 .btn-deactivate {
   background: none;
@@ -369,7 +369,7 @@ tbody td {
   padding: 6px 16px;
   border: 1.5px solid var(--color-border);
   border-radius: 7px;
-  background: white;
+  background: var(--color-surface);
   font-size: 13px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
@@ -384,7 +384,7 @@ tbody td {
 }
 
 .btn-page:disabled {
-  color: #D1D5DB;
+  color: var(--color-border-input);
   cursor: not-allowed;
   border-color: var(--color-bg-muted);
 }
@@ -438,7 +438,7 @@ tbody td {
   border: none;
   border-radius: 9px;
   background: var(--color-error);
-  color: white;
+  color: var(--color-surface);
   font-size: 14px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
@@ -448,7 +448,7 @@ tbody td {
 }
 
 .btn-delete-company:hover:not(:disabled) {
-  background: #B91C1C;
+  background: var(--color-error-dark);
 }
 
 .btn-delete-company:disabled {
@@ -457,7 +457,7 @@ tbody td {
 }
 
 .modal-box {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
   width: 100%;
   max-width: 700px;
@@ -539,7 +539,7 @@ tbody td {
   border-radius: 9px;
   overflow: hidden;
   transition: border-color 0.2s;
-  background: white;
+  background: var(--color-surface);
 }
 
 .field-input-wrap:focus-within {
@@ -566,14 +566,14 @@ tbody td {
 .field-icon svg path,
 .field-icon svg polyline {
   fill: none;
-  stroke: #9CA3AF;
+  stroke: var(--gray-400);
   stroke-width: 2;
 }
 
-/* Keep building icon filled white override only in table */
+/* Keep building icon filled var(--color-surface) override only in table */
 .company-icon svg path,
 .company-icon svg polyline {
-  fill: white;
+  fill: var(--color-surface);
   stroke: none;
 }
 
@@ -590,7 +590,7 @@ tbody td {
 }
 
 .field-input::placeholder {
-  color: #9CA3AF;
+  color: var(--gray-400);
   font-weight: 500;
 }
 
@@ -599,7 +599,7 @@ tbody td {
   border: none;
   cursor: pointer;
   padding: 0 12px 0 4px;
-  color: #9CA3AF;
+  color: var(--gray-400);
   display: flex;
   align-items: center;
   transition: color 0.15s;
@@ -627,7 +627,7 @@ tbody td {
   padding: 10px 22px;
   border: 1.5px solid var(--color-border);
   border-radius: 9px;
-  background: white;
+  background: var(--color-surface);
   font-size: 14px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
@@ -637,7 +637,7 @@ tbody td {
 }
 
 .btn-cancel:hover {
-  border-color: #9CA3AF;
+  border-color: var(--gray-400);
   color: var(--color-text-primary);
 }
 
@@ -647,7 +647,7 @@ tbody td {
   gap: 8px;
   padding: 10px 26px;
   background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent));
-  color: white;
+  color: var(--color-surface);
   border: none;
   border-radius: 9px;
   font-size: 14px;
@@ -676,7 +676,7 @@ tbody td {
   width: 14px;
   height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: white;
+  border-top-color: var(--color-surface);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   flex-shrink: 0;
@@ -711,7 +711,7 @@ tbody td {
   display: inline-block;
   width: 36px;
   height: 20px;
-  background: #D1D5DB;
+  background: var(--color-border-input);
   border-radius: 999px;
   transition: background 0.2s ease;
   flex-shrink: 0;
@@ -724,7 +724,7 @@ tbody td {
   left: 2px;
   width: 16px;
   height: 16px;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease;

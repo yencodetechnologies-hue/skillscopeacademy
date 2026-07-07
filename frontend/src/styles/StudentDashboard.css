@@ -50,7 +50,7 @@
 }
 
 .alert-success {
-  background: #f0fdf4;
+  background: var(--color-success-panel);
   border: 1px solid #a7f3d0;
 }
 
@@ -81,7 +81,7 @@
 
 .alert-link {
   font-size: 0.85rem;
-  color: #059669;
+  color: var(--color-success-alt);
   font-weight: 600;
   text-decoration: none;
   margin-top: 2px; 
@@ -96,7 +96,7 @@
 
 /* Warning alert (Awaiting Review) */
 .alert-warning {
-  background: #fffbeb;
+  background: var(--color-surface)beb;
   border: 1px solid #fde68a;
   border-radius: 12px;
   display: flex;
@@ -125,7 +125,7 @@
 
 /* Danger alert */
 .alert-danger {
-  background: #fff5f5;
+  background: var(--color-surface)5f5;
   border: 1px solid #fed7d7;
   border-radius: 12px;
   display: flex;
@@ -151,7 +151,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   color: #c53030;
-  background: #fff5f5;
+  background: var(--color-surface)5f5;
   border: 1px solid #feb2b2;
   border-radius: 20px;
   padding: 6px 8px;
@@ -176,7 +176,7 @@
   margin-left: auto;
   flex-shrink: 0;
   background: #e53e3e;
-  color: white;
+  color: var(--color-surface);
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
@@ -201,7 +201,7 @@
 .quick-actions-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-surface);
   margin: 0 0 16px;
 }
 
@@ -229,7 +229,7 @@
 }
 
 .quick-action-btn:hover {
-  background: #fff;
+  background: var(--color-surface);
   transform: translateY(-1px);
 }
 

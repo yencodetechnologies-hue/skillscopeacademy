@@ -129,7 +129,7 @@ function CourseDropdown({ groupedCourses, value, onChange, placeholder = "Select
                         fontSize: "13px",
                         outline: "none",
                         boxSizing: "border-box",
-                        background: "#f8fafc"
+                        background: colors.slate50
                     }}
                     onClick={(e) => e.stopPropagation()}
                 />
@@ -179,7 +179,7 @@ function CourseDropdown({ groupedCourses, value, onChange, placeholder = "Select
                 c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 c.courseCode.toLowerCase().includes(searchTerm.toLowerCase())
             ).length === 0 && (
-                <div style={{ padding: "10px", textAlign: "center", color: "#888" }}>
+                <div style={{ padding: "10px", textAlign: "center", color: colors.textIcon }}>
                     No courses found
                 </div>
             )}
@@ -352,7 +352,7 @@ function AddCourseButton({ groupedCourses, onAdd, enrollmentType }) {
                             c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             c.courseCode.toLowerCase().includes(searchTerm.toLowerCase())
                         ).length === 0 && (
-                            <div style={{ padding: "10px", textAlign: "center", color: "#888" }}>
+                            <div style={{ padding: "10px", textAlign: "center", color: colors.textIcon }}>
                                 No courses found
                             </div>
                         )}
@@ -947,7 +947,7 @@ function CourseSelection({
                             </p>
                             
                             {loadingSlots ? (
-                                <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+                                <div style={{ textAlign: 'center', padding: '20px', color: colors.textFaint }}>
                                     <div className="loading-spinner-small" style={{ marginBottom: '10px' }}></div>
                                     <p>Checking for upcoming sessions...</p>
                                 </div>
@@ -960,7 +960,7 @@ function CourseSelection({
                             ) : (
                                 <div style={{ textAlign: 'center', padding: '30px', background: '#fff5f5', borderRadius: '12px', border: '1px solid #feb2b2' }}>
                                     <p style={{ color: '#c53030', fontWeight: '600' }}>No upcoming sessions available for this course.</p>
-                                    <p style={{ fontSize: '13px', color: '#666', marginTop: '5px' }}>Please contact us for more information or try another course.</p>
+                                    <p style={{ fontSize: '13px', color: colors.textFaint, marginTop: '5px' }}>Please contact us for more information or try another course.</p>
                                 </div>
                             )}
                         </div>
@@ -1016,7 +1016,7 @@ function CourseSelection({
                                     <span className="company-cart-price">${getCoursePrice(sc.course)} per person</span>
                                 </div>
                                 <div className="company-cart-controls">
-                                    <label style={{ fontSize: "12px", color: "#888" }}>Qty</label>
+                                    <label style={{ fontSize: "12px", color: colors.textIcon }}>Qty</label>
                                     <input
                                         type="number"
                                         min="1"

@@ -1,6 +1,6 @@
 /* ===== VOC STEP 2 ===== */
 .v2-wrap {
-    background: #fff;
+    background: var(--color-surface);
     border-radius: 14px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     overflow: hidden;
@@ -9,13 +9,13 @@
 }
 
 .v2-header {
-    background: #0f172a;
+    background: var(--color-slate-900);
     padding: 28px 32px;
     text-align: center;
 }
 
 .v2-header-title {
-    color: #fff;
+    color: var(--color-surface);
     font-size: 22px;
     font-weight: 700;
     margin: 0 0 6px;
@@ -28,7 +28,7 @@
 }
 
 .v2-price-highlight {
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-weight: 600;
 }
 
@@ -39,7 +39,7 @@
 .v2-label {
     font-size: 12px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     letter-spacing: 0.4px;
     display: block;
     margin-bottom: 8px;
@@ -48,7 +48,7 @@
 /* Select */
 .v2-select-wrap {
     position: relative;
-    background: #f1f5f9;
+    background: var(--color-slate-100);
     border-radius: 10px;
     padding: 13px 16px;
     display: flex;
@@ -60,7 +60,7 @@
     background: transparent;
     outline: none;
     font-size: 14px;
-    color: #555;
+    color: var(--color-text-dim);
     width: 100%;
     font-family: inherit;
     appearance: none;
@@ -68,7 +68,7 @@
 }
 
 .v2-chevron {
-    color: #888;
+    color: var(--color-text-icon);
     font-size: 13px;
     flex-shrink: 0;
     pointer-events: none;
@@ -84,7 +84,7 @@
     padding: 15px;
     font-size: 15px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--color-slate-900);
     cursor: pointer;
     margin: 14px 0 20px;
     font-family: inherit;
@@ -93,12 +93,12 @@
 }
 
 .v2-add-btn:hover {
-    background: #22d3ee;
+    background: var(--color-cyan-accent);
 }
 
 /* Empty box */
 .v2-empty-box {
-    border: 2px dashed #d1d5db;
+    border: 2px dashed var(--color-border-input);
     border-radius: 12px;
     padding: 48px 20px;
     text-align: center;
@@ -114,13 +114,13 @@
 .v2-empty-text {
     font-size: 15px;
     font-weight: 600;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 4px;
 }
 
 .v2-empty-hint {
     font-size: 13px;
-    color: #888;
+    color: var(--color-text-icon);
     margin: 0;
 }
 
@@ -152,7 +152,7 @@
 }
 
 .v2-course-check {
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     font-size: 18px;
     margin-top: 2px;
     flex-shrink: 0;
@@ -161,14 +161,14 @@
 .v2-course-name {
     font-size: 14.5px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 4px;
 }
 
 .v2-course-price {
     font-size: 14px;
     font-weight: 600;
-    color: #22d3ee;
+    color: var(--color-cyan-accent);
     margin: 0;
 }
 
@@ -177,7 +177,7 @@
     border: none;
     cursor: pointer;
     font-size: 17px;
-    color: #888;
+    color: var(--color-text-icon);
     padding: 0;
     line-height: 1;
 }
@@ -194,7 +194,7 @@
 .v2-date-label {
     font-size: 11.5px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     letter-spacing: 0.4px;
     display: block;
     margin-bottom: 6px;
@@ -221,7 +221,7 @@
 }
 
 .v2-date-value {
-    color: #111;
+    color: var(--color-text-primary);
     font-weight: 500;
 }
 
@@ -230,7 +230,7 @@
     top: calc(100% + 4px);
     left: 0;
     right: 0;
-    background: #fff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 10px;
     max-height: 220px;
@@ -242,13 +242,13 @@
 .v2-date-option {
     padding: 11px 16px;
     font-size: 14px;
-    color: #333;
+    color: var(--color-text-primary);
     cursor: pointer;
     transition: background 0.15s;
 }
 
 .v2-date-option:hover {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
 }
 
 .v2-date-selected {
@@ -268,7 +268,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--color-bg-panel);
     padding-top: 20px;
     gap: 16px;
 }
@@ -276,7 +276,7 @@
 .v2-total-label {
     font-size: 12px;
     font-weight: 700;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0 0 4px;
     letter-spacing: 0.3px;
 }
@@ -284,7 +284,7 @@
 .v2-total-amount {
     font-size: 26px;
     font-weight: 800;
-    color: #111;
+    color: var(--color-text-primary);
     margin: 0;
 }
 
@@ -295,20 +295,20 @@
 }
 
 .v2-back-btn {
-    background: #fff;
-    border: 1.5px solid #d1d5db;
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border-input);
     border-radius: 8px;
     padding: 11px 20px;
     font-size: 13px;
     font-weight: 600;
-    color: #333;
+    color: var(--color-text-primary);
     cursor: pointer;
     font-family: inherit;
     white-space: nowrap;
 }
 
 .v2-back-btn:hover {
-    background: #f1f5f9;
+    background: var(--color-slate-100);
 }
 
 .v2-next-btn {
@@ -318,7 +318,7 @@
     padding: 12px 22px;
     font-size: 13px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--color-slate-900);
     cursor: pointer;
     font-family: inherit;
     letter-spacing: 0.3px;
@@ -327,7 +327,7 @@
 }
 
 .v2-next-btn:hover {
-    background: #22d3ee;
+    background: var(--color-cyan-accent);
 }
 
 @media (max-width: 600px) {

@@ -24,7 +24,7 @@ const formatDate = (iso) => {
 function QRImage({ value, size = 168 }) {
   const [src, setSrc] = useState("");
   useEffect(() => {
-    QRCode.toDataURL(value, { width: size, margin: 2, color: { dark: "#000", light: colors.white } })
+    QRCode.toDataURL(value, { width: size, margin: 2, color: { dark: colors.black, light: colors.white } })
       .then(setSrc)
       .catch(console.error);
   }, [value, size]);

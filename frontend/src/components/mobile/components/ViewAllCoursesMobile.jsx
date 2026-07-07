@@ -27,7 +27,7 @@ const PREFERRED_ORDER = [
 const CATEGORY_COLORS = {
   "Short Courses":      "#0d2240",
   "Earthmoving Courses":colors.brandPrimary,
-  "High Risk Work":     "#0e6da8",
+  "High Risk Work":     colors.brandAccent,
   "Combo":              "#0a4d7a",
 };
 
@@ -36,7 +36,7 @@ function getCategoryColor(category = "") {
     if (category.toLowerCase().includes(key.toLowerCase())) return val;
   }
   // cycle through brand colors for unknown categories
-  const palette = ["#0d2240","#0e6da8",colors.brandPrimary,"#0a4d7a","#1490cc"];
+  const palette = ["#0d2240", colors.brandAccent, colors.brandPrimary, "#0a4d7a", colors.brandAccent];
   let hash = 0;
   for (let i = 0; i < category.length; i++) hash += category.charCodeAt(i);
   return palette[hash % palette.length];

@@ -59,7 +59,7 @@ font-size:14px;
 
 .summary-card{
 border:1px solid #bfdbfe;
-background:#eff6ff;
+background: var(--color-info-bg);
 padding:20px;
 border-radius:8px;
 margin-bottom:20px;
@@ -211,7 +211,7 @@ height:24px;
 }
 
 .pay-now-btn:disabled {
-  background: #93c5fd;
+  background: var(--color-info-border);
   cursor: not-allowed;
 }
 

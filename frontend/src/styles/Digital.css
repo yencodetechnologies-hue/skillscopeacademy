@@ -7,7 +7,7 @@
 
 /* TITLE */
 .digital-title {
-  background: linear-gradient(90deg, #3b82f6, var(--color-info));
+  background: linear-gradient(90deg, var(--color-brand-accent), var(--color-info));
   color: white;
   padding: 10px 14px;
   border-radius: 6px;

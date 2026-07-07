@@ -3,12 +3,13 @@
  * Keep in sync with --color-* values in src/styles/tokens.css.
  */
 export const colors = {
-  brandPrimary: '#F57C00',
-  brandAccent: '#0a1d33',
+  brandPrimary: '#F5A623',
+  brandAccent: '#F57C00',
   brandDark: '#0a1d33',
-  brandPrimaryHover: '#E65100',
-  brandLight: '#FFF3E0',
-  brandTint: '#FFE0B2',
+  brandPrimaryHover: '#D4920E',
+  brandAccentHover: '#E65100',
+  brandLight: '#FFF4D6',
+  brandTint: '#FFF8E7',
   brandOnPrimary: '#1a1d2e',
 
   success: '#16a34a',
@@ -20,9 +21,10 @@ export const colors = {
   warning: '#ca8a04',
   warningBg: '#fef9c3',
   warningAlt: '#f59e0b',
-  info: '#2563eb',
-  infoBg: '#dbeafe',
-  infoHover: '#1d4ed8',
+  info: '#F57C00',
+  infoBg: '#FFF3E0',
+  infoHover: '#E65100',
+  infoBorder: '#FFCC80',
   orange: '#f97316',
 
   textPrimary: '#111827',
@@ -49,8 +51,7 @@ export const statusColors = {
 };
 
 export const scheduleTypeColors = {
-  theory: { color: colors.brandPrimary, bg: '#FFF3E0' },
-  practical: { color: colors.brandPrimary, bg: '#FFE0B2' },
+  theory: { color: colors.brandPrimary, bg: '#FFF8E7' },
+  practical: { color: colors.brandPrimary, bg: '#FFF4D6' },
   exam: { color: colors.successAlt, bg: colors.successBg },
 };
-

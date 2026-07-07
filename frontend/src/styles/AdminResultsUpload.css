@@ -1,6 +1,6 @@
 
 /* ─── Page ─────────────────────────────────────────────────────────────────── */
-.ru-fetching { margin: 0 1.5rem .75rem; background: #eff6ff; color: var(--color-info-hover); padding: .5rem 1rem; border-radius: 8px; font-size: .82rem; font-weight: 500; }
+.ru-fetching { margin: 0 1.5rem .75rem; background: var(--color-info-bg); color: var(--color-info-hover); padding: .5rem 1rem; border-radius: 8px; font-size: .82rem; font-weight: 500; }
 
 .ru-page {
   font-family: 'DM Sans', sans-serif;

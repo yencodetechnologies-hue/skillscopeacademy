@@ -161,7 +161,7 @@ cursor:pointer;
 }
 
 .email-btn{
-border-color:#3b82f6;
+border-color: var(--color-brand-accent);
 }
 
 /* RESPONSIVE */

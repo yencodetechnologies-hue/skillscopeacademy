@@ -413,7 +413,7 @@
 }
 
 .mlp-session-course-tag-link:active {
-  color: #1490cc;
+  color: var(--color-brand-accent);
 }
 
 .mlp-date-course {

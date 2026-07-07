@@ -321,7 +321,7 @@
 .sp-stat-purple .sp-stat-label { color: #3ab7ed; }
 .sp-stat-purple .sp-stat-value { color: var(--color-text-primary); }
 
-.sp-stat-blue   { background: #eff6ff; }
+.sp-stat-blue   { background: var(--color-info-bg); }
 .sp-stat-blue .sp-stat-label   { color: var(--color-info); }
 .sp-stat-blue .sp-stat-value   { color: var(--color-text-primary); }
 

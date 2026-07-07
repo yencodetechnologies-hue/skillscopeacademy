@@ -211,7 +211,7 @@
 }
 
 .sba-btn--primary:hover:not(:disabled) {
-  background: #5b4cdb;
+  background: var(--color-brand-accent);
 }
 
 .sba-btn--danger {
@@ -306,7 +306,7 @@
   height: 22px;
   border-radius: 50%;
   background: #f3f0ff;
-  color: #5b4cdb;
+  color: var(--color-brand-accent);
   font-size: 0.72rem;
   font-weight: 800;
   display: flex;
@@ -374,7 +374,7 @@
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  color: #1dc9e3;
+  color: var(--color-brand-accent);
   line-height: 1;
 }
 
@@ -444,7 +444,7 @@
 .sba-img-btn.is-active {
   border-color: var(--color-brand-primary);
   background: #f3f0ff;
-  color: #5b4cdb;
+  color: var(--color-brand-accent);
 }
 
 .sba-file {

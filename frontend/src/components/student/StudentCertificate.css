@@ -118,7 +118,7 @@
   background: #cbd5e1;
   animation: pulse 2.5s ease-in-out infinite;
 }
-.uc-line-0 { background: #93c5fd; animation-delay: 0s; }
+.uc-line-0 { background: var(--color-info-border); animation-delay: 0s; }
 .uc-line-1 { background: #c4b5fd; animation-delay: 0.3s; }
 .uc-line-2 { background: #cbd5e1; animation-delay: 0.6s; }
 @keyframes pulse {

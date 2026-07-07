@@ -5,13 +5,14 @@
 
 :root {
   /* Brand */
-  --color-brand-primary: #F57C00;
-  --color-brand-accent: #0a1d33;
+  --color-brand-primary: #F5A623;
+  --color-brand-accent: #F57C00;
   --color-brand-dark: #0a1d33;
-  --color-brand-primary-hover: #E65100;
-  --color-brand-light: #FFF3E0;
-  --color-brand-tint: #FFE0B2;
+  --color-brand-primary-hover: #D4920E;
+  --color-brand-light: #FFF4D6;
+  --color-brand-tint: #FFF8E7;
   --color-brand-on-primary: #1a1d2e;
+  --color-brand-accent-hover: #E65100;
 
   /* Semantic */
   --color-success: #16a34a;
@@ -23,9 +24,10 @@
   --color-warning: #ca8a04;
   --color-warning-bg: #fef9c3;
   --color-warning-alt: #f59e0b;
-  --color-info: #2563eb;
-  --color-info-bg: #dbeafe;
-  --color-info-hover: #1d4ed8;
+  --color-info: #F57C00;
+  --color-info-bg: #FFF3E0;
+  --color-info-hover: #E65100;
+  --color-info-border: #FFCC80;
   --color-orange: #f97316;
 
   /* Neutrals */
@@ -82,7 +84,7 @@
   --brand-light: var(--color-brand-tint);
   --primary: var(--color-brand-primary);
   --primary-color: var(--color-brand-primary);
-  --primary-light: #FFF3E0;
+  --primary-light: #FFF4D6;
   --primary-dark: var(--color-brand-accent);
   --primary-dk: var(--color-brand-accent);
   --purple: var(--color-brand-primary);
@@ -161,7 +163,7 @@
   --ef-shadow: var(--shadow-sm);
 
   /* Legacy aliases — company payment (--cp2-*) */
-  --cp2-indigo: var(--color-brand-primary);
+  --cp2-indigo: var(--color-brand-accent);
   --cp2-green: var(--color-success);
   --cp2-amber: #d97706;
   --cp2-sky: var(--color-brand-primary);

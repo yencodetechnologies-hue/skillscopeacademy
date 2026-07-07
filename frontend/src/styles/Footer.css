@@ -9,7 +9,7 @@
 /* ===== TOP GRADIENT BAR ===== */
 .footer-top-bar {
   height: 3px;
-  background: linear-gradient(90deg, var(--color-brand-primary), var(--color-info), var(--color-brand-primary));
+  background: linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-accent), var(--color-brand-primary));
 }
 
 /* ===== MAIN GRID ===== */

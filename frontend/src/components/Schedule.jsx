@@ -20,7 +20,7 @@ function authHeaders() {
 
 const COURSE_COLORS = [
   "#f97316",colors.brandPrimary,colors.brandPrimary,colors.successAlt,
-  "#f59e0b","#ef4444","#3b82f6","#ec4899",
+  "#f59e0b","#ef4444",colors.brandAccent,"#ec4899",
   "#14b8a6",colors.brandPrimary,"#84cc16","#f43f5e",
 ];
 

@@ -1,4 +1,5 @@
-const API_URL = "https://api.octosofttechnologies.in"; // ✅ Production API URL
+// const API_URL = "https://api.octosofttechnologies.in"; // ✅ Production API URL
+const API_URL="https://skillscopeacademy.yencodetechnologies.in"
 
 async function loadForm() {
     const params = new URLSearchParams(window.location.search)

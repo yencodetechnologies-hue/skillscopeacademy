@@ -8,5 +8,5 @@
 // (e.g. on a fresh clone with no .env files at all).
 export const API_URL =
     import.meta.env.VITE_API_URL ||
-    (import.meta.env.DEV ? "http://localhost:7001" : "https://api.octosofttechnologies.in");
+    (import.meta.env.DEV ? "http://localhost:7001" : "https://skillscopeacademy.yencodetechnologies.in");
  

@@ -456,7 +456,7 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                     <span className="field-value">{usi.number || "N/A"}</span>
                   </div>
                   <div className="modal-field">
-                    <span className="field-label">Apply through STA</span>
+                    <span className="field-label">Apply through SafeTricks</span>
                     <span className="field-value">{usi.staApplication === "yes" ? "Yes" : "No"}</span>
                   </div>
                   <div className="modal-field">
@@ -480,7 +480,7 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
                     <span className="field-value">{usi.staAuthoriseName || "N/A"}</span>
                   </div>
                   <div className="modal-field">
-                    <span className="field-label">STA Consent</span>
+                    <span className="field-label">SafeTricks Consent</span>
                     <span className="field-value">{usi.staConsent ? "Yes" : "No"}</span>
                   </div>
                 </div>

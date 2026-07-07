@@ -1,5 +1,5 @@
 /* ============================================================
-   STA ENROLMENT FORM — print.css (FIXED v4)
+   SafeTricks ENROLMENT FORM — print.css (FIXED v4)
    Key fixes:
    1. Bootstrap _reboot.scss sets border-width:0 on td/th — override it
    2. .p2Blue was bleeding blue bg into idTable rows — isolated
@@ -46,7 +46,7 @@ body {
 .sheet .col-3 { flex: 0 0 25%; max-width: 25%; }
 .sheet .col-6 { flex: 0 0 50%; max-width: 50%; text-align: center; }
 
-/* ── STA Header ── */
+/* ── SafeTricks Header ── */
 .sta-logo     { max-width: 100%; max-height: 28mm; object-fit: contain; }
 .sta-title    { font-size: 14pt; font-weight: 900; letter-spacing: 1px; line-height: 1.2; }
 .sta-subtitle { font-size: 12pt; font-weight: 900; letter-spacing: 1px; line-height: 1.2; }

@@ -348,7 +348,7 @@ function renderQualificationCertificates(qual) {
         sheet.innerHTML = `
             <div class="row g-0 align-items-start mb-2">
                 <div class="col-3">
-                    <img class="sta-logo" src="./assets/staLogo.png" alt="STA logo">
+                    <img class="sta-logo" src="./assets/staLogo.png" alt="SafeTricks logo">
                 </div>
                 <div class="col-6 text-center">
                     <div class="fw-black sta-title">SAFETY TRAINING ACADEMY</div>
@@ -372,7 +372,7 @@ function renderQualificationCertificates(qual) {
             </table>
 
             <div class="footerCompany">
-                Australian International Education and Training Pty Ltd Trading as Safety Training Academy<br/>
+                Australian International Education and Training Pty Ltd Trading as SafeTricks<br/>
                 14- 16 Marjorie Street Sefton NSW 2162 &nbsp;--&nbsp; Ph: 1300 976 097
             </div>
             <div class="footerHr"></div>

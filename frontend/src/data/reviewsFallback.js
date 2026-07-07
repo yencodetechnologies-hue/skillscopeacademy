@@ -5,14 +5,14 @@ export const FALLBACK_REVIEWS_SECTION = [
     name: "Valerii Rebrov",
     stars: 5,
     text: "Very good place.",
-    reviewUrl: "https://www.google.com/maps/search/?api=1&query=STA&query_place_id=ChIJR90q3fW9EmsRh9preTZ4ZE0",
+    reviewUrl: "https://www.google.com/maps/search/?api=1&query=SafeTricks&query_place_id=ChIJR90q3fW9EmsRh9preTZ4ZE0",
     relativeTime: "Google Review",
   },
   {
     name: "Jesus Colina",
     stars: 5,
     text: "They provide excellent information and good training in different courses",
-    reviewUrl: "https://www.google.com/maps/search/?api=1&query=STA&query_place_id=ChIJR90q3fW9EmsRh9preTZ4ZE0",
+    reviewUrl: "https://www.google.com/maps/search/?api=1&query=SafeTricks&query_place_id=ChIJR90q3fW9EmsRh9preTZ4ZE0",
     relativeTime: "Google Review",
   },
 ];
@@ -20,7 +20,7 @@ export const FALLBACK_REVIEWS_SECTION = [
 export const FALLBACK_ABOUT_REVIEWS = [
   {
     stars: "★★★★★",
-    text: "Very good place. Trainer was excellent and easy to understand. Passed first go. Highly recommend STA.",
+    text: "Very good place. Trainer was excellent and easy to understand. Passed first go. Highly recommend SafeTricks.",
     author: "Valerii R. · White Card",
   },
   {
@@ -34,7 +34,7 @@ export const FALLBACK_COURSE_REVIEWS = [
   {
     name: "Valerii R.",
     course: "White Card · April 2024",
-    text: "Very good place. Trainer was excellent and easy to understand. Passed first go. Highly recommend STA.",
+    text: "Very good place. Trainer was excellent and easy to understand. Passed first go. Highly recommend SafeTricks.",
   },
   {
     name: "Jesus C.",
@@ -56,7 +56,7 @@ export const FALLBACK_COURSE_REVIEWS = [
 export const FALLBACK_MOBILE_REVIEWS = [
   {
     name: "Valerii R.",
-    text: "Very good place. Trainer was excellent and easy to understand. Passed first go. Highly recommend STA.",
+    text: "Very good place. Trainer was excellent and easy to understand. Passed first go. Highly recommend SafeTricks.",
   },
   {
     name: "Jesus C.",

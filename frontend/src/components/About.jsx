@@ -24,7 +24,7 @@ const WHY_ITEMS = [
     { color: "#22c55e", icon: "🛡", text: <><strong>The safety of every student is so important to us</strong> that why we make it our priority. We are located in a well-organized area. We set ourselves apart by ensuring that our students are fully trained.</> },
     { color: colors.brandPrimary, icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
     { color: "#f97316", icon: "📊", text: <>Our equipment for each course is very standard, contributing to the training to be more understandable by every one of our students.</> },
-    { color: colors.brandAccent, icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At STA, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
+    { color: colors.brandAccent, icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At SafeTricks, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
     { color: colors.info, icon: "📍", text: <>Our training location has easy access to public transport without too much stress. And lastly, you can choose to train in your home place and at a convenient time.</> },
 ]
 
@@ -70,7 +70,7 @@ function AboutPage() {
 
                         <div className="ab-about-card">
                             <p className="ab-about-text">
-                                <strong>SafeTricks</strong> (STA) is a specialty branch of
+                                <strong>SafeTricks</strong> is a specialty branch of
                                 Australian International Education Training which was formed in 2017, who is a{" "}
                                 <a href="#" className="ab-link">Registered Training Organisation (RTO)</a> Provider
                                 No <strong>45234</strong>) that specialises in the delivery of{" "}

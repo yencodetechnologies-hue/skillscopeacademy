@@ -17,7 +17,7 @@ import { colors } from '../constants/theme';
 //     getCoursePriceNumber,
 // } from "../utils/coursePrice"
 // import BookingModal from "../components/course/BookingModal"
-// import logo from "../assets/SafeTrickslogo.png"
+// import logo from "../assets/staLogo.png"
 // import PdfViewer from '../components/common/PdfViewer';
 // import { useGoogleReviews, shortAuthorName, getReviewDisplayText, GOOGLE_REVIEWS_MAX } from "../hooks/useGoogleReviews"
 // import { FALLBACK_COURSE_REVIEWS } from "../data/reviewsFallback"
@@ -717,7 +717,7 @@ import { colors } from '../constants/theme';
 //                     )}
 
 //                     <div className="cdp-card">
-//                         <div className="cdp-card-title">Why choose STA</div>
+//                         <div className="cdp-card-title">Why choose SafeTricks</div>
 //                         <div className="cdp-trust-grid">
 //                             {[
 //                                 { icon: "⭐", title: googleReviewsTrustTitle },
@@ -784,7 +784,7 @@ import { colors } from '../constants/theme';
 //                                 className="cdp-hb-card"
 //                             >
 //                                 <div className="cdp-hb-inner">
-//                                     <img src={logo} alt="STA Logo" className="cdp-hb-logo" />
+//                                     <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
 //                                     <h3 className="cdp-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
 //                                     <div className="cdp-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
 //                                 </div>
@@ -798,7 +798,7 @@ import { colors } from '../constants/theme';
 //                         className="cdp-hb-card"
 //                     >
 //                         <div className="cdp-hb-inner">
-//                             <img src={logo} alt="STA Logo" className="cdp-hb-logo" />
+//                             <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
 //                             <h3 className="cdp-hb-title">Participant Handbook</h3>
 //                             <div className="cdp-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
 //                         </div>
@@ -925,7 +925,7 @@ import {
     getCoursePriceNumber,
 } from "../utils/coursePrice"
 import BookingModal from "../components/course/BookingModal"
-import logo from "../assets/SafeTrickslogo.png"
+import logo from "../assets/staLogo.png"
 import PdfViewer from '../components/common/PdfViewer';
 import { useGoogleReviews, shortAuthorName, getReviewDisplayText, GOOGLE_REVIEWS_MAX } from "../hooks/useGoogleReviews"
 import { FALLBACK_COURSE_REVIEWS } from "../data/reviewsFallback"
@@ -1743,8 +1743,8 @@ const handleViewPDF = (pdfUrl) => {
                     ═══════════════════════════════════════ */}
 
 
-                    {/* WHY CHOOSE STA */}
-                    <AccordionCard title="Why choose STA">
+                    {/* WHY CHOOSE SafeTricks */}
+                    <AccordionCard title="Why choose SafeTricks">
                         <div className="cdp-trust-grid">
                             {[
                                 { icon: "⭐", title: googleReviewsTrustTitle },
@@ -1812,7 +1812,7 @@ const handleViewPDF = (pdfUrl) => {
                                 className="cdp-hb-card"
                             >
                                 <div className="cdp-hb-inner">
-                                    <img src={logo} alt="STA Logo" className="cdp-hb-logo" />
+                                    <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
                                     <h3 className="cdp-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
                                     <div className="cdp-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
                                 </div>
@@ -1826,7 +1826,7 @@ const handleViewPDF = (pdfUrl) => {
                         className="cdp-hb-card"
                     >
                         <div className="cdp-hb-inner">
-                            <img src={logo} alt="STA Logo" className="cdp-hb-logo" />
+                            <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
                             <h3 className="cdp-hb-title">Participant Handbook</h3>
                             <div className="cdp-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
                         </div>

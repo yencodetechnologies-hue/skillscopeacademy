@@ -187,7 +187,7 @@ function ContactPage() {
 
                 <div className="cp-map-wrap">
                     <iframe
-                        title="STA Location"
+                        title="SafeTricks Location"
                         className="cp-map-iframe"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.7!2d151.0333!3d-33.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12bb4e8b5b5b5b%3A0x0!2s3%2F14-16+Marjorie+St%2C+Sefton+NSW+2162!5e0!3m2!1sen!2sau!4v1"
                         allowFullScreen=""

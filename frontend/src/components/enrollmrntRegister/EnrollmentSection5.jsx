@@ -345,19 +345,19 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                 <div className="s5-policy-box">
                     <div className="s5-policy-item">
                         <h5>Complaints & Appeals</h5>
-                        <p>Complaints are recorded and managed through STA's complaints process. If not resolved, you may lodge an appeal. Appeals may progress to independent mediation (e.g., National Training Complaints Hotline / Ombudsman pathways where applicable).</p>
+                        <p>Complaints are recorded and managed through SafeTricks' complaints process. If not resolved, you may lodge an appeal. Appeals may progress to independent mediation (e.g., National Training Complaints Hotline / Ombudsman pathways where applicable).</p>
                     </div>
                     <div className="s5-policy-item">
                         <h5>Reassessment</h5>
-                        <p>If you believe an assessment outcome is unfair, first discuss with your assessor. If unresolved, follow the formal appeals process. STA may require evidence, and independent reassessment may be arranged where necessary.</p>
+                        <p>If you believe an assessment outcome is unfair, first discuss with your assessor. If unresolved, follow the formal appeals process. SafeTricks may require evidence, and independent reassessment may be arranged where necessary.</p>
                     </div>
                     <div className="s5-policy-item">
                         <h5>Consumer Guarantee</h5>
-                        <p>STA will provide training and assessment with due care and skill, fit for purpose, and within a reasonable timeframe.</p>
+                        <p>SafeTricks will provide training and assessment with due care and skill, fit for purpose, and within a reasonable timeframe.</p>
                     </div>
                     <div className="s5-policy-item">
                         <h5>Change to agreed services</h5>
-                        <p>Changes may occur due to course/practical requirements, third party arrangements, or ownership changes. Where possible, STA will notify affected learners.</p>
+                        <p>Changes may occur due to course/practical requirements, third party arrangements, or ownership changes. Where possible, SafeTricks will notify affected learners.</p>
                     </div>
                     <div className="s5-policy-item">
                         <h5>Credit Transfer </h5>
@@ -369,7 +369,7 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                     </div>
                     <div className="s5-policy-item">
                         <h5>Important information</h5>
-                        <p>By signing this form, you confirm the information provided is correct and you agree to STA policies and procedures.</p>
+                        <p>By signing this form, you confirm the information provided is correct and you agree to SafeTricks policies and procedures.</p>
                     </div>
                 </div>
             </div>
@@ -400,7 +400,7 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                 <ul className="s5-declaration-list">
                     <li>I confirm the information provided is true and correct.</li>
                     <li>I understand I must provide a USI to receive certification (where applicable).</li>
-                    <li>I understand STA policies apply (training, assessment, complaints/appeals and privacy).</li>
+                    <li>I understand SafeTricks policies apply (training, assessment, complaints/appeals and privacy).</li>
                 </ul>
                 <div className="s5-row-2" style={{ marginTop: 16 }}>
                     <div className="s5-field">

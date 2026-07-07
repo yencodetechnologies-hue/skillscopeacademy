@@ -184,7 +184,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                             <p className="usi-error-msg">USI Number is required (10 characters)</p>
                         )}
                         <p className="usi-hint">
-                            If you don't have one, select "Apply through STA" below.
+                            If you don't have one, select "Apply through SafeTricks" below.
                         </p>
                     </div>
 
@@ -209,7 +209,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
 
                 <div className="usi-sta-group" id="usi-staApplication">
                     <p className={`usi-sta-label ${errors.includes("staApplication") ? "usi-label-error" : ""}`}>
-                        USI application through STA (if you do not already have one)
+                        USI application through SafeTricks (if you do not already have one)
                         <span className="usi-required">*</span>
                     </p>
                     <div className="usi-radio-row">
@@ -233,7 +233,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                                 onChange={() => set("staApplication", "yes")}
                                 className="usi-radio"
                             />
-                            Yes (Apply through STA)
+                            Yes (Apply through SafeTricks)
                         </label>
                     </div>
                 </div>
@@ -244,11 +244,11 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                 <div className="usi-extra-box">
 
                     <h3 className="usi-extra-title">
-                        USI application through STA (if you do not already have one)
+                        USI application through SafeTricks (if you do not already have one)
                     </h3>
 
                     <p className="usi-extra-text">
-                        If you would like STA to apply for a USI on your behalf, you must authorise us to do so and provide additional information.
+                        If you would like SafeTricks to apply for a USI on your behalf, you must authorise us to do so and provide additional information.
                     </p>
 
                     <div className="usi-field">

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/FooterMobile.css";
-import logo from "../../../assets/Logo STA.jpeg"
+import logo from "../../../assets/staLogo.png"
 import { ORG_PHONE_1300, ORG_PHONE_MOBILE } from "../../../utils/organizationPhones"
 
 // Each label maps to an existing route in App.jsx so taps from mobile

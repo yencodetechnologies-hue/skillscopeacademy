@@ -153,7 +153,7 @@ function AboutSection() {
 
                 {/* RIGHT — Content */}
                 <div className="wcs-content">
-                    <div className="wcs-label">Why choose STA</div>
+                    <div className="wcs-label">Why choose SafeTricks</div>
                     <div className="wcs-title">NSW's Most Trusted Training RTO</div>
                     <p className="wcs-desc">{reviewsDesc}</p>
                     <ul className="wcs-feature-list">

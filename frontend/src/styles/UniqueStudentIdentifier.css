@@ -74,7 +74,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #26c6da;
+  background: var(--color-brand-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,14 +91,14 @@
   height: 20px;
   border-radius: 50%;
   background: var(--color-surface);
-  color: #26c6da;
+  color: var(--color-brand-accent);
   font-size: 11px;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
-  border: 1.5px solid #26c6da;
+  border: 1.5px solid var(--color-brand-accent);
 }
 .usi-icon-label {
   font-size: 11px;
@@ -109,7 +109,7 @@
 }
 .usi-icon-arrow {
   font-size: 26px;
-  color: #26c6da;
+  color: var(--color-brand-accent);
   align-self: flex-start;
   margin-top: 16px;
   padding: 0 4px;
@@ -186,7 +186,7 @@
   transition: background 0.15s;
 }
 .usi-step-card.open .usi-step-header {
-  background: #26c6da;
+  background: var(--color-brand-accent);
   color: var(--color-surface);
 }
 .usi-step-card.open .usi-step-header .usi-step-toggle {

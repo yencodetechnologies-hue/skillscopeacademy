@@ -53,7 +53,7 @@
   --color-success-dark: #15803d;
   --color-success-border: #bbf7d0;
   --color-success-panel: #f0fdf4;
-  --color-cyan-accent: #22d3ee;
+  --color-cyan-accent: var(--color-brand-accent);
   --color-link-muted: #4a7096;
   --color-sky-light: #bae0f7;
   --color-sky-wash: #e8f4fd;
@@ -64,9 +64,9 @@
   --color-navy-mid: #0a4d7a;
   --color-navy-topnav: #0e1e3d;
   --color-pink-accent: #ec4899;
-  --color-teal: #26c6da;
-  --color-trust-cyan: #1aa4d4;
-  --color-trust-bg: #e8f6fd;
+  --color-teal: var(--color-brand-accent);
+  --color-trust-cyan: var(--color-brand-accent);
+  --color-trust-bg: var(--color-info-bg);
   --color-usi-blue: #003d82;
   --color-usi-blue-light: #005cbf;
   --color-border-alt: #e0e0e0;

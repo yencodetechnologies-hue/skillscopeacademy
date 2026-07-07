@@ -32,7 +32,7 @@
     height: 52px;
     min-width: 52px;
     border-radius: 12px;
-    background: #e8f6fd;
+    background: var(--color-trust-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,7 +40,7 @@
 
 .trust-icon {
     font-size: 22px;
-    color: #1aa4d4;
+    color: var(--color-trust-cyan);
 }
 
 /* Text */
@@ -68,7 +68,7 @@
 .trust-underline {
     width: 36px;
     height: 3px;
-    background: #1aa4d4;
+    background: var(--color-trust-cyan);
     border-radius: 2px;
     margin: 4px 0 2px;
 }

@@ -62,7 +62,7 @@ export const colors = {
   bgSubtle: '#fafafa',
   bgPanel: '#f0f0f0',
 
-  cyanAccent: '#22d3ee',
+  cyanAccent: '#F57C00',
   linkMuted: '#4a7096',
   skyLight: '#bae0f7',
   skyWash: '#e8f4fd',

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { colors } from "../constants/theme";
 import PublicNavbar from "../components/PublicNavbar";
 import Footer from "../components/landingPage/Footer";import "../styles/UniqueStudentIdentifier.css";
 
@@ -90,10 +91,10 @@ function CheckIcon() {
   return (
     <span className="usi-check">
       <svg viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#26c6da" strokeWidth="2" />
+        <circle cx="12" cy="12" r="10" stroke={colors.brandAccent} strokeWidth="2" />
         <path
           d="M7 12.5l3.5 3.5 6.5-7"
-          stroke="#26c6da"
+          stroke={colors.brandAccent}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"

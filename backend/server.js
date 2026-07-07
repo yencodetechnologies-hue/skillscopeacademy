@@ -56,37 +56,37 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // ROUTES
-app.use("/auth", require("./routes/authRoutes"));
-app.use("/courses", require("./routes/courseRoutes"));
-app.use("/enrollments", require("./routes/enrollmentRoutes"));
-app.use("/schedules", require("./routes/scheduleRoutes"));
-app.use("/enrollment-form", require("./routes/enrollmentFormRoutes"));
-app.use("/companies", companyRoutes);
-app.use("/book-now", companyEnrollRoutes);
-app.use("/enroll", studentRoutes);
-app.use("/llnd", require("./routes/llndRoutes"));
-app.use("/payment", paymentRouter);
-app.use("/flow", enrollmentRoutes);
-app.use("/students", studentRoutes);
-app.use("/student", studentDashboardRoutes);
-app.use("/booking-email", bookingEmailRoutes);
-app.use("/enrollment-links", enrollmentLinksRouter);
-app.use("/gallery", galleryRouter)
-app.use("/company-payments", companypaymentroute);
-app.use("/course-links", courseLinkRoutes);
-app.use("/results", resultRoutes);
-app.use("/categories", require("./routes/categoryRoutes")); // ✅ ADD
-app.use("/sliders", require("./routes/sliderRoutes"));
-app.use("/partners", require("./routes/partnerRoutes"));
-app.use("/site-banner", require("./routes/siteBannerRoutes"));
-app.use("/form-documents", require("./routes/formDocumentRoutes"));
-app.use("/code-of-practice", require("./routes/codeOfPracticeRoutes"));
-app.use("/voc", require("./routes/vocRoutes"));
-app.use("/files", require("./routes/filesRoutes"));
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/courses", require("./routes/courseRoutes"));
+app.use("/api/enrollments", require("./routes/enrollmentRoutes"));
+app.use("/api/schedules", require("./routes/scheduleRoutes"));
+app.use("/api/enrollment-form", require("./routes/enrollmentFormRoutes"));
+app.use("/api/companies", companyRoutes);
+app.use("/api/book-now", companyEnrollRoutes);
+app.use("/api/enroll", studentRoutes);
+app.use("/api/llnd", require("./routes/llndRoutes"));
+app.use("/api/payment", paymentRouter);
+app.use("/api/flow", enrollmentRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/student", studentDashboardRoutes);
+app.use("/api/booking-email", bookingEmailRoutes);
+app.use("/api/enrollment-links", enrollmentLinksRouter);
+app.use("/api/gallery", galleryRouter)
+app.use("/api/company-payments", companypaymentroute);
+app.use("/api/course-links", courseLinkRoutes);
+app.use("/api/results", resultRoutes);
+app.use("/api/categories", require("./routes/categoryRoutes")); // ✅ ADD
+app.use("/api/sliders", require("./routes/sliderRoutes"));
+app.use("/api/partners", require("./routes/partnerRoutes"));
+app.use("/api/site-banner", require("./routes/siteBannerRoutes"));
+app.use("/api/form-documents", require("./routes/formDocumentRoutes"));
+app.use("/api/code-of-practice", require("./routes/codeOfPracticeRoutes"));
+app.use("/api/voc", require("./routes/vocRoutes"));
+app.use("/api/files", require("./routes/filesRoutes"));
 
-app.use("/admin-logs", require("./routes/adminActivityLogRoutes"));
+app.use("/api/admin-logs", require("./routes/adminActivityLogRoutes"));
 
-app.get("/health", async (req, res) => {
+app.get("/api/health", async (req, res) => {
   const mongoose = require("mongoose");
   const dbStatus = mongoose.connection.readyState === 1 ? "Connected" : "Disconnected";
   res.json({

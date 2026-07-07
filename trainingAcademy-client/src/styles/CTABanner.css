@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+.cta-banner {
+  background: var(--btn-bg);
+  padding: 48px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* TEXT */
+
+.cta-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0d2240;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.cta-sub {
+  font-size: 15px;
+  color: rgba(13, 34, 64, 0.65);
+  margin: 0;
+}
+
+/* BUTTONS */
+.cta-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cta-btn-dark {
+  background: #0d2240;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.cta-btn-dark:hover {
+  background: #1a3a5c;
+}
+
+.cta-btn-white {
+  background: #fff;
+  color: #0d2240;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+.cta-btn-white:hover {
+  background: #f0f8ff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .cta-banner {
+    padding: 40px 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 36px 24px;
+    gap: 24px;
+  }
+  .cta-title { font-size: 22px; }
+  .cta-actions { width: 100%; }
+  .cta-btn-dark,
+  .cta-btn-white {
+    flex: 1;
+    justify-content: center;
+  }
+}

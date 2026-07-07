@@ -1,0 +1,41 @@
+/* ── Back button ── */
+.register-container > .back-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #ebebf0 !important;
+  border-radius: 10px;
+  margin-left: 20px;
+  color: black !important;
+  display: inline-block;
+}
+
+.back-btn-login:hover {
+  background: linear-gradient(90deg, #02afef, #02afef) !important;
+  color: white !important;
+}
+.welcome{
+  color: #02afef;
+}
+/* ── Auth wrapper ── */
+@media (max-width: 425px) {
+    .back-btn{
+        margin-top: 20px;
+    }
+}
+
+/* ── Mobile: hide AuthCard ── */
+@media (max-width: 768px) {
+  .auth-card {
+    display: none !important;
+  }
+
+  .auth-wrapper {
+    padding: 10px;
+    gap: 0;
+    
+  }
+
+  .login-container {
+    padding: 0px;
+  }
+}

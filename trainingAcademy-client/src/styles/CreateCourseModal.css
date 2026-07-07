@@ -1,0 +1,570 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.course-modal {
+    background: white;
+    width: 75%;
+    border-radius: 12px;
+    padding: 25px;
+    height: 90vh;
+    overflow: auto;
+}
+
+.modal-header-course {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+.course-modal > .modal-header{
+  position: static;
+}
+.modal-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.modal-tabs button {
+    border: none;
+    background: #eee;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.modal-footer > button:hover{
+  cursor: pointer;
+}
+
+.modal-tabs .active {
+    background: #02afef;
+    color: white !important;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5%;
+}
+
+.form-grid input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.form-grid select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    
+}
+
+.details-section textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.seo-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.seo-section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+}
+
+.seo-section input,
+.seo-section textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 6px;
+}
+
+.seo-char-count {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.seo-hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.4;
+}
+
+.add-btn {
+    background: #f3f3f3;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.create-btn {
+    background: #02afef;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+.cancel-btn {
+    background: #eee;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+.cancel-btn:hover {
+    cursor: pointer;
+}
+
+.pricing {
+
+    padding-top: 10px;
+}
+
+.image-upload-options>button {
+    background: #eee;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.image-upload-options>button:hover {
+    background: #02afef;
+    color: white;
+    cursor: pointer;
+}
+.form-group>label,input{
+    display: block;
+    margin-bottom: 5px;
+
+}
+.details-section>div>label{
+    margin-top: 15px;  
+   }
+
+.form-group>input, .form-group>select{
+   padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    margin-top: 5px;
+}
+.course-description {
+    font-size: 0.8em;
+    color: #555;
+    margin-top: 5px;
+}
+.add-description-btn{
+    background:#f3f3f3;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    margin-top:8px;
+    margin-bottom:10px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.add-description-btn:hover{
+    background:linear-gradient(90deg,#02afef,#f107a3);
+    color:white;
+}
+.requirements-section > div > input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
+    margin-top: 5px;
+}
+.handbook-card{
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+.handbook-card{
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:30px;
+  max-width:650px;
+  background:#fff;
+}
+
+.handbook-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.handbook-header h3{
+  font-size:22px;
+  margin:0;
+}
+
+.handbook-desc{
+  color:#6b6b6b;
+  margin:10px 0 25px;
+  line-height:1.5;
+}
+
+.handbook-card>label{
+  display:block;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.handbook-card>input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #e5e5e5;
+  margin-bottom:20px;
+  font-size:14px;
+  background:#f8f8f8;
+}
+
+.upload-btn{
+  position:relative;
+  display:inline-block;
+  border:1px solid #ddd;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:25px;
+}
+
+.upload-btn input{
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity:0;
+  cursor:pointer;
+  display: block;
+}
+
+.upload-btn span{
+  font-weight:500;
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:10px 0 20px;
+}
+
+.divider span{
+  flex:1;
+  height:1px;
+  background:#ddd;
+}
+
+.divider p{
+  margin:0;
+  color:#777;
+}
+.combo-container{
+  margin-top:20px;
+}
+
+.combo-card{
+  border-radius:18px;
+  padding:28px;
+  margin-bottom:25px;
+  background:#fff;
+}
+
+.combo-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.combo-header h3{
+  font-size:24px;
+  margin:0;
+}
+
+.combo-desc{
+  color:#6b6b6b;
+  margin:12px 0 20px;
+  font-size:18px;
+  line-height:1.5;
+}
+
+.checkbox-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:18px;
+  font-weight:500;
+}
+
+.checkbox-row input{
+  width:18px;
+  height:18px;
+}
+
+.badge{
+  font-size:14px;
+  padding:6px 12px;
+  border-radius:999px;
+  color:white;
+  font-weight:600;
+}
+
+.green{
+  background:#16a34a;
+}
+
+.purple{
+  background:linear-gradient(90deg,#7c3aed,#c026d3) !important;
+  color: white !important;
+}
+
+.experience{
+  border:2px solid #a7f3d0;
+}
+
+.premium{
+  border:2px solid #c4b5fd;
+}
+
+.combo-footer{
+  display:flex;
+  gap:20px;
+  margin-top:30px;
+}
+.dynamic-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.dynamic-field input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+.dynamic-field button {    background: #f3f3f3;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.dynamic-field button:hover {
+    background: #02afef;
+    color: white;
+}
+
+.experience-pricing{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:20px;
+
+}
+
+.combo-expanded {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.combo-price-duration-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.combo-expanded small {
+    color: #888;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+.experience-card{
+
+padding:20px;
+border-radius:12px;
+border:2px solid #22c55e;
+background:#f0fdf4;
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
+}
+
+.no-exp{
+
+border:2px solid #ef4444;
+background:#fef2f2;
+
+}
+
+.experience-card input{
+
+padding:10px;
+border-radius:8px;
+border:1px solid #ddd;
+
+}
+
+.preview-box{
+
+margin-top:20px;
+
+padding:20px;
+
+border-radius:12px;
+
+background:#eef4ff;
+
+border:1px solid #c7d2fe;
+
+}
+
+.preview-grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:15px;
+
+margin-top:10px;
+
+}
+
+.preview-card{
+
+padding:18px;
+
+border-radius:10px;
+
+text-align:center;
+
+font-weight:600;
+
+}
+
+.preview-card.green{
+
+background:#dcfce7;
+color:#166534;
+
+}
+
+.preview-card.red{
+
+background:#fee2e2;
+color:#b91c1c;
+
+}
+
+.preview-price{
+
+font-size:22px;
+
+margin-bottom:5px;
+
+}
+
+.preview-price span{
+
+text-decoration:line-through;
+
+margin-right:6px;
+
+opacity:0.6;
+
+}
+
+.pricing-type-selector {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0 16px 0;
+    flex-wrap: wrap;
+}
+
+.pricing-type-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: #fafafa;
+    min-width: fit-content;
+    flex: 1;
+}
+
+.pricing-type-option input[type="radio"] {
+    accent-color: #02afef;
+    margin: 0;
+    width: auto !important;
+    min-width: 16px;
+    flex-shrink: 0;
+}
+
+.pricing-type-option.active {
+    border-color: #02afef;
+    background: #f3eeff;
+    color: #02afef;
+}
+
+.pricing-sub {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin: 14px 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+

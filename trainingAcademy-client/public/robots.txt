@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://safetytrainingacademy.edu.au/sitemap.xml

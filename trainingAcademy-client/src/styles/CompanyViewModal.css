@@ -1,0 +1,859 @@
+/* ═══════════════════════════════════════════
+   CompanyViewModal.css
+   Responsive, pixel-matched to screenshots
+═══════════════════════════════════════════ */
+
+/* ── Backdrop ── */
+.cvm-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 15, 25, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow-y: auto;
+}
+
+/* ── Modal Box ── */
+.cvm-modal {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 960px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: cvm-slide-in 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cvm-slide-in {
+    from { opacity: 0; transform: translateY(-16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Header ── */
+.cvm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 18px;
+    border-bottom: 1px solid #F0F0F5;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.cvm-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.cvm-company-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #02afef 0%, #0a8fc0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.cvm-company-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cvm-company-tagline {
+    font-size: 13px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.cvm-close-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: #F3F4F6;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+}
+.cvm-close-btn:hover {
+    background: #E5E7EB;
+    color: #111827;
+}
+
+/* ── Scrollable Body ── */
+.cvm-body {
+    padding: 20px 24px 28px;
+    overflow-y: auto;
+    max-height: calc(90vh - 80px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cvm-loading {
+    text-align: center;
+    padding: 48px;
+    color: #9CA3AF;
+    font-size: 14px;
+}
+
+/* ── Description ── */
+.cvm-desc {
+    font-size: 13.5px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── Profile Card ── */
+.cvm-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 14px 18px;
+    background: #FAFAFA;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.cvm-profile-email {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #374151;
+    font-size: 13.5px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.cvm-profile-email:hover { color: #02afef; }
+.cvm-profile-email svg { color: #9CA3AF; }
+
+.cvm-profile-divider {
+    width: 1px;
+    height: 32px;
+    background: #E5E7EB;
+    margin: 0 6px;
+    flex-shrink: 0;
+}
+
+.cvm-profile-joined {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6B7280;
+}
+.cvm-profile-joined svg { flex-shrink: 0; color: #9CA3AF; }
+.cvm-profile-joined > div {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    line-height: 1.4;
+}
+.cvm-joined-label {
+    color: #9CA3AF;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.cvm-joined-date {
+    color: #374151;
+    font-weight: 600;
+    font-size: 13px;
+}
+.cvm-joined-time {
+    color: #9CA3AF;
+    font-size: 11.5px;
+}
+
+.cvm-profile-right {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.cvm-account-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+.cvm-badge-active {
+    background: #ECFDF5;
+    color: #059669;
+}
+.cvm-badge-inactive {
+    background: #FEF2F2;
+    color: #DC2626;
+}
+.cvm-badge-paylater {
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+}
+
+.cvm-last-login {
+    font-size: 12px;
+    color: #9CA3AF;
+}
+
+/* ── Meta Row (Contact Person, Mobile, etc.) ── */
+.cvm-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 12px 16px;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.cvm-meta-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+}
+
+.cvm-meta-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6B7280;
+    margin-bottom: 2px;
+}
+
+.cvm-meta-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* ── Stats Row ── */
+.cvm-stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.cvm-stat-card {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    transition: box-shadow 0.15s;
+}
+.cvm-stat-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+.cvm-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.cvm-icon-purple { background: linear-gradient(135deg, #02afef, #0a8fc0); }
+.cvm-icon-blue   { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+.cvm-icon-gray   { background: linear-gradient(135deg, #9CA3AF, #6B7280); }
+.cvm-icon-gray svg { stroke: white; }
+
+.cvm-stat-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1;
+}
+.cvm-stat-label {
+    font-size: 13px;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+/* ── Section ── */
+.cvm-section {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+}
+
+.cvm-section-header {
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid #F3F4F6;
+    background: #FAFAFA;
+}
+.cvm-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px;
+}
+.cvm-section-sub {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ── Main Students Table ── */
+.cvm-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.cvm-main-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 860px;
+}
+
+.cvm-main-table thead tr {
+    background: #F9FAFB;
+}
+.cvm-main-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6B7280;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #E5E7EB;
+    white-space: nowrap;
+}
+.cvm-main-table td {
+    padding: 12px 12px;
+    border-bottom: 1px solid #F3F4F6;
+    color: #374151;
+    vertical-align: top;
+}
+.cvm-main-table tbody tr:last-child td { border-bottom: none; }
+.cvm-main-table tbody tr:hover { background: #F9FAFB; }
+
+/* ── Student Info in Table ── */
+.cvm-stu-name {
+    font-weight: 600;
+    color: #111827;
+    font-size: 13px;
+}
+.cvm-stu-meta {
+    font-size: 11.5px;
+    color: #9CA3AF;
+    margin-top: 1px;
+}
+.cvm-stu-date {
+    font-size: 12px;
+    color: #374151;
+    white-space: nowrap;
+}
+
+/* ── Tags / Pills ── */
+.cvm-tag {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cvm-tag-pending     { background: #FEF3C7; color: #B45309; }
+.cvm-tag-completed   { background: #ECFDF5; color: #059669; }
+.cvm-tag-active      { background: #EEF2FF; color: #02afef; }
+.cvm-tag-inactive    { background: #F3F4F6; color: #9CA3AF; }
+.cvm-tag-submitted   { background: #E0F2FE; color: #0369A1; }
+.cvm-tag-not-submitted { background: #FEF2F2; color: #DC2626; }
+.cvm-tag-not-completed { background: #FEF2F2; color: #DC2626; }
+.cvm-tag-unpaid      { background: #FEF3C7; color: #B45309; }
+.cvm-tag-paid        { background: #ECFDF5; color: #059669; }
+.cvm-tag-no          { background: #F3F4F6; color: #9CA3AF; }
+.cvm-tag-yes         { background: #ECFDF5; color: #059669; }
+
+/* ── Orders Section ── */
+.cvm-orders-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cvm-order-block {
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.cvm-order-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.12s;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.cvm-order-header:hover { background: #F9FAFB; }
+
+.cvm-order-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.cvm-order-label { font-size: 13.5px; font-weight: 600; color: #111827; }
+.cvm-order-date  { font-size: 13.5px; font-weight: 600; color: #111827; }
+.cvm-order-pay-tag {
+    font-size: 11.5px;
+    color: #6B7280;
+    background: #F3F4F6;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-weight: 500;
+}
+
+.cvm-order-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.cvm-order-amount {
+    font-size: 14px;
+    font-weight: 700;
+    color: #02afef;
+}
+.cvm-order-status {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+.cvm-status-completed { background: #ECFDF5; color: #059669; }
+.cvm-status-pending   { background: #FEF3C7; color: #B45309; }
+
+.cvm-order-chevron { color: #9CA3AF; }
+
+.cvm-order-id {
+    font-size: 11px;
+    color: #9CA3AF;
+    padding: 0 16px 8px;
+    font-family: monospace;
+    letter-spacing: 0.03em;
+}
+
+/* ── Course Block inside Order ── */
+.cvm-course-block {
+    border-top: 1px solid #F3F4F6;
+    padding: 12px 16px;
+}
+
+.cvm-course-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.cvm-course-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #02afef;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.cvm-course-name { font-size: 14px; font-weight: 600; color: #111827; }
+
+.cvm-course-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    justify-content: flex-end;
+}
+.cvm-enrolled-count {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    color: #6B7280;
+    margin-right: auto;
+}
+.cvm-enrolled-count svg { stroke: #9CA3AF; }
+
+.cvm-icon-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    background: #fff;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+}
+.cvm-icon-btn:hover { background: #F3F4F6; color: #111827; }
+
+/* ── Sub-student table (inside order) ── */
+.cvm-student-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+}
+
+.cvm-student-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    min-width: 680px;
+}
+.cvm-student-table thead tr { background: #F9FAFB; }
+.cvm-student-table th {
+    padding: 8px 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9CA3AF;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #E5E7EB;
+    white-space: nowrap;
+    text-align: left;
+}
+.cvm-student-table td {
+    padding: 10px 10px;
+    border-bottom: 1px solid #F3F4F6;
+    color: #374151;
+    vertical-align: top;
+}
+.cvm-student-table tbody tr:last-child td { border-bottom: none; }
+.cvm-student-table tbody tr:hover { background: #F9FAFB; }
+
+/* ── Course Link Cards ── */
+.cvm-link-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: #fff;
+    transition: box-shadow 0.15s;
+}
+.cvm-link-card:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+.cvm-link-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.cvm-link-card-info { flex: 1; min-width: 0; }
+
+.cvm-link-course-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px;
+}
+
+.cvm-link-course-meta {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.cvm-link-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.cvm-link-badge-avail { background: #dcfce7; color: #16a34a; }
+.cvm-link-badge-full  { background: #fee2e2; color: #dc2626; }
+
+.cvm-link-url-box {
+    background: #f3f4f6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #555;
+    word-break: break-all;
+    margin-bottom: 10px;
+}
+
+.cvm-link-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cvm-link-btn-copy {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #02afef;
+    color: #fff;
+    transition: background 0.15s;
+}
+.cvm-link-btn-copy:hover { background: #0a8fc0; }
+.cvm-link-btn-copy--disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.cvm-link-btn-students {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: 1px solid #e0e7ff;
+    cursor: pointer;
+    background: #f0faff;
+    color: #02afef;
+    transition: all 0.15s;
+}
+.cvm-link-btn-students:hover,
+.cvm-link-btn-students--active {
+    background: #02afef;
+    color: #fff;
+    border-color: #02afef;
+}
+
+.cvm-link-students-panel {
+    margin-top: 12px;
+    border: 1px solid #e0e7ff;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.cvm-link-students-header {
+    padding: 10px 14px;
+    background: #f0faff;
+    border-bottom: 1px solid #e0e7ff;
+    font-size: 13px;
+    font-weight: 700;
+    color: #02afef;
+}
+
+.cvm-link-students-empty {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+.cvm-link-students-panel .cvm-table-scroll {
+    padding: 0;
+}
+
+/* ═══════════════════════════
+   RESPONSIVE
+═══════════════════════════ */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .cvm-backdrop { padding: 0; align-items: flex-end; }
+
+    .cvm-modal {
+        border-radius: 20px 20px 0 0;
+        max-width: 100%;
+        max-height: 92vh;
+    }
+
+    .cvm-body { max-height: calc(92vh - 80px); }
+
+    .cvm-stats-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cvm-profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .cvm-profile-right {
+        align-items: flex-start;
+        margin-left: 0;
+    }
+    .cvm-profile-divider { display: none; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .cvm-header { padding: 16px 16px 14px; }
+    .cvm-body { padding: 14px 16px 20px; gap: 12px; }
+
+    .cvm-company-name { font-size: 15px; }
+    .cvm-company-tagline { font-size: 12px; }
+
+    .cvm-stats-row {
+        grid-template-columns: 1fr;
+    }
+    .cvm-stats-row .cvm-stat-card:last-child {
+        grid-column: auto;
+    }
+
+    .cvm-order-header { padding: 11px 14px; }
+    .cvm-order-label, .cvm-order-date { font-size: 12.5px; }
+
+    .cvm-stat-num { font-size: 22px; }
+}
+
+/* ── Purchased courses ── */
+.cvm-purchases-section {
+    margin-top: 4px;
+}
+
+.cvm-purchases-empty {
+    padding: 20px 18px;
+    color: #9ca3af;
+    font-size: 13px;
+    margin: 0;
+}
+
+.cvm-purchases-list {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cvm-purchase-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: #fafafa;
+}
+
+.cvm-purchase-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cvm-purchase-order {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.cvm-purchase-meta {
+    margin: 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.cvm-purchase-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.cvm-purchase-amount {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.cvm-purchase-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.cvm-purchase-badge-paid {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.cvm-purchase-badge-pending {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.cvm-purchase-badge-failed {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.cvm-purchase-txn {
+    margin: 8px 0 0;
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.cvm-purchase-courses {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.cvm-purchase-session {
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.cvm-purchase-no-courses {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #9ca3af;
+}

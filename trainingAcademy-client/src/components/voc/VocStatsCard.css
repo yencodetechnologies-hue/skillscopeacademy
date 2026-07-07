@@ -1,0 +1,73 @@
+.vsc__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 33px;
+}
+
+.vsc__card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vsc__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.vsc__card-title {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.vsc__card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vsc__icon--warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.vsc__icon--success {
+  background: #d1f5e0;
+  color: #1a7f44;
+}
+
+.vsc__icon--purple {
+  background: #dbeeff;
+  color: #0a5f8c;
+}
+
+.vsc__card-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.vsc__card-subtitle {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .vsc__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,462 @@
+/* CONTAINER */
+.digital-container {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* TITLE */
+.digital-title {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+/* INSTRUCTION */
+.digital-instruction {
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* MAIN LAYOUT */
+.digital-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  flex-wrap: wrap;
+}
+
+/* LEFT SIDE */
+.digital-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 80px;
+}
+
+/* DRAG ITEMS */
+.draggable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  text-align: center;
+  cursor: grab;
+  font-size: 14px;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.digital-logo {
+  width: 80px;
+  margin: 10px 0;
+}
+
+.url-label {
+  font-size: 14px;
+  margin: 10px 0 6px;
+  font-weight: 500;
+}
+
+.draggable.green {
+  background: #10b981;
+  color: white;
+  font-weight: 500;
+  padding: 15px;
+}
+
+.draggable img {
+  width: 60px;
+  height: 60px;
+}
+
+/* RIGHT SIDE */
+.digital-right {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+}
+
+/* GRID FOR Q2 */
+.digital-right.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+/* DROP ZONE */
+.drop-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 9px;
+  background: #f8fafc;
+  font-size: 14px;
+  width: 160px;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.drop-zone.filled {
+  background: #d1fae5;
+  border-color: #10b981;
+  border-style: solid;
+  color: #065f46;
+  font-weight: 600;
+}
+
+.drop-zone:hover {
+  border-color:#02afef;
+  background: #f3f4f6;
+}
+
+.drop-zone.filled:hover {
+  border-color: #059669;
+  background: #a7f3d0;
+}
+
+/* OVERLAY */
+.overlay-drop {
+  position: absolute;
+}
+
+/* IMAGE WRAPPER */
+.digital-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  justify-content: center;
+}
+
+.digital-bg-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* OVERLAY POSITIONS */
+.checklist {
+  top: 75px;
+  left: 175px;
+}
+
+.images {
+  top: 130px;
+  left: 173px;
+  min-width: 150px;
+}
+
+/* SUCCESS TEXT */
+.success {
+  margin-top: 10px;
+  color: #16a34a;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* INPUT */
+.url-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.url-input:focus {
+  outline: none;
+  border-color:#02afef;
+}
+
+/* RESET BUTTON */
+.reset-btn {
+  margin: 35px auto;
+  display: block;
+  padding: 8px 16px;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background: #d1d5db;
+}
+
+/* DEVICE */
+.device {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.device img {
+  width: 90px;
+  height: auto;
+}
+
+/* FOOTER */
+.digital-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  gap: 10px;
+}
+
+.digital-footer button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.digital-footer button:first-child {
+  background: #e5e7eb;
+}
+
+.digital-footer button:first-child:hover {
+  background: #d1d5db;
+}
+
+.digital-footer button:last-child {
+  background:#02afef;
+  color: white;
+}
+
+.digital-footer button:last-child:hover {
+  background: #02afef;
+}
+
+.digital-footer span {
+  font-size: 13px;
+  color: #555;
+}
+
+.digital-footer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── MOBILE ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Q1 & Q3 */
+  .digital-main {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .digital-left {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 12px;
+    min-width: unset;
+  }
+
+  .digital-bg-img {
+    width: 130%;
+    height: auto;
+  }
+
+  .draggable img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .checklist {
+    top: 20%;
+    left: 44%;
+    width: 90px;
+    font-size: 10px;
+  }
+
+  .images {
+    top: 34%;
+    left: 44%;
+    min-width: unset;
+    font-size: 10px;
+  }
+
+  .draggable.green {
+    padding: 10px 12px;
+    font-size: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .digital-image-wrapper {
+    max-width: 280px;
+    width: 100%;
+  }
+
+  .drop-zone {
+    width: 120px;
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  /* ── Q2 drag-labels: left labels | right devices, both vertical ── */
+  .digital-main.labels-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: nowrap;        /* prevent wrapping to new row */
+    overflow-x: hidden;
+  }
+
+  /* Left column: green label cards stacked vertically */
+  .digital-main.labels-layout .digital-left {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 42%;
+    min-width: unset;
+    max-width: unset;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  /* Right column: device cards stacked vertically (1 column, not 2x2 grid) */
+  .digital-main.labels-layout .digital-right.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    width: 55%;
+  }
+
+  /* Each device card: image on top, drop zone below */
+  .digital-main.labels-layout .device {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 8px 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .digital-main.labels-layout .device img {
+    width: 44px;
+    height: auto;
+  }
+
+  /* Drop zone fills the device card width */
+  .digital-main.labels-layout .drop-zone {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 11px;
+    padding: 5px 4px;
+  }
+
+  /* Label height matches device card height — visual alignment */
+  .digital-main.labels-layout .digital-left .draggable.green {
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 11px;
+    padding: 6px 8px;
+    text-align: center;
+  }
+
+  .digital-right {
+    width: 100%;
+  }
+
+  .digital-right.grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .device img {
+    width: 60px;
+  }
+
+  .digital-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .digital-footer button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .digital-footer span {
+    text-align: center;
+  }
+}
+
+/* ─── DESKTOP ─────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .digital-container {
+    padding: 30px;
+  }
+
+  .digital-main {
+    width: 75%;
+    margin: 0 auto;
+    gap: 80px;
+  }
+
+  .digital-image-wrapper {
+    max-width: 380px;
+  }
+
+  /* labels-layout: force row — labels left | devices grid right */
+  .digital-main.labels-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 40px;
+  }
+
+  .digital-main.labels-layout .digital-left {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: auto;
+    min-width: 180px;
+    gap: 14px;
+  }
+
+  .digital-main.labels-layout .digital-right.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    flex: 1;
+    align-items: baseline;
+  }
+
+  .digital-main.labels-layout .device img {
+    width: 90px;
+  }
+
+  .digital-main.labels-layout .drop-zone {
+    width: 160px;
+  }
+  .digital-logo {
+    width: 250px;
+  }
+}

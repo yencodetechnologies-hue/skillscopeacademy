@@ -1,0 +1,375 @@
+/* ============================
+   StudentProfile.css
+   ============================ */
+
+.sp-page {
+  padding: 28px 32px;
+  background: #f8f9fb;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ── Page Header ── */
+.sp-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sp-page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #02afef;
+  margin: 0 0 4px;
+}
+
+.sp-page-sub {
+  font-size: 13.5px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.sp-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sp-btn-edit {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  background: #02afef;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sp-btn-edit:hover { background: #0a8fc0; }
+
+.sp-btn-save {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sp-btn-save:hover    { background: #15803d; }
+.sp-btn-save:disabled { opacity: 0.65; cursor: not-allowed; }
+
+.sp-btn-cancel {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  background: #fff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sp-btn-cancel:hover { background: #f9fafb; }
+
+/* ── Toast ── */
+.sp-toast {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.sp-toast-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.sp-toast-error   { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+
+/* ── Layout ── */
+.sp-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── Profile Card ── */
+.sp-card-wrap {
+  position: sticky;
+  top: 80px;
+}
+
+.sp-profile-card {
+  background: linear-gradient(160deg, #0d2240 0%, #02afef 40%, #02afef 100%);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  color: #fff;
+  min-height: 420px;
+}
+
+.sp-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.sp-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #fff;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.sp-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sp-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+}
+
+.sp-card-id {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 24px;
+}
+
+.sp-card-info {
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.sp-card-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.92);
+}
+
+.sp-card-row i {
+  width: 16px;
+  font-size: 13px;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+/* ── Sections ── */
+.sp-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sp-section {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  padding: 24px 28px;
+}
+
+.sp-section-header {
+  margin-bottom: 20px;
+}
+
+.sp-section-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.sp-section-header p {
+  font-size: 12.5px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── Grid layouts ── */
+.sp-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sp-grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.sp-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── Field ── */
+.sp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-full {
+  grid-column: 1 / -1;
+}
+
+.sp-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: none;
+}
+
+.sp-value {
+  font-size: 14px;
+  color: #374151;
+  background: #f9fafb;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.sp-input {
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.sp-input:focus {
+  border-color: #02afef;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+}
+
+.sp-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ── Stats ── */
+.sp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.sp-stat-card {
+  border-radius: 10px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.sp-stat-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sp-stat-value {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.sp-stat-purple { background: #f0faff; }
+.sp-stat-purple .sp-stat-label { color: #3ab7ed; }
+.sp-stat-purple .sp-stat-value { color: #111827; }
+
+.sp-stat-blue   { background: #eff6ff; }
+.sp-stat-blue .sp-stat-label   { color: #2563eb; }
+.sp-stat-blue .sp-stat-value   { color: #111827; }
+
+.sp-stat-green  { background: #f0fdf4; }
+.sp-stat-green .sp-stat-label  { color: #16a34a; }
+.sp-stat-green .sp-stat-value  { color: #111827; }
+
+.sp-stat-orange { background: #fff7ed; }
+.sp-stat-orange .sp-stat-label { color: #ea580c; }
+.sp-stat-orange .sp-stat-value { color: #111827; }
+
+/* ── Loading / Error ── */
+.sp-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.sp-error-msg {
+  padding: 16px 20px;
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: 8px;
+  margin: 24px;
+  font-size: 13.5px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .sp-layout { grid-template-columns: 280px 1fr; }
+  .sp-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .sp-page   { padding: 20px 16px; }
+  .sp-layout { grid-template-columns: 1fr; }
+  .sp-card-wrap { position: static; }
+  .sp-grid-2    { grid-template-columns: 1fr; }
+  .sp-grid-3    { grid-template-columns: 1fr; }
+  .sp-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .sp-page-header { flex-direction: column; align-items: stretch; }
+  .sp-header-actions { justify-content: flex-end; }
+}
+
+@media (max-width: 480px) {
+  .sp-stats-grid { grid-template-columns: 1fr 1fr; }
+  .sp-section    { padding: 18px 16px; }
+}

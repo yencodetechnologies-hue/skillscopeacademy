@@ -1,0 +1,1107 @@
+/* MobileLandingPage.css — all classes prefixed mlp- */
+
+.mlp-root {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding-bottom: 60px;
+}
+
+.mlp-root *,
+.mlp-root *::before,
+.mlp-root *::after {
+  box-sizing: border-box;
+}
+
+/* ── Announcement Bar ── */
+.announcement-bar {
+  height: 32px;
+  width: 100%;
+  background: #15a0de;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+}
+
+.announcement-bar p {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 11px;
+  animation: scrollText 15s linear infinite;
+  line-height: 32px;
+}
+
+@keyframes scrollText {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ── Top Bar ── */
+.mlp-topbar {
+  background: #0d2240;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mlp-logo-text {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.mlp-topbar-phones {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mlp-topbar-phone {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* ── Hero Carousel ── */
+.mlp-carousel {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: #0d2240;
+}
+
+.mlp-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  /* Inactive slides are invisible (opacity:0) but still occupy the same
+     absolute box. Without this they intercepted taps on the image area
+     of the visible slide, making it look like only the title text was
+     clickable. Disabling pointer-events here forwards every tap to the
+     active slide underneath/above. */
+  pointer-events: none;
+}
+
+.mlp-slide.active {
+  opacity: 1;
+  /* Re-enable interactions only on the slide the user can actually see. */
+  pointer-events: auto;
+}
+
+.mlp-slide.active[role="button"] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.06);
+}
+
+.mlp-slide-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #0d1b2a;
+}
+
+.mlp-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,34,64,0.92) 0%, rgba(13,34,64,0.2) 60%);
+}
+
+.mlp-slide-content {
+  position: relative;
+  z-index: 2;
+  padding: 14px 16px;
+  width: 100%;
+}
+
+.mlp-slide-badge {
+  background: #29b6e8;
+  color: #0d2240;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 7px;
+}
+
+.mlp-slide-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 5px;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mlp-slide-price {
+  color: #29b6e8;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mlp-slide-orig {
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  text-decoration: line-through;
+  margin-left: 5px;
+}
+
+.mlp-cbtn {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 3;
+  background: rgba(41,182,232,0.2);
+  border: 1px solid rgba(41,182,232,0.4);
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.mlp-prev { left: 10px; }
+.mlp-next { right: 10px; }
+
+.mlp-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 3;
+}
+
+.mlp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.mlp-dot.active {
+  background: #29b6e8;
+  width: 18px;
+  border-radius: 3px;
+}
+
+.mlp-slide-counter {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  background: rgba(13, 34, 64, 0.7);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(41, 182, 232, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  user-select: none;
+}
+
+/* ── Trust Strip ── */
+.mlp-trust-strip {
+  background: #0d2240;
+  padding: 6px 16px;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  border-top: 1px solid rgba(41,182,232,0.2);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mlp-trust-strip>div{
+  margin: auto;
+}
+
+.mlp-trust-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.mlp-trust-pill {
+  background: rgba(41,182,232,0.15);
+  border: 1px solid rgba(41,182,232,0.3);
+  border-radius: 20px;
+  padding: 4px 10px;
+  color: #29b6e8;
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+/* ── CTA Strip ── */
+.mlp-cta-strip {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #fff;
+  border-bottom: 1px solid #dbeafe;
+}
+
+.mlp-btn-book {
+  flex: 1;
+  background: #15a0de;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mlp-btn-call {
+  background: #29b6e8;
+  color: #0d2240;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Divider ── */
+.mlp-divider {
+  height: 8px;
+  background: #e8f4fd;
+}
+
+/* ── Section ── */
+.mlp-section {
+  padding: 12px 16px;
+}
+
+.mlp-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #29b6e8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 15px;
+}
+
+.mlp-section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0d2240;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* ── Session course tag (subtitle under Available sessions) ── */
+.mlp-session-course-tag {
+  font-size: 12px;
+  font-weight: 500;
+  color: #29b6e8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mlp-sessions-section{
+  min-height: 351px;
+}
+/* ── Dates Card ── */
+.mlp-dates-card {
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Reserve room for SHOW_LIMIT (3) rows even when the current course
+     has 0/1/2 sessions. Without this the card shrinks/grows as the hero
+     auto-rotates between courses and yanks the rest of the page up and
+     down — a visible flicker if the user is reading content below this
+     section. The 180px ≈ 3 × ~54px row + small breathing room. */
+  min-height: 180px;
+}
+
+.mlp-date-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid #bae0f7;
+}
+
+.mlp-date-row:last-child {
+  border-bottom: none;
+}
+
+.mlp-date-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #29b6e8;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.mlp-date-dot.amber {
+  background: #f59e0b;
+}
+
+.mlp-date-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mlp-date-info-link {
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(41, 182, 232, 0.18);
+  border-radius: 6px;
+  transition: background 0.18s ease;
+}
+
+.mlp-date-info-link:active {
+  background: rgba(41, 182, 232, 0.08);
+}
+
+.mlp-session-course-tag-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(41, 182, 232, 0.4);
+  text-underline-offset: 2px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mlp-session-course-tag-link:active {
+  color: #1490cc;
+}
+
+.mlp-date-course {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0d2240;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mlp-date-when {
+  font-size: 11px;
+  color: #4a7096;
+  margin-top: 1px;
+}
+
+.mlp-date-spots {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0d7aad;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  margin-left: 8px;
+  border: none;
+}
+.mlp-date-actions > button{
+  background-color: #15a0de;
+  color: #fff;
+  padding: 5px 9px;
+}
+
+.mlp-date-spots.low {
+  color: #d97706;
+  background: #fef3c7;
+}
+
+/* ── No sessions ── */
+.mlp-no-sessions {
+  text-align: center;
+  color: #4a7096;
+  font-size: 13px;
+  padding: 20px;
+  background: #f0f8ff;
+  border-radius: 12px;
+  border: 1px solid #bae0f7;
+  /* Match `.mlp-dates-card`'s reserved height so courses with zero
+     sessions don't collapse the section (and the page below it). The
+     flex centering keeps the message vertically aligned in the box. */
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── See more / See less button ── */
+.mlp-see-more-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 10px;
+  color: #0d7aad;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mlp-see-more-btn:active {
+  background: #dbeafe;
+}
+
+/* ── Skeleton loader ── */
+.mlp-skeleton-row {
+  gap: 10px;
+}
+
+.mlp-skeleton {
+  background: linear-gradient(90deg, #e8f4fd 25%, #d1ebfa 50%, #e8f4fd 75%);
+  background-size: 200% 100%;
+  animation: mlp-shimmer 1.4s infinite;
+  border-radius: 6px;
+}
+
+.mlp-skeleton-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mlp-skeleton-title {
+  height: 13px;
+  width: 120px;
+  margin-bottom: 5px;
+}
+
+.mlp-skeleton-sub {
+  height: 11px;
+  width: 180px;
+}
+
+.mlp-skeleton-badge {
+  height: 22px;
+  width: 54px;
+  border-radius: 20px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+@keyframes mlp-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Session swipe — grouped pages of 7 ── */
+.mlp-session-swipe {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mlp-session-swipe::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each page card is full width — same as the dates card, but swipeable */
+.mlp-session-page-card {
+  flex-shrink: 0;
+  width: 100%;
+  min-width: calc(100vw - 64px);
+  max-width: 416px;
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* page indicator — "1 / 3" at bottom of each page card */
+.mlp-page-indicator {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a7096;
+  padding: 8px;
+  border-top: 1px solid #bae0f7;
+  background: #e8f4fd;
+}
+
+
+.mlp-course-card {
+  background: #fff;
+  border: 1.5px solid #bae0f7;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 150px;
+  max-width: 160px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mlp-ci-img {
+  height: 90px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #0d2240;
+}
+
+.mlp-course-body {
+  padding: 8px 10px;
+  flex: 1;
+}
+
+.mlp-course-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d2240;
+  line-height: 1.3;
+  margin-bottom: 3px;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mlp-course-duration {
+  font-size: 10px;
+  color: #4a7096;
+  margin-bottom: 4px;
+}
+
+.mlp-course-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d7aad;
+}
+
+.mlp-course-orig {
+  font-size: 11px;
+  color: #94a3b8;
+  text-decoration: line-through;
+  margin-left: 3px;
+}
+
+.mlp-course-btn {
+  display: block;
+  background: #0d2240;
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 7px;
+  margin: 4px 10px 10px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  width: calc(100% - 20px);
+}
+
+/* ── Stats ── */
+.mlp-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #bae0f7;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.mlp-stat {
+  background: #f0f8ff;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.mlp-stat-num {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0d2240;
+}
+
+.mlp-stat-label {
+  font-size: 10px;
+  color: #4a7096;
+  margin-top: 2px;
+}
+
+/* ── Reviews ── */
+.mlp-reviews-summary {
+  background: #f0f8ff;
+  border: 1.5px solid #bae0f7;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.mlp-review-big {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0d2240;
+}
+.mlp-date-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  border: none;
+}
+.mlp-stars {
+  color: #f59e0b;
+  font-size: 15px;
+}
+
+.mlp-review-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0d2240;
+}
+
+.mlp-review-site {
+  font-size: 11px;
+  color: #4a7096;
+}
+
+/* ── Reviews — horizontal swipe ── */
+.mlp-review-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.mlp-review-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.mlp-review-card {
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 12px;
+  padding: 14px;
+  min-width: 260px;
+  max-width: 280px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.mlp-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.mlp-review-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d2240;
+}
+
+.mlp-review-quote {
+  font-size: 12px;
+  color: #4a7096;
+  line-height: 1.5;
+}
+
+/* ── Sticky Bottom Bar ── */
+.mlp-sticky {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #0d2240;
+  padding: 10px 16px;
+  display: flex;
+  gap: 8px;
+  border-top: 2px solid #29b6e8;
+  z-index: 100;
+}
+
+.mlp-sticky-call {
+  flex: 1;
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mlp-sticky-wa {
+  background: #25d366;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Category Grid (iPhone-style 3×3 app icons) ── */
+.mlp-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 10px;
+  width: 100%;
+}
+
+.mlp-cat-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s ease;
+}
+
+.mlp-cat-tile:active {
+  transform: scale(0.94);
+}
+
+.mlp-cat-tile-icon {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  /* iOS-style continuous corner radius (~22% of tile size) */
+  border-radius: 22%;
+  overflow: hidden;
+  background-color: #0d2240;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 6px 14px rgba(13, 34, 64, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.mlp-cat-tile-initial {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.mlp-cat-tile-label {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d2240;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.mlp-cat-tile-count {
+  width: 100%;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(13, 34, 64, 0.55);
+  line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ── Desktop: hide ── */
+@media (min-width: 769px) {
+  .mlp-root {
+    display: none;
+  }
+}
+
+/* ── Partner Brands Marquee ── */
+.mlp-brands-track-wrap {
+  overflow: hidden;
+  width: 100%;
+}
+
+.mlp-brands-track {
+  display: flex;
+  animation: mlp-marquee 18s linear infinite;
+  width: max-content;
+}
+
+.mlp-brands-row {
+  display: flex;
+  gap: 10px;
+  padding-right: 10px;
+}
+
+
+
+@keyframes mlp-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Enquire Now Button ── */
+.mlp-enquire-btn {
+  display: block;
+  width: 100%;
+  background: #0d2240;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+}
+.mlp-enquire-btn:active { background: #1a4a7a; }
+
+/* ── Modal Backdrop ── */
+.mlp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,34,64,0.6);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* ── Modal Sheet ── */
+.mlp-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px 20px 0 0;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: mlp-slide-up 0.25s ease;
+}
+
+@keyframes mlp-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.mlp-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #e8f4fd;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.mlp-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d2240;
+}
+
+.mlp-modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Enquiry Section with Light Blue Background */
+.mlp-section-enquire {
+  background-color: #00AEEF !important; /* Exact light blue from screenshot */
+  padding: 40px 20px !important;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.mlp-section-enquire .mlp-enquire-btn {
+  margin-top: 0;
+  background-color: #0D2240; /* Dark navy for strong contrast */
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mlp-modal-body {
+  padding: 16px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mlp-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mlp-input {
+  flex: 1;
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #0d2240;
+  outline: none;
+}
+.mlp-input:focus { border-color: #29b6e8; }
+.mlp-input::placeholder { color: #94a3b8; }
+.mlp-input-full { width: 100%; }
+
+.mlp-textarea {
+  width: 100%;
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #0d2240;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+}
+.mlp-textarea:focus { border-color: #29b6e8; }
+.mlp-textarea::placeholder { color: #94a3b8; }
+
+.mlp-modal-send {
+  background: #0d2240;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+.mlp-modal-send:active { background: #1a4a7a; }
+
+.mlp-modal-divider {
+  height: 1px;
+  background: #e8f4fd;
+  margin: 4px 0;
+}
+
+.mlp-modal-enrol-text {
+  font-size: 13px;
+  color: #4a7096;
+  text-align: center;
+}
+
+.mlp-modal-enrol-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.mlp-modal-enrol-btn {
+  flex: 1;
+  background: #29b6e8;
+  color: #0d2240;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mlp-modal-voc-btn {
+  background: #0d2240;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

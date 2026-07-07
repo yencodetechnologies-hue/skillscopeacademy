@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ─── Page ─────────────────────────────────────────────────────────────────── */
+.ru-fetching { margin: 0 1.5rem .75rem; background: #eff6ff; color: #1d4ed8; padding: .5rem 1rem; border-radius: 8px; font-size: .82rem; font-weight: 500; }
+
+.ru-page {
+  font-family: 'DM Sans', sans-serif;
+  background: #f4f5f9;
+  min-height: 100vh;
+  padding: 2rem;
+  color: #1a1d2e;
+}
+.ru-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.75rem;
+}
+.ru-title  { font-size: 1.6rem; font-weight: 700; margin: 0 0 0.25rem; }
+.ru-subtitle { font-size: 0.875rem; color: #6b7280; margin: 0; }
+
+/* ─── Search Card ───────────────────────────────────────────────────────────── */
+.ru-search-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.ru-search-card h3 { margin: 0 0 .2rem; font-size: .95rem; font-weight: 600; }
+.ru-search-card p  { margin: 0; font-size: .8rem; color: #6b7280; }
+.ru-search-row { display: flex; gap: .75rem; margin-top: .85rem; flex-wrap: wrap; }
+.ru-search-wrap { position: relative; flex: 1; min-width: 200px; }
+.ru-search-icon {
+  position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%); font-size: .9rem;
+}
+.ru-search-input {
+  width: 100%; padding: .55rem .75rem .55rem 2rem;
+  border: 1.5px solid #e5e7eb; border-radius: 8px;
+  font-family: inherit; font-size: .875rem; outline: none;
+  transition: border-color .2s; box-sizing: border-box;
+}
+.ru-search-input:focus { border-color: #02afef; }
+.ru-select {
+  padding: .55rem .75rem; border: 1.5px solid #e5e7eb;
+  border-radius: 8px; font-family: inherit; font-size: .875rem;
+  outline: none; background: #fff; cursor: pointer; transition: border-color .2s;
+}
+.ru-select:focus { border-color: #02afef; }
+
+/* ─── Table Card ────────────────────────────────────────────────────────────── */
+.ru-table-card {
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden;
+}
+.ru-table-head { padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid #f0f0f5; }
+.ru-table-head h3 { margin: 0 0 .2rem; font-size: 1rem; font-weight: 600; }
+.ru-table-head p  { margin: 0; font-size: .8rem; color: #6b7280; }
+.ru-table-scroll { overflow-x: auto; }
+table.ru-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.ru-table thead th {
+  background: #f8f8fc; padding: .7rem 1rem;
+  text-align: left; font-weight: 600; color: #374151;
+  white-space: nowrap; border-bottom: 1px solid #eee;
+}
+.ru-table tbody tr { border-bottom: 1px solid #f3f4f6; transition: background .15s; }
+.ru-table tbody tr:hover { background: #fafafa; }
+.ru-table tbody td { padding: .7rem 1rem; vertical-align: middle; }
+
+/* ─── Badges ─────────────────────────────────────────────────────────────────
+   KEY FIX: white-space:nowrap prevents wrapping; inline-flex keeps icon+text on one line
+   ─────────────────────────────────────────────────────────────────────────── */
+.ru-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.69rem;
+  font-weight: 600;
+  white-space: nowrap;    /* ← prevents 2-line wrapping */
+  line-height: 1.5;
+}
+.ru-badge--completed     { background: #dcfce7; color: #15803d; }
+.ru-badge--not-completed { background: #fee2e2; color: #dc2626; }
+.ru-badge--active        { background: #dbeafe; color: #1d4ed8; }
+.ru-badge--inactive      { background: #f3f4f6; color: #6b7280; }
+.ru-badge--paid          { background: #dcfce7; color: #15803d; }
+.ru-badge--unpaid        { background: #fef9c3; color: #a16207; }
+.ru-badge--verified      { background: #fef9c3; color: #a16207; }
+.ru-badge--not-verified  { background: #fee2e2; color: #dc2626; }
+
+/* Badge column — don't let it stretch too wide */
+.ru-table td:has(.ru-badge) { white-space: nowrap; }
+
+/* ─── Student Cell ──────────────────────────────────────────────────────────── */
+.ru-student-cell { display: flex; align-items: center; gap: .6rem; }
+.ru-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #02afef, #a29bfe);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: #fff; font-size: .8rem; flex-shrink: 0;
+}
+.ru-student-name { font-weight: 600; color: #1a1d2e; }
+.ru-student-nick { font-size: .72rem; color: #9ca3af; }
+
+/* ─── Action Buttons ────────────────────────────────────────────────────────── */
+.ru-actions { display: flex; gap: 6px; align-items: center; }
+.ru-btn-upload {
+  padding: 5px 12px; border-radius: 7px; border: none; cursor: pointer;
+  font-family: inherit; font-size: .75rem; font-weight: 600;
+  background: #02afef; color: #fff;
+  transition: background .2s, transform .1s; white-space: nowrap;
+}
+.ru-btn-upload:hover { background: #5a4bd1; transform: translateY(-1px); }
+.ru-btn-upload:disabled {
+  background: #d1d5db; color: #9ca3af; cursor: not-allowed; transform: none;
+}
+
+/* ─── Pagination ────────────────────────────────────────────────────────────── */
+.ru-pagination {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.5rem; border-top: 1px solid #f0f0f5;
+  font-size: .8rem; color: #6b7280; flex-wrap: wrap; gap: .5rem;
+}
+.ru-page-controls { display: flex; align-items: center; gap: .5rem; }
+.ru-page-indicator { font-size: .8rem; color: #374151; }
+.ru-page-btn {
+  padding: 5px 14px; border: 1.5px solid #e5e7eb; border-radius: 7px;
+  background: #fff; cursor: pointer; font-size: .8rem; font-family: inherit;
+  transition: all .15s;
+}
+.ru-page-btn:hover:not(:disabled) { border-color: #02afef; color: #02afef; }
+.ru-page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ─── Loading / Empty ───────────────────────────────────────────────────────── */
+.ru-loading { padding: 2rem; text-align: center; color: #9ca3af; }
+.ru-empty   { padding: 2rem; text-align: center; color: #9ca3af; }
+.ru-error   { color: #ef4444 !important; }
+
+/* ─── Table Cell Helpers ────────────────────────────────────────────────────── */
+.ru-date-primary   { font-size: .8rem; font-weight: 500; }
+.ru-date-secondary { font-size: .72rem; color: #9ca3af; }
+.ru-type-primary   { font-size: .8rem; }
+.ru-type-company   { font-size: .72rem; font-weight: 600; color: #02afef; }
+.ru-email          { font-size: .8rem; color: #4b5563; }
+.ru-phone          { font-size: .8rem; }
+.ru-course-title   { font-weight: 500; font-size: .8rem; }
+.ru-course-cat     { font-size: .72rem; color: #9ca3af; }
+.ru-schedule       { font-size: .8rem; white-space: nowrap; }
+
+/* ─── Warning Modal ─────────────────────────────────────────────────────────── */
+.ru-warn-modal {
+  background: #fff; border-radius: 16px;
+  width: 100%; max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  animation: ru-slide-up .25s ease;
+  overflow: hidden;
+}
+.ru-warn-top {
+  background: linear-gradient(135deg, #fff7ed, #fef3c7);
+  padding: 1.75rem 1.5rem 1.25rem;
+  text-align: center;
+  border-bottom: 1px solid #fde68a;
+}
+.ru-warn-icon { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
+.ru-warn-top h2 { margin: 0 0 .3rem; font-size: 1.1rem; font-weight: 700; color: #92400e; }
+.ru-warn-top p  { margin: 0; font-size: .85rem; color: #b45309; }
+.ru-warn-checks { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: .6rem; }
+.ru-warn-check-row {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem .85rem; border-radius: 8px;
+  font-size: .82rem; font-weight: 500;
+}
+.ru-warn-check-row.fail { background: #fee2e2; color: #dc2626; }
+.ru-warn-check-row.pass { background: #dcfce7; color: #15803d; }
+.ru-warn-check-row .wc-icon { font-size: 1rem; flex-shrink: 0; }
+.ru-warn-footer {
+  padding: .85rem 1.5rem 1.25rem;
+  display: flex; justify-content: center;
+}
+.ru-warn-close-btn {
+  padding: .55rem 2rem; border: none; border-radius: 8px;
+  background: #f59e0b; color: #fff; cursor: pointer;
+  font-family: inherit; font-size: .875rem; font-weight: 600;
+  transition: background .2s;
+}
+.ru-warn-close-btn:hover { background: #d97706; }
+
+/* ─── Upload Result Modal ───────────────────────────────────────────────────── */
+.ru-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 1rem;
+}
+.ru-modal {
+  background: #fff; border-radius: 16px;
+  width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2); animation: ru-slide-up .25s ease;
+}
+@keyframes ru-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ru-modal-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid #f0f0f5;
+}
+.ru-modal-header h2 { margin: 0 0 .2rem; font-size: 1.15rem; font-weight: 700; }
+.ru-modal-header p  { margin: 0; font-size: .8rem; color: #6b7280; }
+.ru-modal-close {
+  background: none; border: none; font-size: 1.1rem; cursor: pointer;
+  color: #9ca3af; padding: 4px; border-radius: 6px;
+  transition: background .15s, color .15s;
+}
+.ru-modal-close:hover { background: #f3f4f6; color: #374151; }
+
+/* Student info bar */
+.ru-modal-student-bar {
+  margin: 1rem 1.5rem;
+  background: linear-gradient(135deg, #f0faff, #dbeeff);
+  border-radius: 10px; padding: .85rem 1rem;
+  display: flex; align-items: center; gap: .75rem;
+  border: 1px solid #ddd6fe;
+}
+.ru-modal-student-bar .ru-avatar { width: 40px; height: 40px; font-size: 1rem; }
+.ru-modal-student-bar-info h4 { margin: 0 0 2px; font-size: .9rem; font-weight: 700; }
+.ru-modal-student-bar-info p  { margin: 0; font-size: .75rem; color: #6b7280; }
+
+/* Form */
+.ru-modal-body { padding: 0 1.5rem 1.5rem; }
+.ru-field { margin-bottom: 1rem; }
+.ru-label { display: block; font-size: .8rem; font-weight: 600; margin-bottom: .4rem; color: #374151; }
+.ru-required { color: #ef4444; }
+.ru-input,
+.ru-mselect,
+.ru-textarea {
+  width: 100%; padding: .6rem .75rem;
+  border: 1.5px solid #e5e7eb; border-radius: 8px;
+  font-family: inherit; font-size: .875rem; outline: none;
+  transition: border-color .2s; box-sizing: border-box; background: #fff;
+}
+.ru-input:focus,
+.ru-mselect:focus,
+.ru-textarea:focus { border-color: #02afef; }
+.ru-textarea { resize: vertical; min-height: 80px; }
+
+/* Locked / read-only field */
+.ru-input--locked {
+  background: #f8f8fc;
+  color: #6b7280;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+}
+.ru-mselect--locked {
+  background: #f8f8fc;
+  color: #6b7280;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+  pointer-events: none;
+}
+
+.ru-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .75rem; }
+.ru-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+
+/* Footer */
+.ru-modal-footer {
+  display: flex; justify-content: flex-end; gap: .75rem;
+  padding: 1rem 1.5rem; border-top: 1px solid #f0f0f5;
+}
+.ru-btn-cancel {
+  padding: .55rem 1.25rem; border: 1.5px solid #e5e7eb;
+  border-radius: 8px; background: #fff; cursor: pointer;
+  font-family: inherit; font-size: .875rem; transition: all .15s;
+}
+.ru-btn-cancel:hover { border-color: #02afef; color: #02afef; }
+.ru-btn-save {
+  padding: .55rem 1.5rem; border: none; border-radius: 8px;
+  background: #02afef; color: #fff; cursor: pointer;
+  font-family: inherit; font-size: .875rem; font-weight: 600;
+  transition: background .2s;
+}
+.ru-btn-save:hover   { background: #5a4bd1; }
+.ru-btn-save:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Success */
+.ru-success {
+  margin: 0 1.5rem .75rem;
+  background: #dcfce7; color: #15803d;
+  padding: .6rem 1rem; border-radius: 8px;
+  font-size: .85rem; font-weight: 500;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ru-page    { padding: 1rem; }
+  .ru-grid-3  { grid-template-columns: 1fr; }
+  .ru-grid-2  { grid-template-columns: 1fr; }
+  .ru-modal,
+  .ru-warn-modal { max-width: 100%; }
+}

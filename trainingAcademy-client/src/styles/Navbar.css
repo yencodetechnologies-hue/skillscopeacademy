@@ -1,0 +1,198 @@
+/* ===== BASE NAVBAR ===== */
+.navbar {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: relative;
+    z-index: 100;
+}
+
+.navbar-burger {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+/* ===== HOME BUTTON ===== */
+.home-pg-btn {
+    padding: 6px 20px;
+    cursor: pointer;
+    border: 1px solid #ebebf0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-pg-btn:hover {
+    background: #02afef;
+    color: white;
+}
+
+/* Desktop: text காட்டு, icon hide */
+.home-icon {
+    display: none;
+}
+
+.home-text {
+    display: block;
+    margin: 0;
+}
+
+/* ===== RIGHT SIDE ===== */
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.desktop-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.desktop-icons span,
+.burger-icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: #444;
+}
+
+/* Mobile burger icon - desktop-ல் hide */
+.burger-icon {
+    display: none;
+    font-size: 22px;
+}
+
+/* ===== MOBILE SIDEBAR ===== */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 240px;
+    height: 100vh;
+    height: 100dvh;
+    /* dynamic viewport height - address bar hide ஆனாலும் சரியா இருக்கும் */
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.12);
+    z-index: 999;
+    transition: right 0.3s ease;
+    border-left: 1px solid #eee;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* iOS smooth scroll */
+}
+
+.mobile-sidebar.open {
+    right: 0;
+}
+
+.sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+    gap: 28px;
+}
+
+.sidebar-inner span {
+    cursor: pointer;
+    font-size: 22px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.sidebar-inner span:hover {
+    background: #02afef;
+    color: white;
+}
+
+/* Close button (xmark) - first span */
+.sidebar-inner span:first-child {
+    align-self: flex-end;
+    font-size: 20px;
+    color: #888;
+    padding: 4px 8px;
+}
+
+.sidebar-inner span:first-child:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* Sidebar open-ஆ இருக்கும்போது body scroll lock */
+body.sidebar-open {
+    overflow: hidden;
+    touch-action: none;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 998;
+}
+
+/* Scrollbar hide - Chrome / Safari / Mobile browsers */
+.mobile-sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ===== RESPONSIVE BREAKPOINT ===== */
+@media (max-width: 768px) {
+
+    /* Role title hide */
+    .navbar-title {
+        display: none;
+    }
+
+    .open {
+        overflow-y: auto;
+
+    }
+
+    .mobile-sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Gap குறைக்கணும் */
+    .navbar-burger {
+        gap: 16px;
+    }
+
+    .burger-icon {
+        display: none !important;
+    }
+
+    .desktop-icons {
+        margin-right: 50px;}
+
+        /* Home button: text hide, icon காட்டு */
+        .home-text {
+            display: none;
+        }
+
+        .home-icon {
+            display: block;
+            font-size: 16px;
+        }
+
+        .home-pg-btn {
+            padding: 8px 12px;
+        }
+
+        /* Desktop icons hide, burger show */
+
+
+        .burger-icon {
+            display: block;
+        }
+    }

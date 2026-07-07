@@ -1,0 +1,435 @@
+.public-navbar {
+  width: 100%;
+  color: #0f1e3d;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-link {
+  color: white;
+  text-decoration: none;
+}
+
+.fa-angle-down {
+  position: relative;
+  top: 2px;
+}
+
+.navbar-logo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo > img {
+  height: 35px;
+}
+
+.logo span {
+  color: #02afef;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f1e3d;
+  transition: color 0.18s ease;
+}
+
+/* Hover the link itself, or any direct text/icon inside it. Also apply
+   while the Courses / Resources dropdown is open so the parent label stays
+   highlighted while the user navigates the panel below. */
+.nav-links li:hover,
+.nav-links li:hover > i,
+.nav-links li:focus-within {
+  color: #02afef;
+}
+
+/* BUTTONS */
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nav-buttons button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background:#02afef;
+  color: white;
+  border: none;
+  padding: 13px 26px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.combo-btn {
+  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+}
+
+.book-btn {
+  background: #1bc6e5;
+}
+
+.pub-voc-btn {
+  border: 2px solid #02afef !important;
+  background: #19354a;
+  color: #02afef;
+  font-weight: 600;
+}
+
+.login-btn {
+  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+  border: 1px solid #0f1e3d !important;
+}
+
+.phone-btn {
+  background: #1b2c4f;
+}
+
+/* RESOURCES DROPDOWN */
+.resources-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #0d1b2a;
+  color: white;
+  width: 250px;
+  border-radius: 10px;
+  padding: 10px 0;
+  z-index: 999;
+}
+
+.resources-dropdown div {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+
+.resources-dropdown-item.has-submenu {
+  position: relative;
+}
+
+.cop-submenu {
+  position: absolute;
+  top: -10px;
+  right: 100%;
+  margin-right: 6px;
+  min-width: 240px;
+  max-width: 320px;
+  background: #0d1b2a;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.cop-submenu div {
+  padding: 10px 15px;
+  cursor: pointer;
+  /* transition: 0.2s; */
+  white-space: normal;
+}
+
+.cop-submenu div:hover {
+  background: transparent;
+}
+
+.cop-submenu-empty {
+  cursor: default !important;
+  opacity: 0.6;
+  font-size: 0.9em;
+}
+
+.cop-submenu-empty:hover {
+  background: transparent !important;
+}
+
+/* Transparent bridge that fills the 10px gap between the navbar item
+   and the .courses-dropdown panel so the cursor never leaves the parent
+   <li> while moving toward a category. Without this the dropdown closes
+   the moment the cursor enters the empty space. */
+.courses-dropdown-bridge {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 800px;          /* match .courses-dropdown width */
+  height: 12px;          /* slightly more than .courses-dropdown's margin-top */
+  background: transparent;
+  z-index: 998;          /* just below the dropdown */
+}
+
+/* COURSES DROPDOWN */
+.courses-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 800px;
+  display: flex;
+  background: #0d1b2a;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 999;
+  margin-top: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.courses-dropdown-left {
+  width: 35%;
+  background: #162436;
+  padding: 15px;
+  flex-shrink: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.courses-dropdown-left .category-item {
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.courses-dropdown-left .category-item:hover,
+.courses-dropdown-left .category-item.active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.courses-dropdown-right {
+  width: 65%;
+  background: #0d1b2a;
+  padding: 15px 20px;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.courses-dropdown-right .course-item {
+  padding: 8px 10px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.courses-dropdown-right .course-item-code {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.courses-dropdown-right .course-item-title {
+  flex: 1;
+  color: white;
+}
+
+.courses-dropdown-right .course-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.courses-dropdown-right .course-item:hover .course-item-title {
+  color: white;
+}
+
+/* MOBILE MENU ICON */
+.mobile-menu {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* MOBILE OVERLAY */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 99;
+}
+
+/* MOBILE FULLMENU */
+.mobile-fullmenu {
+  display: none;
+  flex-direction: column;
+  background: white;
+  position: fixed;
+  top: 81px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  max-height: 70vh;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-fullmenu-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mobile-fullmenu-item {
+  padding: 15px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f1e3d;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.mobile-fullmenu-item:hover {
+  background: #f7faff;
+  color: #2563eb;
+}
+
+.mobile-fullmenu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 24px 18px;
+  border-top: 1px solid #eee;
+  background: white;
+}
+
+.mobile-fullmenu-buttons button {
+  width: 100%;
+  padding: 13px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-buttons {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .mobile-fullmenu {
+    display: flex;
+    margin-left: 16%;
+    border-radius: 10px 0px 0px 10px;
+  }
+  .mobile-fullmenu-buttons{
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 8px 15px;
+  }
+
+  .mobile-menu {
+    font-size: 26px;
+  }
+.navbar-logo > img {
+    height: 18px;
+  }
+
+ 
+}
+
+@media (min-width: 1400px) {
+  .navbar-container {
+    max-width: 1500px;
+  }
+
+  .nav-links li {
+    font-size: 16px;
+  }
+
+  .nav-buttons button {
+    height: 44px;
+    padding: 0 22px;
+  }
+}
+
+/* COMBO DROPDOWN */
+.combo-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 400px;
+  background: #0d1b2a;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 0;
+  z-index: 1000;
+  margin-top: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.combo-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  transition: background 0.2s, color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.combo-item:last-child {
+  border-bottom: none;
+}
+
+.combo-item:hover {
+  background: #02afef;
+  color: white;
+}
+
+.combo-btn-nav {
+  white-space: nowrap;
+}

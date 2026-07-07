@@ -1,0 +1,143 @@
+.contact-enroll-section{
+padding:100px 0;
+background:url("/hero-bg.jpg") center/cover no-repeat;
+position:relative;
+}
+
+.contact-enroll-section::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(15,30,61,0.8);
+}
+
+.contact-container{
+position:relative;
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+align-items:center;
+padding:0 20px;
+}
+
+/* FORM BOX */
+
+.contact-form-box{
+background:linear-gradient(135deg,#06b6d4,#0ea5e9);
+padding:40px;
+border-radius:20px;
+color:white;
+}
+
+.contact-form-box h2{
+margin-bottom:25px;
+font-size:28px;
+}
+
+/* INPUTS */
+
+.form-row{
+display:flex;
+gap:15px;
+margin-bottom:15px;
+}
+
+.contact-form-box input,
+.contact-form-box textarea{
+width:100%;
+padding:12px 15px;
+border:none;
+border-radius:10px;
+margin-bottom:15px;
+font-size:14px;
+}
+
+.contact-form-box textarea{
+height:120px;
+resize:none;
+}
+
+/* SEND BUTTON */
+
+.send-btn{
+background:#0f172a;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+cursor:pointer;
+}
+
+/* RIGHT CONTENT */
+
+.enroll-content{
+color:white;
+}
+
+.enroll-content h2{
+font-size:40px;
+color:#22d3ee;
+margin-bottom:15px;
+}
+
+.enroll-content p{
+max-width:450px;
+line-height:1.6;
+margin-bottom:25px;
+}
+
+/* BUTTONS */
+
+.enroll-buttons{
+display:flex;
+gap:15px;
+}
+
+.enrol-btn{
+background:#0f172a;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+}
+
+.llnd-btn{
+background:#06b6d4;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+color:white;
+}
+
+.voc-btn{
+background:#02afef;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+color:white;
+}
+.entrol-btn-landing{
+    margin: 0px;
+}
+@media(max-width:1024px){
+
+.contact-container{
+grid-template-columns:1fr;
+}
+
+.enroll-content{
+text-align:center;
+}
+
+.enroll-buttons{
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.form-row{
+flex-direction:column;
+}
+
+}

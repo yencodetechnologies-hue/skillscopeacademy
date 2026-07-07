@@ -1,0 +1,157 @@
+.cs-wrap {
+  background: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.cs-section {
+  padding: 64px 80px;
+  margin: auto;
+}
+
+.cs-wrap{
+    margin: 0px 40px;
+}
+.cs-header { 
+    margin-bottom: 28px;
+    margin-top: 28px;
+}
+.cs-label {
+  font-size: 12px; font-weight: 700; color: #29b6e8;
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
+}
+.cs-title { font-size: 28px; font-weight: 700; color: #0d2240; margin-bottom: 6px; }
+.cs-sub { font-size: 15px; color: #4a7096; }
+
+/* TAB WRAPPER — ✅ clip overflow so tabs never wrap to second line */
+/* TAB NAV — ✅ wrap to multiple lines, no scroll */
+.cs-tab-nav {
+  display: flex;
+  background: #0d2240;
+  border-radius: 14px 14px 0 0;
+  flex-wrap: wrap;
+}
+.cs-tab-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 13px 16px;
+  border: none;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: 'Inter', sans-serif;
+  min-width: max-content;
+}
+.cs-tab-btn:last-child { border-right: none; }
+.cs-tab-btn:hover {
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.06);
+}
+.cs-tab-btn--active {
+  background: #29b6e8 !important;
+  color: #0d2240 !important;
+}
+.cs-tab-count {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  flex-shrink: 0;
+}
+.cs-tab-btn--active .cs-tab-count {
+  background: rgba(13,34,64,0.25);
+  color: #0d2240;
+}
+
+/* PANELS */
+.cs-panels-wrap {
+  border: 2px solid #0d2240;
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  padding: 22px;
+  background: #fff;
+}
+
+/* GRID */
+.cs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* MORE CARD */
+.cs-more {
+  background: #f4faff;
+  border: 1.5px dashed #bae0f7;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.cs-more:hover { border-color: #29b6e8; }
+.cs-more-plus {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: #e8f4fd;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #29b6e8; line-height: 1;
+}
+.cs-more-title { font-size: 14px; font-weight: 700; color: #0d2240; }
+.cs-more-sub { font-size: 12px; color: #4a7096; }
+.cs-more-btn {
+  margin-top: 6px;
+  background: #0d2240; color: #fff;
+  font-size: 12px; font-weight: 700;
+  padding: 9px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.cs-more-btn:hover { background: #29b6e8; color: #0d2240; }
+
+/* SHOW MORE */
+.cs-show-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.cs-show-more-btn {
+  background: #0d2240;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s;
+}
+.cs-show-more-btn:hover { background: #29b6e8; color: #0d2240; }
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .cs-section { padding: 48px 40px; }
+  .cs-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .cs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .cs-section { padding: 32px 16px; }
+  .cs-grid { grid-template-columns: 1fr; }
+}

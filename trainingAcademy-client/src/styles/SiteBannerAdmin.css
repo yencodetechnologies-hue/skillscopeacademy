@@ -1,0 +1,507 @@
+/* Site Banners admin — grid + right sidebar (Add Banner) */
+
+.sba-page {
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  background: #f4f5f9;
+  min-height: 100vh;
+  padding: 1.75rem 2rem 3rem;
+  color: #1a1d2e;
+}
+
+.sba-shell {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .sba-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sba-aside {
+    order: -1;
+  }
+}
+
+.sba-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.sba-sub {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #6b7280;
+  max-width: 560px;
+  line-height: 1.45;
+}
+
+.sba-main-head {
+  margin-bottom: 1.25rem;
+}
+
+.sba-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.sba-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.1rem;
+}
+
+.sba-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.sba-card:hover {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.sba-card--off {
+  opacity: 0.72;
+}
+
+.sba-card--skeleton {
+  min-height: 260px;
+  background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 50%, #eef2f7 75%);
+  background-size: 200% 100%;
+  animation: sba-shimmer 1.4s infinite;
+  border: none;
+}
+
+@keyframes sba-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.sba-order {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background:#02afef;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(108, 92, 231, 0.45);
+}
+
+.sba-thumb-wrap {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+.sba-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sba-off-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.sba-card-body {
+  padding: 0.85rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.sba-card-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.sba-untitled {
+  color: #94a3b8;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.sba-card-link {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #64748b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sba-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.sba-btn {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 6px;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #0f172a;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.sba-btn:hover:not(:disabled) {
+  background: #eef2f7;
+}
+
+.sba-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sba-btn--icon {
+  flex: 0 0 auto;
+  min-width: 28px;
+  padding: 0.35rem 0.4rem;
+}
+
+.sba-btn--primary {
+  background: #02afef;
+  color: #fff;
+  border-color: #02afef;
+}
+
+.sba-btn--primary:hover:not(:disabled) {
+  background: #5b4cdb;
+}
+
+.sba-btn--danger {
+  border-color: #fecaca;
+  color: #b91c1c;
+  background: #fff;
+}
+
+.sba-btn--danger:hover {
+  background: #fef2f2;
+}
+
+.sba-empty {
+  grid-column: 1 / -1;
+  background: #fff;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Right sidebar */
+.sba-aside {
+  position: sticky;
+  top: 1.5rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sba-add-btn {
+  width: 100%;
+  background: #02afef;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.35);
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.sba-add-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.sba-aside-note {
+  margin: 0.85rem 0 1rem;
+  font-size: 0.78rem;
+  color: #6b7280;
+  line-height: 1.45;
+}
+
+.sba-aside-list h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
+}
+
+.sba-aside-list ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sba-aside-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  font-size: 0.8rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sba-aside-list li:last-child {
+  border-bottom: none;
+}
+
+.sba-aside-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f3f0ff;
+  color: #5b4cdb;
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sba-aside-hidden {
+  margin-left: auto;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+
+.sba-aside-empty {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* Modal */
+.sba-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 200;
+  backdrop-filter: blur(4px);
+}
+
+.sba-modal {
+  position: fixed;
+  z-index: 201;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px;
+  max-width: calc(100vw - 2rem);
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.2);
+}
+
+.sba-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f0f0f5;
+}
+
+.sba-modal-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.sba-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #1dc9e3;
+  line-height: 1;
+}
+
+.sba-modal-body {
+  padding: 1rem 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sba-modal-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.sba-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 0.35rem;
+}
+
+.sba-req {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.sba-input {
+  width: 100%;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.sba-input:focus {
+  outline: none;
+  border-color: #02afef;
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.12);
+}
+
+.sba-img-toggle {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.sba-img-btn {
+  padding: 0.35rem 0.7rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sba-img-btn.is-active {
+  border-color: #02afef;
+  background: #f3f0ff;
+  color: #5b4cdb;
+}
+
+.sba-file {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.sba-preview {
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.sba-preview img {
+  width: 100%;
+  display: block;
+  max-height: 160px;
+  object-fit: contain;
+  background: #f8f9fc;
+}
+
+.sba-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid #f0f0f5;
+}
+
+.sba-confirm {
+  position: fixed;
+  z-index: 201;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  max-width: calc(100vw - 2rem);
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.sba-confirm h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.sba-confirm p {
+  margin: 0 0 1rem;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.sba-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

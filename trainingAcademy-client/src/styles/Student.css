@@ -1,0 +1,873 @@
+/* ============================================
+   StudentManagement.css
+   Exact replica of the Student Management UI
+   ============================================ */
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f5f5f7;
+  color: #111;
+}
+
+.ef-stats > .stat-card{
+  flex-direction: row !important;
+}
+/* ── Page Wrapper ── */
+.sm-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Page Header ── */
+.sm-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sm-page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.5px;
+}
+
+.sm-page-subtitle {
+  font-size: 14px;
+  color: #666;
+}
+
+/* ── Section Header ── */
+.sm-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sm-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+.sm-section-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* ── Add New Student Button ── */
+.sm-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #02afef;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.sm-add-btn:hover {
+  background-color: #0a8fc0;
+}
+
+.sm-add-btn-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* ── Cards ── */
+.sm-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px 24px;
+}
+
+/* ── Search Card ── */
+.sm-search-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sm-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+.sm-card-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.sm-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sm-search-input-wrap {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sm-search-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 14px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.sm-search-input {
+  width: 100%;
+  padding: 9px 12px 9px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sm-search-input:focus {
+  border-color: #02afef;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.sm-search-input::placeholder {
+  color: #9ca3af;
+}
+
+.sm-status-select {
+  padding: 9px 32px 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111;
+  background: #fff;
+  outline: none;
+  cursor: pointer;
+  appearance: auto;
+  min-width: 130px;
+  transition: border-color 0.2s;
+}
+
+.sm-status-select:focus {
+  border-color: #02afef;
+}
+
+.sm-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.sm-search-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* ── Table Card ── */
+.sm-table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.sm-table-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.sm-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 1100px;
+}
+
+.sm-table thead tr {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sm-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.sm-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s;
+}
+
+.sm-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.sm-table td {
+  padding: 14px 14px;
+  vertical-align: middle;
+  color: #374151;
+  font-size: 13px;
+}
+
+/* ── Date / Time ── */
+.sm-date {
+  font-weight: 500;
+  color: #111;
+  white-space: nowrap;
+}
+
+.sm-time {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* ── Student Cell ── */
+.sm-student-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+}
+
+.sm-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #02afef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sm-avatar-icon {
+  font-size: 16px;
+  filter: brightness(10);
+}
+
+.sm-student-name {
+  font-weight: 500;
+  color: #111;
+  white-space: nowrap;
+}
+
+.sm-student-nick {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+/* ── Email / Course ── */
+.sm-email {
+  color: #374151;
+  white-space: nowrap;
+}
+
+.sm-course {
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #374151;
+}
+
+/* ── Status Badges ── */
+.sm-status-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-completed {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-completed .badge-icon {
+  color: #16a34a;
+}
+
+.badge-not-completed {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.badge-not-completed .badge-icon {
+  color: #dc2626;
+}
+
+/* ── Payment Badge ── */
+.payment-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.payment-paid {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.payment-unpaid {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* ── Active Badge ── */
+.active-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #dcfce7;
+  color: #16a34a;
+  white-space: nowrap;
+}
+
+/* ── Icon Buttons ── */
+.sm-icon-btn {
+  background: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #6b7280;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.sm-icon-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.sm-delete-btn {
+  color: #dc2626;
+}
+
+.sm-delete-btn:hover {
+  background: #fee2e2;
+  border-color: #fecaca;
+}
+
+/* ── Actions Cell ── */
+.sm-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+/* ── Deactivate Button ── */
+.sm-deactivate-btn {
+  padding: 5px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.sm-deactivate-btn:hover {
+  background: #f3f4f6;
+}
+
+/* ── Pagination ── */
+.sm-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-top: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sm-pagination-info {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.sm-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sm-page-btn {
+  padding: 7px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.sm-page-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.sm-page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.sm-page-indicator {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  padding: 7px 14px;
+  border: 1px solid #02afef;
+  border-radius: 8px;
+  background: #faf5ff;
+  white-space: nowrap;
+}
+/* ─────────────────────────────────────────────
+   PASTE THESE STYLES INTO YOUR Student.css
+   ───────────────────────────────────────────── */
+
+/* Active / Inactive badge variants */
+.badge-active {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+.badge-inactive {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Activate button (green) */
+.sm-activate-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.sm-activate-btn:hover {
+  background: #bbf7d0;
+}
+
+/* Loading / Error states */
+.sm-loading {
+  padding: 2rem;
+  text-align: center;
+  color: #02afef;
+  font-weight: 500;
+}
+.sm-error {
+  padding: 1rem;
+  text-align: center;
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 8px;
+  margin: 1rem;
+}
+
+/* ── Modal Overlay ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ── Modal Box ── */
+.modal-overlay>.modal-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  position: relative;
+}
+.modal-box-sm {
+  max-width: 420px;
+}
+
+/* ── Modal Header ── */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px;
+}
+.modal-subtitle {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #888;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.modal-close-btn:hover {
+  background: #f3f4f6;
+}
+
+/* ── View Modal: Profile Card ── */
+.modal-profile-card {
+  display: flex;
+  gap: 16px;
+  background: #f9f7ff;
+  border: 1px solid #dbeeff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+.modal-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #02afef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.modal-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 2px;
+  color: #111;
+}
+.modal-nick {
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 4px;
+}
+.modal-email-line,
+.modal-phone-line {
+  font-size: 13px;
+  color: #555;
+  margin: 2px 0;
+}
+.modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* ── View Modal: Sections ── */
+.modal-section {
+  margin-bottom: 20px;
+}
+.modal-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #02afef;
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #dbeeff;
+}
+.modal-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #444;
+  border-bottom: 1px solid #f3f4f6;
+}
+.modal-detail-row span:first-child {
+  color: #888;
+}
+
+/* ── Edit Modal: Form ── */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.modal-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.modal-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: #fafafa;
+  transition: border-color 0.15s;
+}
+.modal-input-wrap:focus-within {
+  border-color: #02afef;
+  background: #fff;
+}
+.modal-input-icon {
+  font-size: 15px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.modal-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #111;
+  width: 100%;
+}
+
+/* ── Modal Buttons ── */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.modal-cancel-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  color: #444;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.modal-cancel-btn:hover {
+  background: #f3f4f6;
+}
+.modal-save-btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  background: #02afef;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.modal-save-btn:hover {
+  background: #0a8fc0;
+}
+.modal-save-btn:disabled,
+.modal-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Delete Modal ── */
+.modal-delete-body {
+  padding: 12px 0 20px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
+}
+.modal-delete-warning {
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+.modal-delete-confirm-btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  background: #dc2626;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.modal-delete-confirm-btn:hover {
+  background: #b91c1c;
+}
+.modal-delete-confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Error in modal ── */
+.modal-error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .sm-page {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+
+  .sm-page-title {
+    font-size: 22px;
+  }
+
+  .sm-section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sm-add-btn {
+    align-self: flex-start;
+  }
+
+  .sm-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sm-search-input-wrap {
+    min-width: unset;
+  }
+
+  .sm-status-select,
+  .sm-search-btn {
+    width: 100%;
+  }
+
+  .sm-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sm-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .sm-page {
+    padding: 16px 12px;
+  }
+
+  .sm-card {
+    padding: 16px;
+  }
+
+  .sm-table-header {
+    padding: 16px;
+  }
+}

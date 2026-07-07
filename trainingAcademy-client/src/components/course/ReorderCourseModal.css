@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════
+   ReorderCoursesModal.css
+   Matches Safety Training Academy admin UI
+═══════════════════════════════════════════════ */
+
+/* ── BACKDROP ────────────────────────────────── */
+.rco-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 100;
+    animation: rco-fade-in 0.15s ease;
+}
+
+/* ── MODAL ───────────────────────────────────── */
+.rco-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background: #ffffff;
+    border-radius: 12px;
+    width: 500px;
+    max-width: calc(100vw - 32px);
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.08);
+    animation: rco-slide-up 0.2s ease;
+    overflow: hidden;
+}
+
+/* ── HEADER ──────────────────────────────────── */
+.rco-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 20px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+
+.rco-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+    font-family: inherit;
+}
+
+.rco-subtitle {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 380px;
+}
+
+.rco-close-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #888;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.rco-close-btn:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* ── BODY ────────────────────────────────────── */
+.rco-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.rco-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rco-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.rco-body::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+}
+
+/* ── CATEGORY SECTION ────────────────────────── */
+.rco-category-section {
+    flex-shrink: 0;
+}
+
+.rco-section-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    margin: 0;
+    padding: 14px 20px 8px;
+    text-transform: none;
+}
+
+.rco-category-list {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.rco-category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 20px;
+    cursor: pointer;
+    transition: background 0.12s;
+    border-left: 3px solid transparent;
+}
+
+.rco-category-item:hover {
+    background: #faf9ff;
+}
+
+.rco-category-item--active {
+    background: #f5f3ff;
+    border-left-color:#02afef;
+}
+
+.rco-category-item--active .rco-category-name {
+    color:#02afef;
+    font-weight: 500;
+}
+
+.rco-category-name {
+    font-size: 14px;
+    color: #1a1a1a;
+}
+
+.rco-category-count {
+    font-size: 12px;
+    color: #888;
+    background: #f3f4f6;
+    padding: 2px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.rco-category-item--active .rco-category-count {
+    background: #ede9fe;
+    color:#02afef;
+}
+
+/* ── COURSES SECTION ─────────────────────────── */
+.rco-courses-section {
+    padding: 0 0 16px;
+}
+
+.rco-courses-heading {
+    font-size: 13px;
+    font-weight: 600;
+    color:#02afef;
+    margin: 0;
+    padding: 14px 20px 8px;
+}
+
+.rco-reordering-tag {
+    font-weight: 400;
+    color: #f59e0b;
+    font-size: 12px;
+}
+
+.rco-saving-tag {
+    font-weight: 400;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.rco-saved-tag {
+    font-weight: 500;
+    color: #16a34a;
+    font-size: 12px;
+}
+
+/* ── COURSE ITEMS ────────────────────────────── */
+.rco-course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 8px;
+}
+
+.rco-course-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid transparent;
+    cursor: grab;
+    transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+    user-select: none;
+}
+
+.rco-course-item:hover {
+    background: #faf9ff;
+    border-color: #e5e0ff;
+}
+
+.rco-course-item:active,
+.rco-course-item[draggable="true"]:active {
+    cursor: grabbing;
+    background: #f5f3ff;
+    border-color: #c4b5fd;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.12);
+}
+
+.rco-drag-handle {
+    color: #bbb;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    pointer-events: none;
+    transition: color 0.15s;
+}
+
+.rco-course-item:hover .rco-drag-handle {
+    color:#02afef;
+}
+
+.rco-course-title {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.4;
+}
+
+/* ── EMPTY HINT ──────────────────────────────── */
+.rco-empty-hint {
+    padding: 20px 20px 24px;
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* ── ANIMATIONS ──────────────────────────────── */
+@keyframes rco-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes rco-slide-up {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 16px)); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width: 540px) {
+    .rco-modal {
+        width: calc(100vw - 24px);
+        max-height: 92vh;
+    }
+
+    .rco-subtitle {
+        max-width: 260px;
+    }
+}

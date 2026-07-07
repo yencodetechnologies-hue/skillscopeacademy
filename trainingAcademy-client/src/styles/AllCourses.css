@@ -1,0 +1,72 @@
+.all-courses-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.all-courses-header {
+  margin-bottom: 32px;
+}
+
+.all-courses-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f1e3d;
+}
+
+.all-courses-header p {
+  color: #64748b;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ✅ Responsive Grid */
+.all-courses-grid {
+  display: grid;
+  gap: 24px;
+
+  /* Mobile — 1 column */
+  grid-template-columns: 1fr;
+}
+
+/* Tablet — 2 columns */
+@media (min-width: 640px) {
+  .all-courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Laptop medium — 3 columns */
+@media (min-width: 1024px) {
+  .all-courses-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Laptop XL — 4 columns */
+@media (min-width: 1280px) {
+  .all-courses-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Skeleton loader */
+.course-card-skeleton {
+  height: 380px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.no-courses {
+  text-align: center;
+  padding: 80px;
+  color: #94a3b8;
+  font-size: 18px;
+}

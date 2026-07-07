@@ -1,0 +1,630 @@
+/* EnrollmentLinks.css */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #02afef;
+  --primary-light: #dbeeff;
+  --purple-hover: #0a8fc0;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --red: #dc2626;
+  --red-light: #fee2e2;
+  --blue-light: #dbeafe;
+  --blue: #2563eb;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --white: #ffffff;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --font: 'DM Sans', 'Segoe UI', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--gray-50);
+  color: var(--gray-800);
+}
+
+/* ── Page Wrapper ── */
+.el-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f6ff 0%, #f0f4ff 100%);
+  padding: 36px 40px;
+  font-family: var(--font);
+}
+
+/* ── Header ── */
+.el-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.el-header-text h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gray-900);
+  letter-spacing: -0.5px;
+}
+
+.el-header-text p {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+.el-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 11px 22px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.25);
+  font-family: var(--font);
+}
+
+.el-btn-primary:hover {
+  background: var(--purple-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+}
+
+.el-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ── Stat Cards ── */
+.el-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.el-stat-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+.el-stat-card .label {
+  font-size: 13px;
+  color: var(--gray-500);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.el-stat-card .value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -1px;
+}
+
+.el-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.el-stat-icon.purple { background: var(--primary-light); color: var(--primary); }
+.el-stat-icon.green  { background: var(--green-light);  color: var(--green); }
+.el-stat-icon.blue   { background: var(--blue-light);   color: var(--blue); }
+
+/* ── Table Card ── */
+.el-table-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-100);
+  overflow: hidden;
+}
+
+.el-table-header {
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.el-table-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+
+.el-table-header p {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 3px;
+}
+
+/* ── Table ── */
+.el-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.el-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.el-table td {
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: var(--gray-700);
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: middle;
+}
+
+.el-table tr:last-child td {
+  border-bottom: none;
+}
+
+.el-table tr:hover td {
+  background: var(--gray-50);
+}
+
+.el-link-name {
+  font-weight: 600;
+  color: var(--gray-800);
+  font-size: 13.5px;
+}
+
+.el-link-code {
+  font-size: 11.5px;
+  color: var(--gray-400);
+  font-family: 'Courier New', monospace;
+  margin-top: 2px;
+}
+
+.el-course-text {
+  color: var(--gray-400);
+  font-size: 13px;
+}
+
+/* ── Badges ── */
+.el-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.el-badge.active   { background: var(--green-light);  color: var(--green); }
+.el-badge.inactive { background: var(--gray-100);     color: var(--gray-500); }
+.el-badge.pay-later{ background: #f0fdf4;             color: #15803d; border: 1px solid #bbf7d0; }
+.el-badge.agent    { background: #fefce8;             color: #a16207; border: 1px solid #fde68a; }
+
+/* ── Action Icons ── */
+.el-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.el-icon-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gray-500);
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+.el-icon-btn:hover { background: var(--gray-100); color: var(--gray-700); border-color: var(--gray-300); }
+.el-icon-btn.red   { color: var(--red); border-color: #fecaca; }
+.el-icon-btn.red:hover { background: var(--red-light); border-color: var(--red); }
+.el-icon-btn.purple-icon { color: var(--primary); border-color: var(--primary-light); }
+.el-icon-btn.purple-icon:hover { background: var(--primary-light); }
+
+/* ── Modal Overlay ── */
+.el-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.el-modal {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.el-modal-head {
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.el-modal-head h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.el-modal-head p {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 3px;
+}
+
+.el-modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.el-modal-close:hover { color: var(--gray-700); background: var(--gray-100); }
+
+.el-modal-body {
+  padding: 22px 28px;
+}
+
+/* ── Form Fields ── */
+.el-field {
+  margin-bottom: 18px;
+}
+
+.el-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+
+.el-field label span.req {
+  color: var(--red);
+  margin-left: 2px;
+}
+
+.el-input, .el-textarea, .el-select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: var(--gray-800);
+  background: var(--white);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: var(--font);
+  outline: none;
+}
+
+.el-input:focus, .el-textarea:focus, .el-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+}
+
+.el-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.el-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── Toggles ── */
+.el-toggles {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.el-toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--gray-700);
+  cursor: pointer;
+  user-select: none;
+}
+
+.el-toggle-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.el-toggle-hint {
+  font-size: 12px;
+  color: var(--gray-400);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+/* ── Modal Footer ── */
+.el-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 28px 22px;
+  border-top: 1px solid var(--gray-100);
+}
+
+.el-btn-cancel {
+  padding: 9px 20px;
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+
+.el-btn-cancel:hover { background: var(--gray-50); border-color: var(--gray-300); }
+
+.el-btn-danger {
+  padding: 9px 20px;
+  border: none;
+  background: var(--red);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: var(--font);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.el-btn-danger:hover { background: #b91c1c; }
+
+/* ── View Modal ── */
+.el-qr-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.el-qr-box {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: var(--white);
+}
+
+.el-qr-box svg {
+  display: block;
+}
+
+.el-url-block {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.el-url-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.el-url-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.el-url-text {
+  flex: 1;
+  font-size: 12.5px;
+  font-family: 'Courier New', monospace;
+  color: var(--gray-700);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  padding: 7px 10px;
+  border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.el-url-created {
+  font-size: 11.5px;
+  color: var(--gray-400);
+  margin-top: 8px;
+}
+
+.el-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.el-info-item label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--gray-400);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.el-info-item span {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.el-enrolled-head {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-700);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gray-100);
+  margin-bottom: 12px;
+}
+
+.el-empty-students {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--gray-400);
+  font-size: 13px;
+}
+
+.el-empty-students .el-empty-icon {
+  font-size: 36px;
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+/* ── Students Modal ── */
+.el-students-modal .el-modal-head {
+  background: var(--primary-light);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+/* ── Toast ── */
+.el-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--white);
+  border: 1px solid var(--green-light);
+  border-left: 4px solid var(--green);
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--gray-700);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-md);
+  z-index: 2000;
+  animation: toastIn 0.25s ease;
+}
+
+.el-toast .check { color: var(--green); font-size: 16px; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Edit Modal ── */
+.el-edit-icon {
+  color: var(--primary);
+  font-size: 16px;
+}
+
+/* ── Download QR btn ── */
+.el-btn-dark {
+  padding: 10px 20px;
+  background: var(--gray-900);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: var(--font);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.el-btn-dark:hover { background: var(--gray-700); }

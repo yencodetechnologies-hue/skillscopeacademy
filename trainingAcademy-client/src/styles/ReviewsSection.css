@@ -1,0 +1,130 @@
+.reviews-section {
+  padding: 50px 0;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.review-title {
+  font-size: 36px;
+  color: #0891b2;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.review-container {
+  height: auto !important;
+  background: transparent !important;
+}
+
+/* Carousel */
+.carousel-wrapper {
+     overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  cursor: grab;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none; 
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-wrapper::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
+}
+
+.carousel-track {
+  display: flex;
+  gap: 25px;
+  width: max-content;
+}
+
+.carousel-track.paused {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* moves exactly one full set */
+  }
+}
+
+/* Card */
+.review-card {
+  background: white;
+  border: 2px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.review-avatar {
+  font-size: 40px;
+  font-weight: 700;
+  color: #f59e0b;
+  width: 60px;
+  height: 60px;
+  background: #fef3c7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+}
+
+.reviewer-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.stars {
+  font-size: 16px;
+}
+
+.review-text {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-btn {
+  margin-top: 10px;
+  border: 2px solid #0ea5e9;
+  background: white;
+  color: #0ea5e9;
+  padding: 8px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.review-btn:hover {
+  background: #0ea5e9;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .review-card {
+    width: 240px;
+    padding: 20px;
+  }
+}

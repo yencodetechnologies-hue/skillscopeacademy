@@ -1,0 +1,337 @@
+/* ===== VOC STEP 2 ===== */
+.v2-wrap {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    overflow: hidden;
+    max-width: 780px;
+    margin: 0 auto 40px;
+}
+
+.v2-header {
+    background: #0f172a;
+    padding: 28px 32px;
+    text-align: center;
+}
+
+.v2-header-title {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.v2-header-sub {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0;
+}
+
+.v2-price-highlight {
+    color: #22d3ee;
+    font-weight: 600;
+}
+
+.v2-body {
+    padding: 28px 32px;
+}
+
+.v2-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 0.4px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Select */
+.v2-select-wrap {
+    position: relative;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.v2-select {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #555;
+    width: 100%;
+    font-family: inherit;
+    appearance: none;
+    cursor: pointer;
+}
+
+.v2-chevron {
+    color: #888;
+    font-size: 13px;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+/* Add Course Button */
+.v2-add-btn {
+    display: block;
+    width: 100%;
+    background: #67e8f9;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    cursor: pointer;
+    margin: 14px 0 20px;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+    transition: background 0.2s;
+}
+
+.v2-add-btn:hover {
+    background: #22d3ee;
+}
+
+/* Empty box */
+.v2-empty-box {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 48px 20px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.v2-empty-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.v2-empty-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 4px;
+}
+
+.v2-empty-hint {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+}
+
+/* Course card */
+.v2-course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.v2-course-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 18px 20px;
+}
+
+.v2-course-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.v2-course-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.v2-course-check {
+    color: #22d3ee;
+    font-size: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.v2-course-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 4px;
+}
+
+.v2-course-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #22d3ee;
+    margin: 0;
+}
+
+.v2-delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    color: #888;
+    padding: 0;
+    line-height: 1;
+}
+
+.v2-delete-btn:hover {
+    color: #ef4444;
+}
+
+/* Date section */
+.v2-date-section {
+    position: relative;
+}
+
+.v2-date-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 0.4px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.v2-date-select-wrap {
+    position: relative;
+}
+
+.v2-date-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 11px 14px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.v2-date-placeholder {
+    color: #94a3b8;
+}
+
+.v2-date-value {
+    color: #111;
+    font-weight: 500;
+}
+
+.v2-date-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.v2-date-option {
+    padding: 11px 16px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.v2-date-option:hover {
+    background: #f1f5f9;
+}
+
+.v2-date-selected {
+    background: #e0f9ff;
+    color: #0891b2;
+    font-weight: 600;
+}
+
+.v2-date-warning {
+    font-size: 12.5px;
+    color: #f59e0b;
+    margin: 6px 0 0;
+}
+
+/* Footer */
+.v2-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+    gap: 16px;
+}
+
+.v2-total-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 4px;
+    letter-spacing: 0.3px;
+}
+
+.v2-total-amount {
+    font-size: 26px;
+    font-weight: 800;
+    color: #111;
+    margin: 0;
+}
+
+.v2-footer-btns {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.v2-back-btn {
+    background: #fff;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.v2-back-btn:hover {
+    background: #f1f5f9;
+}
+
+.v2-next-btn {
+    background: #67e8f9;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.v2-next-btn:hover {
+    background: #22d3ee;
+}
+
+@media (max-width: 600px) {
+    .v2-body { padding: 20px 16px; }
+    .v2-footer { flex-direction: column; align-items: flex-start; }
+    .v2-footer-btns { width: 100%; justify-content: flex-end; }
+}

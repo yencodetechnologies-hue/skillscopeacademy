@@ -1,0 +1,933 @@
+/* CourseDetailMobile.css — all classes prefixed cdm- */
+
+.cdm-root {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #f0f8ff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding-bottom: 70px;
+  min-height: 100vh;
+}
+
+.cdm-root *,
+.cdm-root *::before,
+.cdm-root *::after {
+  box-sizing: border-box;
+}
+
+/* ── Top Bar ── */
+.cdm-topbar {
+  background: #0d2240;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cdm-back-btn {
+  background: none;
+  border: none;
+  color: #29b6e8;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.cdm-topbar-title {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.cdm-topbar-phone {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* ── Hero Image ── */
+.cdm-hero-img {
+  background: #0d2240;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cdm-hero-img-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cdm-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,34,64,0.96) 0%, rgba(13,34,64,0.5) 45%, rgba(13,34,64,0.1) 100%);
+}
+
+/* ── Hero content: code pill + title — BOTTOM LEFT (Option A style) ── */
+.cdm-hero-content {
+  position: absolute;
+  bottom: 15px;
+  left: 14px;
+  right: 100px;
+  z-index: 2;
+}
+
+.cdm-hero-code {
+  background: #29b6e8;
+  color: #0d2240;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.cdm-hero-title {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cdm-hero-btn {
+
+    padding: 7px 12px;
+    border-radius: 7px;
+    background-color: var(--btn-bg);
+    border: none;
+    color: var(--btn-color);
+    font-weight: 600;
+
+}
+
+.cdm-hero-price {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  text-align: right;
+  z-index: 2;
+}
+
+.cdm-hero-price-num {
+  color: #29b6e8;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.cdm-hero-price-orig {
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+  text-decoration: line-through;
+}
+
+/* ── Quick Facts ── */
+.cdm-quick-facts {
+  background: #fff;
+  border-bottom: 1px solid #bae0f7;
+  padding: 10px 16px;
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cdm-quick-facts::-webkit-scrollbar {
+  display: none;
+}
+
+.cdm-fact {
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.cdm-fact-icon {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.cdm-fact-val {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0d2240;
+  white-space: nowrap;
+}
+
+.cdm-fact-label {
+  font-size: 9px;
+  color: #4a7096;
+}
+
+/* ── Section ── */
+.cdm-section {
+  background: #fff;
+  margin-bottom: 8px;
+  padding: 14px 16px;
+  overflow: hidden;
+}
+
+.cdm-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0d2240;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8f4fd;
+}
+
+.cdm-section-title span {
+  color: #29b6e8;
+}
+
+.cdm-desc-text {
+  font-size: 13px;
+  color: #4a7096;
+  line-height: 1.6;
+}
+
+/* ── Checklist ── */
+.cdm-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cdm-checklist li {
+  font-size: 13px;
+  color: #4a7096;
+  padding: 6px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border-bottom: 1px solid #f0f8ff;
+}
+
+.cdm-checklist li:last-child {
+  border-bottom: none;
+}
+
+.cdm-check {
+  color: #29b6e8;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Points swipe (What you learn / Entry req) ── */
+.cdm-points-swipe {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+  margin: 0 -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.cdm-points-swipe::-webkit-scrollbar {
+  display: none;
+}
+
+.cdm-points-page {
+  flex-shrink: 0;
+  width: calc(100vw - 64px);
+  max-width: 380px;
+  scroll-snap-align: start;
+}
+
+/* ── Price Section ── */
+.cdm-price-section {
+  background: #0d2240;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+
+.cdm-price-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.cdm-price-big {
+  color: #29b6e8;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.cdm-price-save {
+  background: #29b6e8;
+  color: #0d2240;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.cdm-price-note {
+  color: rgba(255,255,255,0.6);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ── Variant booking row (experience / SL+BL) ───────────────
+   Two side-by-side buttons inside the dark price section. Each
+   button is its own little card so the variant label, price,
+   and CTA are visually grouped. Stacks vertically on the
+   narrowest phones so the touch targets stay big. */
+.cdm-price-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* Stack the two variant buttons vertically — one full-width row each.
+   Each row is a single line: price on the left, "Book <variant>" label
+   on the right. Compact, scannable, big tap target. */
+.cdm-variant-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cdm-variant-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(180deg, #29b6e8 0%, #1e9bca 100%);
+  color: #0d2240;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+  transition: transform 0.08s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+.cdm-variant-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  opacity: 0.95;
+}
+
+.cdm-variant-price {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.cdm-variant-label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.cdm-price-note--centered {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.cdm-book-now-big {
+  display: block;
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.cdm-book-now-big:active {
+  opacity: 0.9;
+}
+
+/* ── Available Dates ── */
+.cdm-dates-list {
+  padding: 0;
+}
+
+.cdm-date-slot {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f8ff;
+  gap: 10px;
+   cursor: pointer;
+    transition: background 0.15s;
+}
+
+
+.cdm-date-slot:hover {
+    background: #e0f2fe;
+}
+.cdm-date-slot:last-child {
+  border-bottom: none;
+}
+
+.cdm-date-cal {
+  background: #0d2240;
+  color: #fff;
+  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cdm-date-cal.sunday {
+  background: #1a4a7a;
+}
+
+.cdm-date-cal-day {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cdm-date-cal-mon {
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #29b6e8;
+}
+
+.cdm-date-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cdm-date-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d2240;
+}
+
+.cdm-date-time {
+  font-size: 11px;
+  color: #4a7096;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cdm-date-spots {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cdm-date-spots.ok {
+  color: #0d7aad;
+  background: #dbeafe;
+}
+
+.cdm-date-spots.low {
+  color: #d97706;
+  background: #fef3c7;
+}
+
+.cdm-book-slot-btn {
+  background: #0d2240;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cdm-book-slot-btn:active {
+  background: #1a4a7a;
+}
+
+/* ── Sessions loading skeleton ── */
+.cdm-sessions-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cdm-skeleton-slot {
+  height: 52px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e8f4fd 25%, #d1ebfa 50%, #e8f4fd 75%);
+  background-size: 200% 100%;
+  animation: cdm-shimmer 1.4s infinite;
+}
+
+@keyframes cdm-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0;  }
+}
+
+.cdm-hb-card {
+  background: #02afef;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #02afef,
+    #02afef 12px,
+    #0086b9 12px,
+    #0086b9 24px
+  );
+  border-radius: 12px;
+  padding: 10px;
+  margin: 14px 16px;
+  display: block;
+  text-decoration: none;
+}
+
+.cdm-hb-inner {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cdm-hb-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #7cfc00;
+}
+
+.cdm-hb-logo {
+  height: 28px;
+  margin-bottom: 8px;
+}
+
+.cdm-hb-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #02afef;
+  margin: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.cdm-hb-subtitle {
+  font-size: 8px;
+  font-weight: 700;
+  color: #000;
+  margin-top: 4px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+/* Large Handbook Card Section (Mobile) */
+/* Branded Handbook Section (Reference Style) - Mobile */
+.cdm-handbook-section {
+    background-color: #f0f9ff;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 174, 239, 0.03) 0px,
+        rgba(0, 174, 239, 0.03) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    border-top: 1px solid #bae6fd;
+    border-bottom: 1px solid #bae6fd;
+    padding: 40px 15px;
+    margin: 30px 0;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.cdm-large-hb-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cdm-large-hb-card {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    line-height: 0;
+}
+
+.cdm-large-hb-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.cdm-large-hb-cta {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00AEEF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    border: 1.5px solid white;
+    padding: 6px 16px;
+    border-radius: 30px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.cdm-no-sessions {
+  text-align: center;
+  color: #4a7096;
+  font-size: 13px;
+  padding: 20px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  border: 1px solid #bae0f7;
+}
+
+/* ── See more / See less button ── */
+.cdm-see-more-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 10px;
+  color: #0d7aad;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cdm-see-more-btn:active {
+  background: #dbeafe;
+}
+
+/* ── Session swipe — grouped pages of 7 ── */
+.cdm-session-swipe {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cdm-session-swipe::-webkit-scrollbar {
+  display: none;
+}
+
+.cdm-session-page-card {
+  flex-shrink: 0;
+  width: 100%;
+  min-width: calc(100vw - 64px);
+  max-width: 416px;
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* ── Page indicator (shared by sessions + points swipe) ── */
+.cdm-page-indicator {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a7096;
+  padding: 8px;
+  border-top: 1px solid #bae0f7;
+  background: #e8f4fd;
+}
+
+/* ── Trust Badges ── */
+.cdm-trust-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cdm-trust-badge {
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.cdm-trust-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.cdm-trust-text {
+  font-size: 11px;
+  color: #0d2240;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ── Reviews — horizontal swipe ── */
+.cdm-review-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cdm-review-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.cdm-review-card {
+  background: #f0f8ff;
+  border: 1px solid #bae0f7;
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 260px;
+  max-width: 280px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.cdm-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.cdm-review-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d2240;
+}
+
+.cdm-review-stars {
+  color: #f59e0b;
+  font-size: 12px;
+}
+
+.cdm-review-text {
+  font-size: 12px;
+  color: #4a7096;
+  line-height: 1.5;
+}
+
+/* ── Sticky Bottom Bar ── */
+.cdm-sticky {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #0d2240;
+  padding: 10px 16px;
+  display: flex;
+  gap: 8px;
+  border-top: 2px solid #29b6e8;
+  z-index: 100;
+}
+
+.cdm-sticky-book {
+  flex: 1;
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cdm-sticky-call {
+  background: #fff;
+  color: #0d2240;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Section Slider ── */
+
+/* Header row: title on the left, prev/next arrows on the right. This
+   keeps the arrows in a fixed-height strip above the slide content —
+   they no longer sit absolutely positioned over the list, so they
+   can't overlap text regardless of how tall a given slide is. */
+.cdm-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8f4fd;
+}
+
+.cdm-section-header .cdm-section-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.cdm-slide-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.cdm-slide-nav button.cdm-slide-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  position: static;
+  margin: 0;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid #bae0f7;
+  outline: none;
+  background: #f0f8ff;
+  color: #0d2240;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cdm-slide-nav button.cdm-slide-arrow:active {
+  background: #dbeafe;
+}
+
+.slide-wrap {
+  position: relative;
+  overflow: hidden;
+  text-wrap: wrap;
+}
+
+.slide-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.slide-page {
+  min-width: 100%;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.cdm-dot-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 10px;
+}
+
+.cdm-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #bae0f7;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cdm-dot.active {
+  background: #29b6e8;
+}
+
+/* ── Desktop: hide ── */
+@media (min-width: 769px) {
+  .cdm-root {
+    display: none;
+  }
+}

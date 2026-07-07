@@ -1,0 +1,147 @@
+/* ===== VOC STEP 1 ===== */
+.v1-wrap {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    overflow: hidden;
+    max-width: 780px;
+    margin: 0 auto 40px;
+}
+
+.v1-header {
+    background: #0f172a;
+    padding: 28px 32px;
+    text-align: center;
+}
+
+.v1-header-title {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.v1-header-sub {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0;
+}
+
+.v1-body {
+    padding: 28px 32px 32px;
+}
+
+/* Rows */
+.v1-row-2 {
+    display: flex;
+    gap: 20px;
+}
+
+.v1-row-3 {
+    display: flex;
+    gap: 16px;
+}
+
+/* Field */
+.v1-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    margin-bottom: 18px;
+}
+
+.v1-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 0.4px;
+}
+
+/* Input wrap */
+.v1-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.v1-icon {
+    font-size: 15px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.v1-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+    font-family: inherit;
+}
+
+.v1-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Select */
+.v1-select-wrap {
+    position: relative;
+}
+
+.v1-select {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    width: 100%;
+    font-family: inherit;
+    appearance: none;
+    cursor: pointer;
+}
+
+.v1-chevron {
+    position: absolute;
+    right: 0;
+    font-size: 12px;
+    color: #888;
+    pointer-events: none;
+}
+
+/* CTA Button */
+.v1-cta-btn {
+    display: block;
+    width: 100%;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: none;
+    border-radius: var(--btn-radius);
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    margin-top: 8px;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.v1-cta-btn:hover {
+    background: #22d3ee;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .v1-row-2, .v1-row-3 {
+        flex-direction: column;
+        gap: 0;
+    }
+    .v1-body {
+        padding: 20px 16px 24px;
+    }
+}

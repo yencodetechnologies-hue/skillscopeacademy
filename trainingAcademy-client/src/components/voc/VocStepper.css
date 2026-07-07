@@ -1,0 +1,70 @@
+/* ===== VOC STEPPER ===== */
+.vs-stepper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
+    padding: 28px 16px 20px;
+}
+
+.vs-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.vs-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #888;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.vs-active {
+    background: var(--btn-bg);
+    color: var(--btn-color);
+}
+
+.vs-done {
+    background: #22c55e;
+    color: #fff;
+}
+
+.vs-check {
+    width: 20px;
+    height: 20px;
+}
+
+.vs-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.vs-label-active {
+    color: var(--btn-bg);
+}
+
+@media (max-width: 480px) {
+    .vs-stepper {
+        gap: 20px;
+    }
+    .vs-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    .vs-label {
+        font-size: 10px;
+    }
+}

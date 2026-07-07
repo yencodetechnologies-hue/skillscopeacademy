@@ -1,0 +1,495 @@
+/* ===== ENROLLMENT USI - SECTION 2 ===== */
+
+.usi-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+}
+
+/* Section Header */
+.usi-section-header {
+    background: #EBF4FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+}
+
+.usi-section-header-text {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e3a5f;
+    letter-spacing: 0.3px;
+}
+
+/* Info Card */
+.usi-info-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.usi-info-text {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+    margin: 0 0 10px;
+}
+
+.usi-info-text:last-child {
+    margin-bottom: 0;
+}
+
+/* Main Card */
+.usi-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.usi-card-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: #111;
+}
+
+/* USI Input Row */
+.usi-input-row {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.usi-input-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.usi-permission-col {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 4px;
+}
+
+.usi-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.usi-input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: #111;
+}
+
+.usi-input:focus {
+    border-color: #02afef;
+    background: #fff;
+}
+
+.usi-error-msg {
+    color: #dc2626;
+    font-size: 12px;
+    margin: 4px 0 0;
+    font-weight: 500;
+}
+
+.usi-hint {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+}
+
+.usi-permission-checkbox {
+    margin-top: 3px;
+    accent-color: #02afef;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.usi-permission-text {
+    font-size: 13.5px;
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* STA Radio Group */
+.usi-sta-group {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+}
+
+.usi-sta-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 12px;
+}
+
+.usi-required {
+    color: #dc2626;
+    margin-left: 2px;
+}
+
+.usi-optional {
+    font-weight: 400;
+    color: #888;
+    font-size: 12.5px;
+    margin-left: 4px;
+}
+
+.usi-radio-row {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.usi-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.usi-radio {
+    accent-color: #02afef;
+    cursor: pointer;
+}
+
+/* ===== STA EXPAND BOX ===== */
+
+.usi-extra-box {
+    border: 1.5px solid #fca5a5;
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    margin-top: 20px;
+    background: #fff;
+}
+
+.usi-extra-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #dc2626;
+    margin: 0 0 10px;
+}
+
+.usi-extra-text {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 20px;
+}
+
+.usi-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.usi-field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.usi-checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.usi-checkbox-row input[type="checkbox"] {
+    margin-top: 3px;
+    flex-shrink: 0;
+    accent-color: #dc2626;
+    width: 15px;
+    height: 15px;
+}
+
+.usi-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.usi-row > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.usi-row > div label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111;
+}
+
+.usi-subtitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    margin: 4px 0 6px;
+}
+
+.usi-subtitle-hint {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 16px;
+}
+
+.usi-file-hint {
+    font-size: 12.5px;
+    color: #888;
+    margin: 6px 0 0;
+    line-height: 1.5;
+}
+
+/* Footer Nav */
+.usi-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.usi-prev-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.usi-prev-btn:hover {
+    background: #f3f4f6;
+}
+
+.usi-next-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #02afef;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.usi-next-btn:hover {
+    opacity: 0.92;
+}
+
+.usi-next-btn:active {
+    transform: scale(0.98);
+}
+
+/* ===== FILE UPLOAD + PREVIEW ===== */
+
+.usi-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.usi-upload-wrapper label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111;
+}
+
+.usi-dropzone {
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    cursor: pointer;
+    background: #f9fafb;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.usi-dropzone:hover {
+    border-color: #02afef;
+    background: #f0faff;
+}
+
+.usi-dropzone-active {
+    border-color: #02afef;
+    background: #f0faff;
+}
+
+.usi-dropzone-arrow {
+    font-size: 20px;
+    color: #02afef;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.usi-dropzone-text {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #02afef;
+    margin: 0;
+}
+
+.usi-dropzone-hint {
+    font-size: 12px;
+    color: #888;
+    margin: 4px 0 0;
+}
+
+.usi-file-name {
+    font-size: 13.5px;
+    color: #166534;
+    font-weight: 600;
+    margin: 0;
+}
+
+.usi-file-preview {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.usi-preview-img {
+    width: 200px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    display: block;
+}
+
+.usi-preview-pdf {
+    font-size: 13.5px;
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.usi-remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    line-height: 1;
+}
+
+.usi-remove-btn:hover {
+    background: #dc2626;
+}
+
+/* ── Add these to your existing EnrollmentSection2.css ── */
+
+/* Red border on dropzone when file is too large */
+.usi-dropzone-error {
+    border-color: #f87171 !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Error message below the dropzone */
+.usi-file-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #dc2626;
+    animation: fadeInDown 0.2s ease;
+}
+
+.usi-file-error-icon {
+    font-size: 13px;
+    color: #dc2626;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.usi-input-error {
+    border-color: #dc2626 !important;
+    background: #fef2f2 !important;
+}
+
+.usi-label-error {
+    color: #dc2626 !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .usi-input-row,
+    .usi-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .usi-card,
+    .usi-extra-box {
+        padding: 20px 16px;
+    }
+}

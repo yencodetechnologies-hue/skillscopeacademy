@@ -1,0 +1,476 @@
+/* ===== ENROLLMENT SECTION 3 — EDUCATION & EMPLOYMENT ===== */
+/* ── Add these to your existing EnrollmentSection3.css ── */
+/* ── Add these to your existing EnrollmentSection3.css ── */
+
+.s3-evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.s3-evidence-card {
+    border: 1.5px dashed #d1d5db;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fafafa;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.s3-evidence-card-done {
+    border-color: #86efac;
+    background: #f0fdf4;
+}
+
+.s3-evidence-card-error {
+    border-color: #f87171;
+    background: #fff5f5;
+}
+
+.s3-evidence-label-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.s3-evidence-badge { font-size: 15px; flex-shrink: 0; }
+
+.s3-evidence-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    flex: 1;
+}
+
+.s3-evidence-tick { font-size: 15px; }
+
+.s3-evidence-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 18px 12px;
+    cursor: pointer;
+    background: #fff;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.s3-evidence-dropzone:hover {
+    border-color:#02afef;
+    background: #faf5ff;
+}
+
+.s3-evidence-arrow { font-size: 20px; color: #9ca3af; margin-bottom: 4px; }
+.s3-evidence-dropzone-text { font-size: 13px; font-weight: 500; color: #374151; margin: 0; }
+.s3-evidence-dropzone-hint { font-size: 11px; color: #9ca3af; margin: 2px 0 0 0; }
+
+.s3-evidence-preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+}
+
+.s3-evidence-img {
+    width: 100%;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.s3-evidence-pdf {
+    font-size: 13px;
+    color: #2563eb;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.s3-evidence-remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.s3-evidence-remove:hover { background: #dc2626; }
+
+.s3-file-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #dc2626;
+    animation: s3FadeInDown 0.2s ease;
+}
+
+.s3-file-error-icon { font-size: 13px; }
+
+@keyframes s3FadeInDown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+/* Red outline on file input when error */
+.s3-file-input-error {
+    outline: 1.5px solid #f87171;
+    border-radius: 4px;
+}
+
+/* Error message below file input */
+.s3-file-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #dc2626;
+    animation: s3FadeInDown 0.2s ease;
+}
+
+.s3-file-error-icon {
+    font-size: 13px;
+    color: #dc2626;
+}
+
+@keyframes s3FadeInDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.s3-input-error {
+    border-color: #dc2626 !important;
+    background: #fef2f2 !important;
+}
+
+.s3-label-error {
+    color: #dc2626 !important;
+}
+
+.s3-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+}
+
+/* Section Header */
+.s3-section-header {
+    background: #EBF4FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+}
+
+.s3-section-header-text {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e3a5f;
+    letter-spacing: 0.3px;
+}
+
+/* Card */
+.s3-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.s3-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 8px;
+}
+
+.s3-info-text {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.s3-subtitle {
+    font-size: 13.5px;
+    color: #555;
+    margin: 0 0 16px;
+}
+
+.s3-hint {
+    font-size: 13px;
+    color: #888;
+    margin: 8px 0 0;
+    line-height: 1.5;
+}
+
+.s3-divider {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 16px 0;
+}
+
+/* Radio grid — 2 columns */
+.s3-radio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+    margin-bottom: 12px;
+}
+
+.s3-radio-row {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.s3-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    color: #222;
+    cursor: pointer;
+}
+
+.s3-radio {
+    accent-color:#02afef;
+    cursor: pointer;
+}
+
+/* Field */
+.s3-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex: 1;
+}
+
+.s3-field-full {
+    width: 100%;
+    flex: unset;
+}
+
+.s3-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111;
+}
+
+.s3-required {
+    color: #dc2626;
+    margin-left: 2px;
+}
+
+/* Inputs */
+.s3-input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.s3-input:focus {
+    border-color:#02afef;
+    background: #fff;
+}
+
+.s3-input-full {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.s3-input-full:focus {
+    border-color:#02afef;
+    background: #fff;
+}
+
+.s3-textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.s3-textarea:focus {
+    border-color:#02afef;
+    background: #fff;
+}
+
+.s3-file-input {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 13.5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* Checkbox */
+.s3-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: #333;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.s3-checkbox-label input[type="checkbox"] {
+    accent-color:#02afef;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+/* Two column row */
+.s3-row-2 {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Qualification expand box */
+.s3-qual-box {
+    margin-top: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px 20px 16px;
+    background: #fafafa;
+}
+
+.s3-qual-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 14px;
+}
+
+.s3-checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+}
+
+/* Footer Nav */
+.s3-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-bottom: 16px;
+}
+
+.s3-prev-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.s3-prev-btn:hover {
+    background: #f3f4f6;
+}
+
+.s3-next-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #02afef;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.s3-next-btn:hover {
+    opacity: 0.92;
+}
+
+.s3-next-btn:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .s3-radio-grid,
+    .s3-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .s3-row-2 {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .s3-card {
+        padding: 20px 16px;
+    }
+
+    .s3-qual-box {
+        padding: 16px 14px;
+    }
+}

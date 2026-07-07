@@ -1,0 +1,759 @@
+/* ═══════════════════════════════════════════════
+   SCHEDULE MODAL — ScheduleModal.css
+═══════════════════════════════════════════════ */
+
+/* ── Overlay ── */
+.csm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* ── Container ── */
+.csm-container {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+/* ── Header ── */
+.csm-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+  border-radius: 16px 16px 0 0;
+}
+
+.csm-header-icon {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.csm-header-text {
+  flex: 1;
+}
+
+.csm-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 2px;
+}
+
+.csm-subtitle {
+  font-size: 0.78rem;
+  color: #888;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.csm-close-btn {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.csm-close-btn:hover { background: #e8e8e8; }
+
+/* ── Form Card ── */
+.csm-form-card {
+  margin: 1rem 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+/* Add header row */
+.csm-add-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.csm-add-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Bulk toggle checkbox */
+.csm-bulk-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+}
+
+.csm-bulk-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.csm-bulk-check {
+  width: 16px;
+  height: 16px;
+  border: 2px solid#02afef;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.csm-bulk-toggle input:checked + .csm-bulk-check {
+  background:#02afef;
+}
+
+.csm-bulk-toggle input:checked + .csm-bulk-check::after {
+  content: "✓";
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ── Grid ── */
+.csm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.csm-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.csm-field-full {
+  grid-column: 1 / -1;
+}
+
+/* ── Field ── */
+.csm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.csm-field label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.csm-field input,
+.csm-field select {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #222;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.csm-field input:focus,
+.csm-field select:focus {
+  border-color:#02afef;
+}
+
+.csm-hint {
+  font-size: 0.72rem;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* ── Day Picker ── */
+.csm-day-picker-wrap {
+  margin: 0.75rem 0;
+  background: #faf8ff;
+  border: 1px solid #ede9ff;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.csm-day-picker-wrap > label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.csm-day-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.csm-day-btn {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid #d1c4f7;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.8rem;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+
+.csm-day-btn.active {
+  background:#02afef;
+  color: #fff;
+  border-color:#02afef;
+}
+
+.csm-day-btn.blurred {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.csm-day-btn:hover:not(.active):not(.blurred) {
+  border-color:#02afef;
+  color:#02afef;
+}
+
+/* ── Add Date Button ── */
+.csm-add-date-btn {
+  margin-top: 1rem;
+  padding: 0.55rem 1.2rem;
+  background:#02afef;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+.csm-add-date-btn:hover { background: #02afef; }
+
+/* ── Schedule Section ── */
+.csm-schedule-section {
+  padding: 0 1.5rem 1rem;
+  flex: 1;
+}
+
+.csm-section-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.csm-section-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+}
+
+/* Filter tabs */
+.csm-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.csm-show-inactive {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #666;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.csm-show-inactive input {
+  cursor: pointer;
+}
+
+.csm-filter-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.csm-filter-tab {
+  padding: 0.25rem 0.65rem;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: #888;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+.csm-filter-tab:hover { background: #f5f5f5; color: #444; }
+.csm-filter-tab.active { background: #f0ebff; color:#02afef; font-weight: 500; }
+
+.csm-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.csm-dot.green { background: #22c55e; }
+
+.csm-session-inactive {
+  opacity: 0.55;
+  background: #f9fafb;
+  border: 1px dashed #d1d5db;
+}
+
+/* ── No session ── */
+.csm-no-session {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.875rem;
+  color: #bbb;
+  border: 1px dashed #e8e8e8;
+  border-radius: 10px;
+}
+
+/* ── Date Block ── */
+.csm-date-block {
+  margin-bottom: 1rem;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.csm-date-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0.65rem 1rem;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+  flex-wrap: wrap;
+}
+
+.csm-cal-icon {
+  margin-right: 4px;
+  font-size: 0.9rem;
+}
+
+.csm-session-count {
+  font-size: 0.75rem;
+  color: #888;
+  font-weight: 400;
+}
+
+.csm-add-slot-btn {
+  font-size: 0.75rem;
+  color:#02afef;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 500;
+}
+.csm-add-slot-btn:hover { text-decoration: underline; }
+
+/* ── Session Card ── */
+.csm-session-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #f5f5f5;
+  flex-wrap: wrap;
+}
+.csm-session-card:last-child { border-bottom: none; }
+
+.csm-session-unsaved {
+  background: #fdfcff;
+}
+
+.csm-session-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.csm-tag {
+  background: #f0ebff;
+  color:#02afef;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.csm-time {
+  font-size: 0.8rem;
+  color: #555;
+  white-space: nowrap;
+}
+
+.csm-avl-slot {
+  font-size: 0.75rem;
+  color: #666;
+  min-width: 60px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.csm-avl-slot span {
+  font-size: 0.68rem;
+  color: #aaa;
+}
+
+.csm-unsaved-badge {
+  background: #fff8e8;
+  color: #d97706;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid #fde68a;
+  min-width: auto;
+}
+
+.csm-session-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.csm-edit-btn {
+  font-size: 0.78rem;
+  color:#02afef;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 2px 4px;
+}
+.csm-edit-btn:hover { text-decoration: underline; }
+
+/* Session active/inactive toggle switch */
+.csm-status-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.csm-status-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.csm-status-slider {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+  background: #ef4444;
+  border-radius: 999px;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+}
+
+.csm-status-slider::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease;
+}
+
+.csm-status-switch.is-on .csm-status-slider {
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.csm-status-switch.is-on .csm-status-slider::after {
+  transform: translateX(18px);
+}
+
+.csm-status-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #dc2626;
+  min-width: 62px;
+  transition: color 0.2s ease;
+}
+
+.csm-status-switch.is-on .csm-status-label {
+  color: #16a34a;
+}
+
+.csm-status-switch:hover .csm-status-slider {
+  filter: brightness(0.96);
+}
+
+.csm-status-switch.is-loading {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.csm-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #ef4444;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.12s;
+}
+.csm-delete:hover { background: #fef2f2; }
+
+/* ── Footer ── */
+.csm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+  position: sticky;
+  bottom: 0;
+}
+
+.csm-save-dates-btn {
+  padding: 0.6rem 1.4rem;
+  background: #e8e0ff;
+  color: #9e9e9e;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.csm-save-dates-btn.active {
+  background:#02afef;
+  color: #fff;
+  cursor: pointer;
+}
+.csm-save-dates-btn.active:hover { background: #02afef; }
+
+.csm-cancel-btn {
+  padding: 0.6rem 1.2rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: #444;
+  transition: background 0.15s;
+}
+.csm-cancel-btn:hover { background: #f5f5f5; }
+
+/* ═══════════════════════════════════════════════
+   EDIT SESSION MODAL
+═══════════════════════════════════════════════ */
+
+.csm-edit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 1rem;
+}
+
+.csm-edit-modal {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.csm-edit-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.csm-edit-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 4px;
+}
+
+.csm-edit-header p {
+  font-size: 0.78rem;
+  color: #888;
+  margin: 0;
+}
+
+.csm-edit-field label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #777;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.csm-edit-date-val {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #222;
+  margin: 0;
+}
+
+.csm-edit-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 0.25rem;
+}
+
+.csm-save-changes-btn {
+  padding: 0.55rem 1.2rem;
+  background:#02afef;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.csm-save-changes-btn:hover { background: #02afef; }
+.csm-save-changes-btn:disabled { background: #c4b5fd; cursor: not-allowed; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — mobile
+═══════════════════════════════════════════════ */
+@media (max-width: 540px) {
+  .csm-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .csm-container {
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+    max-width: 100%;
+  }
+
+  .csm-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .csm-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .csm-field-full {
+    grid-column: auto;
+  }
+
+  .csm-section-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .csm-session-card {
+    gap: 8px;
+  }
+
+  .csm-footer {
+    flex-direction: column-reverse;
+  }
+
+  .csm-save-dates-btn,
+  .csm-cancel-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .csm-edit-modal {
+    max-width: 100%;
+    margin: 0 0.5rem;
+  }
+
+  .csm-day-picker {
+    gap: 6px;
+  }
+
+  .csm-day-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}

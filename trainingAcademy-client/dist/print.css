@@ -1,0 +1,464 @@
+/* ============================================================
+   STA ENROLMENT FORM — print.css (FIXED v4)
+   Key fixes:
+   1. Bootstrap _reboot.scss sets border-width:0 on td/th — override it
+   2. .p2Blue was bleeding blue bg into idTable rows — isolated
+   3. All dynamic data text forced RED + bold
+   4. Print media preserves red on filled data
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9pt;
+  background: #e0e0e0;
+  color: #000;
+}
+
+/* ── Toolbar ── */
+.toolbar {
+  position: sticky; top: 0; z-index: 100;
+  background: #f5f5f5; border-bottom: 1px solid #ccc;
+  padding: 8px 16px;
+}
+
+.student-id-banner {
+  background: #fff3cd; border: 1px solid #ffc107;
+  color: #856404; padding: 8px 16px;
+  font-size: 9pt; font-weight: bold; text-align: center;
+}
+
+/* ── A4 Sheet ── */
+.sheet {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 12mm 14mm 10mm 14mm;
+  margin: 12px auto;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  position: relative;
+  display: block;
+}
+
+/* Fix Bootstrap grid inside sheet */
+.sheet .row { display: flex; flex-wrap: wrap; width: 100%; }
+.sheet .col-3 { flex: 0 0 25%; max-width: 25%; }
+.sheet .col-6 { flex: 0 0 50%; max-width: 50%; text-align: center; }
+
+/* ── STA Header ── */
+.sta-logo     { max-width: 100%; max-height: 28mm; object-fit: contain; }
+.sta-title    { font-size: 14pt; font-weight: 900; letter-spacing: 1px; line-height: 1.2; }
+.sta-subtitle { font-size: 12pt; font-weight: 900; letter-spacing: 1px; line-height: 1.2; }
+.sta-rto      { font-size: 10pt; font-weight: 900; margin-top: 2px; }
+.sta-instruction { font-size: 8.5pt; color: #222; }
+.sta-section  { font-size: 10pt; font-weight: 900; text-transform: uppercase; }
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.sta-table,
+.sta-table thead,
+.sta-table tbody,
+.sta-table tfoot,
+.sta-table tr,
+.sta-table td,
+.sta-table th {
+  border-color: #000 !important;
+  border-style: solid !important;
+}
+
+.sta-table {
+  width: 100%;
+  border-collapse: collapse !important;
+  font-size: 8pt;
+  border-width: 0.5pt !important;
+}
+
+.sta-table td,
+.sta-table th {
+  border-width: 0.5pt !important;
+  padding: 3px 5px;
+  vertical-align: top;
+  color: #000 !important;
+  background-color: transparent;
+}
+
+/* Dark header bars */
+.sta-bar {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+  font-weight: 900;
+  font-size: 8.5pt;
+  padding: 4px 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-color: #1a1a1a !important;
+}
+
+.sta-subnote {
+  font-size: 7.5pt;
+  background-color: #f5f5f5 !important;
+  padding: 2px 5px;
+}
+
+/* ── Checkbox ── */
+.cb {
+  display: inline-block; width: 12px; height: 14px;
+  border: 1pt solid #000 !important; margin-right: 3px;
+  vertical-align: middle; background: #fff !important;
+  position: relative; flex-shrink: 0;
+}
+.cb.checked::after {
+  content: "✓"; position: absolute; top: -2px; left: 0;
+  font-size: 9px; color: #000; font-weight: bold;
+}
+
+/* ── Value Spans — RED + BOLD ── */
+.value {
+  display: inline-block; min-width: 60px; min-height: 12px;
+  border-bottom: 0.5pt solid #555 !important;
+  font-size: 8pt;
+  color: red !important;
+  font-weight: 600 !important;
+  padding: 0 2px;
+}
+
+.fillVal {
+  display: inline-block; font-size: 8pt;
+  color: red !important;
+  font-weight: 600 !important;
+  padding: 0 2px; min-width: 8px;
+}
+
+/* Target all data-field and data-line filled values */
+[data-field],
+span[data-field],
+[data-line] .fillVal,
+span[data-line] .fillVal,
+.p7P [data-line] .fillVal,
+.p7Text [data-line] .fillVal,
+.p7Body [data-line] .fillVal,
+td [data-line] .fillVal,
+div [data-line] .fillVal {
+  color: red !important;
+  font-weight: 600 !important;
+}
+
+.sta-ifdiff { font-size: 7pt; font-style: italic; color: #444; }
+
+/* Fill lines */
+.fillLine1 {
+  display: inline-block; border-bottom: 0.75pt solid #000 !important;
+  min-height: 12px; vertical-align: bottom; position: relative;
+}
+.fillLine {
+  display: inline-block; border-bottom: 0.75pt solid #000 !important;
+  min-height: 10px; vertical-align: bottom;
+}
+
+/* Width helpers */
+.w-35{width:35mm} .w-45{width:45mm} .w-55{width:55mm}
+.w-65{width:65mm} .w-80{width:80mm} .w-95{width:95mm} .w-110{width:110mm}
+
+/* ── USI ── */
+.usiText { font-size: 7.5pt; line-height: 1.45; color: #111; }
+.usiText a { color: #0000cc; font-size: 7pt; }
+.usiBoxes { display: inline-flex; align-items: center; gap: 2px; }
+.usiBoxes span {
+  display: inline-flex; width: 14px; height: 16px;
+  border: 1pt solid #000 !important; align-items: center; justify-content: center;
+  font-size: 8pt; font-weight: bold; color: red !important;
+  background: #fff !important;
+}
+.usiBoxes span:first-child {
+  font-weight: 900; font-size: 7pt; border: none !important;
+  width: auto; margin-right: 3px; color: #000 !important;
+}
+
+/* ── Footer ── */
+.footerCompany { margin-top: auto; padding-top: 6px; font-size: 7pt; text-align: center; color: #333; line-height: 1.4; }
+.footerHr { border: none; border-top: 0.75pt solid #000 !important; margin: 3px 0 2px; }
+.footerLine { display: flex; justify-content: space-between; font-size: 7pt; color: #333; padding: 0 2px; }
+
+/* ============================================================
+   PAGE 2 — USI Application
+   ============================================================ */
+.p2Outer { border: 1pt solid #000; margin-bottom: 5mm; }
+
+.p2Heading {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+  font-weight: 900; font-size: 8.5pt;
+  padding: 4px 8px; text-transform: uppercase;
+}
+
+.p2Pad {
+  padding: 5px 8px; font-size: 7.5pt; line-height: 1.45;
+  color: #000; background-color: transparent;
+}
+.p2Blue {
+  color: #000; background-color: transparent;
+}
+.p2Blue a { color: #0000cc; font-size: 7pt; word-break: break-all; }
+
+.p2InnerBox {
+  border: 0.75pt solid #000; margin: 4px 6px;
+  padding: 5px 7px; font-size: 7.5pt; line-height: 1.45;
+  color: #000; background-color: transparent;
+}
+.p2Under { text-decoration: underline; display: block; margin-bottom: 2px; }
+
+.p2InnerTableWrap {
+  margin: 4px 6px 6px 6px;
+  border: 0.75pt solid #000;
+  overflow: hidden !important;
+}
+
+.idTable,
+.idTable thead,
+.idTable tbody,
+.idTable tfoot,
+.idTable tr,
+.idTable td,
+.idTable th {
+  border-color: #555 !important;
+  border-style: solid !important;
+  background-color: transparent !important;
+  color: #000 !important;
+}
+
+.idTable {
+  width: 100%;
+  border-collapse: collapse !important;
+  font-size: 7.5pt;
+  border-width: 0.5pt !important;
+}
+
+.idTable td, .idTable th {
+  border-width: 0.5pt !important;
+  padding: 3px 5px;
+  vertical-align: top;
+}
+
+.idTitle { font-weight: bold; font-size: 7.5pt; }
+.idSmall { font-size: 7.5pt; line-height: 1.5; }
+.dateHint { font-size: 6.5pt; font-style: italic; color: #555; }
+
+/* ── Office Use ── */
+.p2OfficeOuter { border: 1pt solid #000; margin-bottom: 4mm; }
+
+.officeBar {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+  font-weight: 900; font-size: 8.5pt;
+  padding: 4px 8px; text-transform: uppercase;
+}
+
+.officeTable,
+.officeTable thead,
+.officeTable tbody,
+.officeTable tr,
+.officeTable td,
+.officeTable th {
+  border-color: #555 !important;
+  border-style: solid !important;
+  background-color: transparent !important;
+  color: #000 !important;
+}
+.officeTable {
+  width: 100%; border-collapse: collapse !important; font-size: 7.5pt;
+  border-width: 0.5pt !important;
+}
+.officeTable td, .officeTable th {
+  border-width: 0.5pt !important; padding: 3px 6px; vertical-align: top;
+}
+.officeNote { font-size: 7pt; font-style: italic; padding: 4px 6px; line-height: 1.5; }
+.p2BlueText { color: #00008b; font-weight: bold; }
+.p2SmallNote { font-size: 6.5pt; font-style: italic; color: #444; margin-left: 4px; }
+
+/* ============================================================
+   PAGE 3
+   ============================================================ */
+.p3SectionTitle { font-size: 10pt; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; color: #000; }
+.p3Intro { border: 0.75pt solid #000; padding: 4px 8px; margin-bottom: 5px; font-size: 8pt; color: #000; }
+.p3IntroHead { font-weight: 900; font-size: 8.5pt; margin-bottom: 2px; }
+.p3Opt { display: flex; align-items: flex-start; gap: 4px; font-size: 8pt; line-height: 1.4; padding: 1px 0; color: #000; }
+.p3Code { display: inline-block; background-color: #d0d0d0 !important; font-weight: bold; font-size: 7pt; padding: 0 3px; min-width: 20px; text-align: center; border: 0.5pt solid #888; flex-shrink: 0; color: #000 !important; }
+.p3QualGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; }
+.p3InnerTable,
+.p3InnerTable tr,
+.p3InnerTable td { border-color: #555 !important; border-style: solid !important; background-color: transparent !important; color: #000 !important; }
+.p3InnerTable { width: 100%; border-collapse: collapse !important; font-size: 8pt; border-width: 0.5pt !important; }
+.p3InnerTable td { border-width: 0.5pt !important; padding: 2px 5px; vertical-align: top; }
+
+/* ============================================================
+   PAGE 4
+   ============================================================ */
+.p4SectionTitle { font-size: 10pt; font-weight: 900; text-transform: uppercase; margin-bottom: 2px; color: #000; }
+.p4SectionSub { font-size: 7.5pt; color: #333; margin-bottom: 5px; }
+.p4Note { font-size: 7.5pt; font-weight: normal; font-style: italic; color: #000; }
+.p4Opt { display: flex; align-items: flex-start; gap: 4px; font-size: 8pt; line-height: 1.4; padding: 1px 0; color: #000; }
+.p4Code { display: inline-block; background-color: #d0d0d0 !important; font-weight: bold; font-size: 7pt; padding: 0 3px; min-width: 20px; text-align: center; border: 0.5pt solid #888; flex-shrink: 0; color: #000 !important; }
+.p4Foot { font-size: 7pt; font-style: italic; color: #444; }
+.p4CobRight { display: flex; flex-direction: column; gap: 3px; }
+.p4LineGrow { flex: 1; min-width: 40mm; }
+.p4LinePlace { width: 50mm; }
+.p4Small { font-size: 7pt; font-style: italic; color: #555; }
+.p4Inline { display: inline-flex; align-items: center; gap: 3px; font-size: 8pt; color: #000; }
+
+/* ============================================================
+   PAGE 5
+   ============================================================ */
+.p5TopBar { background-color: #e8e8e8 !important; font-weight: bold; font-size: 8pt; padding: 3px 6px; border: 0.5pt solid #000; color: #000 !important; }
+.p5RightNote { font-style: italic; font-weight: normal; font-size: 7.5pt; color: #000; }
+.p5Opt { display: flex; align-items: flex-start; gap: 4px; font-size: 8pt; line-height: 1.4; padding: 2px 0; color: #000; }
+.p5Small { font-size: 7pt; color: #555; }
+.p5ShortTitle { font-size: 10pt; font-weight: 900; text-transform: uppercase; margin: 6px 0 3px; color: #000; }
+.p5Band { background-color: #c8c8c8 !important; font-weight: 900; font-size: 8pt; padding: 2px 6px; border: 0.5pt solid #000; color: #000 !important; }
+
+/* ============================================================
+   PAGES 7–13
+   ============================================================ */
+.p7BoxFill { flex: 1; }
+.p7Body { padding: 6px 8px; vertical-align: top; }
+.p7Text { font-size: 8pt; line-height: 1.5; color: #111; }
+.p7Head { font-weight: 900; font-size: 8.5pt; margin-top: 6px; margin-bottom: 2px; color: #000; }
+.p7P { margin-bottom: 5px; font-size: 8pt; line-height: 1.5; color: #000; }
+.p7Ul { margin: 2px 0 5px 14px; font-size: 8pt; line-height: 1.5; color: #000; }
+.p7Ol { margin: 2px 0 5px 14px; font-size: 8pt; line-height: 1.5; color: #000; }
+.p7Ol li { margin-bottom: 3px; }
+.p7Contact { margin-top: 8px; font-size: 8pt; line-height: 1.6; color: #000; }
+.p7Text a { color: #0000cc; font-size: 7.5pt; word-break: break-all; }
+.mt8 { margin-top: 8px; }
+.p10Alpha { list-style-type: lower-alpha; margin: 2px 0 5px 18px; font-size: 8pt; line-height: 1.5; color: #000; }
+
+/* ============================================================
+   PAGE 14
+   ============================================================ */
+.photoIdSection { display: flex; gap: 10mm; padding: 4px 0; }
+.photoIdCard { flex: 1; }
+.photoIdContainer { width: 100%; height: 35mm; border: 1pt solid #000; display: flex; align-items: center; justify-content: center; background: #f9f9f9; overflow: hidden; }
+.photoIdContainer img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.photoIdPlaceholder { font-size: 7.5pt; color: #888; font-style: italic; }
+.footerBrand { text-align: center; margin-top: 6px; padding: 4px; border-top: 1pt solid #000; }
+.footerBrandTitle   { font-size: 10pt; font-weight: 900; color: #000; }
+.footerBrandSubtitle{ font-size: 9pt;  font-weight: 900; color: #000; }
+.footerBrandRto     { font-size: 8.5pt;font-weight: 900; color: #000; }
+
+/* ============================================================
+   QUALIFICATION CERTIFICATES (Section 3 uploads)
+   ------------------------------------------------------------
+   Reuses .photoIdSection / .photoIdCard / .photoIdContainer for
+   identical look and image size as the PHOTO AND ID CARD section.
+   These rules only add wrap behaviour so 2 cards sit per row.
+   ============================================================ */
+#qualCertSection,
+.qualCertOverflowSection {
+  flex-wrap: wrap;
+  row-gap: 6mm;
+}
+
+#qualCertSection .photoIdCard,
+.qualCertOverflowSection .photoIdCard {
+  flex: 0 0 calc(50% - 5mm);
+  max-width: calc(50% - 5mm);
+}
+
+/* ============================================================
+   FIX: remove unwanted blue/hover overlay
+   ============================================================ */
+.sta-table tbody,
+.idTable tbody,
+.officeTable tbody {
+  background-color: #fff !important;
+}
+
+.sta-table tr,
+.idTable tr,
+.officeTable tr {
+  background-color: transparent !important;
+}
+
+.sta-table td,
+.idTable td,
+.officeTable td {
+  background-color: transparent !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd),
+.table-hover tbody tr:hover {
+  background-color: transparent !important;
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  body {
+    background: #fff; margin: 0; padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: #000 !important;
+  }
+
+  /* Default all black */
+  * { color: #000 !important; }
+
+  /* ✅ Override: keep data fields RED in print */
+  .value,
+  .fillVal,
+  [data-field],
+  span[data-field],
+  [data-line] .fillVal,
+  span[data-line] .fillVal,
+  .p7P [data-line] .fillVal,
+  .p7Text [data-line] .fillVal,
+  .p7Body [data-line] .fillVal,
+  td [data-line] .fillVal,
+  div [data-line] .fillVal {
+    color: red !important;
+    font-weight: 600 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Preserve dark bars */
+  .sta-bar, .p2Heading, .officeBar {
+    background-color: #1a1a1a !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .p5Band    { background-color: #c8c8c8 !important; color: #000 !important; }
+  .p5TopBar  { background-color: #e8e8e8 !important; color: #000 !important; }
+  .p3Code, .p4Code { background-color: #d0d0d0 !important; color: #000 !important; }
+  .sta-subnote { background-color: #f5f5f5 !important; }
+
+  /* Force table borders in print */
+  .sta-table td, .sta-table th,
+  .idTable td, .idTable th,
+  .officeTable td, .officeTable th,
+  .p3InnerTable td {
+    border: 0.5pt solid #000 !important;
+  }
+
+  /* No blue bleed */
+  .idTable tr, .idTable td, .idTable th,
+  .p2Pad, .p2Blue, .p2InnerBox {
+    background-color: transparent !important;
+  }
+
+  .toolbar, .student-id-banner { display: none !important; }
+
+  .sheet {
+    width: 210mm; min-height: 297mm; height: 297mm;
+    margin: 0; padding: 12mm 14mm 10mm 14mm;
+    box-shadow: none;
+    page-break-after: always; break-after: page;
+  }
+  .sheet:last-child { page-break-after: avoid; break-after: avoid; }
+
+  @page { size: A4; margin: 0; }
+  a { color: #0000cc !important; text-decoration: none; }
+}

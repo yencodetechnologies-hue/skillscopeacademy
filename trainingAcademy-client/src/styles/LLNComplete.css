@@ -1,0 +1,140 @@
+.LLN-complete-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  margin-top: 20px;
+}
+
+/* HEADER */
+.LLN-header {
+  background: linear-gradient(90deg, #02afef, #0a8fc0);
+  color: white;
+  padding: 12px 16px;
+  font-weight: 500;
+}
+
+/* BODY */
+.LLN-body {
+  background: #f3eedc;
+  /* 🔥 exact light yellow */
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* ICON */
+.complete-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+.LLN-body h3 {
+  margin: 10px 0;
+}
+
+.sub-text {
+  color: #555;
+  font-size: 14px;
+}
+
+.attempt {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #666;
+}
+
+.score {
+  margin: 10px 0 20px;
+  font-weight: 500;
+}
+
+/* SECTION LIST */
+.section-list {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ROW */
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* BADGE */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.badge.pass {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.badge.fail {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* BUTTON */
+.retry-btn {
+  margin-top: 20px;
+  padding: 8px 20px;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background: #d1d5db;
+}
+
+/* FAIL BG (existing yellow) */
+.fail-bg {
+  background: #f3eedc;
+}
+
+/* PASS BG (green tone) */
+.pass-bg {
+  background: #e6f4ea;
+}
+
+/* CONTINUE BUTTON AREA */
+.continue-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+}
+
+/* BUTTON */
+.continue-btn {
+  background: linear-gradient(90deg, #02afef, #0a8fc0);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.continue-btn:hover {
+  opacity: 0.9;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .section-row {
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+  }
+}

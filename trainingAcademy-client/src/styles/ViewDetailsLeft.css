@@ -1,0 +1,156 @@
+.view-details-left{
+display:flex;
+flex-direction:column;
+gap:30px;
+}
+
+/* IMAGE */
+
+.course-image{
+border-radius:20px;
+overflow:hidden;
+}
+
+/* .course-image img{
+width:100%;
+height:380px;
+object-fit:cover;
+display:block;
+} */
+
+/* INFO CARDS */
+
+.course-info-container{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+}
+
+.info-card{
+background:white;
+padding:20px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+.info-card span{
+font-size:24px;
+}
+
+.info-card p{
+margin-top:10px;
+color:#64748b;
+}
+
+/* COMBO OFFER */
+
+.course-combo-div{
+background:linear-gradient(135deg,#02afef,#ec4899);
+padding:40px;
+border-radius:20px;
+color:white;
+position:relative;
+overflow:hidden;
+margin-top:20px;
+}
+
+.combo-label{
+font-size:12px;
+font-weight:600;
+opacity:0.8;
+}
+
+.combo-desc-course{
+margin:15px 0;
+opacity:0.9;
+}
+
+.combo-bottom{
+display:flex;
+align-items:center;
+gap:30px;
+margin-top:20px;
+}
+
+.combo-btn-course{
+background:white;
+color:#02afef;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+font-weight:600;
+cursor:pointer;
+}
+.course-combo-div::before{
+content:"";
+position:absolute;
+width:200px;
+height:200px;
+background:rgba(255,255,255,0.15);
+border-radius:50%;
+top:-50px;
+right:-50px;
+}
+
+.course-combo-div::after{
+content:"";
+position:absolute;
+width:200px;
+height:200px;
+background:rgba(255,255,255,0.1);
+border-radius:50%;
+bottom:-50px;
+left:-50px;
+}
+
+.combo-bottom div{
+background:rgba(255,255,255,0.15);
+padding:15px 20px;
+border-radius:12px;
+}
+/* COURSE SECTION */
+
+.course-section{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+.course-section h3{
+margin-bottom:15px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1024px){
+
+.course-info-container{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:768px){
+
+.course-info-container{
+grid-template-columns:1fr;
+}
+
+.combo-bottom{
+display:flex;
+align-items:center;
+gap:30px;
+margin-top:20px;
+}
+
+}
+
+@media(max-width:480px){
+
+.course-section{
+padding:20px;
+}
+
+}

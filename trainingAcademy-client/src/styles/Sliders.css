@@ -1,0 +1,349 @@
+/* =====================================================
+   Admin Sliders page — visual style aligned with the
+   rest of the admin (Students/VocSubmissions). Standalone
+   so we don't fight existing pages' overrides.
+   ===================================================== */
+
+.sl-page {
+    padding: 24px 28px 60px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #0f172a;
+}
+
+.sl-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.sl-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.sl-sub {
+    margin: 4px 0 0;
+    font-size: 13.5px;
+    color: #64748b;
+}
+
+.sl-add-btn {
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+}
+
+.sl-add-btn:hover { background: #1e293b; }
+
+.sl-error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.sl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.sl-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.sl-card:hover {
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.sl-card--inactive { opacity: 0.6; }
+
+.sl-card-skeleton {
+    height: 240px;
+    background: linear-gradient(90deg, #eef2f7 25%, #e2e8f0 50%, #eef2f7 75%);
+    background-size: 200% 100%;
+    animation: sl-shimmer 1.5s infinite;
+    border: none;
+}
+
+@keyframes sl-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.sl-thumb-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #f1f5f9;
+    overflow: hidden;
+}
+
+.sl-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.sl-inactive-pill {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(15, 23, 42, 0.85);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 999px;
+}
+
+.sl-card-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sl-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.sl-card-link {
+    font-size: 12px;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sl-card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.sl-btn {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    cursor: pointer;
+    color: #0f172a;
+    font-family: inherit;
+    transition: background 0.15s;
+}
+.sl-btn:hover { background: #eef2f7; }
+
+.sl-btn--ghost {
+    background: transparent;
+    border: 1px solid #d1d5db;
+    color: #475569;
+}
+
+.sl-btn--primary {
+    background: #0f172a;
+    color: #fff;
+    border-color: #0f172a;
+}
+.sl-btn--primary:hover { background: #1e293b; }
+
+.sl-btn--danger {
+    background: #fff;
+    border-color: #fecaca;
+    color: #b91c1c;
+}
+.sl-btn--danger:hover { background: #fef2f2; }
+
+.sl-empty {
+    background: #fff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 60px 24px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14.5px;
+}
+
+/* ── Modal ──────────────────────────────────────────── */
+.sl-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 100;
+}
+
+.sl-modal {
+    position: fixed;
+    z-index: 101;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+    max-width: calc(100vw - 32px);
+    max-height: 88vh;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+
+.sl-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sl-modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sl-modal-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.sl-modal-body {
+    padding: 16px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sl-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.sl-input {
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: #0f172a;
+    background: #fff;
+}
+.sl-input:focus {
+    outline: none;
+    border-color: #0f172a;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.15);
+}
+
+.sl-img-toggle {
+    display: inline-flex;
+    background: #f1f5f9;
+    padding: 3px;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.sl-img-toggle-btn {
+    border: none;
+    background: transparent;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #475569;
+    font-family: inherit;
+}
+.sl-img-toggle-btn.is-active {
+    background: #fff;
+    color: #0f172a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.sl-preview-wrap {
+    margin-top: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f8fafc;
+}
+
+.sl-preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.sl-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* ── Confirm dialog ─────────────────────────────────── */
+.sl-confirm {
+    position: fixed;
+    z-index: 101;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    max-width: calc(100vw - 32px);
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+
+.sl-confirm h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sl-confirm p {
+    margin: 0 0 16px;
+    font-size: 13.5px;
+    color: #475569;
+}
+
+.sl-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}

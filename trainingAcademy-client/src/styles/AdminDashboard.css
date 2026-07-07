@@ -1,0 +1,224 @@
+.week-navigation {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.week-navigation > button {
+    background: #02afef;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.week-navigation > button:hover {
+    background: #0d2240;
+}
+.week-navigation > span {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 500;
+    color: #0d2240;
+}
+.calandar-dates {
+    border: 1px solid #e0eef5;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.calendar-day {
+    color: #6b7280;
+}
+.booking-count {
+    color: #02afef;
+    bottom: 1px;
+    font-weight: 700;
+}
+.calandar-dates > h3, p {
+    margin: 8px 0;
+}
+.calandar-div {
+    background: white;
+    padding: 33px;
+    margin: 33px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+@media (max-width: 600px) {
+    .calander-dates {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* ─── Day cell interactive styles ─── */
+.day-hoverable {
+    cursor: default;
+    transition: box-shadow 0.15s, border-color 0.15s, background 0.15s;
+}
+.day-hoverable:hover,
+.day-active {
+    box-shadow: 0 0 0 2px #02afef;
+    border-color: #02afef;
+    background: #f0faff;
+}
+.day-hint {
+    font-size: 11px;
+    color: #02afef;
+    font-weight: 600;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+}
+
+/* ─── Daily Students Modal ─── */
+.daily-modal {
+    position: fixed;
+    z-index: 9999;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    width: 720px;
+    max-width: calc(100vw - 20px);
+    overflow: hidden;
+    border: 1px solid #d0e8f5;
+    animation: modalFadeIn 0.15s ease;
+}
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.daily-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background:#02afef;
+    color: #fff;
+}
+.daily-modal-title {
+    font-size: 15px;
+    font-weight: 700;
+}
+.daily-modal-count {
+    font-size: 12px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 12px;
+    padding: 2px 10px;
+}
+.daily-modal-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+}
+.daily-modal-close:hover { opacity: 1; }
+
+.daily-modal-table-wrap {
+    overflow-x: auto;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.daily-modal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.daily-modal-table th {
+    background: #f0faff;
+    color: #0d2240;
+    font-weight: 600;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid #bee3f8;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.daily-modal-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #f0f4f8;
+    color: #374151;
+    vertical-align: middle;
+}
+.daily-modal-table tr:last-child td { border-bottom: none; }
+.daily-modal-table tr:hover td { background: #f0faff; }
+
+.booking-id-chip {
+    font-family: monospace;
+    font-size: 12px;
+    background: #dbeeff;
+    color: #0a5f8c;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.name-cell { font-weight: 600; color: #0d2240; }
+.email-cell { color: #4b5563; font-size: 12px; }
+
+.type-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.type-badge.type-individual { background: #dbeafe; color: #1d4ed8; }
+.type-badge.type-company    { background: #d1fae5; color: #065f46; }
+.type-badge.type-agent      { background: #fef3c7; color: #92400e; }
+
+.status-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.status-badge.status-active   { background: #d1fae5; color: #065f46; }
+.status-badge.status-inactive { background: #fee2e2; color: #991b1b; }
+
+.daily-modal-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 10px 20px;
+    border-top: 1px solid #e5f0f8;
+    background: #f8fbff;
+}
+.daily-modal-pagination button {
+    background: #02afef;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.daily-modal-pagination button:hover:not(:disabled) {
+    background: #0d2240;
+}
+.daily-modal-pagination button:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+}
+.daily-modal-pagination span {
+    font-size: 13px;
+    color: #6b7280;
+}
+.daily-modal-loading,
+.daily-modal-empty {
+    padding: 30px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 14px;
+}

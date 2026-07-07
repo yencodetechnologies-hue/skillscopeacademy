@@ -1,0 +1,253 @@
+.pf-root {
+  background-color: #f6f8fb;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.pf-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Page header */
+.pf-page {
+  padding: 56px 0 80px;
+}
+
+.pf-page-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f1e3d;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+
+.pf-title-bar {
+  width: 96px;
+  height: 6px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  margin-bottom: 40px;
+}
+
+.pf-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+/* Two-column layout */
+.pf-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* LEFT — featured handbook card */
+.pf-featured-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pf-handbook-card {
+  background: white;
+  border: 1px solid #e5e9f2;
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+  box-shadow: 0 4px 6px -1px rgba(15, 30, 61, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pf-handbook-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 30px -10px rgba(15, 30, 61, 0.18);
+}
+
+.pf-handbook-banner {
+  background: #0f1e3d;
+  padding: 28px 28px 22px;
+}
+
+.pf-handbook-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.pf-handbook-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0;
+}
+
+.pf-handbook-logo {
+  width: auto;
+  max-width: 220px;
+  height: auto;
+}
+
+.pf-handbook-body {
+  padding: 22px 26px 26px;
+}
+
+.pf-handbook-body h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #02afef;
+  margin: 0 0 10px;
+}
+
+.pf-handbook-body p {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* RIGHT — document list */
+.pf-list-col {
+  display: flex;
+}
+
+.pf-doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #e5e9f2;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(15, 30, 61, 0.06);
+  overflow: hidden;
+}
+
+.pf-doc-list li + li {
+  border-top: 1px solid #eef1f6;
+}
+
+.pf-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 18px 22px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.pf-doc-item:hover {
+  background: #f3f7fb;
+}
+
+.pf-doc-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.pf-doc-title {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #0f1e3d;
+}
+
+.pf-doc-arrow {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.pf-doc-item:hover .pf-doc-arrow {
+  color: #02afef;
+}
+
+/* Empty / loading states */
+.pf-empty-card {
+  background: white;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #64748b;
+  width: 100%;
+}
+
+.pf-empty-card i {
+  font-size: 1.8rem;
+  color: #cbd5e1;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.pf-empty-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.pf-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #eef1f6;
+  border: none;
+  box-shadow: none;
+  min-height: 220px;
+}
+
+.pf-doc-item.pf-skeleton {
+  min-height: 60px;
+}
+
+.pf-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: pf-shimmer 1.4s infinite;
+}
+
+@keyframes pf-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .pf-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .pf-page { padding: 36px 0 56px; }
+  .pf-page-title { font-size: 1.7rem; }
+}

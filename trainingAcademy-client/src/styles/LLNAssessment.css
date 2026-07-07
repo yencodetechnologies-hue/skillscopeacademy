@@ -1,0 +1,214 @@
+.LLN-card {
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    margin-top: 20px;
+    margin: 0% 7% 0% 7% !important;
+}
+
+.LLN-progress {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.LLN-fill {
+    height: 100%;
+    background: #111827;
+    transition: 0.3s;
+}
+
+.LLN-stepper {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.LLN-h3 {
+    margin-top: 20px;
+}
+
+.LLN-step {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.LLN-step.active {
+    background:#02afef;
+    color: white;
+    border: none;
+}
+
+.LLN-step.done {
+    background: #16a34a;
+    color: white;
+    border: none;
+}
+
+.question-box {
+    margin-bottom: 20px;
+}
+
+.question-box select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+}
+
+.LLN-next-btn-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.next-btn-LLN {
+    background: linear-gradient(90deg, #02afef, #ec4899);
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.assessment-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 40px;
+}
+
+.assessment-modal-content {
+    background: white;
+    width: 100%;
+    max-width: 1200px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.result-box {
+    background: #f3f4f6;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.section-results p {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.pass {
+    color: green;
+}
+
+.fail {
+    color: red;
+}
+
+.continue-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg,#02afef, #ec4899);
+    color: white;
+    cursor: pointer;
+}
+
+.declaration {
+    margin-top: 25px;
+}
+
+.decl-checkbox {
+    display: flex;
+    margin: 10px 0;
+}
+
+.decl-checkbox-check {
+    margin: 0px 10px 0px 0px;
+    display: flex;
+}
+
+.decl-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-pass {
+    background: #dcfce7;
+    color: #166534;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.status-fail {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.LLN-asses-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.question-image {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.question-image img {
+    width: 120px;
+}
+
+.sub-question {
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.dropdown-group {
+    margin-top: 12px;
+}
+
+.dropdown-group>select {
+    margin-top: 10px;
+}
+
+.dropdown-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}

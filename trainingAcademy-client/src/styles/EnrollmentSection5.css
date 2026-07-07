@@ -1,0 +1,650 @@
+/* ===== ENROLLMENT SECTION 5 — PRIVACY, TERMS & SIGNATURE ===== */
+/* ── Add these to your existing EnrollmentSection5.css ── */
+
+/* Red border on dropzone when file is too large */
+.s5-dropzone-error {
+    border-color: #f87171 !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Error message below the dropzone */
+.s5-file-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #dc2626;
+    animation: s5FadeInDown 0.2s ease;
+}
+
+.s5-file-error-icon {
+    font-size: 13px;
+    color: #dc2626;
+}
+
+@keyframes s5FadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.s5-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+}
+
+/* Section Header */
+.s5-section-header {
+    background: #EBF4FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+}
+
+.s5-section-header-text {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e3a5f;
+    letter-spacing: 0.3px;
+}
+
+/* Warning Banner */
+.s5-warning-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.s5-warning-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* Card */
+.s5-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.s5-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 16px;
+}
+
+/* Policy Box */
+.s5-policy-box {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px 20px 8px;
+}
+
+.s5-policy-item {
+    margin-bottom: 16px;
+}
+
+.s5-policy-item h5 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 4px;
+}
+
+.s5-policy-item p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.s5-contact-block p {
+    font-size: 13px;
+    color: #555;
+    margin: 2px 0;
+}
+
+/* Checkboxes */
+.s5-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #222;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.s5-checkbox-label input[type="checkbox"] {
+    accent-color:#02afef;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.s5-required {
+    color: #dc2626;
+    margin-left: 2px;
+}
+
+/* Declaration */
+.s5-declaration-list {
+    padding-left: 20px;
+    margin: 0 0 8px;
+}
+
+.s5-declaration-list li {
+    font-size: 13.5px;
+    color: #444;
+    line-height: 1.7;
+}
+
+/* Row 2 */
+.s5-row-2 {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.s5-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.s5-label {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111;
+}
+
+.s5-input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.s5-input:focus {
+    border-color:#02afef;
+    background: #fff;
+}
+
+/* Signature */
+.s5-signature-wrapper {
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.s5-signature-canvas {
+    display: block;
+    width: 100%;
+    height: 200px;
+    cursor: crosshair;
+    background: #fff;
+    touch-action: none;
+}
+
+.s5-signature-footer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.s5-clear-btn {
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.s5-clear-btn:hover {
+    background: #f3f4f6;
+}
+
+.s5-signature-hint {
+    font-size: 13px;
+    color: #888;
+}
+
+/* Photo Header */
+.s5-photo-header {
+    background: #EBF4FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+}
+
+.s5-photo-header-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin: 0 0 6px;
+}
+
+.s5-photo-header-text {
+    font-size: 13px;
+    color: #444;
+    margin: 2px 0;
+    line-height: 1.5;
+}
+
+/* Upload row */
+.s5-upload-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 12px;
+}
+
+/* Upload card */
+.s5-upload-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.s5-upload-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.s5-upload-icon {
+    font-size: 16px;
+}
+
+.s5-upload-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.s5-upload-hint {
+    font-size: 12.5px;
+    color: #888;
+    margin: 0 0 12px;
+}
+
+/* Dropzone */
+.s5-dropzone {
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: #fafafa;
+}
+
+.s5-dropzone:hover {
+    border-color:#02afef;
+    background: #f5f3ff;
+}
+
+.s5-dropzone-active {
+    border-color:#02afef;
+    background: #f5f3ff;
+}
+
+.s5-upload-arrow {
+    font-size: 22px;
+    color: #666;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.s5-dropzone-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    margin: 0 0 4px;
+}
+
+.s5-dropzone-hint {
+    font-size: 12px;
+    color: #888;
+    margin: 0;
+}
+
+.s5-file-name {
+    font-size: 13px;
+    color: #16a34a;
+    font-weight: 500;
+    margin: 0;
+    word-break: break-all;
+}
+
+.s5-upload-footer-note {
+    font-size: 12.5px;
+    color: #888;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Footer Nav */
+.s5-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-bottom: 16px;
+}
+
+.s5-prev-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.s5-prev-btn:hover {
+    background: #f3f4f6;
+}
+
+.s5-submit-btn {
+    background: #02afef;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.s5-submit-btn:hover {
+    opacity: 0.92;
+}
+
+.s5-submit-btn:active {
+    transform: scale(0.98);
+}
+
+.es5-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a2e;
+    color: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    text-align: center;
+    min-width: 320px;
+}
+
+.es5-toast-msg {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+.es5-toast-btn {
+    background: #02afef;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.es5-toast-btn:hover {
+    opacity: 0.92;
+}
+
+.s5-preview-section {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.s5-preview-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.s5-preview-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+.s5-preview-label {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.s5-preview-signature {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+    max-height: 120px;
+    object-fit: contain;
+}
+
+.s5-preview-img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    max-height: 150px;
+}
+
+.s5-preview-pdf {
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #374151;
+}
+
+.s5-input-error {
+    border-color: #dc2626 !important;
+    background: #fef2f2 !important;
+}
+
+.s5-label-error {
+    color: #dc2626 !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .s5-row-2,
+    .s5-upload-row {
+        flex-direction: column;
+    }
+
+    .s5-card,
+    .s5-upload-card {
+        padding: 20px 16px;
+    }
+
+    .s5-signature-canvas {
+        height: 160px;
+    }
+}
+
+/* Submission and Success Screens Styling */
+.s5-submit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: 40px 24px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 40px auto;
+    max-width: 550px;
+    animation: s5FadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes s5FadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loader Spinner */
+.s5-submit-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f4f6;
+    border-top: 5px solid#02afef;
+    border-radius: 50%;
+    animation: s5Spin 1s linear infinite;
+    margin-bottom: 24px;
+}
+
+@keyframes s5Spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success Checked Circle */
+.s5-submit-success-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    background-color: #ecfdf5;
+    border-radius: 50%;
+    color: #10b981;
+    margin-bottom: 24px;
+    animation: s5ScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes s5ScaleIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.s5-submit-success-icon-svg {
+    width: 38px;
+    height: 38px;
+    fill: currentColor;
+}
+
+/* Texts and Subtitles */
+.s5-submit-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 10px 0;
+}
+
+.s5-submit-title.success {
+    color: #10b981;
+}
+
+.s5-submit-sub {
+    font-size: 14.5px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0 0 28px 0;
+    max-width: 420px;
+}
+
+/* Buttons */
+.s5-submit-dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg,#02afef, #c084fc);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 26px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.s5-submit-dashboard-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+    opacity: 0.96;
+}
+
+.s5-submit-dashboard-btn:active {
+    transform: translateY(0);
+}

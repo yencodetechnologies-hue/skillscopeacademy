@@ -1,0 +1,8 @@
+
+node_modules
+.DS_Store
+
+# Personal env files (override the committed .env.development / .env.production)
+.env
+.env.local
+.env.*.local

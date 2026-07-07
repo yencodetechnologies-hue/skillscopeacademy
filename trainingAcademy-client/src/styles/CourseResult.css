@@ -1,0 +1,189 @@
+/* ── Add these styles to your existing CourseResult.css ── */
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color:#02afef; /* matches the purple Continue button */
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* Error state — red border on the whole checkbox block */
+.checkbox-group.has-error {
+    border-color: #f87171;
+    background-color: #fff5f5;
+    border-radius: 8px;
+}
+
+/* Error message row with icon */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: #dc2626;
+    font-weight: 500;
+    padding-left: 2px;
+    animation: fadeInDown 0.2s ease;
+}
+
+.error-icon {
+    font-size: 13px;
+    line-height: 1;
+    color: #dc2626;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}/* overlay background */
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* card */
+.result-card {
+  width: 100%;
+  max-width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: white;
+  padding: 30px;
+}
+
+/* title */
+.result-title {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* result box */
+.result-box {
+  background: #f5f6f8;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.result-box span {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* sections */
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+/* badge */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge.pass {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge.fail {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* declaration */
+.declaration {
+  margin-top: 20px;
+}
+.declaration > label {
+  display: flex !important;
+}
+.declaration > label>input{
+    margin: 0px 10px 0px 0px;
+}
+
+
+.declaration label {
+  display: block;
+  margin: 8px 0;
+}
+
+.confirm-text {
+  margin: 10px 0;
+}
+
+/* name row */
+.name-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+/* button */
+.continue-btn {
+  margin-top: 20px;
+  background: linear-gradient(90deg, #02afef, #ec4899);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.continue-btn:hover {
+  opacity: 0.9;
+}
+@media (max-width: 600px) {
+  .result-card {
+    max-height: none;   /* allow full scroll */
+    height: auto;
+    max-width: none;
+    margin-top: 26%;
+  }
+  .result-overlay{
+    align-items: flex-start;
+  }
+}

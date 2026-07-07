@@ -1,0 +1,721 @@
+.form-group{
+margin-bottom:25px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.radio-group-opt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.company-cart {
+    border: 1.5px solid #e8e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.company-cart-item {
+    border: 1.5px solid #e8e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.company-cart-item:last-child {
+    border-bottom: none;
+}
+
+.company-cart-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.company-cart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.company-cart-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.company-cart-price {
+    font-size: 12px;
+    color: #888;
+}
+
+.company-cart-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.company-qty-input {
+    width: 60px;
+    padding: 6px 8px;
+    border: 1.5px solid #e0e0f0;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.company-cart-subtotal {
+    font-size: 14px;
+    font-weight: 600;
+    color: #02afef;
+    min-width: 80px;
+}
+
+.company-cart-remove {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px 8px;
+}
+
+.company-slot-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #e8e8f0;
+}
+
+.company-slot-label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.company-slot-selected {
+    background: #f0fdf4;
+    color: #16a34a;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.company-total {
+    padding: 14px 16px;
+    background: #faf8ff;
+    font-size: 15px;
+    color: #02afef;
+    border-top: 1.5px solid #e8e0f8;
+}
+
+.course-optgroup{
+    color:#02afef;
+    font-weight:600;
+}
+
+/* ── Custom Course Dropdown ── */
+.cs-dropdown {
+    position: relative;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 14px;
+}
+.cs-dropdown__trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.2s;
+}
+.cs-dropdown__trigger--open {
+    border-color:#02afef;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.cs-dropdown__placeholder { color: #999; }
+.cs-dropdown__value { color: #111; }
+.cs-dropdown__arrow { font-size: 10px; color: #888; margin-left: 8px; flex-shrink: 0; }
+
+/* .cs-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid#02afef;
+    border-top: none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+} */
+
+.cs-dropdown__menu {
+  position: absolute;
+  top: 100%;              /* input keela start aagum */
+  left: 0;
+  width: 100%;
+  max-height: 250px;      /* 🔥 IMPORTANT — height limit */
+  overflow-y: auto;       /* scroll varum */
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.cs-dropdown__group-label {
+    padding: 8px 12px 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #02afef;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: #f0faff;
+    border-top: 1px solid #e0f4fd;
+}
+.cs-dropdown__option {
+    padding: 10px 16px;
+    cursor: pointer;
+    color: #222;
+    font-size: 13.5px;
+    transition: background 0.15s;
+}
+.cs-dropdown__option:hover { background: #f3f0ff; }
+.cs-dropdown__option--selected { background: #ede9fe; color:#02afef; font-weight: 500; }
+
+.course-select{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  margin-top:8px;
+  font-size: 14px;
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+.radio-group input[type="radio"] {
+  margin: 0px;
+  appearance: auto;
+  -webkit-appearance: radio;
+  width: 19px;
+  height: 16px;
+  accent-color:#02afef;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.slot-title{
+margin-bottom:20px !important;
+}
+
+/* Slots Layout */
+.slots{
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+.date-section{
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:20px;
+}
+
+.slot-date-title{
+margin-bottom:15px !important;
+}
+
+/* Slot Grid */
+.slots-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+/* Slot Card */
+.slot-card{
+border:1px solid #ddd;
+padding:20px;
+border-radius:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.slot-card:hover{
+border-color:#02afef;
+}
+
+.slot-card.active{
+border:2px solid#02afef;
+background:#f3f0ff;
+box-shadow:0 0 0 2px rgba(124,58,237,0.2);
+}
+
+.slot-card--full {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+.slot-time{
+color:#4b5563;
+margin-bottom:10px;
+}
+
+.spots{
+color:#02afef;
+font-size:14px;
+}
+
+.show-more-btn-cs{
+display:block;
+margin:15px auto;
+border:none;
+color:#02afef;
+cursor:pointer;
+padding:12px 24px;
+font-weight:600;
+transition:0.3s;
+border-radius:30px;
+cursor:pointer;
+background:#f4f0ff;
+}
+.show-more-btn-cs:hover{
+color: white;
+background:#02afef;
+}
+
+/* ===== ENROLMENT TYPE ===== */
+.form-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0d2240;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-required {
+  color: #ef4444;
+  margin-left: 3px;
+}
+
+.enrol-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.enrol-type-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #f8fafc;
+  transition: all 0.18s;
+  user-select: none;
+}
+
+.enrol-type-card:hover {
+  border-color: #29b6e8;
+  background: #f0f8ff;
+}
+
+.enrol-type-card--active {
+  background: #0d2240 !important;
+  border-color: #0d2240 !important;
+}
+
+.enrol-type-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.enrol-type-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0d2240;
+  line-height: 1.2;
+}
+.enrol-type-card--active .enrol-type-label {
+  color: #fff;
+}
+
+.enrol-type-sub {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 3px;
+}
+.enrol-type-card--active .enrol-type-sub {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===== ORDER SUMMARY ===== */
+.company-order-summary {
+    background: #faf8ff;
+    border: 1.5px solid #e0d8f8;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+.company-order-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #02afef;
+    margin-bottom: 10px;
+}
+.company-order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #ede8fa;
+    flex-wrap: wrap;
+}
+.company-order-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a2e;
+    flex: 1;
+}
+.company-order-detail {
+    font-size: 12px;
+    color: #6b7280;
+}
+.company-order-nodate {
+    color: #e53e3e;
+    font-size: 12px;
+}
+.company-order-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #02afef;
+}
+.company-order-total {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #02afef;
+    text-align: right;
+}
+
+/* ===== SLOT REOPEN ===== */
+.company-slot-reopen {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #16a34a;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.company-slot-reopen span {
+    color: #02afef;
+    text-decoration: underline;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+/* ===== CALENDAR DATE PICKER ===== */
+.cs-cal-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1.5px solid#02afef;
+    border-radius: 8px;
+    background: #fff;
+    color:#02afef;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.cs-cal-btn:hover {
+    background: #f3f0ff;
+}
+
+.cs-cal-clear {
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+.cs-cal-clear:hover {
+    background: #fee2e2;
+    color: #e53e3e;
+}
+
+.cs-cal-popup {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 9999;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 14px;
+    width: 280px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.cs-cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.cs-cal-month {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.cs-cal-nav {
+    background: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    transition: background 0.15s;
+}
+.cs-cal-nav:hover {
+    background: #f3f0ff;
+    border-color:#02afef;
+    color:#02afef;
+}
+
+.cs-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.cs-cal-dayname {
+    font-size: 11px;
+    color: #aaa;
+    text-align: center;
+    padding: 4px 0;
+    font-weight: 600;
+}
+
+.cs-cal-day {
+    font-size: 12px;
+    text-align: center;
+    padding: 7px 2px;
+    border-radius: 6px;
+    cursor: default;
+    color: #d1d5db;
+    transition: all 0.15s;
+}
+
+.cs-cal-day--avail {
+    background: #ede9fe;
+    color: #02afef;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cs-cal-day--avail:hover {
+    background:#02afef;
+    color: #fff;
+}
+
+.cs-cal-day--selected {
+    background: #02afef!important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+/* ===== DATE CHIP SCROLL ===== */
+.cs-date-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    scrollbar-width: none;
+}
+.cs-date-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* Add Course Button */
+.add-course-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--color-primary, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.add-course-btn:hover {
+    background: var(--color-primary-dark, #1d4ed8);
+}
+
+.add-course-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 100;
+    min-width: 320px;
+}
+
+.cs-date-chip {
+    min-width: 15%;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+    background: #fff;
+    flex-shrink: 0;
+    transition: all 0.15s;
+}
+.cs-date-chip:hover {
+    border-color:#02afef;
+    background: #faf8ff;
+}
+.cs-date-chip--active {
+    border-color:#02afef;
+    background: #ede9fe;
+}
+.cs-date-chip__day {
+    font-size: 11px;
+    color: #888;
+}
+.cs-date-chip__date {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-top: 2px;
+}
+.cs-date-chip__slots {
+    font-size: 11px;
+    color:#02afef;
+    margin-top: 3px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+    .slots-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:767px){
+    .slots-grid{
+        grid-template-columns:1fr;
+    }
+    .cs-cal-popup {
+        width: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .enrol-type-grid {
+        grid-template-columns: 1fr;
+    }
+    .cs-date-chip {
+        min-width: 70px;
+    }
+}
+
+/* Company booking link — locked course & session */
+.cs-locked-booking {
+    margin-bottom: 20px;
+}
+.cs-locked-booking__badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #02afef;
+    background: #eef2ff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin: 0 0 10px;
+}
+.cs-locked-booking__hint {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0 0 16px;
+}
+.cs-locked-booking__card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+}
+.cs-locked-booking__label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin: 0 0 6px;
+}
+.cs-locked-booking__value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+}
+.cs-locked-booking__meta {
+    font-size: 13px;
+    color: #64748b;
+    margin: 4px 0 0;
+}
+.cs-locked-booking__slots {
+    font-size: 13px;
+    color: #16a34a;
+    font-weight: 600;
+    margin: 8px 0 0;
+}

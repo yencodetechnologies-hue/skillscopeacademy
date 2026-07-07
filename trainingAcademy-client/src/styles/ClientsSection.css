@@ -1,0 +1,68 @@
+.clients-section {
+    padding: 40px 0;
+    background: #0d2240;
+    overflow: hidden;
+}
+
+.clients-container {
+    height: auto !important;
+    background: transparent;
+    display: block !important;
+}
+
+.clients-title {
+    font-size: 20px;
+    color: #0ea5e9;
+    margin-bottom: 40px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ── Marquee wrap — overflow hidden cuts overflow ── */
+.mlp-brands-track-wrap {
+    overflow: hidden;
+    width: 100%;
+}
+
+.mlp-brands-track {
+    display: flex;
+    width: max-content;
+    animation: mlp-marquee 18s linear infinite;
+}
+
+.mlp-brands-row {
+    display: flex;
+    gap: 10px;
+    padding-right: 10px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
+
+.mlp-brand-logo {
+    width: 160px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.client-logo-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+}
+
+.mlp-brand-logo:hover .client-logo-img {
+    filter: none;
+}
+
+@keyframes mlp-marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}

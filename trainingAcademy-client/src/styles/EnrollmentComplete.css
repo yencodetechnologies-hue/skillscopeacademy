@@ -1,0 +1,168 @@
+/* ===== ENROLLMENT COMPLETE ===== */
+
+.ec-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: #f3f4f6;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Card */
+.ec-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 490px;
+    overflow: hidden;
+}
+
+/* Gradient Header */
+.ec-header {
+    background: linear-gradient(135deg, #0d2240 0%, #02afef 60%, #29b6e8 100%);
+    padding: 40px 32px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Check circle */
+.ec-check-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ec-check-icon {
+    width: 26px;
+    height: 26px;
+}
+
+/* Title */
+.ec-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Subtitle */
+.ec-subtitle {
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Body */
+.ec-body {
+    padding: 32px 32px 28px;
+}
+
+.ec-message {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+    margin: 0 0 12px;
+}
+
+.ec-message strong {
+    color: #111;
+    font-weight: 600;
+}
+
+.ec-divider {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 20px 0;
+}
+
+/* Contact block */
+.ec-contact {
+    margin-bottom: 28px;
+}
+
+.ec-regards {
+    font-size: 14px;
+    color: #444;
+    margin: 0 0 6px;
+}
+
+.ec-org-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 2px;
+}
+
+.ec-org-role {
+    font-size: 13.5px;
+    color: #666;
+    margin: 0 0 6px;
+}
+
+.ec-org-phone {
+    font-size: 14px;
+    color: #333;
+    margin: 0 0 4px;
+}
+
+.ec-org-email {
+    font-size: 14px;
+    color: #02afef;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+}
+
+.ec-org-email:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard button */
+.ec-dashboard-btn {
+    display: block;
+    width: 100%;
+    background: #02afef;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.2px;
+    transition: opacity 0.2s;
+}
+
+.ec-dashboard-btn:hover {
+    opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+    .ec-header {
+        padding: 32px 20px 28px;
+    }
+
+    .ec-body {
+        padding: 24px 20px 20px;
+    }
+
+    .ec-title {
+        font-size: 18px;
+    }
+}

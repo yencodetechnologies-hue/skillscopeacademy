@@ -15,7 +15,7 @@ function RegisterForm() {
             email: "",
             phone: "",
             password: "",
-            role: "student",
+            role: "Student",
         },
 
         validationSchema: Yup.object({
@@ -34,8 +34,11 @@ function RegisterForm() {
                     values
                 )
 
-                alert(res.data.message)
-
+                alert(res.data.message || "Registration successful!")
+                if (res.data.token) {
+                  localStorage.setItem("token", res.data.token)
+                  localStorage.setItem("user", JSON.stringify(res.data.user))
+                }
                 resetForm()
 
             } catch (err) {

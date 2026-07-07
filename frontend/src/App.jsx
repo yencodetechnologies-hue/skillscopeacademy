@@ -268,7 +268,7 @@ function App() {
 
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
-                {/* <Route path="/register" element={<Register />} /> */}
+                <Route path="/register" element={<Register />} />
                 {/*
                   SEO-friendly course URLs. The param is the course's
                   manual slug (unique) — e.g. /course/forklift-licence.

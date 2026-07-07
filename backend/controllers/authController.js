@@ -27,13 +27,17 @@ exports.register = async (req,res)=>{
     role,
   });
 
-res.json({
-message:"Register success",
-
-});
+const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+  res.status(201).json({
+    success: true,
+    message: "Register success",
+    token,
+    user: { id: user._id, name: user.name, email: user.email, phone: user.phone, role: user.role }
+  });
 
  }catch(err){
-   res.status(500).json({message:"Server Error"});
+   console.error('Register error:', err.message);
+   res.status(500).json({ success: false, message: err.message });
  }
 };
 
@@ -145,7 +149,8 @@ exports.login = async (req, res) => {
     return res.status(400).json({ message: "Invalid Credentials" });
 
   } catch (err) {
-    res.status(500).json({ message: "Server Error" });
+    console.error('Login error:', err.message);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 // POST /api/auth/auto-login
@@ -261,4 +266,13 @@ exports.checkEmailExists = async (req, res) => {
             error: error.message 
         })
     }
+}
+// GET /api/auth/finduser — list all users (admin)
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, '-password').sort({ createdAt: -1 })
+    res.json({ success: true, data: users })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
 }

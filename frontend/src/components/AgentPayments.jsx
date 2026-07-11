@@ -106,7 +106,7 @@ export default function AgentPayments() {
           disabled={loading}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#3aa2ed",
+            backgroundColor: "#D4920E",
             color: "white",
             border: "none",
             borderRadius: "6px",

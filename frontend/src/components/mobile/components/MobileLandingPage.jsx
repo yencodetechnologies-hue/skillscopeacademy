@@ -683,7 +683,7 @@ import {
   getCourseVariants,
 } from "../../../utils/coursePrice";
 import { ORG_PHONE_1300, ORG_PHONE_MOBILE } from "../../../utils/organizationPhones";
-import ClientsSection from "../../landingPage/ClientsSection";
+// import ClientsSection from "../../landingPage/ClientsSection";
 
 // Order is now managed via Admin Dashboard (dbCategories.order)
 
@@ -1192,7 +1192,7 @@ export default function MobileLandingPage({ courses = [] }) {
       {/* ── Partner Brands — infinite marquee ── */}
       {/* ── Partner Brands — infinite marquee ── */}
 <div className="mlp-divider" />
-<ClientsSection />
+{/* <ClientsSection /> */}
 
       {/* ── Enquire Now button ── */}
       <div className="mlp-divider" />

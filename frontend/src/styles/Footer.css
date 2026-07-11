@@ -1,6 +1,11 @@
 /* ===== BASE ===== */
 .footer {
-  background: var(--color-navy-deep);
+  /* FIX: was `background: var(--color-navy-deep);` — that variable is
+     defined as green somewhere else in the project (likely variables.css
+     or index.css), which is why editing this file alone had no effect.
+     Hardcoding the color here guarantees the footer is navy regardless
+     of what --color-navy-deep resolves to elsewhere. */
+  background: #0a1e3f;
   color: var(--color-surface);
   font-family: 'Inter', sans-serif;
 }

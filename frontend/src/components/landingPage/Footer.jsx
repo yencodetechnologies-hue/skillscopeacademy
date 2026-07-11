@@ -227,7 +227,7 @@ function Footer({ courses }) {
                     © 2024 SafeTricks. All rights reserved.
                     ABN 45234 · safetricks.com.au
                 </span>
-                <div className="footer-rto-badge"></div>
+             
             </div>
 
         </footer>

@@ -111,7 +111,7 @@ const buildVocStudentHtml = (data) => {
     <!-- ── Header ── -->
     <div class="eb-hdr">
       <h1>VOC Submission Received</h1>
-      <p class="eb-hdr-sub">Safety Training Academy &nbsp;·&nbsp; RTO #45234</p>
+      <p class="eb-hdr-sub">Safety Training Academy &nbsp;·&nbsp; </p>
     </div>
     <div class="eb-divider"></div>
 
@@ -184,7 +184,7 @@ const buildVocStudentHtml = (data) => {
       Questions? Contact us at
       <a href="mailto:admin@safetytrainingacademy.com.au">admin@safetytrainingacademy.com.au</a>
       or call <a href="tel:1300976097">1300 976 097</a>.<br />
-      <strong>Safety Training Academy</strong> &nbsp;|&nbsp; RTO #45234<br /><br />
+      <strong>Safety Training Academy</strong> &nbsp;|&nbsp; <br /><br />
       &copy; ${new Date().getFullYear()} Safety Training Academy. All rights reserved.<br />
       <span style="font-size:9px;">This is an automated confirmation. Please do not reply directly to this email.</span>
     </div>

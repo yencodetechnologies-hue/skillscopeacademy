@@ -1,4 +1,4 @@
-/* ===== TRUST BAR ===== */
+/* ===== TRUST BAR — glassmorphic, single row inside the banner ===== */
 
 .trust-bar {
     width: 100%;
@@ -6,104 +6,118 @@
 }
 
 .trust-container {
-    max-width: 1100px;
+    max-width: 1180px;
     margin: 0 auto;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 32px;
-    background: var(--color-surface);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    gap: 8px;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 22px 8px;
+    background: rgba(10, 20, 40, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Each item */
+/* Each item — plain content sitting directly on the single glass bar,
+   separated only by a thin divider, not its own boxed card */
 .trust-item {
     display: flex;
     align-items: center;
-    gap: 14px;
-    flex: 1;
+    gap: 12px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 20px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    transition: transform 0.2s;
 }
 
-/* Icon circle */
+.trust-item + .trust-item {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.trust-item:hover {
+    transform: translateY(-2px);
+}
+
+/* Icon glass square */
 .trust-icon-wrap {
-    width: 52px;
-    height: 52px;
-    min-width: 52px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
     border-radius: 12px;
-    background: var(--color-trust-bg);
+    background: rgba(245, 166, 35, 0.16);
+    border: 1px solid rgba(245, 166, 35, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .trust-icon {
-    font-size: 22px;
-    color: var(--color-trust-cyan);
+    font-size: 17px;
+    color: var(--color-brand-primary);
 }
 
 /* Text */
 .trust-text {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
+    min-width: 0;
 }
 
 .trust-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--color-text-primary);
+    color: var(--color-surface);
     margin: 0;
     line-height: 1.3;
+    white-space: nowrap;
 }
 
 .trust-desc {
-    font-size: 12.5px;
-    color: #777;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.65);
     margin: 0;
-}
-
-/* Blue underline under RTO #45234 */
-.trust-underline {
-    width: 36px;
-    height: 3px;
-    background: var(--color-trust-cyan);
-    border-radius: 2px;
-    margin: 4px 0 2px;
-}
-
-/* Vertical divider */
-.trust-divider {
-    width: 1px;
-    height: 48px;
-    background: var(--color-border);
-    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+    .trust-title,
+    .trust-desc {
+        white-space: normal;
+    }
+}
+
 @media (max-width: 1024px) {
     .trust-container {
         flex-wrap: wrap;
-        gap: 16px;
+        row-gap: 16px;
         justify-content: center;
     }
 
-    .trust-divider {
-        display: none;
+    .trust-item {
+        flex: 1 1 45%;
     }
 
-    .trust-item {
-        flex: 1 1 40%;
+    /* Dividers only make sense in a single straight line; drop them once
+       items wrap onto multiple rows */
+    .trust-item + .trust-item {
+        border-left: none;
     }
 }
 
 @media (max-width: 640px) {
     .trust-container {
         flex-direction: column;
-        align-items: flex-start;
-        padding: 16px 20px;
-        gap: 16px;
+        padding: 16px;
+        gap: 12px;
         display: none;
     }
 

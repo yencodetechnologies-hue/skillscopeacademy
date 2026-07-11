@@ -1,57 +1,49 @@
 import "../../styles/TrustBar.css"
 
+const TRUST_ITEMS = [
+    {
+        icon: "fa-solid fa-star",
+        title: "10,000+",
+        desc: "Students Trained",
+    },
+    {
+        icon: "fa-solid fa-circle-check",
+        title: "100%",
+        desc: "Compliance Focused",
+    },
+ 
+    {
+        icon: "fa-solid fa-user-group",
+        title: "Face to Face Training",
+        desc: "Practical hands-on learning",
+    },
+    {
+        icon: "fa-solid fa-award",
+        title: "Qualified Trainers",
+        desc: "Industry experienced experts",
+    },
+    {
+        icon: "fa-regular fa-file-lines",
+        title: "Nationally Recognized",
+        desc: "Certificates accepted Australia-wide",
+    },
+]
+
 function TrustBar() {
     return (
         <div className="trust-bar">
             <div className="trust-container">
-
-                <div className="trust-item">
-                    <div className="trust-icon-wrap">
-                        <i className="fa-solid fa-building trust-icon"></i>
+                {TRUST_ITEMS.map((item, i) => (
+                    <div className="trust-item" key={i}>
+                        <div className="trust-icon-wrap">
+                            <i className={`${item.icon} trust-icon`}></i>
+                        </div>
+                        <div className="trust-text">
+                            <p className="trust-title">{item.title}</p>
+                          
+                        </div>
                     </div>
-                    <div className="trust-text">
-                        <p className="trust-title">RTO<br />#45234</p>
-                        <div className="trust-underline"></div>
-                        <p className="trust-desc">Registered Training Organisation</p>
-                    </div>
-                </div>
-
-                <div className="trust-divider"></div>
-
-                <div className="trust-item">
-                    <div className="trust-icon-wrap">
-                        <i className="fa-solid fa-user-group trust-icon"></i>
-                    </div>
-                    <div className="trust-text">
-                        <p className="trust-title">Face to Face<br />Training</p>
-                        <p className="trust-desc">Practical hands-on learning</p>
-                    </div>
-                </div>
-
-                <div className="trust-divider"></div>
-
-                <div className="trust-item">
-                    <div className="trust-icon-wrap">
-                        <i className="fa-solid fa-award trust-icon"></i>
-                    </div>
-                    <div className="trust-text">
-                        <p className="trust-title">Qualified<br />Trainers</p>
-                        <p className="trust-desc">Industry experienced experts</p>
-                    </div>
-                </div>
-
-                <div className="trust-divider"></div>
-
-                <div className="trust-item">
-                    <div className="trust-icon-wrap">
-                        <i className="fa-regular fa-file-lines trust-icon"></i>
-                    </div>
-                    <div className="trust-text">
-                        <p className="trust-title">Nationally<br />Recognized</p>
-                        <p className="trust-desc"><strong>Certificates accepted Australia-wide</strong></p>
-                    </div>
-                </div>
-
+                ))}
             </div>
         </div>
     )

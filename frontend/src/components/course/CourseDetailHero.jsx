@@ -63,7 +63,7 @@ function CourseDetailHero({ course }) {
                             </div>
                             <div className="meta-item">
                                 <span className="meta-icon">🏅</span>
-                                <span><strong>RTO #45234</strong> accredited</span>
+                                <span><strong></strong> accredited</span>
                             </div>
                         </div>
 
@@ -133,7 +133,7 @@ function CourseDetailHero({ course }) {
                     <div className="info-item">
                         <span className="info-icon">🎓</span>
                         <div className="info-text">
-                            <strong>RTO #45234</strong>
+                            <strong></strong>
                             <span>Accredited provider</span>
                         </div>
                     </div>

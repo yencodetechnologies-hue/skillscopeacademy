@@ -52,7 +52,7 @@ function AboutPage() {
 
             {/* ── HERO ── */}
             <section className="ab-hero">
-                <div className="ab-hero-badge">RTO #45234 | ASQA Accredited</div>
+                <div className="ab-hero-badge"> | ASQA Accredited</div>
                 <h1 className="ab-hero-title">About <span className="ab-cyan">Us</span></h1>
                 <p className="ab-hero-sub">
                     Empowering careers through excellence in vocational education and training

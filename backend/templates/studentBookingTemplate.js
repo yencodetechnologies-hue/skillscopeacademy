@@ -66,7 +66,7 @@ const studentBookingTemplate = (data) => {
         <tr>
           <td>
             <p class="eb-hdr-title">Safety Training Academy</p>
-            <p class="eb-hdr-sub">RTO #45234 &nbsp;·&nbsp; BOOKING CONFIRMATION</p>
+            <p class="eb-hdr-sub"> &nbsp;·&nbsp; BOOKING CONFIRMATION</p>
           </td>
           <td align="right" valign="top">
             <div style="display:inline-block; text-align:right; min-width: 200px;">
@@ -143,7 +143,7 @@ const studentBookingTemplate = (data) => {
 
     <div class="eb-footer">
       Questions? <a href="mailto:info@safetytrainingacademy.edu.au">info@safetytrainingacademy.edu.au</a> | 1300 976 097<br/>
-      <strong>Safety Training Academy</strong> | RTO #45234<br/><br/>
+      <strong>Safety Training Academy</strong> | <br/><br/>
       &copy; ${new Date().getFullYear()} Safety Training Academy. All rights reserved.
     </div>
   </div>

@@ -74,7 +74,7 @@ const buildAdminBookingHtml = (data) => {
     <div class="eb-hdr">
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
-                <td><p class="eb-hdr-title">Safety Training Academy</p><p class="eb-hdr-sub">RTO #45234 &nbsp;·&nbsp; ADMIN NOTIFICATION</p></td>
+                <td><p class="eb-hdr-title">Safety Training Academy</p><p class="eb-hdr-sub"> &nbsp;·&nbsp; ADMIN NOTIFICATION</p></td>
                 <td align="right"><div class="eb-badge-sky">NEW BOOKING</div></td>
             </tr>
         </table>
@@ -104,7 +104,7 @@ const buildAdminBookingHtml = (data) => {
         </table></div>
         <div class="eb-important-box" style="background:#fffbeb; border-color:#fef3c7;"><span class="eb-important-title" style="color:#92400e;">⚠ ACTION REQUIRED</span><p class="eb-important-text" style="color:#b45309;">Please confirm payment before scheduling this student into the course.</p></div>
     </div>
-    <div class="eb-footer">This is an automated admin notification from <strong>Safety Training Academy</strong> (RTO #45234).<br/>2 Marjorie St, Sefton NSW 2162 &nbsp;·&nbsp; 1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au</div>
+    <div class="eb-footer">This is an automated admin notification from <strong>Safety Training Academy</strong> ().<br/>2 Marjorie St, Sefton NSW 2162 &nbsp;·&nbsp; 1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au</div>
 </div></body></html>`;
 };
 
@@ -115,7 +115,7 @@ const buildStudentBookingHtml = (data) => {
     <div class="eb-hdr">
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
-                <td><p class="eb-hdr-title">Safety Training Academy</p><p class="eb-hdr-sub">RTO #45234 &nbsp;·&nbsp; BOOKING CONFIRMATION</p></td>
+                <td><p class="eb-hdr-title">Safety Training Academy</p><p class="eb-hdr-sub"> &nbsp;·&nbsp; BOOKING CONFIRMATION</p></td>
                 <td align="right"><div class="eb-badge-sky">CONFIRMED</div></td>
             </tr>
         </table>
@@ -165,7 +165,7 @@ const buildStudentBookingHtml = (data) => {
     </div>
     <div class="eb-footer">
         Questions? <a href="mailto:admin@safetytrainingacademy.com.au" style="color:#F57C00; text-decoration:none;">admin@safetytrainingacademy.com.au</a> | 1300 976 097<br/>
-        <strong>Safety Training Academy</strong> | RTO #45234 | <a href="https://www.safetytrainingacademy.edu.au" style="color:#F57C00; text-decoration:none;">Student Portal</a><br/><br/>
+        <strong>Safety Training Academy</strong> |  | <a href="https://www.safetytrainingacademy.edu.au" style="color:#F57C00; text-decoration:none;">Student Portal</a><br/><br/>
         &copy; ${new Date().getFullYear()} Safety Training Academy. All rights reserved.<br/>
         This is an automated confirmation. Please do not reply directly to this email.
     </div>
@@ -241,7 +241,7 @@ const buildCommonHeader = (title, subTitle, badgeText, bookingId, isAdmin = fals
         <tr>
           <td valign="top">
             <p class="eb-hdr-title" style="font-size:18px; font-weight:700; color:#ffffff; margin:0;">Safety Training Academy</p>
-            <p class="eb-hdr-sub" style="font-size:10px; color:#F57C00; letter-spacing:0.8px; text-transform:uppercase; font-weight:600; margin:4px 0 0;">RTO #45234 &nbsp;·&nbsp; ${subTitle}</p>
+            <p class="eb-hdr-sub" style="font-size:10px; color:#F57C00; letter-spacing:0.8px; text-transform:uppercase; font-weight:600; margin:4px 0 0;"> &nbsp;·&nbsp; ${subTitle}</p>
           </td>
           <td align="right" valign="top">
             <div style="display:inline-block; text-align:right; min-width: 200px;">
@@ -350,7 +350,7 @@ const sendCompanyOrderConfirmation = async (req, res) => {
     
     const html = `
 <!DOCTYPE html><html><head><style>body{margin:0;padding:24px;background:#f0f2f5;font-family:sans-serif;}.card{max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;}.hdr{background:#0d2240;padding:20px 30px;color:#fff;}.hdr h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:1px;}.content{padding:30px;}.footer{background:#f8fafc;padding:20px;text-align:center;font-size:11px;color:#999;border-top:1px solid #e0e0e0;}</style></head><body>
-<div class="card"><div class="hdr"><h2>Company Booking Confirmed</h2><p style="margin:4px 0 0; font-size:10px; color:#F57C00;">Booking ID: ${orderId}</p></div><div class="content"><p style="font-size:15px; color:#1e293b;">Dear <strong>${companyName}</strong>,</p><p style="font-size:14px; color:#475569; line-height:1.6;">Thank you for your booking. Below are the registration links for your employees. Each link allows for the specific quantity purchased.</p><table width="100%" cellspacing="0" cellpadding="0" style="margin:20px 0; border:1px solid #e0e0e0; border-radius:4px; overflow:hidden;">${linksHtml}</table><div style="background:#f0f9ff; padding:15px; border-radius:4px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:13px; font-weight:700; color:#0d2240;">Total Amount Paid</span><span style="font-size:16px; font-weight:700; color:#0d2240;">${priceStr}</span></div></div><div class="footer">&copy; ${new Date().getFullYear()} Safety Training Academy | RTO #45234</div></div></body></html>`;
+<div class="card"><div class="hdr"><h2>Company Booking Confirmed</h2><p style="margin:4px 0 0; font-size:10px; color:#F57C00;">Booking ID: ${orderId}</p></div><div class="content"><p style="font-size:15px; color:#1e293b;">Dear <strong>${companyName}</strong>,</p><p style="font-size:14px; color:#475569; line-height:1.6;">Thank you for your booking. Below are the registration links for your employees. Each link allows for the specific quantity purchased.</p><table width="100%" cellspacing="0" cellpadding="0" style="margin:20px 0; border:1px solid #e0e0e0; border-radius:4px; overflow:hidden;">${linksHtml}</table><div style="background:#f0f9ff; padding:15px; border-radius:4px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:13px; font-weight:700; color:#0d2240;">Total Amount Paid</span><span style="font-size:16px; font-weight:700; color:#0d2240;">${priceStr}</span></div></div><div class="footer">&copy; ${new Date().getFullYear()} Safety Training Academy | </div></div></body></html>`;
     try { await sendEmail({ to: toEmail, subject: `Company Booking Confirmed - Order #${orderId}`, html, bcc: process.env.BOOKINGS_EMAIL }); res.status(200).json({ success: true }); } catch (err) { res.status(500).json({ success: false }); }
 };
 
@@ -358,7 +358,7 @@ const sendCompanyPortalWelcome = async (req, res) => {
     const { toEmail, companyName, initialPassword, loginBaseUrl, portalEnrollmentUrl } = req.body;
     const html = `
 <!DOCTYPE html><html><head><style>body{margin:0;padding:24px;background:#f0f2f5;font-family:sans-serif;}.card{max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;}.hdr{background:#0d2240;padding:20px 30px;color:#fff;}.content{padding:30px;}.footer{background:#f8fafc;padding:20px;text-align:center;font-size:11px;color:#999;border-top:1px solid #e0e0e0;}</style></head><body>
-<div class="card"><div class="hdr"><h2>Welcome to Safety Training Academy</h2><p style="margin:4px 0 0; font-size:10px; color:#F57C00;">COMPANY PORTAL ACCESS</p></div><div class="content"><p style="font-size:15px; color:#1e293b;">Dear <strong>${companyName}</strong>,</p><p style="font-size:14px; color:#475569; line-height:1.6;">Your company portal has been activated. You can now manage your employees and track their progress through your dashboard.</p><div style="background:#f8fafc; border:1px solid #e0e0e0; border-radius:6px; padding:20px; margin:20px 0;"><table width="100%"><tr><td style="font-size:12px; color:#64748b; padding-bottom:8px;">Portal URL</td><td style="font-size:13px; font-weight:700; color:#0d2240; padding-bottom:8px;"><a href="${loginBaseUrl}" style="color:#F57C00; text-decoration:none;">${loginBaseUrl}</a></td></tr><tr><td style="font-size:12px; color:#64748b;">Password</td><td style="font-size:13px; font-weight:700; color:#0d2240; font-family:monospace;">${initialPassword}</td></tr></table></div><div style="background:#f0f9ff; padding:15px; border-radius:6px;"><p style="margin:0 0 8px; font-size:11px; font-weight:700; color:#0d2240; text-transform:uppercase;">Quick Enrollment Link for Employees</p><p style="margin:0; font-size:12px; color:#F57C00; word-break:break-all;">${portalEnrollmentUrl}</p></div></div><div class="footer">&copy; ${new Date().getFullYear()} Safety Training Academy | RTO #45234</div></div></body></html>`;
+<div class="card"><div class="hdr"><h2>Welcome to Safety Training Academy</h2><p style="margin:4px 0 0; font-size:10px; color:#F57C00;">COMPANY PORTAL ACCESS</p></div><div class="content"><p style="font-size:15px; color:#1e293b;">Dear <strong>${companyName}</strong>,</p><p style="font-size:14px; color:#475569; line-height:1.6;">Your company portal has been activated. You can now manage your employees and track their progress through your dashboard.</p><div style="background:#f8fafc; border:1px solid #e0e0e0; border-radius:6px; padding:20px; margin:20px 0;"><table width="100%"><tr><td style="font-size:12px; color:#64748b; padding-bottom:8px;">Portal URL</td><td style="font-size:13px; font-weight:700; color:#0d2240; padding-bottom:8px;"><a href="${loginBaseUrl}" style="color:#F57C00; text-decoration:none;">${loginBaseUrl}</a></td></tr><tr><td style="font-size:12px; color:#64748b;">Password</td><td style="font-size:13px; font-weight:700; color:#0d2240; font-family:monospace;">${initialPassword}</td></tr></table></div><div style="background:#f0f9ff; padding:15px; border-radius:6px;"><p style="margin:0 0 8px; font-size:11px; font-weight:700; color:#0d2240; text-transform:uppercase;">Quick Enrollment Link for Employees</p><p style="margin:0; font-size:12px; color:#F57C00; word-break:break-all;">${portalEnrollmentUrl}</p></div></div><div class="footer">&copy; ${new Date().getFullYear()} Safety Training Academy | </div></div></body></html>`;
     try { await sendEmail({ to: toEmail, subject: "Welcome to Safety Training Academy Company Portal", html, bcc: process.env.BOOKINGS_EMAIL }); res.status(200).json({ success: true }); } catch (err) { res.status(500).json({ success: false }); }
 };
 
@@ -366,7 +366,7 @@ const sendVOCConfirmation = async (req, res) => {
     const { toEmail, firstName, submissionId, amountPaid } = req.body;
     const html = `
 <!DOCTYPE html><html><head><style>body{margin:0;padding:24px;background:#f0f2f5;font-family:sans-serif;}.card{max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;}.hdr{background:#0d2240;padding:20px 30px;color:#fff;}.content{padding:30px;}.footer{background:#f8fafc;padding:20px;text-align:center;font-size:11px;color:#999;border-top:1px solid #e0e0e0;}</style></head><body>
-<div class="card"><div class="hdr"><h2>VOC Submission Received</h2><p style="margin:4px 0 0; font-size:10px; color:#F57C00;">Booking ID: ${submissionId}</p></div><div class="content"><p style="font-size:15px; color:#1e293b;">Hi <strong>${firstName}</strong>,</p><p style="font-size:14px; color:#475569; line-height:1.6;">Thank you for your VOC submission. We have received your application and the payment of <strong>$${Number(amountPaid).toFixed(2)}</strong>. Our team will review the documents and get back to you shortly.</p></div><div class="footer">&copy; ${new Date().getFullYear()} Safety Training Academy | RTO #45234</div></div></body></html>`;
+<div class="card"><div class="hdr"><h2>VOC Submission Received</h2><p style="margin:4px 0 0; font-size:10px; color:#F57C00;">Booking ID: ${submissionId}</p></div><div class="content"><p style="font-size:15px; color:#1e293b;">Hi <strong>${firstName}</strong>,</p><p style="font-size:14px; color:#475569; line-height:1.6;">Thank you for your VOC submission. We have received your application and the payment of <strong>$${Number(amountPaid).toFixed(2)}</strong>. Our team will review the documents and get back to you shortly.</p></div><div class="footer">&copy; ${new Date().getFullYear()} Safety Training Academy | </div></div></body></html>`;
     try { await sendEmail({ to: toEmail, subject: "VOC Submission Received", html, bcc: process.env.BOOKINGS_EMAIL }); res.status(200).json({ success: true }); } catch (err) { res.status(500).json({ success: false }); }
 };
 
@@ -374,7 +374,7 @@ const sendEmailOTP = async (req, res) => {
     const { toEmail, otp } = req.body;
     const html = `
 <!DOCTYPE html><html><head><style>body{margin:0;padding:24px;background:#f0f2f5;font-family:sans-serif;}.card{max-width:400px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e0e0e0;box-shadow:0 4px 12px rgba(0,0,0,0.05);}.hdr{background:#0d2240;padding:24px;color:#fff;text-align:center;}.hdr h2{margin:0;font-size:16px;text-transform:uppercase;letter-spacing:1px;}.content{padding:40px 30px;text-align:center;}.otp-box{font-size:36px;font-weight:700;color:#0d2240;background:#f0f9ff;padding:20px;border-radius:8px;border:2px dashed #F57C00;letter-spacing:8px;margin:20px 0;}.footer{background:#f8fafc;padding:15px;text-align:center;font-size:10px;color:#999;border-top:1px solid #e0e0e0;}</style></head><body>
-<div class="card"><div class="hdr"><h2>Verification Code</h2></div><div class="content"><p style="margin:0; font-size:14px; color:#475569;">Use the code below to complete your verification:</p><div class="otp-box">${otp}</div><p style="margin:0; font-size:12px; color:#94a3b8;">This code will expire in 10 minutes.</p></div><div class="footer">Safety Training Academy | RTO #45234</div></div></body></html>`;
+<div class="card"><div class="hdr"><h2>Verification Code</h2></div><div class="content"><p style="margin:0; font-size:14px; color:#475569;">Use the code below to complete your verification:</p><div class="otp-box">${otp}</div><p style="margin:0; font-size:12px; color:#94a3b8;">This code will expire in 10 minutes.</p></div><div class="footer">Safety Training Academy | </div></div></body></html>`;
     try { await sendEmail({ to: toEmail, subject: `${otp} is your verification code`, html }); res.status(200).json({ success: true }); } catch (err) { res.status(500).json({ success: false }); }
 };
 

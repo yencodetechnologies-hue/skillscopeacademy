@@ -65,7 +65,7 @@ export default function MobileLandingPage({ courses = [] }) {
   const trustPills = useMemo(
     () => [
       trustReviewsLine,
-      "RTO #45234",
+      "",
       "SafeWork NSW approved",
       "📍 Sefton NSW",
     ],

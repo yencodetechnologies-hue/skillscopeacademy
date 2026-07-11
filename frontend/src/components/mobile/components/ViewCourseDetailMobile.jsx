@@ -401,7 +401,7 @@ export default function ViewCourseDetailMobile({ course, courses = [], fromPorta
         </div>
         <div className="cdm-fact">
           <div className="cdm-fact-icon">🎓</div>
-          <div className="cdm-fact-val">RTO #45234</div>
+          <div className="cdm-fact-val"></div>
           <div className="cdm-fact-label">Accredited</div>
         </div>
         <div className="cdm-fact">

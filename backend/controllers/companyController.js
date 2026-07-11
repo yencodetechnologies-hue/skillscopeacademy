@@ -60,7 +60,7 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
     <div class="cr-hdr">
       <div>
         <p class="cr-hdr-title">Safety Training Academy</p>
-        <p class="cr-hdr-sub">RTO #45234 &nbsp;·&nbsp; Company Portal</p>
+        <p class="cr-hdr-sub"> &nbsp;·&nbsp; Company Portal</p>
       </div>
       <span class="cr-badge">Welcome</span>
     </div>
@@ -106,7 +106,7 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
     <div class="cr-footer">
       <div class="cr-footer-brand">Safety Training Academy</div>
       <p class="cr-footer-info">
-        2 Wellington St, Sefton NSW 2162 &nbsp;·&nbsp; RTO #45234<br>
+        2 Wellington St, Sefton NSW 2162 &nbsp;·&nbsp; <br>
         1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au
       </p>
     </div>

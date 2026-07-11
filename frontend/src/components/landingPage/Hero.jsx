@@ -1,4 +1,5 @@
 import "../../styles/Hero.css"
+import TrustBar from "./TrustBar"
 import sliderOne from "../../assets/Slider1.jpeg"
 import sliderTwo from "../../assets/Slider2.jpeg"
 import sliderThree from "../../assets/Slider3.jpeg"
@@ -7,6 +8,23 @@ import { API_URL } from "../../data/service"
 import { ACTIVE_COURSES_URL, filterActiveCourses } from "../../utils/courseStatus"
 import { useState,useRef,useEffect } from "react"
 import { cdnImage } from "../../utils/cdnImage"
+
+// Builds the short overlay copy for a course from real API data, with a
+// safe fallback while courses are still loading.
+function buildSlideInfo(course) {
+  if (!course) {
+    return { badge: "COURSES", title: "Explore Our Courses", desc: "Nationally recognised training across a range of industries." }
+  }
+  const descText = Array.isArray(course.description)
+    ? course.description.filter(Boolean).join(" ")
+    : (course.description || "")
+  const trimmedDesc = descText.length > 110 ? `${descText.slice(0, 110).trim()}…` : descText
+  return {
+    badge: course.category || "COURSES",
+    title: course.title || "Explore Our Courses",
+    desc: trimmedDesc || "Nationally recognised training designed for real workplaces.",
+  }
+}
 
 function Hero() {
   const navigate = useNavigate()
@@ -20,6 +38,7 @@ function Hero() {
   const [pubsearch, pubsetSearch] = useState("")
   const [suggestions, setSuggestions] = useState([])
   const [allCourses, setAllCourses] = useState([])
+  const [paused, setPaused] = useState(false)
   const currentIndexRef = useRef(0)
 
   useEffect(() => {
@@ -58,19 +77,36 @@ function Hero() {
     return () => { alive = false }
   }, [])
 
+  // Courses with an image, used to drive the hero slider card so it shows
+  // real course photos + titles fetched from the API.
+  const sliderCourses = allCourses.filter(c => c?.image).slice(0, 6)
+  const slideCount = sliderCourses.length || images.length
+  const slideIndex = sliderCourses.length ? currentIndex % sliderCourses.length : currentIndex
+  const activeCourse = sliderCourses[slideIndex]
+  const slideInfo = buildSlideInfo(activeCourse)
+  const slideImage = activeCourse
+    ? cdnImage(activeCourse.image, { w: 700 })
+    : cdnImage(images[currentIndex], { w: 700 })
+
+  const goToSlide = (targetIndex) => {
+    const total = images.length
+    const next = ((targetIndex % total) + total) % total
+    setNextIndex(next)
+    setAnimating(true)
+    setTimeout(() => {
+      currentIndexRef.current = next
+      setCurrentIndex(next)
+      setAnimating(false)
+    }, 1200)
+  }
+
   useEffect(() => {
+    if (paused) return
     const interval = setInterval(() => {
-      const next = (currentIndexRef.current + 1) % images.length
-      setNextIndex(next)
-      setAnimating(true)
-      setTimeout(() => {
-        currentIndexRef.current = next
-        setCurrentIndex(next)
-        setAnimating(false)
-      }, 1200)
+      goToSlide(currentIndexRef.current + 1)
     }, 4000)
     return () => clearInterval(interval)
-  }, [])
+  }, [paused, images.length])
 
   useEffect(() => {
     if (pubsearch.trim()) {
@@ -100,6 +136,7 @@ function Hero() {
         <p>🔥 SUNDAY CLASSES AVAILABLE • ENROLL NOW • LIMITED SEATS 🔥     NATIONALLY RECOGNIZED CERTIFICATES •      GET CERTIFIED WITH CREDENTIALS THAT ARE RECOGNIZED ACROSS ALL STATES AND TERRITORIES </p>
       </div>
       <div className="hero-container">
+       <div className="hero-top">
 
         {/* LEFT */}
         <div className="hero-left">
@@ -171,50 +208,84 @@ function Hero() {
             </div>
           </div>
 
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hero-stat-icon"><i className="fa-regular fa-star"></i></span>
-              <div className="hero-stat-text">
-                <strong>10,000+</strong>
-                <span>Students Trained</span>
-              </div>
+        </div>
+
+        {/* RIGHT CARD — course image slider */}
+        <div
+          className="hero-slider-card"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="hero-slider-image-wrap">
+            <img
+              key={activeCourse?._id || currentIndex}
+              src={slideImage}
+              alt={slideInfo.title}
+              className="hero-slider-img"
+            />
+
+            <div className="hero-slider-topcontrols">
+              <button
+                type="button"
+                className="hero-slider-iconbtn"
+                aria-label="Expand"
+                onClick={() => window.open(slideImage, "_blank")}
+              >
+                <i className="fa-solid fa-up-right-and-down-left-from-center"></i>
+              </button>
+              <button
+                type="button"
+                className="hero-slider-iconbtn"
+                aria-label={paused ? "Play" : "Pause"}
+                onClick={() => setPaused(p => !p)}
+              >
+                <i className={`fa-solid ${paused ? "fa-play" : "fa-pause"}`}></i>
+              </button>
             </div>
-            <div className="hero-stat">
-              <span className="hero-stat-icon shield"><i className="fa-solid fa-circle-check"></i></span>
-              <div className="hero-stat-text">
-                <strong>100%</strong>
-                <span>Compliance Focused</span>
-              </div>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-stat-icon shield"><i className="fa-solid fa-shield-halved"></i></span>
-              <div className="hero-stat-text">
-                <strong>Trusted</strong>
-                <span>Across Australia</span>
+
+            <button
+              type="button"
+              className="hero-slider-arrow hero-slider-arrow-left"
+              aria-label="Previous slide"
+              onClick={() => goToSlide(currentIndexRef.current - 1)}
+            >
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              type="button"
+              className="hero-slider-arrow hero-slider-arrow-right"
+              aria-label="Next slide"
+              onClick={() => goToSlide(currentIndexRef.current + 1)}
+            >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div
+              className="hero-slider-overlay"
+              onClick={() => activeCourse && navigate(`/course/${activeCourse.slug}`)}
+            >
+              <span className="hero-slider-badge">{slideInfo.badge}</span>
+              <h4 className="hero-slider-title">{slideInfo.title}</h4>
+
+              <div className="hero-slider-timeline">
+                {Array.from({ length: slideCount }).map((_, i) => (
+                  <span key={i} className="hero-slider-dash">
+                    <span
+                      className={`hero-slider-dash-fill ${i === slideIndex && !paused ? "hero-slider-dash-fill-active" : ""}`}
+                      style={{ width: i < slideIndex ? "100%" : i === slideIndex ? undefined : "0%" }}
+                    />
+                  </span>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT CARD */}
-        <div className="hero-card">
-          <div className="hero-card-title-row">
-            <h3>Course Enrolment</h3>
-            <div className="hero-card-divider"></div>
-          </div>
-          <p>
-            To enrol for a Course with SafeTricks, please complete our online
-            Enrolment form via the button below:
-          </p>
-          <button className="enrol-btn" onClick={() => navigate("/book-now")}>
-            <i className="fa-solid fa-user-shield"></i> Start Enrolment Now →
-          </button>
-          <button className="voc-btn" onClick={() => navigate("/voc")}>
-            <i className="fa-solid fa-user-shield"></i> VOC (Verification of Competency)
-          </button>
-          <button className="voc-btn" onClick={() => navigate("/book-now?enroll=company")}>
-            <i className="fa-solid fa-user-shield"></i> Company Enrolment →
-          </button>
+       </div>
+
+        {/* TRUST BAR — inside the hero, below the left copy / slider row */}
+        <div className="hero-trustbar-wrap">
+          <TrustBar />
         </div>
 
       </div>

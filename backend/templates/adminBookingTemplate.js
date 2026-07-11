@@ -118,7 +118,7 @@ const adminBookingTemplate = (data) => {
         <tr>
           <td>
             <p class="eb-hdr-title">Safety Training Academy</p>
-            <p class="eb-hdr-sub">RTO #45234 &nbsp;·&nbsp; Admin Notification</p>
+            <p class="eb-hdr-sub"> &nbsp;·&nbsp; Admin Notification</p>
           </td>
           <td align="right" valign="top">
             <div style="display:inline-block; text-align:right; min-width: 200px;">
@@ -199,7 +199,7 @@ const adminBookingTemplate = (data) => {
 
     <!-- ── Footer ── -->
     <div class="eb-footer">
-      This is an automated admin notification from <strong>Safety Training Academy</strong> (RTO #45234).<br />
+      This is an automated admin notification from <strong>Safety Training Academy</strong> ().<br />
       2 Marjorie St, Sefton NSW 2162 &nbsp;·&nbsp; 1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au
     </div>
 

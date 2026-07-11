@@ -22,7 +22,7 @@ const quickLinks = [
 
 // Accreditation badges are credentials, not links — render as plain text.
 const accredLabels = [
-    "RTO #45234",
+    "",
     "SafeWork NSW Approved",
     "Nationally Recognised Training",
 ]
@@ -227,7 +227,7 @@ function Footer({ courses }) {
                     © 2024 SafeTricks. All rights reserved.
                     ABN 45234 · safetricks.com.au
                 </span>
-                <div className="footer-rto-badge">RTO #45234</div>
+                <div className="footer-rto-badge"></div>
             </div>
 
         </footer>

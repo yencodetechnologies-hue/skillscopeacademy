@@ -500,7 +500,7 @@ import { colors } from '../constants/theme';
 //                         { icon: "📅", val: course?.duration || "1 Day", label: "Course duration" },
 //                         { icon: "⏰", val: "8:30am – 4:30pm", label: "Class hours" },
 //                         { icon: "📍", val: course?.location || "Sefton NSW", label: "Training location" },
-//                         { icon: "🎓", val: "RTO #45234", label: "Accredited provider" },
+//                         { icon: "🎓", val: "", label: "Accredited provider" },
 //                         { icon: "📜", val: "Same Day", label: "Certificate issued" },
 //                         { icon: "🗺", val: "All States", label: "Nationally recognised" },
 //                     ].map((item, i) => (
@@ -849,7 +849,7 @@ import { colors } from '../constants/theme';
 //                         <div className="cdp-sticky-facts">
 //                             📅 {course?.duration} &nbsp;·&nbsp;
 //                             📍 {course?.location} &nbsp;·&nbsp;
-//                             🎓 RTO #45234
+//                             🎓 
 //                         </div>
 //                     </div>
 //                     <div className="cdp-sticky-price">
@@ -1470,7 +1470,7 @@ const handleViewPDF = (pdfUrl) => {
                         { icon: "📅", val: course?.duration || "1 Day", label: "Course duration" },
                         { icon: "⏰", val: "8:30am – 4:30pm", label: "Class hours" },
                         { icon: "📍", val: course?.location || "Sefton NSW", label: "Training location" },
-                        { icon: "🎓", val: "RTO #45234", label: "Accredited provider" },
+                        { icon: "🎓", val: "", label: "Accredited provider" },
                         { icon: "📜", val: "Same Day", label: "Certificate issued" },
                         { icon: "🗺", val: "All States", label: "Nationally recognised" },
                     ].map((item, i) => (
@@ -1877,7 +1877,7 @@ const handleViewPDF = (pdfUrl) => {
                         <div className="cdp-sticky-facts">
                             📅 {course?.duration} &nbsp;·&nbsp;
                             📍 {course?.location} &nbsp;·&nbsp;
-                            🎓 RTO #45234
+                            🎓 
                         </div>
                     </div>
                     <div className="cdp-sticky-price">

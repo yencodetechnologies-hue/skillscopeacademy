@@ -926,7 +926,7 @@
   cursor: pointer;
   letter-spacing: 0.03em;
 }
-.mlp-enquire-btn:active { background: #1a4a7a; }
+.mlp-enquire-btn:active { background:#D4920E; }
 
 /* ── Modal Backdrop ── */
 .mlp-modal-backdrop {
@@ -984,7 +984,7 @@
 
 /* Enquiry Section with Light Blue Background */
 .mlp-section-enquire {
-  background-color: #00AEEF !important; /* Exact light blue from screenshot */
+  background-color: #0a1e3f !important; /* Exact light blue from screenshot */
   padding: 40px 20px !important;
   text-align: center;
   margin: 0 !important;
@@ -992,7 +992,7 @@
 
 .mlp-section-enquire .mlp-enquire-btn {
   margin-top: 0;
-  background-color: var(--color-navy-deep); /* Dark navy for strong contrast */
+  background-color: #D4920E; /* Dark navy for strong contrast */
   color: var(--color-surface);
   border: none;
   width: 100%;

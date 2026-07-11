@@ -11,7 +11,7 @@ const TRUST_ITEMS = [
         title: "100%",
         desc: "Compliance Focused",
     },
- 
+
     {
         icon: "fa-solid fa-user-group",
         title: "Face to Face Training",
@@ -40,7 +40,7 @@ function TrustBar() {
                         </div>
                         <div className="trust-text">
                             <p className="trust-title">{item.title}</p>
-                          
+                            <p className="trust-desc">{item.desc}</p>
                         </div>
                     </div>
                 ))}

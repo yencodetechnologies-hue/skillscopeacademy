@@ -69,6 +69,7 @@
     flex-direction: column;
     gap: 3px;
     min-width: 0;
+    flex: 1 1 auto;
 }
 
 .trust-title {
@@ -77,14 +78,25 @@
     color: var(--color-surface);
     margin: 0;
     line-height: 1.3;
-    white-space: nowrap;
+    /* FIX: was `white-space: nowrap`, which forced long titles like
+       "Face to Face Training" / "Nationally Recognized" onto one line,
+       causing them to spill over into the neighbouring items. Wrapping
+       is now allowed so each item's text breaks and stays inside its
+       own column. */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .trust-desc {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.65);
     margin: 0;
-    white-space: nowrap;
+    line-height: 1.3;
+    /* Same fix applied to the description line */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 /* ===== RESPONSIVE ===== */

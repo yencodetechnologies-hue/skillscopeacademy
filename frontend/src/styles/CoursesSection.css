@@ -4,7 +4,7 @@
 }
 
 .cs-section {
-  padding: 64px 80px;
+  padding: 4px 80px 64px;
   margin: auto;
 }
 
@@ -13,7 +13,7 @@
 }
 .cs-header { 
     margin-bottom: 28px;
-    margin-top: 28px;
+    margin-top: 0;
 }
 .cs-label {
   font-size: 12px; font-weight: 700; color: var(--color-brand-primary);
@@ -31,7 +31,7 @@
   flex-wrap: wrap;
 }
 .cs-tab-btn {
-  flex: 0 0 auto;
+  flex: 1 1 140px;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
   cursor: pointer;
   transition: all 0.18s;
   font-family: 'Inter', sans-serif;
-  min-width: max-content;
+  min-width: 140px;
 }
 .cs-tab-btn:last-child { border-right: none; }
 .cs-tab-btn:hover {
@@ -81,10 +81,10 @@
   background: var(--color-surface);
 }
 
-/* GRID */
+/* GRID — auto-fits column count to available width on any screen size */
 .cs-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
 }
 
@@ -145,13 +145,8 @@
 
 /* RESPONSIVE */
 @media (max-width: 1200px) {
-  .cs-section { padding: 48px 40px; }
-  .cs-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 900px) {
-  .cs-grid { grid-template-columns: repeat(2, 1fr); }
+  .cs-section { padding: 4px 40px 48px; }
 }
 @media (max-width: 600px) {
   .cs-section { padding: 32px 16px; }
-  .cs-grid { grid-template-columns: 1fr; }
 }

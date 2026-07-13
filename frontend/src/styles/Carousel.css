@@ -3,7 +3,7 @@
 ═══════════════════════════════════════════════════════ */
 
 .hp-section {
-  padding: 48px 40px 32px;
+  padding: 0px 40px 4px;
   background: var(--white);
   font-family: var(--font-body);
 }
@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 28px;
+  margin-bottom: 0;
 }
 
 .hp-tagline {
@@ -540,15 +540,34 @@
   }
 }
 
-/* ── Desktop: 7 visible items carousel ── */
-@media (min-width: 1024px) {
+/* ── Laptop / small desktop: shrink icons so all fit in one row without clipping ── */
+@media (min-width: 769px) and (max-width: 1366px) {
+  .hp-card {
+    width: 100px;
+  }
+  .hp-track {
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hp-card-img-wrap {
+    width: 78px;
+    height: 68px;
+  }
+  .hp-card-label {
+    font-size: 11px;
+  }
+}
+
+/* ── Large desktop: full-size icons, wraps safely if it ever doesn't fit ── */
+@media (min-width: 1367px) {
   .hp-card {
     width: 130px; 
   }
   .hp-track {
     gap: 10px;
     justify-content: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
   .hp-card-img-wrap {
     width: 100px;

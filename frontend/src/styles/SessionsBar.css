@@ -1,13 +1,28 @@
 /* ===== BAR ===== */
 .sb-bar {
-    margin-top: 40px;
+    margin-top: 8px;
   background: var(--color-surface);
-  padding: 20px 80px;
+  padding: 18px 80px;
   border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   font-family: 'Inter', sans-serif;
+}
+
+/* HEADER: label + heading stacked */
+.sb-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.sb-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-navy-deep);
+  white-space: nowrap;
 }
 
 /* LABEL */
@@ -140,9 +155,9 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-  .sb-bar { padding: 16px 40px; }
+  .sb-bar { padding: 14px 40px; }
 }
 @media (max-width: 768px) {
-  .sb-bar { padding: 14px 16px; gap: 12px; }
-  .sb-label { display: none; }
+  .sb-bar { padding: 12px 16px; gap: 12px; }
+  .sb-heading { display: none; }
 }

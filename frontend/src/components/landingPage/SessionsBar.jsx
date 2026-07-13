@@ -43,7 +43,10 @@ function SessionsBar() {
 
     return (
         <div className="sb-bar">
-            <div className="sb-label">Don't miss out</div>
+            <div className="sb-header">
+                <div className="sb-label">Don't miss out</div>
+                <div className="sb-heading">Upcoming Courses</div>
+            </div>
 
             <div className="sb-scroll">
                 <div className="sb-marquee">

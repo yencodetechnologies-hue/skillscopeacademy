@@ -140,13 +140,20 @@ function Hero() {
 
         {/* LEFT */}
         <div className="hero-left">
+          <div className="hero-pill">
+            <span className="hero-pill-dot" />
+            <span>NATIONALLY RECOGNISED TRAINING</span>
+          </div>
+
           <h1>
-            NATIONALLY RECOGNIZED
-            <span>CERTIFICATES</span>
+            Australia's trusted<br />
+            <span>safety training</span>
+            provider.
           </h1>
           <p>
-            Get certified with credentials that are recognized across all states and territories.
-            Start your career with confidence.
+            Accredited courses for construction, civil, and industrial
+            workplaces. Get your team certified fast with training that
+            meets every Australian compliance standard.
           </p>
 
           <div className="hero-buttons">
@@ -161,51 +168,9 @@ function Hero() {
               <i className="fa-solid fa-book-open"></i> View All Courses
             </button>
 
-            <div className="hero-search-wrapper">
-              <div className="hero-search">
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  className="hero-search-input"
-                  value={pubsearch}
-                  onChange={(e) => pubsetSearch(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && pubsearch.trim()) {
-                      navigate(`/all-courses?search=${pubsearch}`)
-                    }
-                  }}
-                />
-                <button
-                  className="hero-search-btn"
-                  onClick={() => {
-                    if (pubsearch.trim()) {
-                      navigate(`/all-courses?search=${pubsearch}`)
-                      pubsetSearch("")
-                    }
-                  }}
-                >
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                </button>
-              </div>
-
-              {suggestions.length > 0 && (
-                <div className="search-dropdown">
-                  {suggestions.map((course) => (
-                    <div
-                      key={course._id}
-                      className="search-item"
-                      onClick={() => {
-                        navigate(`/all-courses?search=${course.title}&category=${course.category}`)
-                        setSuggestions([])
-                        pubsetSearch("")
-                      }}
-                    >
-                      {course.title}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            <button className="hero-btn-secondary" onClick={() => navigate("/contact")}>
+              Get in touch
+            </button>
           </div>
 
         </div>
@@ -270,10 +235,17 @@ function Hero() {
               <div className="hero-slider-timeline">
                 {Array.from({ length: slideCount }).map((_, i) => (
                   <span key={i} className="hero-slider-dash">
-                    <span
-                      className={`hero-slider-dash-fill ${i === slideIndex && !paused ? "hero-slider-dash-fill-active" : ""}`}
-                      style={{ width: i < slideIndex ? "100%" : i === slideIndex ? undefined : "0%" }}
-                    />
+                    {i === slideIndex && !paused ? (
+                      <span
+                        key={`fill-${slideIndex}`}
+                        className="hero-slider-dash-fill hero-slider-dash-fill-active"
+                      />
+                    ) : (
+                      <span
+                        className="hero-slider-dash-fill"
+                        style={{ width: i < slideIndex ? "100%" : "0%" }}
+                      />
+                    )}
                   </span>
                 ))}
               </div>

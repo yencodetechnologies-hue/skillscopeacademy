@@ -4,7 +4,7 @@
 }
 
 .cs-section {
-  padding: 4px 80px 64px;
+  padding: 64px 80px;
   margin: auto;
 }
 
@@ -13,7 +13,7 @@
 }
 .cs-header { 
     margin-bottom: 28px;
-    margin-top: 0;
+    margin-top: 28px;
 }
 .cs-label {
   font-size: 12px; font-weight: 700; color: var(--color-brand-primary);
@@ -31,7 +31,7 @@
   flex-wrap: wrap;
 }
 .cs-tab-btn {
-  flex: 1 1 140px;
+  flex: 0 0 auto;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
   cursor: pointer;
   transition: all 0.18s;
   font-family: 'Inter', sans-serif;
-  min-width: 140px;
+  min-width: max-content;
 }
 .cs-tab-btn:last-child { border-right: none; }
 .cs-tab-btn:hover {
@@ -145,7 +145,7 @@
 
 /* RESPONSIVE */
 @media (max-width: 1200px) {
-  .cs-section { padding: 4px 40px 48px; }
+  .cs-section { padding: 48px 40px; }
   .cs-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 900px) {

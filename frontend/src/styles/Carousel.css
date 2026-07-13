@@ -3,7 +3,7 @@
 ═══════════════════════════════════════════════════════ */
 
 .hp-section {
-  padding: 0px 40px 4px;
+  padding: 48px 40px 32px;
   background: var(--white);
   font-family: var(--font-body);
 }
@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 0;
+  margin-bottom: 28px;
 }
 
 .hp-tagline {

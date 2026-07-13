@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    min-height: 100vh;
     padding: 56px 0 36px;
     margin-bottom: 0;
     overflow: visible;
@@ -425,7 +426,6 @@ transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 .hero-slider-card {
     width: 420px;
     flex-shrink: 0;
-    margin-right: -7%;
 }
 
 .hero-slider-image-wrap {

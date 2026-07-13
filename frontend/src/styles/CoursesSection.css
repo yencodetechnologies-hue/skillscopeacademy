@@ -22,22 +22,25 @@
 .cs-title { font-size: 28px; font-weight: 700; color: var(--color-navy-deep); margin-bottom: 6px; }
 .cs-sub { font-size: 15px; color: var(--color-link-muted); }
 
-/* TAB WRAPPER — ✅ clip overflow so tabs never wrap to second line */
-/* TAB NAV — ✅ wrap to multiple lines, no scroll */
+/* TAB NAV — every tab is the exact same height/width per row, labels wrap
+   instead of overflowing, and the row always fills the full bar width */
 .cs-tab-nav {
   display: flex;
   background: var(--color-navy-deep);
   border-radius: 14px 14px 0 0;
   flex-wrap: wrap;
+  overflow: hidden;
 }
 .cs-tab-btn {
-  flex: 1 1 140px;
-  white-space: nowrap;
+  box-sizing: border-box;
+  flex: 1 1 170px;
+  white-space: normal;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 7px;
-  padding: 13px 16px;
+  padding: 13px 14px;
   border: none;
   border-right: 1px solid rgba(255,255,255,0.08);
   background: transparent;
@@ -47,7 +50,14 @@
   cursor: pointer;
   transition: all 0.18s;
   font-family: 'Inter', sans-serif;
-  min-width: 140px;
+  min-width: 170px;
+  min-height: 46px;
+  overflow: hidden;
+}
+.cs-tab-label {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.25;
 }
 .cs-tab-btn:last-child { border-right: none; }
 .cs-tab-btn:hover {
@@ -66,6 +76,7 @@
   background: rgba(255,255,255,0.15);
   color: rgba(255,255,255,0.7);
   flex-shrink: 0;
+  white-space: nowrap;
 }
 .cs-tab-btn--active .cs-tab-count {
   background: rgba(13,34,64,0.25);
@@ -81,10 +92,10 @@
   background: var(--color-surface);
 }
 
-/* GRID — auto-fits column count to available width on any screen size */
+/* GRID — unchanged from the original file */
 .cs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
@@ -143,10 +154,15 @@
 }
 .cs-show-more-btn:hover { background: var(--color-brand-primary); color: var(--color-navy-deep); }
 
-/* RESPONSIVE */
+/* RESPONSIVE — grid breakpoints unchanged from the original file */
 @media (max-width: 1200px) {
   .cs-section { padding: 4px 40px 48px; }
+  .cs-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .cs-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
   .cs-section { padding: 32px 16px; }
+  .cs-grid { grid-template-columns: 1fr; }
 }

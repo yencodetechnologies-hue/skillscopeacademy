@@ -15,17 +15,17 @@ const TRUST_ITEMS = [
     {
         icon: "fa-solid fa-user-group",
         title: "Face to Face Training",
-        desc: "Practical hands-on learning",
+        // desc: "Practical hands-on learning",
     },
     {
         icon: "fa-solid fa-award",
         title: "Qualified Trainers",
-        desc: "Industry experienced experts",
+        // desc: "Industry experienced experts",
     },
     {
         icon: "fa-regular fa-file-lines",
         title: "Nationally Recognized",
-        desc: "Certificates accepted Australia-wide",
+        // desc: "Certificates accepted Australia-wide",
     },
 ]
 

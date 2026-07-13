@@ -1,10 +1,9 @@
-
 /* ===== BAR ===== */
 .sb-bar {
     margin-top: 40px;
   background: var(--color-surface);
   padding: 20px 80px;
-  border-bottom: 1px solid var(--color-sky-light);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   gap: 20px;
@@ -49,8 +48,8 @@
 
 /* CHIP */
 .sb-chip {
-  background: var(--color-sky-panel);
-  border: 1px solid var(--color-sky-light);
+  background: var(--color-brand-tint);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 8px 14px;
   flex-shrink: 0;
@@ -63,7 +62,7 @@
 }
 .sb-chip:hover {
   border-color: var(--color-brand-primary);
-  box-shadow: 0 2px 8px rgba(41, 182, 232, 0.15);
+  box-shadow: 0 2px 10px rgba(245, 166, 35, 0.25);
 }
 
 /* DATE BOX */
@@ -79,7 +78,7 @@
   justify-content: center;
   flex-shrink: 0;
 }
-.sb-date--sunday { background: #1a4a7a; }
+.sb-date--sunday { background: var(--color-navy-hero); }
 .sb-day { font-size: 14px; font-weight: 700; line-height: 1; }
 .sb-mon { font-size: 9px; color: var(--color-brand-primary); text-transform: uppercase; letter-spacing: 0.04em; }
 
@@ -89,7 +88,7 @@
   font-size: 12px; font-weight: 600; color: var(--color-navy-deep);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.sb-detail { font-size: 11px; color: var(--color-link-muted); margin-top: 1px; white-space: nowrap; }
+.sb-detail { font-size: 11px; color: var(--color-text-muted); margin-top: 1px; white-space: nowrap; }
 
 /* SPOTS PILL */
 .sb-spots {
@@ -127,7 +126,7 @@
 .sb-skeleton-date,
 .sb-skeleton-line,
 .sb-skeleton-pill {
-  background: linear-gradient(90deg, var(--color-sky-wash) 25%, #d0eaf8 50%, var(--color-sky-wash) 75%);
+  background: linear-gradient(90deg, var(--color-bg-panel) 25%, var(--gray-200) 50%, var(--color-bg-panel) 75%);
   background-size: 800px 100%;
   animation: sb-shimmer 1.4s infinite linear;
   border-radius: 6px;

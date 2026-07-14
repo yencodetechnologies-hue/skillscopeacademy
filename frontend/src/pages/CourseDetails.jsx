@@ -558,7 +558,7 @@
 //                 {/* ── QUICK FACTS BAR ── */}
 //                 <div className="cdp-qfbar">
 //                     {[
-//                         { icon: "📅", val: course?.duration || "1 Day", label: "Course duration" },
+//                         { icon: "📅", val: course?.trainingDuration || "", label: "Course duration" },
 //                         { icon: "⏰", val: "8:30am – 4:30pm", label: "Class hours" },
 //                         { icon: "📍", val: course?.location || "Sefton NSW", label: "Training location" },
 //                         { icon: "🎓", val: "", label: "Accredited provider" },
@@ -1524,7 +1524,7 @@ import { colors } from '../constants/theme';
 //                 {/* ── QUICK FACTS BAR ── */}
 //                 <div className="cdp-qfbar">
 //                     {[
-//                         { icon: "📅", val: course?.duration || "1 Day", label: "Course duration" },
+//                         { icon: "📅", val: course?.trainingDuration || "", label: "Course duration" },
 //                         { icon: "⏰", val: "8:30am – 4:30pm", label: "Class hours" },
 //                         { icon: "📍", val: course?.location || "Sefton NSW", label: "Training location" },
 //                         { icon: "🎓", val: "", label: "Accredited provider" },
@@ -2474,7 +2474,7 @@ const handleViewPDF = (pdfUrl) => {
                 {/* ── QUICK FACTS BAR ── */}
                 <div className="cdp-qfbar">
                     {[
-                        { icon: "📅", val: course?.duration || "1 Day", label: "Course duration" },
+                        { icon: "📅", val: course?.trainingDuration || "", label: "Course duration" },
                         { icon: "⏰", val: "8:30am – 4:30pm", label: "Class hours" },
                         { icon: "📍", val: course?.location || "Sefton NSW", label: "Training location" },
                         { icon: "🎓", val: "", label: "Accredited provider" },
@@ -2646,11 +2646,11 @@ const handleViewPDF = (pdfUrl) => {
                     )}
 
                     {/* DURATION */}
-                    {course?.duration && (
+                    {course?.trainingDuration && (
                         <div className="cdp-section">
                             <h2 className="cdp-section-title">Duration</h2>
                             <p className="cdp-section-text">
-                                The total duration is {course.duration}. Training and assessment are conducted in our training centre.
+                                The total duration is {course.trainingDuration}. Training and assessment are conducted in our training centre.
                             </p>
                         </div>
                     )}
@@ -2859,7 +2859,7 @@ const handleViewPDF = (pdfUrl) => {
                     <div>
                         <div className="cdp-sticky-name">{course?.title}</div>
                         <div className="cdp-sticky-facts">
-                            📅 {course?.duration} &nbsp;·&nbsp;
+                            📅 {course?.trainingDuration} &nbsp;·&nbsp;
                             📍 {course?.location} &nbsp;·&nbsp;
                             🎓 
                         </div>

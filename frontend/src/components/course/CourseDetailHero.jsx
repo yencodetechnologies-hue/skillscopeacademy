@@ -55,7 +55,7 @@ function CourseDetailHero({ course }) {
                         <div className="hero-meta-row">
                             <div className="meta-item">
                                 <span className="meta-icon">📅</span>
-                                <span><strong>{course?.duration || "1 day"}</strong> duration</span>
+                                <span><strong>{course?.trainingDuration || ""}</strong>{course?.trainingDuration ? " duration" : ""}</span>
                             </div>
                             <div className="meta-item">
                                 <span className="meta-icon">📍</span>

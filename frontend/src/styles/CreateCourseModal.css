@@ -568,3 +568,90 @@ opacity:0.6;
     letter-spacing: 0.5px;
 }
 
+
+/* ── Editable section headings in Details tab ── */
+.editable-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.editable-section-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+  border: none;
+  border-bottom: 2px dashed #ccc;
+  background: transparent;
+  padding: 4px 6px;
+  flex: 1;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.editable-section-heading:focus {
+  border-bottom-color: #f59e0b;
+  background: #fffbeb;
+  border-radius: 4px 4px 0 0;
+}
+
+.edit-heading-hint {
+  font-size: 11px;
+  color: #aaa;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+/* ── EditableLabel component ── */
+.editable-label-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  margin-bottom: 6px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.editable-label-display:hover {
+  background: #f0f0f0;
+}
+
+.editable-label-input {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  border: none;
+  border-bottom: 2px solid #f59e0b;
+  background: #fffbeb;
+  padding: 4px 6px;
+  border-radius: 4px 4px 0 0;
+  outline: none;
+  width: 100%;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.editable-label-pencil {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0 2px;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+.editable-label-pencil:hover {
+  opacity: 1;
+}
+
+/* ── DynamicField editable heading row ── */
+.editable-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}

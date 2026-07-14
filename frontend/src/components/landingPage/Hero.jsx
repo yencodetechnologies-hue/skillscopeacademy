@@ -88,9 +88,21 @@ function Hero() {
     ? cdnImage(activeCourse.image, { w: 700 })
     : cdnImage(images[currentIndex], { w: 700 })
 
-  const goToSlide = (targetIndex) => {
+  const goToSlide = (targetIndex, immediate = false) => {
     const total = images.length
     const next = ((targetIndex % total) + total) % total
+
+    // Manual navigation (arrow clicks) should feel instant — update the
+    // slide content and background right away instead of waiting on the
+    // crossfade timeout used for the automatic rotation.
+    if (immediate) {
+      currentIndexRef.current = next
+      setCurrentIndex(next)
+      setNextIndex((next + 1) % total)
+      setAnimating(false)
+      return
+    }
+
     setNextIndex(next)
     setAnimating(true)
     setTimeout(() => {
@@ -136,15 +148,14 @@ function Hero() {
         <p>🔥 SUNDAY CLASSES AVAILABLE • ENROLL NOW • LIMITED SEATS 🔥     NATIONALLY RECOGNIZED CERTIFICATES •      GET CERTIFIED WITH CREDENTIALS THAT ARE RECOGNIZED ACROSS ALL STATES AND TERRITORIES </p>
       </div>
       <div className="hero-container">
+       <div className="hero-pill">
+         <span className="hero-pill-dot" />
+         <span>NATIONALLY RECOGNISED TRAINING</span>
+       </div>
        <div className="hero-top">
 
         {/* LEFT */}
         <div className="hero-left">
-          <div className="hero-pill">
-            <span className="hero-pill-dot" />
-            <span>NATIONALLY RECOGNISED TRAINING</span>
-          </div>
-
           <h1>
             Australia's trusted<br />
             <span>safety training</span>
@@ -212,7 +223,7 @@ function Hero() {
               type="button"
               className="hero-slider-arrow hero-slider-arrow-left"
               aria-label="Previous slide"
-              onClick={() => goToSlide(currentIndexRef.current - 1)}
+              onClick={() => goToSlide(currentIndexRef.current - 1, true)}
             >
               <i className="fa-solid fa-chevron-left"></i>
             </button>
@@ -220,7 +231,7 @@ function Hero() {
               type="button"
               className="hero-slider-arrow hero-slider-arrow-right"
               aria-label="Next slide"
-              onClick={() => goToSlide(currentIndexRef.current + 1)}
+              onClick={() => goToSlide(currentIndexRef.current + 1, true)}
             >
               <i className="fa-solid fa-chevron-right"></i>
             </button>

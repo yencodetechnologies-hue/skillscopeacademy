@@ -45,9 +45,10 @@
 }
 
 .sb-marquee {
+  --sb-repeat: 3;
   display: flex;
   gap: 15px;
-  animation: sb-marquee-scroll 40s linear infinite;
+  animation: sb-marquee-scroll 5s linear infinite;
   white-space: nowrap;
   width: max-content;
 }
@@ -58,7 +59,7 @@
 
 @keyframes sb-marquee-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
+  100% { transform: translateX(calc(-100% / var(--sb-repeat))); }
 }
 
 /* CHIP */

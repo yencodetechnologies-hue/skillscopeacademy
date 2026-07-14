@@ -85,7 +85,7 @@
   display: flex;
   gap: 20px;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
@@ -543,11 +543,12 @@
 /* ── Laptop / small desktop: shrink icons so all fit in one row without clipping ── */
 @media (min-width: 769px) and (max-width: 1366px) {
   .hp-card {
-    width: 100px;
+    flex: 1 1 100px;
+    width: auto;
   }
   .hp-track {
     gap: 8px;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
   .hp-card-img-wrap {
@@ -562,11 +563,12 @@
 /* ── Large desktop: full-size icons, wraps safely if it ever doesn't fit ── */
 @media (min-width: 1367px) {
   .hp-card {
-    width: 130px; 
+    flex: 1 1 130px;
+    width: auto;
   }
   .hp-track {
     gap: 10px;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
   .hp-card-img-wrap {

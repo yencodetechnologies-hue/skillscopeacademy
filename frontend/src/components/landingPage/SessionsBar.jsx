@@ -41,6 +41,15 @@ function SessionsBar() {
     // Don't render bar if no sessions
     if (!loading && sessions.length === 0) return null
 
+    // How many times to repeat the session list so the marquee track is
+    // always wide enough to fill the bar (and then some) — otherwise a
+    // short session list leaves a blank gap on the right once the loop
+    // resets. Each repeat is ~215px/chip, so aim for ~20 chips minimum.
+    const repeatCount = sessions.length > 0
+        ? Math.max(3, Math.ceil(20 / sessions.length))
+        : 3
+    const loopedSessions = Array.from({ length: repeatCount }).flatMap(() => sessions)
+
     return (
         <div className="sb-bar">
             <div className="sb-header">
@@ -49,7 +58,7 @@ function SessionsBar() {
             </div>
 
             <div className="sb-scroll">
-                <div className="sb-marquee">
+                <div className="sb-marquee" style={{ "--sb-repeat": repeatCount }}>
                     {/* Loading skeletons */}
                     {loading && Array.from({ length: 5 }).map((_, i) => (
                         <div key={i} className="sb-chip sb-chip--skeleton">
@@ -62,8 +71,9 @@ function SessionsBar() {
                         </div>
                     ))}
 
-                    {/* Actual sessions duplicated for infinite scroll */}
-                    {!loading && [...sessions, ...sessions, ...sessions].map((s, i) => {
+                    {/* Actual sessions, repeated enough times for a seamless,
+                        gap-free infinite scroll */}
+                    {!loading && loopedSessions.map((s, i) => {
                         return (
                             <div
                                 key={`${s.sessionId || i}-${i}`}

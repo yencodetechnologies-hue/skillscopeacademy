@@ -41,7 +41,7 @@ function EditableLabel({ value, onChange, className = "" }) {
                 onClick={(e) => { e.stopPropagation(); setEditing(true) }}
                 title="Edit label"
             >
-                ✏
+                <i className="fa-regular fa-pen-to-square"></i>
             </button>
         </span>
     )

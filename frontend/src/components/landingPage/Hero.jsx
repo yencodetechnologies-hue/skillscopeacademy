@@ -80,16 +80,19 @@ function Hero() {
   // Courses with an image, used to drive the hero slider card so it shows
   // real course photos + titles fetched from the API.
   const sliderCourses = allCourses.filter(c => c?.image).slice(0, 6)
+  // Total number of "slides" being shown — this drives navigation, not images.length,
+  // since the background image count and the course-card count can differ.
   const slideCount = sliderCourses.length || images.length
-  const slideIndex = sliderCourses.length ? currentIndex % sliderCourses.length : currentIndex
+  const slideIndex = currentIndex
   const activeCourse = sliderCourses[slideIndex]
   const slideInfo = buildSlideInfo(activeCourse)
   const slideImage = activeCourse
     ? cdnImage(activeCourse.image, { w: 700 })
-    : cdnImage(images[currentIndex], { w: 700 })
+    : cdnImage(images[currentIndex % images.length], { w: 700 })
 
   const goToSlide = (targetIndex, immediate = false) => {
-    const total = images.length
+    const total = slideCount
+    if (total === 0) return
     const next = ((targetIndex % total) + total) % total
 
     // Manual navigation (arrow clicks) should feel instant — update the
@@ -118,7 +121,7 @@ function Hero() {
       goToSlide(currentIndexRef.current + 1)
     }, 4000)
     return () => clearInterval(interval)
-  }, [paused, images.length])
+  }, [paused, slideCount])
 
   useEffect(() => {
     if (pubsearch.trim()) {
@@ -136,11 +139,11 @@ function Hero() {
       <div className="hero-bg-wrapper">
         <div
           className="hero-bg-layer"
-          style={{ backgroundImage: `url(${cdnImage(images[currentIndex], { w: 1920 })})` }}
+          style={{ backgroundImage: `url(${cdnImage(images[currentIndex % images.length], { w: 1920 })})` }}
         />
         <div
           className={`hero-next-layer ${animating ? "hero-next-animate" : ""}`}
-          style={{ backgroundImage: `url(${cdnImage(images[nextIndex], { w: 1920 })})` }}
+          style={{ backgroundImage: `url(${cdnImage(images[nextIndex % images.length], { w: 1920 })})` }}
         />
         <div className="hero-overlay"></div>
       </div>

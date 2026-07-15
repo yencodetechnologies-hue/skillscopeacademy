@@ -6,31 +6,32 @@
     background: var(--color-surface);
 }
 
-.ab-cyan { color: var(--color-cyan-accent); }
+.ab-cyan { color: var(--color-brand-primary); }
 .ab-link { color: var(--color-info); text-decoration: none; font-weight: 500; }
 .ab-link:hover { text-decoration: underline; }
 
 /* ── HERO ── */
 .ab-hero {
-    background: linear-gradient(160deg, #0f2060 0%, #1a3a8f 40%, #1e6abf 100%);
+    background: var(--color-navy-deep);
     padding: 80px 24px 90px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    border-bottom: 4px solid var(--color-brand-primary);
 }
 
 .ab-hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 60% 40%, rgba(34,211,238,0.15) 0%, transparent 70%);
+    background: radial-gradient(ellipse at 60% 40%, rgba(245,166,35,0.08) 0%, transparent 70%);
 }
 
 .ab-hero-badge {
     display: inline-block;
-    background: rgba(34,211,238,0.15);
-    border: 1px solid rgba(34,211,238,0.4);
-    color: #67e8f9;
+    background: rgba(245,166,35,0.15);
+    border: 1px solid rgba(245,166,35,0.5);
+    color: var(--color-brand-primary);
     font-size: 13px;
     font-weight: 600;
     padding: 8px 20px;
@@ -58,7 +59,7 @@
 
 /* ── ABOUT SECTION ── */
 .ab-about {
-    background: #eef9ff;
+    background: var(--color-slate-50);
     padding: 72px 24px;
 }
 
@@ -262,7 +263,7 @@
 
 /* ── VISION & MISSION ── */
 .ab-vm {
-    background: #eef9ff;
+    background: var(--color-slate-50);
     padding: 72px 24px;
 }
 
@@ -279,6 +280,8 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
 }
 
 .ab-vm-header {
@@ -288,8 +291,8 @@
     padding: 18px 24px;
 }
 
-.ab-vision-header { background: linear-gradient(90deg, var(--color-cyan-accent), var(--color-brand-primary)); }
-.ab-mission-header { background: linear-gradient(90deg,var(--color-brand-primary), var(--color-info)); }
+.ab-vision-header  { background: #0a1e3f; }
+.ab-mission-header { background: #0a1e3f; }
 
 .ab-vm-icon { font-size: 20px; }
 
@@ -303,6 +306,7 @@
 .ab-vm-body {
     background: var(--color-surface);
     padding: 22px 24px;
+    flex: 1;
 }
 
 .ab-vm-text {
@@ -343,7 +347,7 @@
 .ab-values-badge {
     display: inline-block;
     background: var(--color-cyan-accent);
-    color: var(--color-slate-900);
+    color:  #D4920E;
     font-size: 12px;
     font-weight: 800;
     padding: 8px 20px;
@@ -381,7 +385,7 @@
 }
 
 .ab-value-featured {
-    background: linear-gradient(135deg, var(--color-info),var(--color-brand-primary));
+    background: #0a1e3f;
     color: var(--color-surface);
 }
 
@@ -421,21 +425,22 @@
 
 /* ── CTA ── */
 .ab-cta {
-    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-info) 100%);
+    background: var(--color-navy-deep);
     padding: 80px 24px;
     text-align: center;
+    border-top: 4px solid var(--color-brand-primary);
 }
 
 .ab-cta-title {
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 800;
-    color: var(--color-surface);
+    color: var(--color-brand-primary);
     margin: 0 0 14px;
 }
 
 .ab-cta-sub {
     font-size: 16px;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.75);
     margin: 0 auto 32px;
     max-width: 540px;
     line-height: 1.6;
@@ -463,14 +468,14 @@
 }
 
 .ab-cta-white {
-    background: var(--color-surface);
-    color: var(--color-slate-900);
+    background: var(--color-brand-primary);
+    color: var(--color-navy-deep);
 }
 
 .ab-cta-outline {
     background: transparent;
     color: var(--color-surface);
-    border: 2px solid rgba(255,255,255,0.7);
+    border: 2px solid rgba(255,255,255,0.5);
 }
 
 /* ── RESPONSIVE ── */

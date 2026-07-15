@@ -17,7 +17,7 @@
 }
 
 .login-link {
-  color: var(--color-surface);
+  color: var(--color-brand-on-primary);
   text-decoration: none;
 }
 

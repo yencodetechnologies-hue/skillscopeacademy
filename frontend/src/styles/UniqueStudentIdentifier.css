@@ -1,15 +1,17 @@
 /* ── USI Page Styles ──────────────────────────────────────────── */
 
 .usi-banner {
-  background: linear-gradient(135deg, #003d82 0%, #005cbf 100%);
+  background: var(--color-navy-deep);
   color: var(--color-surface);
   text-align: center;
   padding: 52px 24px;
+  border-bottom: 4px solid var(--color-brand-primary);
 }
 .usi-banner h1 {
   font-size: 34px;
   font-weight: 800;
   margin-bottom: 10px;
+  color: var(--color-brand-primary);
 }
 .usi-banner p {
   font-size: 16px;
@@ -34,13 +36,13 @@
 .usi-left h2 {
   font-size: 26px;
   font-weight: 800;
-  color: #003d82;
+  color: var(--color-navy-deep);
   margin-bottom: 22px;
 }
 .usi-left h3 {
   font-size: 22px;
   font-weight: 800;
-  color: #003d82;
+  color: var(--color-navy-deep);
   margin: 28px 0 14px;
 }
 .usi-left p {
@@ -53,28 +55,28 @@
 /* 4-icon row */
 .usi-icon-row {
   display: flex;
-  align-items: flex-start;
-  gap: 0;
+  align-items: center;
+  gap: 4px;
   margin-bottom: 28px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .usi-icon-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  flex: 1;
 }
 .usi-icon-wrap {
   position: relative;
   width: 64px;
   height: 64px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .usi-icon-circle {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: var(--color-brand-accent);
+  background: var(--color-navy-deep);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,15 +92,15 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--color-surface);
-  color: var(--color-brand-accent);
+  background: var(--color-brand-primary);
+  color: var(--color-navy-deep);
   font-size: 11px;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
-  border: 1.5px solid var(--color-brand-accent);
+  border: 1.5px solid var(--color-navy-deep);
 }
 .usi-icon-label {
   font-size: 11px;
@@ -109,10 +111,10 @@
 }
 .usi-icon-arrow {
   font-size: 26px;
-  color: var(--color-brand-accent);
-  align-self: flex-start;
-  margin-top: 16px;
-  padding: 0 4px;
+  color: var(--color-brand-primary);
+  flex-shrink: 0;
+  margin-bottom: 20px; /* align with icon center */
+  padding: 0 2px;
 }
 
 /* Check list */
@@ -145,7 +147,7 @@
 .usi-more-info h3 {
   font-size: 22px;
   font-weight: 800;
-  color: #003d82;
+  color: var(--color-navy-deep);
   margin-bottom: 12px;
 }
 .usi-more-info p {
@@ -179,18 +181,18 @@
   padding: 16px 20px;
   cursor: pointer;
   user-select: none;
-  color: #003d82;
+  color: var(--color-navy-deep);
   font-weight: 700;
   font-size: 16px;
   background: var(--color-surface);
   transition: background 0.15s;
 }
 .usi-step-card.open .usi-step-header {
-  background: var(--color-brand-accent);
-  color: var(--color-surface);
+  background: var(--color-brand-primary);
+  color: var(--color-navy-deep);
 }
 .usi-step-card.open .usi-step-header .usi-step-toggle {
-  color: var(--color-surface);
+  color: var(--color-navy-deep);
 }
 .usi-step-toggle {
   color: var(--color-text-dim);

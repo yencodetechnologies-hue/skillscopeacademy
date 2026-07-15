@@ -44,22 +44,13 @@
   position: relative;
 }
 
-.sb-marquee {
-  --sb-repeat: 3;
+/* JS-driven track — no CSS animation, moved by requestAnimationFrame */
+.sb-track {
   display: flex;
   gap: 15px;
-  animation: sb-marquee-scroll 5s linear infinite;
   white-space: nowrap;
-  width: max-content;
-}
-
-.sb-marquee:hover {
-  animation-play-state: paused;
-}
-
-@keyframes sb-marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-100% / var(--sb-repeat))); }
+  will-change: transform;
+  /* No animation property — controlled entirely by JS */
 }
 
 /* CHIP */

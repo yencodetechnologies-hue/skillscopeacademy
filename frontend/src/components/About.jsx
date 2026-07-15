@@ -19,13 +19,13 @@ const COURSES_LIST = [
 ]
 
 const WHY_ITEMS = [
-    { color: colors.brandAccent, icon: "✦", text: <><strong className="ab-cyan">SafeTricks training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
-    { color: colors.info, icon: "🎖", text: <>Our trainers have been in the industry for several years, and they are committed, experienced, and extremely qualified in the specific area in which they choose to train and assess.</> },
-    { color: "#22c55e", icon: "🛡", text: <><strong>The safety of every student is so important to us</strong> that why we make it our priority. We are located in a well-organized area. We set ourselves apart by ensuring that our students are fully trained.</> },
-    { color: colors.brandPrimary, icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
-    { color: "#f97316", icon: "📊", text: <>Our equipment for each course is very standard, contributing to the training to be more understandable by every one of our students.</> },
-    { color: colors.brandAccent, icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At SafeTricks, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
-    { color: colors.info, icon: "📍", text: <>Our training location has easy access to public transport without too much stress. And lastly, you can choose to train in your home place and at a convenient time.</> },
+    { color: "#0d2240", icon: "✦", text: <><strong className="ab-cyan">SafeTricks training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
+    { color: "#F5A623", icon: "🎖", text: <>Our trainers have been in the industry for several years, and they are committed, experienced, and extremely qualified in the specific area in which they choose to train and assess.</> },
+    { color: "#0d2240", icon: "🛡", text: <><strong>The safety of every student is so important to us</strong> that why we make it our priority. We are located in a well-organized area. We set ourselves apart by ensuring that our students are fully trained.</> },
+    { color: "#F5A623", icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
+    { color: "#0d2240", icon: "📊", text: <>Our equipment for each course is very standard, contributing to the training to be more understandable by every one of our students.</> },
+    { color: "#F5A623", icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At SafeTricks, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
+    { color: "#0d2240", icon: "📍", text: <>Our training location has easy access to public transport without too much stress. And lastly, you can choose to train in your home place and at a convenient time.</> },
 ]
 
 const MISSION_ITEMS = [
@@ -37,11 +37,11 @@ const MISSION_ITEMS = [
 ]
 
 const VALUES = [
-    { icon: "✦", bg: colors.brandAccent, title: "Easy Accessibility", text: "Our training services are readily accessible to everyone who needs them." },
-    { icon: "🎯", bg: `linear-gradient(135deg,${colors.info},${colors.brandPrimary})`, title: "Striving for Excellence", text: "We continually aim for the highest qualities in everything we do.", featured: true },
-    { icon: "🎖", bg: colors.brandAccent, title: "Highest Quality", text: "An assurance that a person received quality training from us without negative feedback." },
-    { icon: "👥", bg: `linear-gradient(135deg,${colors.brandPrimary},#ec4899)`, title: "Inclusive", text: "We reflect clients views in our actions and critical thinking to serve betters" },
-    { icon: "🛡", bg: "#22c55e", title: "Trustworthy", text: "We are open, honest, and committed to the highest standards of ethical behaviour" },
+    { icon: "✦", bg: "#0d2240", title: "Easy Accessibility", text: "Our training services are readily accessible to everyone who needs them." },
+    { icon: "🎯", bg: `linear-gradient(135deg,#0d2240,#F5A623)`, title: "Striving for Excellence", text: "We continually aim for the highest qualities in everything we do.", featured: true },
+    { icon: "🎖", bg: "#0d2240", title: "Highest Quality", text: "An assurance that a person received quality training from us without negative feedback." },
+    { icon: "👥", bg: "#F5A623", title: "Inclusive", text: "We reflect clients views in our actions and critical thinking to serve betters" },
+    { icon: "🛡", bg: "#0d2240", title: "Trustworthy", text: "We are open, honest, and committed to the highest standards of ethical behaviour" },
 ]
 
 function AboutPage() {

@@ -25,24 +25,25 @@
 /* TAB NAV — every tab is the exact same height/width per row, labels wrap
    instead of overflowing, and the row always fills the full bar width */
 .cs-tab-nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   background: var(--color-navy-deep);
   border-radius: 14px 14px 0 0;
-  flex-wrap: wrap;
   overflow: hidden;
 }
 .cs-tab-btn {
   box-sizing: border-box;
-  flex: 1 1 170px;
+  width: 100%;
   white-space: normal;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 7px;
-  padding: 13px 14px;
+  padding: 13px 12px;
   border: none;
   border-right: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   background: transparent;
   font-size: 12px;
   font-weight: 600;
@@ -50,16 +51,18 @@
   cursor: pointer;
   transition: all 0.18s;
   font-family: 'Inter', sans-serif;
-  min-width: 170px;
   min-height: 46px;
   overflow: hidden;
 }
+/* Last in each row — no right border */
+.cs-tab-btn:nth-child(5n) { border-right: none; }
+/* Last row — no bottom border */
+.cs-tab-btn:nth-last-child(-n+5) { border-bottom: none; }
 .cs-tab-label {
   white-space: normal;
   word-break: break-word;
   line-height: 1.25;
 }
-.cs-tab-btn:last-child { border-right: none; }
 .cs-tab-btn:hover {
   color: rgba(255,255,255,0.85);
   background: rgba(255,255,255,0.06);

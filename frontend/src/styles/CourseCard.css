@@ -41,7 +41,7 @@
 .course-body { padding:12px; display:flex; flex-direction:column; gap:7px; flex:1; }
 .course-exp-prices { display:flex; align-items:baseline; gap:7px; flex-wrap:wrap; }
 .course-price-main { font-size:22px; font-weight:800; color:var(--color-navy-deep); line-height:1; }
-.course-price-old  { font-size:14px; color:var(--color-text-subtle); text-decoration:line-through; }
+.course-price-old  { font-size:14px;font-weight: 570; font-style: bold;color:rgb(245, 163, 47); text-decoration:line-through; }
 .course-save-badge { background:var(--color-success-bg); color:var(--color-success); font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; }
 
 .course-title {
@@ -51,7 +51,7 @@
 .course-title:hover { color: var(--color-brand-primary); }
 
 .course-info-row { display:flex; gap:10px; flex-wrap:wrap; padding:6px 0; border-top:1px solid #eef6fc; }
-.course-info-item { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--color-link-muted); }
+.course-info-item { display:flex; align-items:center; gap:5px; font-size:12px; color:black; }
 .course-info-item i { color:var(--color-brand-primary); font-size:11px; }
 
 /* ===== CARD DISPLAY OPTIONS ===== */
@@ -73,7 +73,7 @@
 .cc-card-opt-box--voc:hover { border-color:var(--color-brand-primary); background:#cffafe; }
 .cc-card-opt-box--voc .cc-cob-label { color:#0e7490; }
 
-.cc-cob-label { font-size:9px; font-weight:700; color:var(--color-navy-deep); line-height:1.2; }
+.cc-cob-label { font-size:13px; font-weight:700; color:var(--color-navy-deep); line-height:1.2; }
 .cc-cob-price { font-size:14px; font-weight:800; color:var(--color-brand-primary); line-height:1.1; margin-top:2px; }
 .cc-cob-dur   { font-size:9px; color:var(--color-text-subtle); margin-top:1px; }
 .cc-cob-was   { font-size:9px; color:var(--color-text-subtle); text-decoration:line-through; margin-top:1px; }

@@ -52,9 +52,7 @@ function CourseCard({ course, fromPortal }) {
                         <div className="course-thumb-placeholder">📋</div>
                     )}
                     <div className="course-thumb-overlay">View Details</div>
-                    {course.duration && (
-                        <span className="course-dur-badge">{course.duration}</span>
-                    )}
+              
                     <span className="course-cat-badge">{course.category}</span>
                 </div>
 
@@ -86,7 +84,7 @@ function CourseCard({ course, fromPortal }) {
                     <div className="course-info-row">
                         <span className="course-info-item">
                             <i className="fa-regular fa-calendar-days" />
-                            {course.duration}
+                            {/* {course.duration}/ */}
                         </span>
                         <span className="course-info-item">
                             <i className="fa-solid fa-location-dot" />
@@ -114,10 +112,8 @@ function CourseCard({ course, fromPortal }) {
                                 >
                                     <div className="cc-cob-label">{opt.label}</div>
                                     <div className="cc-cob-price">${opt.price}</div>
-                                    <div className="cc-cob-dur">{opt.dur}</div>
-                                    {opt.originalPrice && opt.originalPrice > opt.price && (
-                                        <div className="cc-cob-was">${opt.originalPrice}</div>
-                                    )}
+                                 
+                           
                                 </div>
                             ))}
                         </div>

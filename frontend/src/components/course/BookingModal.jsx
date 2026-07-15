@@ -104,7 +104,7 @@ export function getBookingOptions(course) {
 }
 
 
-export default function BookingModal({ course, onClose, initialSelection = null, extraQueryParams = "" }) {
+export default function     BookingModal({ course, onClose, initialSelection = null, extraQueryParams = "" }) {
     const navigate = useNavigate()
     const options  = getBookingOptions(course)
     const [selected, setSelected] = useState(initialSelection)

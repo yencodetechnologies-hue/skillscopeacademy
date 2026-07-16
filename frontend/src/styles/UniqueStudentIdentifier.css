@@ -55,23 +55,25 @@
 /* 4-icon row */
 .usi-icon-row {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 0;
   margin-bottom: 28px;
-  flex-wrap: nowrap;
 }
+
 .usi-icon-group {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
 }
+
 .usi-icon-wrap {
   position: relative;
   width: 64px;
   height: 64px;
   margin-bottom: 8px;
 }
+
 .usi-icon-circle {
   width: 64px;
   height: 64px;
@@ -85,6 +87,7 @@
   width: 30px;
   height: 30px;
 }
+
 .usi-icon-num {
   position: absolute;
   top: -2px;
@@ -102,6 +105,7 @@
   z-index: 1;
   border: 1.5px solid var(--color-navy-deep);
 }
+
 .usi-icon-label {
   font-size: 11px;
   color: var(--color-text-dim);
@@ -109,12 +113,16 @@
   max-width: 72px;
   line-height: 1.3;
 }
+
+/* Arrow sits between groups, vertically centred with the 64px icons */
 .usi-icon-arrow {
-  font-size: 26px;
+  font-size: 24px;
   color: var(--color-brand-primary);
   flex-shrink: 0;
-  margin-bottom: 20px; /* align with icon center */
-  padding: 0 2px;
+  /* push it down so it lines up with the middle of the 64px circle */
+  margin-top: 20px;
+  align-self: flex-start;
+  padding: 0 4px;
 }
 
 /* Check list */

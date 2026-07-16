@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { colors } from "../constants/theme";
 import PublicNavbar from "../components/PublicNavbar";
 import Footer from "../components/landingPage/Footer";import "../styles/UniqueStudentIdentifier.css";
@@ -167,16 +167,18 @@ export default function UniqueStudentIdentifier() {
                   ),
                 },
               ].map((step, i, arr) => (
-                <div key={step.num} className="usi-icon-group">
-                  <div className="usi-icon-wrap">
-                    <span className="usi-icon-num">{step.num}</span>
-                    <div className="usi-icon-circle">{step.icon}</div>
+                <React.Fragment key={step.num}>
+                  <div className="usi-icon-group">
+                    <div className="usi-icon-wrap">
+                      <span className="usi-icon-num">{step.num}</span>
+                      <div className="usi-icon-circle">{step.icon}</div>
+                    </div>
+                    <span className="usi-icon-label">{step.label}</span>
                   </div>
-                  <span className="usi-icon-label">{step.label}</span>
                   {i < arr.length - 1 && (
                     <span className="usi-icon-arrow">›</span>
                   )}
-                </div>
+                </React.Fragment>
               ))}
             </div>
 

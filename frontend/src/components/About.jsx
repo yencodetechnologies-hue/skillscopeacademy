@@ -37,11 +37,11 @@ const MISSION_ITEMS = [
 ]
 
 const VALUES = [
-    { icon: "✦", bg: "#0d2240", title: "Easy Accessibility", text: "Our training services are readily accessible to everyone who needs them." },
-    { icon: "🎯", bg: `linear-gradient(135deg,#0d2240,#F5A623)`, title: "Striving for Excellence", text: "We continually aim for the highest qualities in everything we do.", featured: true },
-    { icon: "🎖", bg: "#0d2240", title: "Highest Quality", text: "An assurance that a person received quality training from us without negative feedback." },
+    { icon: "✦", bg: "rgb(245, 166, 35)", title: "Easy Accessibility", text: "Our training services are readily accessible to everyone who needs them." },
+    { icon: "🎯", bg: `rgb(245, 166, 35)`, title: "Striving for Excellence", text: "We continually aim for the highest qualities in everything we do.", featured: true },
+    { icon: "🎖", bg: "rgb(245, 166, 35)", title: "Highest Quality", text: "An assurance that a person received quality training from us without negative feedback." },
     { icon: "👥", bg: "#F5A623", title: "Inclusive", text: "We reflect clients views in our actions and critical thinking to serve betters" },
-    { icon: "🛡", bg: "#0d2240", title: "Trustworthy", text: "We are open, honest, and committed to the highest standards of ethical behaviour" },
+    { icon: "🛡", bg: "rgb(245, 166, 35)", title: "Trustworthy", text: "We are open, honest, and committed to the highest standards of ethical behaviour" },
 ]
 
 function AboutPage() {

@@ -6,9 +6,11 @@ const {
   createPaymentToken,
   refundPayment,
   getPaymentDetails,
-  getPaymentHistory
+  getPaymentHistory,
+  getSquareConfig,
 } = require('../controllers/paymentController');
 
+router.get('/square-config', getSquareConfig);
 router.post('/pay', createPayment);
 router.post('/create', createPayment);
 router.post('/create-with-token', createPaymentWithToken);

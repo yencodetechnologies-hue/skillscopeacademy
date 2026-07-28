@@ -24,42 +24,31 @@ const bankSchema = Yup.object({
     paymentSlip: Yup.mixed().required("Payment slip is required"),
 })
 
-function luhnCheck(value) {
-    const digits = value.replace(/\D/g, "")
-    if (digits.length < 13 || digits.length > 19) return false
-    let sum = 0
-    let isEven = false
-    for (let i = digits.length - 1; i >= 0; i--) {
-        let d = parseInt(digits[i], 10)
-        if (isEven) { d *= 2; if (d > 9) d -= 9 }
-        sum += d
-        isEven = !isEven
-    }
-    return sum % 10 === 0
+const SQUARE_SCRIPT = {
+    sandbox: "https://sandbox.web.squarecdn.com/v1/square.js",
+    production: "https://web.squarecdn.com/v1/square.js",
 }
 
-const cardSchema = Yup.object({
-    cardName: Yup.string().trim().required("Name on card is required"),
-    cardNumber: Yup.string()
-        .trim()
-        .required("Card number is required")
-        .test("card-length", "Card number must be 13–19 digits", v => !!v && /^\d[\d\s]{11,17}\d$/.test(v.trim()))
-        .test("luhn", "Invalid card number", v => !!v && luhnCheck(v)),
-    expiryMonth: Yup.string().required("Expiry month is required"),
-    expiryYear: Yup.string()
-        .required("Expiry year is required")
-        .test("not-expired", "Card has expired", function (year) {
-            const { expiryMonth } = this.parent
-            if (!year || !expiryMonth) return true
-            const now = new Date()
-            const exp = new Date(Number(year), Number(expiryMonth) - 1, 1)
-            return exp >= new Date(now.getFullYear(), now.getMonth(), 1)
-        }),
-    cvv: Yup.string()
-        .trim()
-        .required("CVV is required")
-        .matches(/^\d{3,4}$/, "CVV must be 3 or 4 digits"),
-})
+function loadSquareSdk(environment = "sandbox") {
+    if (window.Square) return Promise.resolve(window.Square)
+    const src = SQUARE_SCRIPT[environment] || SQUARE_SCRIPT.sandbox
+    const existing = document.querySelector(`script[src="${src}"]`)
+    if (existing) {
+        return new Promise((resolve, reject) => {
+            if (window.Square) return resolve(window.Square)
+            existing.addEventListener("load", () => resolve(window.Square))
+            existing.addEventListener("error", () => reject(new Error("Failed to load Square")))
+        })
+    }
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script")
+        script.src = src
+        script.async = true
+        script.onload = () => resolve(window.Square)
+        script.onerror = () => reject(new Error("Failed to load Square payments"))
+        document.head.appendChild(script)
+    })
+}
 
 async function runSchema(schema, values) {
     try {
@@ -113,18 +102,21 @@ function Payment({
     const [paymentSlip, setPaymentSlip] = useState(null)
     const [fileSizeError, setFileSizeError] = useState("") // ✅ NEW
     const [cardName, setCardName] = useState("")
-    const [cardNumber, setCardNumber] = useState("")
-    const [expiryMonth, setExpiryMonth] = useState("")
-    const [expiryYear, setExpiryYear] = useState("")
-    const [cvv, setCvv] = useState("")
     const [errors, setErrors] = useState({})
     const [paymentStatus, setPaymentStatus] = useState(null)
     const [paymentError, setPaymentError] = useState("")
     const [ewayTransactionId, setEwayTransactionId] = useState("")
+    const [squareReady, setSquareReady] = useState(false)
+    const [squareLoading, setSquareLoading] = useState(false)
+    const [squareError, setSquareError] = useState("")
+    const [squareCurrency, setSquareCurrency] = useState("AUD")
 
     // ✅ File input ref
     const fileInputRef = useRef(null)
     const didShowTriggeredErrors = useRef(false)
+    const cardContainerRef = useRef(null)
+    const squareCardRef = useRef(null)
+    const squarePaymentsRef = useRef(null)
 
     const clearFieldError = (field) => {
         setErrors(prev => {
@@ -236,19 +228,19 @@ function Payment({
             contactPerson,
             paymentMethod,
             transactionId, paymentSlip,
-            cardName, cardNumber,
-            expiryMonth, expiryYear, cvv,
-            ewayTransactionId
+            cardName,
+            ewayTransactionId,
+            paymentConfirmed: paymentStatus === "success",
         }
         setPaymentData(fullData)
-    }, [name, email, phone, agreed, contactPerson, paymentMethod, transactionId, paymentSlip, cardName, cardNumber, expiryMonth, expiryYear, cvv, ewayTransactionId])
+    }, [name, email, phone, agreed, contactPerson, paymentMethod, transactionId, paymentSlip, cardName, ewayTransactionId, paymentStatus])
 
     const getFullErrors = async (overrideValues = {}) => {
         const vals = {
             name, phone, email, agreed,
             contactPerson,
             transactionId, paymentSlip,
-            cardName, cardNumber, expiryMonth, expiryYear, cvv,
+            cardName,
             ...overrideValues,
         }
         const schema = isCompanyRegister ? personalCompanySchema : personalSchema
@@ -265,15 +257,13 @@ function Payment({
                     paymentSlip: vals.paymentSlip,
                 })
             } else if (paymentMethod === "Card Payment") {
-                methodErrors = await runSchema(cardSchema, {
-                    cardName: vals.cardName,
-                    cardNumber: vals.cardNumber,
-                    expiryMonth: vals.expiryMonth,
-                    expiryYear: vals.expiryYear,
-                    cvv: vals.cvv,
-                })
+                if (!String(vals.cardName || "").trim()) {
+                    methodErrors.cardName = "Name on card is required"
+                }
+                if (!squareReady) {
+                    methodErrors.squareCard = "Secure card form is still loading. Please wait."
+                }
             } else if (paymentMethod === "Pay Later") {
-                // Pay Later has no specific validation requirements
                 methodErrors = {}
             }
         }
@@ -309,7 +299,121 @@ function Payment({
                 }
             }
         })
-    }, [name, phone, email, agreed, contactPerson, transactionId, paymentSlip, cardName, cardNumber, expiryMonth, expiryYear, cvv, paymentMethod, triggerValidation, blockPaymentForExistingEmail, fileSizeError])
+    }, [name, phone, email, agreed, contactPerson, transactionId, paymentSlip, cardName, paymentMethod, triggerValidation, blockPaymentForExistingEmail, fileSizeError, squareReady])
+
+    // ── Square Web Payments card form ─────────────────────────────
+    useEffect(() => {
+        let cancelled = false
+
+        const destroyCard = async () => {
+            if (squareCardRef.current) {
+                try { await squareCardRef.current.destroy() } catch (_) { /* noop */ }
+                squareCardRef.current = null
+            }
+            squarePaymentsRef.current = null
+            setSquareReady(false)
+        }
+
+        const initSquare = async () => {
+            if (paymentMethod !== "Card Payment" || blockPaymentForExistingEmail || isCompanyEnroll || isEnrollmentLink) {
+                await destroyCard()
+                return
+            }
+
+            setSquareLoading(true)
+            setSquareError("")
+            setSquareReady(false)
+
+            // Wait for the card host to mount after React paint
+            for (let i = 0; i < 20 && !cardContainerRef.current && !cancelled; i++) {
+                await new Promise((r) => setTimeout(r, 50))
+            }
+            if (cancelled || !cardContainerRef.current) {
+                if (!cancelled) {
+                    setSquareError("Card form container unavailable. Please switch payment method and try again.")
+                    setSquareLoading(false)
+                }
+                return
+            }
+
+            try {
+                const configRes = await fetch(`${API_URL}/api/payment/square-config`)
+                const raw = await configRes.text()
+                let config
+                try {
+                    config = JSON.parse(raw)
+                } catch {
+                    throw new Error(
+                        configRes.status === 404
+                            ? "Square payment route not found. Restart the backend server (npm start in /backend) and try again."
+                            : `Payment config failed (${configRes.status}). Expected JSON from ${API_URL}/api/payment/square-config but got HTML/text. Is the backend running?`
+                    )
+                }
+                if (!configRes.ok || !config.success) {
+                    throw new Error(config.message || "Unable to load payment form")
+                }
+
+                if (cancelled) return
+
+                setSquareCurrency(config.currency || "AUD")
+                const Square = await loadSquareSdk(config.environment || "sandbox")
+                if (!Square) throw new Error("Square SDK unavailable")
+
+                await destroyCard()
+                if (cancelled || !cardContainerRef.current) return
+
+                // Clear host before attach (Square requires empty container)
+                cardContainerRef.current.innerHTML = ""
+
+                const payments = Square.payments(config.applicationId, config.locationId)
+                squarePaymentsRef.current = payments
+
+                const card = await payments.card({
+                    style: {
+                        input: {
+                            fontSize: "15px",
+                            fontFamily: "inherit",
+                            color: "#111827",
+                        },
+                        "input::placeholder": {
+                            color: "#94a3b8",
+                        },
+                        ".input-container": {
+                            borderColor: "#e5e7eb",
+                            borderRadius: "10px",
+                        },
+                        ".input-container.is-focus": {
+                            borderColor: "#00796B",
+                        },
+                        ".input-container.is-error": {
+                            borderColor: "#dc2626",
+                        },
+                    },
+                })
+                await card.attach(cardContainerRef.current)
+                if (cancelled) {
+                    await card.destroy()
+                    return
+                }
+                squareCardRef.current = card
+                setSquareReady(true)
+            } catch (err) {
+                console.error("Square init failed:", err)
+                if (!cancelled) {
+                    setSquareError(err.message || "Could not load secure card form")
+                    setSquareReady(false)
+                }
+            } finally {
+                if (!cancelled) setSquareLoading(false)
+            }
+        }
+
+        initSquare()
+        return () => {
+            cancelled = true
+            destroyCard()
+        }
+    }, [paymentMethod, blockPaymentForExistingEmail, isCompanyEnroll, isEnrollmentLink])
 
     const handleBlur = async (field, overrideValues = {}) => {
         const allErrors = await getFullErrors(overrideValues)
@@ -338,16 +442,40 @@ function Payment({
             setErrors(newErrors)
             return { success: false, message: "Validation failed" }
         }
+        if (!squareCardRef.current) {
+            setPaymentStatus("error")
+            setPaymentError("Secure card form is not ready. Please wait a moment and try again.")
+            return { success: false, message: "Square card not ready" }
+        }
+
         setPaymentStatus("loading")
         setPaymentError("")
         try {
+            const tokenResult = await squareCardRef.current.tokenize()
+            if (tokenResult.status !== "OK" || !tokenResult.token) {
+                const detail = tokenResult.errors?.[0]?.message
+                    || "Please check your card details and try again."
+                setPaymentStatus("error")
+                setPaymentError(detail)
+                return { success: false, message: detail }
+            }
+
             const amount = Number(coursePrice) || Number(selectedCourse?.sellingPrice) || 0
             const response = await fetch(`${API_URL}/api/payment/pay`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    cardName, cardNumber, expiryMonth, expiryYear, cvv,
-                    amount, email, name, phone, userId: phone,
+                    sourceId: tokenResult.token,
+                    amount,
+                    currency: squareCurrency,
+                    email,
+                    name,
+                    phone,
+                    userId: phone || email,
+                    courseName: selectedCourse?.title || "",
+                    description: selectedCourse
+                        ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
+                        : "Course enrollment",
                 }),
             })
             const result = await response.json()
@@ -381,7 +509,7 @@ function Payment({
                 paymentStatus
             })
         }
-    }, [paymentMethod, paymentStatus, name, phone, email, agreed, cardName, cardNumber, expiryMonth, expiryYear, cvv])
+    }, [paymentMethod, paymentStatus, name, phone, email, agreed, cardName, squareReady])
 
     // ── Remove slip ───────────────────────────────────────────────
     const removeSlip = () => {
@@ -595,9 +723,10 @@ function Payment({
                     >
                         <input type="radio" checked={paymentMethod === "Card Payment"} readOnly />
                         <div>
-                            <strong>Credit Card - Pay Now</strong>
-                            <p>Pay securely with your card online</p>
+                            <strong>Credit Card — Pay Now</strong>
+                            <p>Secure checkout powered by Square</p>
                         </div>
+                        <span className="method-badge">Instant</span>
                     </div>
                     
                     {/* Standalone Pay Later option - only if enabled */}
@@ -722,15 +851,29 @@ function Payment({
                 </div>
             )}
 
-            {/* Card Payment */}
+            {/* Card Payment — Square Web Payments */}
             {!blockPaymentForExistingEmail && !isCompanyEnroll && !isEnrollmentLink && paymentMethod === "Card Payment" && (
-                <form className="card-payment" onSubmit={(e) => e.preventDefault()}>
+                <form className="card-payment square-card-panel" onSubmit={(e) => e.preventDefault()}>
                     <div className="secure-box">
                         <div className="secure-left">
-                            🔒 <strong>Secure Payment</strong>
-                            <p>Your card details are encrypted and secure</p>
+                            <span className="secure-icon" aria-hidden="true">🔒</span>
+                            <div>
+                                <strong>Secure Square Checkout</strong>
+                                <p>Card details stay with Square — never stored on our servers</p>
+                            </div>
                         </div>
-                        <div className="pci">🛡 PCI Compliant</div>
+                        <div className="pci">PCI DSS · Sandbox</div>
+                    </div>
+
+                    <div className="square-amount-chip">
+                        <span>Amount due</span>
+                        <strong>
+                            {squareCurrency}{" "}
+                            {Number(coursePrice || selectedCourse?.sellingPrice || 0).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            })}
+                        </strong>
                     </div>
 
                     <div className="form-group">
@@ -739,79 +882,46 @@ function Payment({
                             type="text"
                             placeholder="JOHN SMITH"
                             value={cardName}
-                            onChange={(e) => setCardName(e.target.value)}
+                            onChange={(e) => {
+                                setCardName(e.target.value)
+                                clearFieldError("cardName")
+                            }}
                             onBlur={() => handleBlur("cardName")}
                             className={errors.cardName ? "input-error" : ""}
+                            autoComplete="cc-name"
                         />
                         {errors.cardName && <span className="error-text">⚠ {errors.cardName}</span>}
                     </div>
 
                     <div className="form-group">
-                        <label>Card Number *</label>
-                        <input
-                            type="text"
-                            placeholder="4111 1111 1111 1111"
-                            value={cardNumber}
-                            onChange={(e) => setCardNumber(e.target.value)}
-                            onBlur={() => handleBlur("cardNumber")}
-                            className={errors.cardNumber ? "input-error" : ""}
+                        <label>Card Details *</label>
+                        <div
+                            id="square-card-container"
+                            ref={cardContainerRef}
+                            className={`square-card-host ${errors.squareCard || squareError ? "is-error" : ""} ${squareReady ? "is-ready" : ""}`}
                         />
-                        {errors.cardNumber && <span className="error-text">⚠ {errors.cardNumber}</span>}
-                    </div>
-
-                    <div className="card-row">
-                        <div className="form-group">
-                            <label>Expiry Month *</label>
-                            <select
-                                value={expiryMonth}
-                                onChange={(e) => setExpiryMonth(e.target.value)}
-                                onBlur={() => handleBlur("expiryMonth")}
-                                className={errors.expiryMonth ? "input-error" : ""}
-                            >
-                                <option value="">MM</option>
-                                {["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"].map(m => (
-                                    <option key={m} value={m}>{m}</option>
-                                ))}
-                            </select>
-                            {errors.expiryMonth && <span className="error-text">⚠ {errors.expiryMonth}</span>}
-                        </div>
-
-                        <div className="form-group">
-                            <label>Expiry Year *</label>
-                            <select
-                                value={expiryYear}
-                                onChange={(e) => setExpiryYear(e.target.value)}
-                                onBlur={() => handleBlur("expiryYear")}
-                                className={errors.expiryYear ? "input-error" : ""}
-                            >
-                                <option value="">YY</option>
-                                {Array.from({ length: 12 }, (_, i) => String(new Date().getFullYear() + i)).map(y => (
-                                    <option key={y} value={y}>{y}</option>
-                                ))}
-                            </select>
-                            {errors.expiryYear && <span className="error-text">⚠ {errors.expiryYear}</span>}
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label>CVV *</label>
-                        <input
-                            type="password"
-                            placeholder="???"
-                            value={cvv}
-                            onChange={(e) => setCvv(e.target.value)}
-                            onBlur={() => handleBlur("cvv")}
-                            className={errors.cvv ? "input-error" : ""}
-                            autoComplete="cc-csc"
-                        />
-                        {errors.cvv && <span className="error-text">⚠ {errors.cvv}</span>}
+                        {squareLoading && (
+                            <span className="checking-text">Loading secure card form…</span>
+                        )}
+                        {squareError && <span className="error-text">⚠ {squareError}</span>}
+                        {errors.squareCard && !squareError && (
+                            <span className="error-text">⚠ {errors.squareCard}</span>
+                        )}
+                        {squareReady && !squareError && (
+                            <span className="square-ready-hint">✓ Ready — enter your card details above</span>
+                        )}
                     </div>
 
                     <div className="card-logos">
-                        <span>We accept:</span>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="visa" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="master" />
+                        <span>We accept</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" />
                     </div>
+
+                    <p className="square-test-hint">
+                        Sandbox test card: <code>4111 1111 1111 1111</code> · any future expiry · any CVV
+                    </p>
 
                     {paymentStatus === "success" && (
                         <div className="payment-success">

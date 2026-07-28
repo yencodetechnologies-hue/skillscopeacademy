@@ -89,17 +89,38 @@ gap:10px;
 align-items:flex-start;
 margin-top:10px;
 cursor:pointer;
+position:relative;
+transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.method-card:hover{
+border-color: var(--color-brand-accent);
+box-shadow: 0 4px 14px rgba(0, 121, 107, 0.08);
 }
 
 .method-card.active{
-border-color:var(--color-brand-primary);
-background:#f3f0ff;
+border-color:var(--color-brand-accent);
+background: linear-gradient(135deg, #E0F2F1 0%, #FFF8E7 100%);
+box-shadow: 0 6px 18px rgba(0, 121, 107, 0.12);
 }
 
 .method-card p{
 font-size:13px;
 color:var(--color-text-muted);
 margin:0;
+}
+
+.method-badge{
+margin-left:auto;
+align-self:center;
+font-size:11px;
+font-weight:700;
+letter-spacing:0.04em;
+text-transform:uppercase;
+color:#0a1d33;
+background: linear-gradient(90deg, #F5A623, #ffc857);
+padding:4px 10px;
+border-radius:999px;
 }
 
 .bank-details{
@@ -154,25 +175,117 @@ border-radius:8px;
 margin-bottom:20px;
 }
 
+.square-card-panel{
+border:1px solid #b2dfdb;
+background:
+  radial-gradient(120% 80% at 100% 0%, rgba(245, 166, 35, 0.12), transparent 55%),
+  linear-gradient(180deg, #ffffff 0%, #f7fbfb 100%);
+box-shadow: 0 10px 28px rgba(10, 29, 51, 0.06);
+padding:22px;
+border-radius:14px;
+}
+
 .secure-box{
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#e0f2fe;
-padding:12px;
-border-radius:6px;
+background: linear-gradient(90deg, #E0F2F1, #FFF4D6);
+padding:14px 16px;
+border-radius:12px;
 margin-bottom:16px;
+border:1px solid rgba(0, 121, 107, 0.15);
+gap:12px;
+}
+
+.secure-left{
+display:flex;
+align-items:flex-start;
+gap:10px;
+}
+
+.secure-icon{
+font-size:18px;
+line-height:1.2;
 }
 
 .secure-left p{
 font-size:13px;
 color:var(--color-info);
-margin:0;
+margin:4px 0 0;
 }
 
 .pci{
+font-size:12px;
+font-weight:700;
+color:#00695C;
+background:rgba(255,255,255,0.75);
+padding:6px 10px;
+border-radius:999px;
+white-space:nowrap;
+}
+
+.square-amount-chip{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 14px;
+margin-bottom:16px;
+border-radius:12px;
+background:#0a1d33;
+color:#fff;
+}
+
+.square-amount-chip span{
 font-size:13px;
-color:var(--color-success);
+opacity:0.8;
+}
+
+.square-amount-chip strong{
+font-size:18px;
+letter-spacing:0.02em;
+color:#F5A623;
+}
+
+.square-card-host{
+min-height:56px;
+padding:4px 2px;
+border-radius:12px;
+transition: box-shadow 0.2s ease;
+}
+
+.square-card-host.is-ready{
+box-shadow: 0 0 0 1px rgba(0, 121, 107, 0.12);
+}
+
+.square-card-host.is-error{
+box-shadow: 0 0 0 1px #dc2626;
+}
+
+.square-ready-hint{
+display:block;
+margin-top:8px;
+font-size:12px;
+color:#15803d;
+font-weight:500;
+}
+
+.square-test-hint{
+margin:12px 0 0;
+font-size:12px;
+color:#64748b;
+background:#f8fafc;
+border:1px dashed #cbd5e1;
+border-radius:8px;
+padding:10px 12px;
+}
+
+.square-test-hint code{
+font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+color:#0a1d33;
+background:#fff;
+padding:2px 6px;
+border-radius:4px;
+border:1px solid #e2e8f0;
 }
 
 .card-row{
@@ -185,11 +298,18 @@ gap:12px;
 display:flex;
 align-items:center;
 gap:10px;
-margin-top:10px;
+margin-top:14px;
+flex-wrap:wrap;
+}
+
+.card-logos span{
+font-size:12px;
+color:var(--color-text-muted);
 }
 
 .card-logos img{
-height:24px;
+height:22px;
+object-fit:contain;
 }
 
 .pay-now-btn {

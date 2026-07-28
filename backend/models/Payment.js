@@ -25,7 +25,7 @@ const paymentSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    default: 'eway'
+    default: 'square'
   },
   gatewayTransactionId: String,
   gatewayResponse: Object,

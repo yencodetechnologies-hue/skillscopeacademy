@@ -1,373 +1,313 @@
 const axios = require('axios');
+const crypto = require('crypto');
 const Payment = require('../models/Payment');
 
-const EWAY_ENV = (process.env.EWAY_ENVIRONMENT || 'Sandbox').trim();
-const IS_PRODUCTION = EWAY_ENV.toLowerCase() === 'production';
+const SQUARE_ENV = (process.env.SQUARE_ENVIRONMENT || 'sandbox').trim().toLowerCase();
+const IS_PRODUCTION = SQUARE_ENV === 'production';
 
-const EWAY_BASE_URL = IS_PRODUCTION
-  ? 'https://api.ewaypayments.com'
-  : 'https://api.sandbox.ewaypayments.com';
+const SQUARE_BASE_URL = IS_PRODUCTION
+  ? 'https://connect.squareup.com'
+  : 'https://connect.squareupsandbox.com';
 
-console.log(`[eWAY] Initialize: Environment=${EWAY_ENV}, URL=${EWAY_BASE_URL}`);
+const SQUARE_VERSION = '2024-12-18';
 
-function getEwayAuthHeader() {
-  const apiKey = (process.env.EWAY_API_KEY || '').trim();
-  const apiPassword = (process.env.EWAY_API_PASSWORD || '').trim();
-  
-  if (!apiKey || !apiPassword) {
-    console.error('CRITICAL: eWAY API credentials missing in environment variables');
-  } else {
-    console.log(`[eWAY] Credentials loaded: Key(${apiKey.length} chars, starts with ${apiKey.slice(0, 5)}...), Pass(${apiPassword.length} chars)`);
+let cachedLocationId = (process.env.SQUARE_LOCATION_ID || '').trim() || null;
+let cachedCurrency = (process.env.SQUARE_CURRENCY || '').trim() || null;
+
+console.log(`[Square] Initialize: Environment=${SQUARE_ENV}, URL=${SQUARE_BASE_URL}`);
+
+function getAccessToken() {
+  const token = (process.env.SQUARE_ACCESS_TOKEN || '').trim();
+  if (!token) {
+    console.error('CRITICAL: SQUARE_ACCESS_TOKEN missing in environment variables');
   }
-
-  const credentials = Buffer.from(`${apiKey}:${apiPassword}`).toString('base64');
-  return `Basic ${credentials}`;
+  return token;
 }
 
-async function callEwayTransaction(requestData) {
+function squareHeaders() {
+  return {
+    Authorization: `Bearer ${getAccessToken()}`,
+    'Square-Version': SQUARE_VERSION,
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  };
+}
+
+function translateSquareErrors(errors) {
+  if (!errors || !errors.length) return 'Payment processing error';
+
+  const map = {
+    CARD_DECLINED: 'Your card was declined. Please try a different card or contact your bank.',
+    CVV_FAILURE: 'Incorrect CVV. Please check the security code on your card.',
+    INVALID_EXPIRATION: 'Invalid expiry date. Please check your card.',
+    INVALID_CARD: 'Invalid card details. Please check and try again.',
+    ADDRESS_VERIFICATION_FAILURE: 'Address verification failed. Please check your billing details.',
+    PAN_FAILURE: 'Invalid card number. Please check and try again.',
+    EXPIRATION_FAILURE: 'Your card has expired. Please use a different card.',
+    INSUFFICIENT_FUNDS: 'Insufficient funds. Please try a different card.',
+    GENERIC_DECLINE: 'Your card was declined. Please contact your bank or try another card.',
+    INVALID_FEES: 'Payment amount is invalid.',
+    PAYMENT_LIMIT_EXCEEDED: 'Payment limit exceeded. Please contact support.',
+  };
+
+  const messages = errors.map((e) => {
+    const code = e.code || e.category || '';
+    return map[code] || e.detail || `Payment error: ${code || 'Unknown'}`;
+  });
+
+  return [...new Set(messages)].join(' ');
+}
+
+async function resolveLocation() {
+  if (cachedLocationId && cachedCurrency) {
+    return { locationId: cachedLocationId, currency: cachedCurrency };
+  }
+
+  const envLocation = (process.env.SQUARE_LOCATION_ID || '').trim();
+  const envCurrency = (process.env.SQUARE_CURRENCY || '').trim();
+
+    if (envLocation) {
+    cachedLocationId = envLocation;
+    cachedCurrency = envCurrency || 'AUD';
+    return { locationId: cachedLocationId, currency: cachedCurrency };
+  }
+
   try {
-    const response = await axios.post(
-      `${EWAY_BASE_URL}/Transaction`,
-      requestData,
-      {
-        headers: {
-          Authorization: getEwayAuthHeader(),
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    // Re-throw with more context
-    if (error.response) {
-      const ewayErr = new Error(`eWAY API Error: ${error.response.status}`);
-      ewayErr.response = error.response;
-      throw ewayErr;
+    const response = await axios.get(`${SQUARE_BASE_URL}/v2/locations`, {
+      headers: squareHeaders(),
+    });
+    const locations = response.data?.locations || [];
+    const active = locations.find((l) => l.status === 'ACTIVE') || locations[0];
+    if (!active?.id) {
+      throw new Error('No Square locations found for this account');
     }
+    cachedLocationId = active.id;
+    // Prefer the location's currency — Square rejects mismatches
+    cachedCurrency = active.currency || envCurrency || 'AUD';
+    console.log(`[Square] Location resolved: ${cachedLocationId} (${cachedCurrency})`);
+    return { locationId: cachedLocationId, currency: cachedCurrency };
+  } catch (error) {
+    console.error('[Square] Failed to resolve location:', error.response?.data || error.message);
     throw error;
   }
 }
 
-function getFirstName(fullName) {
-  if (!fullName) return '';
-  const parts = fullName.trim().split(' ');
-  return parts[0];
+async function callSquareCreatePayment(body) {
+  const response = await axios.post(`${SQUARE_BASE_URL}/v2/payments`, body, {
+    headers: squareHeaders(),
+  });
+  return response.data;
 }
 
-function getLastName(fullName) {
-  if (!fullName) return '';
-  const parts = fullName.trim().split(' ');
-  return parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
-}
-
-function randomInvoiceNumber() {
-  return String(Math.floor(Math.random() * 90000000) + 10000000);
-}
-
-function translateEwayErrors(errors) {
-  if (!errors) return 'Payment processing error';
-  
-  const errorMap = {
-    'V6000': 'Validation error. Please check your information.',
-    'V6021': 'Invalid cardholder name. Please enter the name exactly as it appears on your card.',
-    'V6022': 'Invalid card number. Please check your 16-digit card number.',
-    'V6023': 'Invalid CVN (the 3 digits on the back of your card).',
-    'V6040': 'Invalid expiry month. Please check your card.',
-    'V6041': 'Invalid expiry year. Please check your card.',
-    'V6042': 'Invalid expiry month. Please check your card.',
-    'V6043': 'Invalid expiry year. Please check your card.',
-    'V6044': 'Your card has expired. Please use a different card.',
-    'V6045': 'Invalid CVN (the 3 digits on the back of your card).',
-    'V6153': 'Invalid CVN (the 3 digits on the back of your card). Please check and try again.',
-    'V6011': 'Invalid amount.',
-    'V6012': 'Invalid amount.',
-    'V6013': 'Invalid invoice number.',
-    'V6014': 'Invalid invoice reference.',
-    'V6081': 'Invalid CVN.',
-    'V6082': 'Invalid CVN.',
-  };
-
-  const codes = String(errors).split(',').map(c => c.trim());
-  const messages = codes.map(code => errorMap[code] || `Error ${code}: Please check your card details.`);
-  
-  // Return unique messages
-  return [...new Set(messages)].join(' ');
+async function callSquareRefund(body) {
+  const response = await axios.post(`${SQUARE_BASE_URL}/v2/refunds`, body, {
+    headers: squareHeaders(),
+  });
+  return response.data;
 }
 
 // ============================================
-// 1. CREATE PAYMENT (Direct Card)
+// 0. SQUARE PUBLIC CONFIG (for Web Payments SDK)
+// ============================================
+exports.getSquareConfig = async (req, res) => {
+  try {
+    const applicationId = (process.env.SQUARE_APPLICATION_ID || '').trim();
+    if (!applicationId) {
+      return res.status(500).json({
+        success: false,
+        message: 'Square application ID is not configured',
+      });
+    }
+
+    const { locationId, currency } = await resolveLocation();
+
+    return res.json({
+      success: true,
+      applicationId,
+      locationId,
+      currency,
+      environment: IS_PRODUCTION ? 'production' : 'sandbox',
+    });
+  } catch (error) {
+    const detail = error.response?.data?.errors
+      ? translateSquareErrors(error.response.data.errors)
+      : error.message;
+    return res.status(500).json({
+      success: false,
+      message: detail || 'Unable to load Square payment configuration',
+    });
+  }
+};
+
+// ============================================
+// 1. CREATE PAYMENT (Square source / card token)
+// ============================================
 exports.createPayment = async (req, res) => {
   let payment;
   try {
     const {
-      amount, email, name, phone,
-      cardName, cardNumber, expiryMonth, expiryYear, cvv,
-      currency = 'AUD', userId, description,
-      courseName, // ADDED: for GTM tracking
+      amount,
+      email,
+      name,
+      phone,
+      sourceId,
+      currency: requestedCurrency,
+      userId,
+      description,
+      courseName,
+      // Legacy eWay fields — reject raw cards (PCI)
+      cardNumber,
+      cvv,
     } = req.body;
 
-    // Log request (sanitize card)
-    console.log('[eWAY] createPayment called:', {
-      amount, email, name, phone, cardName, 
-      cardNumber: cardNumber ? 'XXXX...' : 'missing',
-      expiryMonth, expiryYear, cvv: cvv ? 'XXX' : 'missing',
-      userId, description
-    });
+    if (cardNumber || cvv) {
+      return res.status(400).json({
+        success: false,
+        message: 'Card details must be tokenized via Square. Please refresh and try again.',
+      });
+    }
 
-    const numericAmount = parseFloat(amount); // CHANGE 2: store as number
+    if (!sourceId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Payment token is missing. Please enter your card details and try again.',
+      });
+    }
+
+    const numericAmount = parseFloat(amount);
+    if (!numericAmount || numericAmount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid payment amount.',
+      });
+    }
+
+    const { locationId, currency: locationCurrency } = await resolveLocation();
+    const currency = (requestedCurrency || locationCurrency || 'AUD').toUpperCase();
 
     payment = new Payment({
-      transactionId: `eway_${Date.now()}`,
-      userId: userId || phone,
+      transactionId: `sq_${Date.now()}`,
+      userId: userId || phone || email || 'guest',
       amount: numericAmount,
       currency,
-      paymentMethod: 'eway',
-      description: description || `Payment by ${name} - ${email}`,
+      paymentMethod: 'square',
+      description: description || `Payment by ${name || 'customer'} - ${email || ''}`,
       status: 'pending',
     });
     await payment.save();
 
-    const invoiceNumber = randomInvoiceNumber();
+    const idempotencyKey = crypto.randomUUID();
+    const amountCents = Math.round(numericAmount * 100);
 
-    const requestData = {
-      Customer: {
-        Reference: email,
-        Email: email,
-        FirstName: getFirstName(name),
-        LastName: getLastName(name),
-        Phone: phone,
-        CardDetails: {
-          Name: cardName,
-          Number: String(cardNumber).replace(/\s/g, ''),
-          ExpiryMonth: String(expiryMonth).padStart(2, '0'),
-          ExpiryYear: String(expiryYear).slice(-2),
-          CVN: cvv,
-        },
+    const requestBody = {
+      source_id: sourceId,
+      idempotency_key: idempotencyKey,
+      amount_money: {
+        amount: amountCents,
+        currency,
       },
-      Payment: {
-        TotalAmount: Math.round(numericAmount * 100),
-        InvoiceNumber: invoiceNumber,
-        InvoiceDescription: `Payment by ${name}`,
-        InvoiceReference: `INV-${invoiceNumber}`,
-        CurrencyCode: currency,
-      },
-      TransactionType: 'Purchase',
-      Method: 'ProcessPayment',
+      location_id: locationId,
+      autocomplete: true,
+      note: description || `Enrollment payment${courseName ? `: ${courseName}` : ''}`,
+      buyer_email_address: email || undefined,
     };
 
-    // Sanitize request for logging
-    const logRequest = { ...requestData, Customer: { ...requestData.Customer, CardDetails: { ...requestData.Customer.CardDetails, Number: 'XXXX-XXXX-XXXX-' + requestData.Customer.CardDetails.Number.slice(-4), CVN: 'XXX' } } };
-    console.log('[eWAY] Request:', JSON.stringify(logRequest, null, 2));
+    console.log('[Square] createPayment:', {
+      amount: numericAmount,
+      currency,
+      locationId,
+      email,
+      name,
+      sourceId: `${String(sourceId).slice(0, 8)}...`,
+    });
 
-    const ewayResponse = await callEwayTransaction(requestData);
+    const squareResponse = await callSquareCreatePayment(requestBody);
+    const sqPayment = squareResponse.payment;
 
-    console.log('[eWAY] Response:', JSON.stringify({
-      TransactionID: ewayResponse.TransactionID,
-      TransactionStatus: ewayResponse.TransactionStatus,
-      ResponseCode: ewayResponse.ResponseCode,
-      ResponseMessage: ewayResponse.ResponseMessage,
-      Errors: ewayResponse.Errors
-    }, null, 2));
+    const status = (sqPayment?.status || '').toUpperCase();
+    const isApproved = status === 'COMPLETED' || status === 'APPROVED';
 
-    if (ewayResponse.Errors) {
-      payment.status = 'failed';
-      await payment.save();
-      return res.status(400).json({
-        success: false,
-        message: translateEwayErrors(ewayResponse.Errors),
-      });
-    }
-
-    // STRICT CHECK: TransactionStatus must be true AND ResponseCode must be "00" (Approved)
-    const isApproved = ewayResponse.TransactionStatus === true && ewayResponse.ResponseCode === '00';
-
-    const gatewayTxId = ewayResponse.TransactionID != null
-      ? String(ewayResponse.TransactionID)
-      : '';
+    const gatewayTxId = sqPayment?.id || '';
     payment.gatewayTransactionId = gatewayTxId;
     payment.status = isApproved ? 'completed' : 'failed';
-    payment.authorizationCode = ewayResponse.AuthorisationCode || '';
+    payment.authorizationCode = sqPayment?.card_details?.auth_result_code || '';
+    payment.cardType = sqPayment?.card_details?.card?.card_brand || '';
+    payment.maskedCardNumber = sqPayment?.card_details?.card?.last_4
+      ? `****${sqPayment.card_details.card.last_4}`
+      : '';
+    payment.gatewayResponse = {
+      status: sqPayment?.status,
+      receiptUrl: sqPayment?.receipt_url,
+      orderId: sqPayment?.order_id,
+    };
     await payment.save();
+
+    console.log('[Square] Response:', {
+      id: gatewayTxId,
+      status: sqPayment?.status,
+      approved: isApproved,
+    });
 
     return res.json({
       success: isApproved,
       transactionId: payment.transactionId,
       gatewayTransactionId: gatewayTxId,
       status: payment.status,
-      order: isApproved ? {
-        transactionId: payment.transactionId,
-        amount: numericAmount,
-        currency,
-        courseName: courseName || description || '',
-        email,
-        name,
-      } : null,
+      order: isApproved
+        ? {
+            transactionId: payment.transactionId,
+            amount: numericAmount,
+            currency,
+            courseName: courseName || description || '',
+            email,
+            name,
+          }
+        : null,
       message: isApproved
         ? 'Payment successful'
-        : `Payment declined: ${ewayResponse.ResponseCode} - ${ewayResponse.ResponseMessage || 'Declined by bank'}`,
+        : `Payment ${status || 'failed'}. Please try again or use a different card.`,
     });
   } catch (error) {
-    const ewayErrorResponse = error.response?.data;
+    const squareErrors = error.response?.data?.errors;
     const statusCode = error.response?.status || 500;
-    
-    console.error(`eWAY Payment Error [${statusCode}]:`, JSON.stringify(ewayErrorResponse || error.message, null, 2));
+
+    console.error(
+      `Square Payment Error [${statusCode}]:`,
+      JSON.stringify(squareErrors || error.message, null, 2)
+    );
 
     if (payment) {
       payment.status = 'failed';
+      payment.gatewayResponse = error.response?.data || { message: error.message };
       await payment.save();
     }
 
-    const errorMsg = ewayErrorResponse?.Errors 
-      ? `Payment gateway error: ${ewayErrorResponse.Errors}`
-      : (error.message || 'Payment processing error');
-
-    return res.status(statusCode).json({ 
-      success: false, 
-      message: errorMsg,
-      details: ewayErrorResponse 
+    return res.status(statusCode >= 400 && statusCode < 600 ? statusCode : 500).json({
+      success: false,
+      message: squareErrors
+        ? translateSquareErrors(squareErrors)
+        : error.message || 'Payment processing error',
+      details: squareErrors || undefined,
     });
   }
 };
 
 // ============================================
-// 2. CREATE PAYMENT WITH TOKEN (Saved Card)
+// 2. CREATE PAYMENT WITH TOKEN (same as create — Square nonce)
 // ============================================
 exports.createPaymentWithToken = async (req, res) => {
-  let payment;
-  try {
-    const { amount, currency = 'AUD', userId, description, paymentToken } = req.body;
-
-    payment = new Payment({
-      transactionId: `eway_${Date.now()}`,
-      userId,
-      amount,
-      currency,
-      paymentMethod: 'eway',
-      description,
-      status: 'pending',
-    });
-    await payment.save();
-
-    const requestData = {
-      Customer: { TokenCustomerID: paymentToken },
-      Payment: {
-        TotalAmount: Math.round(parseFloat(amount) * 100),
-        InvoiceDescription: description,
-        CurrencyCode: currency,
-      },
-      Method: 'TokenPayment',
-      TransactionType: 'Purchase',
-    };
-
-    // Sanitize request for logging
-    console.log('[eWAY Token Payment] Request:', JSON.stringify({ ...requestData, Customer: { TokenCustomerID: 'XXXXXX' } }, null, 2));
-
-    const ewayResponse = await callEwayTransaction(requestData);
-
-    console.log('[eWAY Token Payment] Response:', JSON.stringify({
-      TransactionID: ewayResponse.TransactionID,
-      TransactionStatus: ewayResponse.TransactionStatus,
-      ResponseCode: ewayResponse.ResponseCode,
-      ResponseMessage: ewayResponse.ResponseMessage,
-      Errors: ewayResponse.Errors
-    }, null, 2));
-
-    if (ewayResponse.Errors) {
-      payment.status = 'failed';
-      await payment.save();
-      return res.status(400).json({
-        success: false,
-        transactionId: payment.transactionId,
-        message: translateEwayErrors(ewayResponse.Errors),
-      });
-    }
-
-    // STRICT CHECK
-    const isApproved = ewayResponse.TransactionStatus === true && ewayResponse.ResponseCode === '00';
-
-    payment.gatewayTransactionId = String(ewayResponse.TransactionID || '');
-    payment.status = isApproved ? 'completed' : 'failed';
-    payment.authorizationCode = ewayResponse.AuthorisationCode || '';
-    await payment.save();
-
-    return res.json({
-      success: isApproved,
-      transactionId: payment.transactionId,
-      status: payment.status,
-      message: isApproved ? 'Payment successful' : `Payment declined: ${ewayResponse.ResponseCode} - ${ewayResponse.ResponseMessage || 'Declined by bank'}`,
-    });
-  } catch (error) {
-    console.error('Token Payment Error:', error.response?.data || error.message);
-    if (payment) {
-      payment.status = 'failed';
-      await payment.save();
-    }
-    return res.status(500).json({
-      success: false,
-      message: error.response?.data?.Errors || error.message,
-    });
-  }
+  req.body.sourceId = req.body.sourceId || req.body.paymentToken;
+  return exports.createPayment(req, res);
 };
 
 // ============================================
-// 3. CREATE PAYMENT TOKEN (Save Card)
+// 3. CREATE PAYMENT TOKEN — not used with Square Web Payments
 // ============================================
 exports.createPaymentToken = async (req, res) => {
-  try {
-    const { cardNumber, cardExpiryMonth, cardExpiryYear, cvv, cardHolderName } = req.body;
-
-    const requestData = {
-      Customer: {
-        CardDetails: {
-          Name: cardHolderName,
-          Number: String(cardNumber).replace(/\s/g, ''),
-          ExpiryMonth: String(cardExpiryMonth).padStart(2, '0'),
-          ExpiryYear: String(cardExpiryYear).slice(-2),
-          CVN: cvv,
-        },
-      },
-      Method: 'CreateTokenCustomer',
-      TransactionType: 'Purchase',
-    };
-
-    console.log('[eWAY Create Token] Request: (Card details hidden)');
-
-    const ewayResponse = await callEwayTransaction(requestData);
-
-    console.log('[eWAY Create Token] Response:', JSON.stringify({
-      TransactionStatus: ewayResponse.TransactionStatus,
-      ResponseCode: ewayResponse.ResponseCode,
-      ResponseMessage: ewayResponse.ResponseMessage,
-      Errors: ewayResponse.Errors
-    }, null, 2));
-
-    if (ewayResponse.Errors) {
-      return res.status(400).json({ success: false, error: translateEwayErrors(ewayResponse.Errors) });
-    }
-
-    const isSuccess = ewayResponse.TransactionStatus === true || ewayResponse.ResponseCode === '00';
-
-    if (!isSuccess) {
-      return res.status(400).json({ 
-        success: false, 
-        message: `Token creation failed: ${ewayResponse.ResponseCode} - ${ewayResponse.ResponseMessage}` 
-      });
-    }
-
-    return res.json({
-      success: true,
-      paymentToken: ewayResponse.Customer?.TokenCustomerID,
-      cardType: ewayResponse.CardType || '',
-      maskedCardNumber: ewayResponse.Customer?.CardDetails?.Number || '',
-    });
-  } catch (error) {
-    console.error('Token Creation Error:', error.response?.data || error.message);
-    return res.status(500).json({
-      success: false,
-      message: error.response?.data?.Errors || error.message,
-    });
-  }
+  return res.status(400).json({
+    success: false,
+    message: 'Card tokenization is handled by Square Web Payments on the client.',
+  });
 };
 
 // ============================================
@@ -382,21 +322,25 @@ exports.refundPayment = async (req, res) => {
     if (payment.status !== 'completed') {
       return res.status(400).json({ error: 'Cannot refund non-completed payment' });
     }
+    if (!payment.gatewayTransactionId) {
+      return res.status(400).json({ error: 'Missing Square payment id for refund' });
+    }
 
-    const requestData = {
-      Refund: {
-        TotalAmount: Math.round((refundAmount || payment.amount) * 100),
-        TransactionID: payment.gatewayTransactionId,
+    const amount = refundAmount || payment.amount;
+    const body = {
+      idempotency_key: crypto.randomUUID(),
+      payment_id: payment.gatewayTransactionId,
+      amount_money: {
+        amount: Math.round(parseFloat(amount) * 100),
+        currency: payment.currency || 'AUD',
       },
     };
 
-    const ewayResponse = await callEwayTransaction(requestData);
+    const refundResponse = await callSquareRefund(body);
+    const refund = refundResponse.refund;
+    const status = (refund?.status || '').toUpperCase();
+    const isApproved = status === 'COMPLETED' || status === 'PENDING';
 
-    if (ewayResponse.Errors) {
-      return res.status(400).json({ success: false, error: ewayResponse.Errors });
-    }
-
-    const isApproved = ewayResponse.TransactionStatus === true;
     if (isApproved) {
       payment.status = 'refunded';
       payment.updatedAt = new Date();
@@ -405,20 +349,22 @@ exports.refundPayment = async (req, res) => {
       return res.json({
         success: true,
         transactionId: payment.transactionId,
-        refundTransactionId: String(ewayResponse.TransactionID || ''),
-        refundAmount: refundAmount || payment.amount,
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        error: ewayResponse.ResponseMessage,
+        refundTransactionId: refund?.id || '',
+        refundAmount: amount,
       });
     }
+
+    return res.status(400).json({
+      success: false,
+      error: `Refund ${status || 'failed'}`,
+    });
   } catch (error) {
     console.error('Refund Error:', error.response?.data || error.message);
     return res.status(500).json({
       success: false,
-      message: error.response?.data?.Errors || error.message,
+      message: error.response?.data?.errors
+        ? translateSquareErrors(error.response.data.errors)
+        : error.message,
     });
   }
 };

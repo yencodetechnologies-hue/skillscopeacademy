@@ -845,7 +845,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         <label>Meta title</label>
                                         <input
                                             type="text"
-                                            placeholder="e.g. EWP Licence Over 11m | Boom Lift Course NSW | SafeTricks"
+                                            placeholder="e.g. EWP Licence Over 11m | Boom Lift Course NSW | SafeTicks"
                                             maxLength={60}
                                             name="metaTitle"
                                             value={formik.values.metaTitle}

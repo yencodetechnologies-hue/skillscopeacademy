@@ -82,12 +82,12 @@ function ContactPage() {
                             </div>
                         </div>
 
-                        <a href="mailto:info@safetricks.com.au" className="cp-contact-card" style={{ textDecoration: "none", color: "inherit" }}>
+                        <a href="mailto:info@safeticks.com.au" className="cp-contact-card" style={{ textDecoration: "none", color: "inherit" }}>
                             <div className="cp-contact-card-icon cp-icon-blue">✉️</div>
                             <div>
                                 <p className="cp-contact-card-label">Our Email</p>
                                 <span className="cp-contact-card-link">
-                                    info@safetricks.com.au
+                                    info@safeticks.com.au
                                 </span>
                             </div>
                         </a>
@@ -114,7 +114,7 @@ function ContactPage() {
                         </div>
 
                         <div className="cp-address-block">
-                            <p className="cp-address-name">SafeTricks | Sydney</p>
+                            <p className="cp-address-name">SafeTicks | Sydney</p>
                             <p className="cp-address-line">3/14-16 Marjorie Street, Sefton NSW 2162</p>
                             <a
                                 href="https://maps.google.com/?q=3/14-16+Marjorie+Street+Sefton+NSW+2162"
@@ -187,7 +187,7 @@ function ContactPage() {
 
                 <div className="cp-map-wrap">
                     <iframe
-                        title="SafeTricks Location"
+                        title="SafeTicks Location"
                         className="cp-map-iframe"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.7!2d151.0333!3d-33.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12bb4e8b5b5b5b%3A0x0!2s3%2F14-16+Marjorie+St%2C+Sefton+NSW+2162!5e0!3m2!1sen!2sau!4v1"
                         allowFullScreen=""

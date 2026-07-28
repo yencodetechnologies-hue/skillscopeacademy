@@ -294,7 +294,7 @@
 
 //       {/* ── Top Bar ── */}
 //       <div className="mlp-topbar">
-//         <span className="mlp-logo-text">SafeTricks</span>
+//         <span className="mlp-logo-text">SafeTicks</span>
 //         <div className="mlp-topbar-phones">
 //           <a href={ORG_PHONE_1300.tel} className="mlp-topbar-phone">{ORG_PHONE_1300.display}</a>
 //           <span style={{ opacity: 0.5, color: "white" }}>|</span>
@@ -567,7 +567,7 @@
 //           <div>
 //             <div className="mlp-stars">★★★★★</div>
 //             <div className="mlp-review-count">{reviewCountLabel}</div>
-//             <div className="mlp-review-site">safetricks.com.au</div>
+//             <div className="mlp-review-site">safeticks.com.au</div>
 //           </div>
 //         </div>
 //         <div className="mlp-review-scroll">
@@ -931,7 +931,7 @@ export default function MobileLandingPage({ courses = [] }) {
 
       {/* ── Top Bar ── */}
       <div className="mlp-topbar">
-        <span className="mlp-logo-text">SafeTricks</span>
+        <span className="mlp-logo-text">SafeTicks</span>
         <div className="mlp-topbar-phones">
           <a href={ORG_PHONE_1300.tel} className="mlp-topbar-phone">{ORG_PHONE_1300.display}</a>
           <span style={{ opacity: 0.5, color: "white" }}>|</span>

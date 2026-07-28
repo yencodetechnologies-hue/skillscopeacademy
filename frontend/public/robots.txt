@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://safetricks.com.au/sitemap.xml
+Sitemap: https://safeticks.com.au/sitemap.xml

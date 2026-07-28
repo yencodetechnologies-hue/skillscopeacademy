@@ -19,12 +19,12 @@ const COURSES_LIST = [
 ]
 
 const WHY_ITEMS = [
-    { color: "#0d2240", icon: "✦", text: <><strong className="ab-cyan">SafeTricks training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
+    { color: "#0d2240", icon: "✦", text: <><strong className="ab-cyan">SafeTicks training programs</strong> on short courses are not only limited to theory but practical classes that fully train the participants in their specific field.</> },
     { color: "#F5A623", icon: "🎖", text: <>Our trainers have been in the industry for several years, and they are committed, experienced, and extremely qualified in the specific area in which they choose to train and assess.</> },
     { color: "#0d2240", icon: "🛡", text: <><strong>The safety of every student is so important to us</strong> that why we make it our priority. We are located in a well-organized area. We set ourselves apart by ensuring that our students are fully trained.</> },
     { color: "#F5A623", icon: "👥", text: <>Our training program full of qualities irrespective of any course you registered for, and we do not just take your money and prepare you to study everything by yourself and fail.</> },
     { color: "#0d2240", icon: "📊", text: <>Our equipment for each course is very standard, contributing to the training to be more understandable by every one of our students.</> },
-    { color: "#F5A623", icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At SafeTricks, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
+    { color: "#F5A623", icon: "📞", text: <>Our customer support system is always available to help you 24/7 every day in a week; we will very thrilled to help you. At SafeTicks, we stand out of our competitors with our low cost; you can't find any other fee less expensive than us, with our quality training and training equipment.</> },
     { color: "#0d2240", icon: "📍", text: <>Our training location has easy access to public transport without too much stress. And lastly, you can choose to train in your home place and at a convenient time.</> },
 ]
 
@@ -64,13 +64,13 @@ function AboutPage() {
                 <div className="ab-about-inner">
                     <div className="ab-about-left">
                         <h2 className="ab-about-heading">
-                            <span className="ab-cyan">SafeTricks</span>{" "}
+                            <span className="ab-cyan">SafeTicks</span>{" "}
                             specialises in the delivery of short courses
                         </h2>
 
                         <div className="ab-about-card">
                             <p className="ab-about-text">
-                                <strong>SafeTricks</strong> is a specialty branch of
+                                <strong>SafeTicks</strong> is a specialty branch of
                                 Australian International Education Training which was formed in 2017, who is a{" "}
                                 <a href="#" className="ab-link">Registered Training Organisation (RTO)</a> Provider
                                 No <strong>45234</strong>) that specialises in the delivery of{" "}
@@ -99,9 +99,9 @@ function AboutPage() {
 
                     <div className="ab-about-right">
                         <div className="ab-building-wrap">
-                            <img src={buildingImg} alt="SafeTricks building" className="ab-building-img" />
+                            <img src={buildingImg} alt="SafeTicks building" className="ab-building-img" />
                             <div className="ab-building-caption">
-                                📍 SafeTricks | Sydney – 3/14-16 Marjorie Street, Sefton NSW 2162
+                                📍 SafeTicks | Sydney – 3/14-16 Marjorie Street, Sefton NSW 2162
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@ function AboutPage() {
             <section className="ab-why">
                 <div className="ab-why-inner">
                     <h2 className="ab-why-title">
-                        Why Choose <span className="ab-cyan">SafeTricks</span>{" "}
+                        Why Choose <span className="ab-cyan">SafeTicks</span>{" "}
                         for short courses in Sydney
                     </h2>
 

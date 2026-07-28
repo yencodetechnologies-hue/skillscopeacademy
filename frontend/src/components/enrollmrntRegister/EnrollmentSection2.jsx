@@ -184,7 +184,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                             <p className="usi-error-msg">USI Number is required (10 characters)</p>
                         )}
                         <p className="usi-hint">
-                            If you don't have one, select "Apply through SafeTricks" below.
+                            If you don't have one, select "Apply through SafeTicks" below.
                         </p>
                     </div>
 
@@ -200,7 +200,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                             htmlFor="usi-permission" 
                             className={`usi-permission-text ${errors.includes("usiPermission") ? "usi-label-error" : ""}`}
                         >
-                            I give permission for SafeTricks to access my Unique Student
+                            I give permission for SafeTicks to access my Unique Student
                             Identifier (USI) for the purpose of recording my results. <span className="usi-required">*</span>
                         </label>
                     </div>
@@ -209,7 +209,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
 
                 <div className="usi-sta-group" id="usi-staApplication">
                     <p className={`usi-sta-label ${errors.includes("staApplication") ? "usi-label-error" : ""}`}>
-                        USI application through SafeTricks (if you do not already have one)
+                        USI application through SafeTicks (if you do not already have one)
                         <span className="usi-required">*</span>
                     </p>
                     <div className="usi-radio-row">
@@ -233,7 +233,7 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                                 onChange={() => set("staApplication", "yes")}
                                 className="usi-radio"
                             />
-                            Yes (Apply through SafeTricks)
+                            Yes (Apply through SafeTicks)
                         </label>
                     </div>
                 </div>
@@ -244,15 +244,15 @@ function EnrollmentSection2({ data, setData, prev, next, userId }) {
                 <div className="usi-extra-box">
 
                     <h3 className="usi-extra-title">
-                        USI application through SafeTricks (if you do not already have one)
+                        USI application through SafeTicks (if you do not already have one)
                     </h3>
 
                     <p className="usi-extra-text">
-                        If you would like SafeTricks to apply for a USI on your behalf, you must authorise us to do so and provide additional information.
+                        If you would like SafeTicks to apply for a USI on your behalf, you must authorise us to do so and provide additional information.
                     </p>
 
                     <div className="usi-field">
-                        <label className={`${errors.includes("staAuthoriseName") ? "usi-label-error" : ""}`}>[Name] — authorises SafeTricks to apply your USI *</label>
+                        <label className={`${errors.includes("staAuthoriseName") ? "usi-label-error" : ""}`}>[Name] — authorises SafeTicks to apply your USI *</label>
                         <input
                             id="usi-staAuthoriseName"
                             className={`usi-input ${errors.includes("staAuthoriseName") ? "usi-input-error" : ""}`}

@@ -376,7 +376,7 @@ export default function AdminSiteBanner() {
                 type="url"
                 value={form.link}
                 onChange={(e) => setField("link", e.target.value)}
-                placeholder="https://safetricks.com.au/..."
+                placeholder="https://safeticks.com.au/..."
               />
 
               <label className="sba-label">

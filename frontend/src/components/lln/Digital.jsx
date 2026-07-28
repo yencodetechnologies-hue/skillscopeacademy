@@ -150,7 +150,7 @@ function Digital({ next }) {
             Object.keys(correctLabels).forEach(key => {
                 if (labelDrop[key] === correctLabels[key]) score++
             })
-            if (url.trim() === "https://safetricks.com.au") score++
+            if (url.trim() === "https://safeticks.com.au") score++
 
             const formattedAnswers = {}
             fileDrop.checklist.forEach((f, i) => { formattedAnswers[`0-${i}`]     = f.type })

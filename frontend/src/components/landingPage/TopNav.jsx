@@ -20,7 +20,7 @@ function TopNav() {
 
                 <div className="top-item">
                     <i className="fa-regular fa-envelope"></i>
-                    <a href="mailto:info@safetricks.com.au" style={{ color: "inherit", textDecoration: "none" }}>info@safetricks.com.au</a>
+                    <a href="mailto:info@safeticks.com.au" style={{ color: "inherit", textDecoration: "none" }}>info@safeticks.com.au</a>
                 </div>
 
                 <div className="top-item">

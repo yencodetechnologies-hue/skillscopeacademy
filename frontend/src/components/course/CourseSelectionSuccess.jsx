@@ -137,8 +137,8 @@ export default function EnrollmentSuccess({ enrollmentData, onBackToHome, onNext
             <a href={ORG_PHONE_MOBILE.tel} style={{ color: "inherit", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>
               <span>📱</span> {ORG_PHONE_MOBILE.display}
             </a>
-            <a href="mailto:info@safetricks.com.au" style={{ color: "inherit", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>
-              <span>✉️</span> info@safetricks.com.au
+            <a href="mailto:info@safeticks.com.au" style={{ color: "inherit", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>
+              <span>✉️</span> info@safeticks.com.au
             </a>
           </div>
         </div>

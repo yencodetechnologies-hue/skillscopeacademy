@@ -230,9 +230,9 @@
 //     useEffect(() => {
 //         if (!course) return
 
-//         const defaultTitle = "SafeTricks | Sydney NSW"
+//         const defaultTitle = "SafeTicks | Sydney NSW"
 //         const defaultDesc =
-//             "SafeTricks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
+//             "SafeTicks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
 
 //         const prevTitle = document.title
 //         const metaEl = document.querySelector('meta[name="description"]')
@@ -834,8 +834,8 @@
 //                     ═══════════════════════════════════════ */}
 
 
-//                     {/* WHY CHOOSE SafeTricks */}
-//                     <AccordionCard title="Why choose SafeTricks">
+//                     {/* WHY CHOOSE SafeTicks */}
+//                     <AccordionCard title="Why choose SafeTicks">
 //                         <div className="cdp-trust-grid">
 //                             {[
 //                                 { icon: "⭐", title: googleReviewsTrustTitle },
@@ -860,7 +860,7 @@
 //                             <div>
 //                                 <div className="cdp-stars">★★★★★</div>
 //                                 <div className="cdp-rating-count">{reviewCountLabel}</div>
-//                                 <div className="cdp-rating-site">safetricks.com.au</div>
+//                                 <div className="cdp-rating-site">safeticks.com.au</div>
 //                             </div>
 //                         </div>
 //                         <div className="cdp-review-grid">
@@ -903,7 +903,7 @@
 //                                 className="cdp-hb-card"
 //                             >
 //                                 <div className="cdp-hb-inner">
-//                                     <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
+//                                     <img src={logo} alt="SafeTicks Logo" className="cdp-hb-logo" />
 //                                     <h3 className="cdp-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
 //                                     <div className="cdp-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
 //                                 </div>
@@ -917,7 +917,7 @@
 //                         className="cdp-hb-card"
 //                     >
 //                         <div className="cdp-hb-inner">
-//                             <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
+//                             <img src={logo} alt="SafeTicks Logo" className="cdp-hb-logo" />
 //                             <h3 className="cdp-hb-title">Participant Handbook</h3>
 //                             <div className="cdp-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
 //                         </div>
@@ -953,8 +953,8 @@
 //                             Our team can answer questions about course suitability, dates, and group bookings.
 //                         </p>
 //                         <a href={ORG_PHONE_1300.tel} className="cdp-sb-btn-cyan">☎ {ORG_PHONE_1300.display}</a>
-//                         <a href="mailto:info@safetricks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
-//                         <div className="cdp-sb-email">info@safetricks.com.au</div>
+//                         <a href="mailto:info@safeticks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
+//                         <div className="cdp-sb-email">info@safeticks.com.au</div>
 //                     </div>
 
 //                 </div>
@@ -1196,9 +1196,9 @@ import { colors } from '../constants/theme';
 //     useEffect(() => {
 //         if (!course) return
 
-//         const defaultTitle = "SafeTricks | Sydney NSW"
+//         const defaultTitle = "SafeTicks | Sydney NSW"
 //         const defaultDesc =
-//             "SafeTricks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
+//             "SafeTicks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
 
 //         const prevTitle = document.title
 //         const metaEl = document.querySelector('meta[name="description"]')
@@ -1744,7 +1744,7 @@ import { colors } from '../constants/theme';
 //                     )}
 
 //                     <div className="cdp-card">
-//                         <div className="cdp-card-title">Why choose SafeTricks</div>
+//                         <div className="cdp-card-title">Why choose SafeTicks</div>
 //                         <div className="cdp-trust-grid">
 //                             {[
 //                                 { icon: "⭐", title: googleReviewsTrustTitle },
@@ -1769,7 +1769,7 @@ import { colors } from '../constants/theme';
 //                             <div>
 //                                 <div className="cdp-stars">★★★★★</div>
 //                                 <div className="cdp-rating-count">{reviewCountLabel}</div>
-//                                 <div className="cdp-rating-site">safetricks.com.au</div>
+//                                 <div className="cdp-rating-site">safeticks.com.au</div>
 //                             </div>
 //                         </div>
 //                         <div className="cdp-review-grid">
@@ -1811,7 +1811,7 @@ import { colors } from '../constants/theme';
 //                                 className="cdp-hb-card"
 //                             >
 //                                 <div className="cdp-hb-inner">
-//                                     <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
+//                                     <img src={logo} alt="SafeTicks Logo" className="cdp-hb-logo" />
 //                                     <h3 className="cdp-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
 //                                     <div className="cdp-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
 //                                 </div>
@@ -1825,7 +1825,7 @@ import { colors } from '../constants/theme';
 //                         className="cdp-hb-card"
 //                     >
 //                         <div className="cdp-hb-inner">
-//                             <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
+//                             <img src={logo} alt="SafeTicks Logo" className="cdp-hb-logo" />
 //                             <h3 className="cdp-hb-title">Participant Handbook</h3>
 //                             <div className="cdp-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
 //                         </div>
@@ -1861,8 +1861,8 @@ import { colors } from '../constants/theme';
 //                             Our team can answer questions about course suitability, dates, and group bookings.
 //                         </p>
 //                         <a href={ORG_PHONE_1300.tel} className="cdp-sb-btn-cyan">☎ {ORG_PHONE_1300.display}</a>
-//                         <a href="mailto:info@safetricks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
-//                         <div className="cdp-sb-email">info@safetricks.com.au</div>
+//                         <a href="mailto:info@safeticks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
+//                         <div className="cdp-sb-email">info@safeticks.com.au</div>
 //                     </div>
 
 //                 </div>
@@ -2147,9 +2147,9 @@ const handleViewPDF = (pdfUrl) => {
     useEffect(() => {
         if (!course) return
 
-        const defaultTitle = "SafeTricks | Sydney NSW"
+        const defaultTitle = "SafeTicks | Sydney NSW"
         const defaultDesc =
-            "SafeTricks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
+            "SafeTicks — RTO 45234. Forklift, White Card, EWP, Working at Heights, Confined Space and more. Sydney NSW."
 
         const prevTitle = document.title
         const metaEl = document.querySelector('meta[name="description"]')
@@ -2750,8 +2750,8 @@ const handleViewPDF = (pdfUrl) => {
                     ═══════════════════════════════════════ */}
 
 
-                    {/* WHY CHOOSE SafeTricks */}
-                    <AccordionCard title="Why choose SafeTricks">
+                    {/* WHY CHOOSE SafeTicks */}
+                    <AccordionCard title="Why choose SafeTicks">
                         <div className="cdp-trust-grid">
                             {[
                                 { icon: "🏛", title: "SafeWork NSW Approved Provider" },
@@ -2796,7 +2796,7 @@ const handleViewPDF = (pdfUrl) => {
                                 className="cdp-hb-card"
                             >
                                 <div className="cdp-hb-inner">
-                                    <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
+                                    <img src={logo} alt="SafeTicks Logo" className="cdp-hb-logo" />
                                     <h3 className="cdp-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
                                     <div className="cdp-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
                                 </div>
@@ -2810,7 +2810,7 @@ const handleViewPDF = (pdfUrl) => {
                         className="cdp-hb-card"
                     >
                         <div className="cdp-hb-inner">
-                            <img src={logo} alt="SafeTricks Logo" className="cdp-hb-logo" />
+                            <img src={logo} alt="SafeTicks Logo" className="cdp-hb-logo" />
                             <h3 className="cdp-hb-title">Participant Handbook</h3>
                             <div className="cdp-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
                         </div>
@@ -2846,8 +2846,8 @@ const handleViewPDF = (pdfUrl) => {
                             Our team can answer questions about course suitability, dates, and group bookings.
                         </p>
                         <a href={ORG_PHONE_1300.tel} className="cdp-sb-btn-cyan">☎ {ORG_PHONE_1300.display}</a>
-                        <a href="mailto:info@safetricks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
-                        <div className="cdp-sb-email">info@safetricks.com.au</div>
+                        <a href="mailto:info@safeticks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
+                        <div className="cdp-sb-email">info@safeticks.com.au</div>
                     </div>
 
                 </div>

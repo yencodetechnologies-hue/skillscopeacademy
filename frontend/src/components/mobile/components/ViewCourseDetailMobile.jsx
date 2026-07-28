@@ -619,9 +619,9 @@
 //               <SectionSlider sections={detailSections} />
 //           </div>
 
-//       {/* ── Why Choose SafeTricks ── */}
+//       {/* ── Why Choose SafeTicks ── */}
 //       <div className="cdm-section">
-//         <div className="cdm-section-title">Why choose SafeTricks</div>
+//         <div className="cdm-section-title">Why choose SafeTicks</div>
 //         <div className="cdm-trust-row">
 //           {trustBadges.map((b, i) => (
 //             <div key={i} className="cdm-trust-badge">
@@ -669,7 +669,7 @@
 //             className="cdm-hb-card"
 //           >
 //             <div className="cdm-hb-inner">
-//               <img src={logo} alt="SafeTricks Logo" className="cdm-hb-logo" />
+//               <img src={logo} alt="SafeTicks Logo" className="cdm-hb-logo" />
 //               <h3 className="cdm-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
 //               <div className="cdm-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
 //             </div>
@@ -683,7 +683,7 @@
 //         className="cdm-hb-card"
 //       >
 //         <div className="cdm-hb-inner">
-//           <img src={logo} alt="SafeTricks Logo" className="cdm-hb-logo" />
+//           <img src={logo} alt="SafeTicks Logo" className="cdm-hb-logo" />
 //           <h3 className="cdm-hb-title">Participant Handbook</h3>
 //           <div className="cdm-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
 //         </div>
@@ -1369,9 +1369,9 @@ export default function ViewCourseDetailMobile({ course, courses = [], fromPorta
               <SectionSlider sections={detailSections} />
           </div>
 
-      {/* ── Why Choose SafeTricks ── */}
+      {/* ── Why Choose SafeTicks ── */}
       <div className="cdm-section">
-        <div className="cdm-section-title">Why choose SafeTricks</div>
+        <div className="cdm-section-title">Why choose SafeTicks</div>
         <div className="cdm-trust-row">
           {trustBadges.map((b, i) => (
             <div key={i} className="cdm-trust-badge">
@@ -1402,7 +1402,7 @@ export default function ViewCourseDetailMobile({ course, courses = [], fromPorta
             className="cdm-hb-card"
           >
             <div className="cdm-hb-inner">
-              <img src={logo} alt="SafeTricks Logo" className="cdm-hb-logo" />
+              <img src={logo} alt="SafeTicks Logo" className="cdm-hb-logo" />
               <h3 className="cdm-hb-title">{course.handbook?.title || "CODE OF PRACTICE"}</h3>
               <div className="cdm-hb-subtitle">Click to download the {course.handbook?.title || "CODE OF PRACTICE"} [PDF]</div>
             </div>
@@ -1416,7 +1416,7 @@ export default function ViewCourseDetailMobile({ course, courses = [], fromPorta
         className="cdm-hb-card"
       >
         <div className="cdm-hb-inner">
-          <img src={logo} alt="SafeTricks Logo" className="cdm-hb-logo" />
+          <img src={logo} alt="SafeTicks Logo" className="cdm-hb-logo" />
           <h3 className="cdm-hb-title">Participant Handbook</h3>
           <div className="cdm-hb-subtitle">Click to download the Participant Handbook [PDF]</div>
         </div>

@@ -73,7 +73,7 @@ function FooterMobile() {
           <div className="row-info">
             <i className="fa-solid fa-location-dot info-icon"></i>
             <p>
-              SafeTricks Sydney<br />
+              SafeTicks Sydney<br />
               3/14-16 Marjorie Street,<br />
               Sefton NSW 2162
             </p>
@@ -82,9 +82,9 @@ function FooterMobile() {
 
         <div className="footer-col footer-contact">
           <div className="sec-label">Contact</div>
-          <a href="mailto:info@safetricks.com.au" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
+          <a href="mailto:info@safeticks.com.au" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
             <i className="fa-solid fa-envelope info-icon"></i>
-            <p>info@safetricks.com.au</p>
+            <p>info@safeticks.com.au</p>
           </a>
           <a href={ORG_PHONE_MOBILE.tel} className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
             <i className="fa-solid fa-phone info-icon"></i>
@@ -123,7 +123,7 @@ function FooterMobile() {
       </div>
 
       <div className="footer-bottom">
-        <span>© 2024 SafeTricks</span>
+        <span>© 2024 SafeTicks</span>
         <span className="footer-rights">ALL RIGHTS RESERVED</span>
       </div>
     </footer>

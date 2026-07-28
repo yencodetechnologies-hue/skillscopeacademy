@@ -192,7 +192,7 @@ export default function PublicForms({ courses }) {
                         <img src={cdnImage(doc.bannerImage, { w: 500 })} alt={doc.title} />
                       ) : (
                         <div className="pf-handbook-fallback">
-                          <img src={logo} alt="SafeTricks" className="pf-handbook-logo" />
+                          <img src={logo} alt="SafeTicks" className="pf-handbook-logo" />
                         </div>
                       )}
                     </div>

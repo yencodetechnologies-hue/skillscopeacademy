@@ -378,7 +378,7 @@ function EnrollmentSection1({ userDetails, data, setData, next }) {
                         Emergency permission <span className="er-required">*</span>
                     </label>
                     <p className="er-small-text">
-                        In the event of an emergency do you give SafeTricks permission to organise emergency
+                        In the event of an emergency do you give SafeTicks permission to organise emergency
                         transport and treatment and do you agree to pay all costs related to the emergency?
                     </p>
                     <p className="er-small-text">

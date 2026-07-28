@@ -107,7 +107,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTicks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -329,7 +329,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTicks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -555,7 +555,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTicks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -776,7 +776,7 @@
 
 //           {/* LOGO */}
 //           <div className="navbar-logo">
-//             <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
+//             <img src={logo} alt="SafeTicks Logo"  onClick={() => navigate("/")} />
 //           </div>
 
 //           {/* DESKTOP NAV LINKS */}
@@ -1015,7 +1015,7 @@ const handleOpenCop = (doc) => {
 
           {/* LOGO */}
           <div className="navbar-logo">
-            <img src={logo} alt="SafeTricks Logo"  onClick={() => navigate("/")} />
+            <img src={logo} alt="SafeTicks Logo"  onClick={() => navigate("/")} />
           </div>
 
           {/* DESKTOP NAV LINKS */}

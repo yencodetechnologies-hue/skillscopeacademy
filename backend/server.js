@@ -26,6 +26,7 @@ const app = express();
 app.set("trust proxy", 1);
 const allowedOrigins = [
   'https://skillscopeacademy.vercel.app',
+  "https://www.safeticks.com",
   'https://skillscopeacademy.yencodetechnologies.in',
   'http://localhost:5173',
   'http://localhost:5174',

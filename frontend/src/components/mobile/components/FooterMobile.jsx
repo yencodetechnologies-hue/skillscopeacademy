@@ -74,17 +74,17 @@ function FooterMobile() {
             <i className="fa-solid fa-location-dot info-icon"></i>
             <p>
               SafeTicks Sydney<br />
-              3/14-16 Marjorie Street,<br />
-              Sefton NSW 2162
+              15/3 Lancaster Street,<br />
+              Ingleburn NSW 2565
             </p>
           </div>
         </div>
 
         <div className="footer-col footer-contact">
           <div className="sec-label">Contact</div>
-          <a href="mailto:info@safeticks.com.au" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
+          <a href="mailto:info@safeticks.com" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
             <i className="fa-solid fa-envelope info-icon"></i>
-            <p>info@safeticks.com.au</p>
+            <p>info@safeticks.com</p>
           </a>
           <a href={ORG_PHONE_MOBILE.tel} className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
             <i className="fa-solid fa-phone info-icon"></i>

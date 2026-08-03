@@ -253,8 +253,8 @@ function EnrollmentComplete() {
                         <a href={ORG_PHONE_1300.tel} style={{ color: "inherit", textDecoration: "none" }} className="ec-org-phone">
                             {ORG_PHONE_1300.display}
                         </a>
-                        <a href="mailto:info@safeticks.com.au" className="ec-org-email">
-                            info@safeticks.com.au
+                        <a href="mailto:info@safeticks.com" className="ec-org-email">
+                            info@safeticks.com
                         </a>
                     </div>
 

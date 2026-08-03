@@ -9,15 +9,15 @@ export function formatAuPhoneDisplay(digits) {
 }
 
 export const ORG_PHONE_1300 = {
-    digits: "1300976097",
-    display: formatAuPhoneDisplay("1300976097"),
-    tel: "tel:1300976097",
+    digits: "1300 415 252",
+    display: formatAuPhoneDisplay("1300 415 252"),
+    tel: "tel:1300 415 252",
     wa: "https://wa.me/611300976097",
 }
 
 export const ORG_PHONE_MOBILE = {
-    digits: "0483878887",
-    display: formatAuPhoneDisplay("0483878887"),
-    tel: "tel:0483878887",
+    digits: "0481 399 977",
+    display: formatAuPhoneDisplay("0481 399 977"),
+    tel: "tel:0481 399 977",
     wa: "https://wa.me/61483878887",
 }

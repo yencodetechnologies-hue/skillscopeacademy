@@ -2846,8 +2846,8 @@ const handleViewPDF = (pdfUrl) => {
                             Our team can answer questions about course suitability, dates, and group bookings.
                         </p>
                         <a href={ORG_PHONE_1300.tel} className="cdp-sb-btn-cyan">☎ {ORG_PHONE_1300.display}</a>
-                        <a href="mailto:info@safeticks.com.au" className="cdp-sb-btn-ghost">✉ Email us</a>
-                        <div className="cdp-sb-email">info@safeticks.com.au</div>
+                        <a href="mailto:info@safeticks.com" className="cdp-sb-btn-ghost">✉ Email us</a>
+                        <div className="cdp-sb-email">info@safeticks.com</div>
                     </div>
 
                 </div>

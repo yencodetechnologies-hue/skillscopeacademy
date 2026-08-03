@@ -35,7 +35,8 @@
 }
 
 .navbar-logo > img {
-  height: 35px;
+  height: 50px;
+  margin-left:70px;
 }
 
 .logo span {
@@ -376,6 +377,7 @@
   }
 .navbar-logo > img {
     height: 18px;
+    margin-left: 0px;
   }
 
  

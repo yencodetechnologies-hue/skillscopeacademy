@@ -20,11 +20,11 @@ function TopNav() {
 
                 <div className="top-item">
                     <i className="fa-regular fa-envelope"></i>
-                    <a href="mailto:info@safeticks.com.au" style={{ color: "inherit", textDecoration: "none" }}>info@safeticks.com.au</a>
+                    <a href="mailto:info@safeticks.com" style={{ color: "inherit", textDecoration: "none" }}>info@safeticks.com</a>
                 </div>
 
                 <div className="top-item">
-                    <i className="fa-solid fa-location-dot"></i> 3/14-16 Marjorie Street, Sefton NSW 2162
+                    <i className="fa-solid fa-location-dot"></i> 15/3 Lancaster Street Ingleburn NSW 2565
                 </div>
 
             </div>

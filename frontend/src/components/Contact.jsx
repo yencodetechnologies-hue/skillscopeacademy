@@ -82,12 +82,12 @@ function ContactPage() {
                             </div>
                         </div>
 
-                        <a href="mailto:info@safeticks.com.au" className="cp-contact-card" style={{ textDecoration: "none", color: "inherit" }}>
+                        <a href="mailto:info@safeticks.com" className="cp-contact-card" style={{ textDecoration: "none", color: "inherit" }}>
                             <div className="cp-contact-card-icon cp-icon-blue">✉️</div>
                             <div>
                                 <p className="cp-contact-card-label">Our Email</p>
                                 <span className="cp-contact-card-link">
-                                    info@safeticks.com.au
+                                    info@safeticks.com
                                 </span>
                             </div>
                         </a>
@@ -115,7 +115,7 @@ function ContactPage() {
 
                         <div className="cp-address-block">
                             <p className="cp-address-name">SafeTicks | Sydney</p>
-                            <p className="cp-address-line">3/14-16 Marjorie Street, Sefton NSW 2162</p>
+                            <p className="cp-address-line">15/3 Lancaster Street Ingleburn NSW 2565</p>
                             <a
                                 href="https://maps.google.com/?q=3/14-16+Marjorie+Street+Sefton+NSW+2162"
                                 target="_blank"
@@ -183,7 +183,7 @@ function ContactPage() {
                 <h2 className="cp-map-title">
                     Visit Our <span className="cp-cyan">Training Center</span>
                 </h2>
-                <p className="cp-map-sub">3/14-16 Marjorie Street, Sefton NSW 2162, Australia</p>
+                <p className="cp-map-sub">15/3 Lancaster Street Ingleburn NSW 2565</p>
 
                 <div className="cp-map-wrap">
                     <iframe
@@ -201,7 +201,7 @@ function ContactPage() {
                     <div className="cp-info-card">
                         <div className="cp-info-icon cp-icon-cyan">📍</div>
                         <h4 className="cp-info-title">Address</h4>
-                        <p className="cp-info-text">3/14-16 Marjorie Street</p>
+                        <p className="cp-info-text">15/3 Lancaster Street Ingleburn NSW 2565</p>
                         <p className="cp-info-text">Sefton NSW 2162</p>
                     </div>
                     <div className="cp-info-card">

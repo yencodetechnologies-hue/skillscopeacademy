@@ -101,7 +101,7 @@ function AboutPage() {
                         <div className="ab-building-wrap">
                             <img src={buildingImg} alt="SafeTicks building" className="ab-building-img" />
                             <div className="ab-building-caption">
-                                📍 SafeTicks | Sydney – 3/14-16 Marjorie Street, Sefton NSW 2162
+                                📍 SafeTicks | Sydney – 15/3 Lancaster Street Ingleburn NSW 2565
                             </div>
                         </div>
                     </div>

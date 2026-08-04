@@ -125,6 +125,7 @@ exports.login = async (req, res) => {
 
     if (company) {
       let isMatch = await bcrypt.compare(password, company.password);
+      console.log(isMatch,"isMatch");
       if (isMatch) {
         const token = jwt.sign(
           { id: company._id, role: company.role || "Company" },

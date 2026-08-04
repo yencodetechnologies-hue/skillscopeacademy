@@ -199,6 +199,7 @@ const menu = {
     { name: "Site Banner", path: "/admin/site-banner", icon: "fa-solid fa-bullhorn" },
     { name: "Activity Logs", path: "/admin/activity-logs", icon: "fa-solid fa-clock-rotate-left" },
     { name: "Code of Practice", path: "/admin/code-of-practice", icon: "fa-solid fa-gavel" },
+    { name: "Email Templates", path: "/admin/email-templates", icon: "fa-solid fa-gavel" },
   ],
 
   Company: [

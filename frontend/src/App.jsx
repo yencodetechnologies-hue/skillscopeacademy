@@ -204,6 +204,7 @@ import TeacherDashboard from "./pages/TeacherDashboard"
 import AdminDashboard from "./pages/AdminDashboard"
 import CompanyDashboard from "./components/company/CompanyDashboard"
 import Students from "./components/Students"
+import EmailTemplates from "./components/EmailTemplates"
 import Schedule from "./components/Schedule"
 import Teachers from "./components/Teachers"
 import LlndResults from "./components/llnd/LlndResults"
@@ -355,6 +356,7 @@ function App() {
                 >
                     <Route index element={<AdminDashboard />} />
                     <Route path="students" element={<Students />} />
+                    <Route path="email-templates" element={<EmailTemplates />} />
                     <Route path="schedule" element={<Schedule />} />
                     <Route path="teachers" element={<Teachers />} />
                     <Route path="llnd-results" element={<LlndResults />} />

@@ -697,6 +697,7 @@ exports.getAllStudents = async (req, res) => {
 
     // ✅ total count (for pagination UI)
     const total = await EnrollmentFlow.countDocuments(flowQuery);
+    console.log("getted");
 
     res.json({
       data: formatted,

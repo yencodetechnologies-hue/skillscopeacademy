@@ -1,0 +1,120 @@
+.email-template-page {
+  padding: 24px;
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+.email-template-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #19191a;
+  margin: 0 0 4px;
+}
+
+.email-template-header p {
+  margin: 0 0 20px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.email-template-table-wrap {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.email-template-meta {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.email-template-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.email-template-table th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.email-template-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--color-bg-muted);
+}
+
+.email-template-empty {
+  text-align: center;
+  color: var(--gray-400);
+  padding: 40px !important;
+}
+
+/* Status Button */
+.template-status-btn {
+  min-width: 95px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.template-status-btn.active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.template-status-btn.active:hover {
+  background: #bbf7d0;
+}
+
+.template-status-btn.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.template-status-btn.inactive:hover {
+  background: #fecaca;
+}
+
+.email-template-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.email-template-pagination button {
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.email-template-pagination button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+@media (max-width:768px){
+
+.email-template-table{
+    display:block;
+    overflow-x:auto;
+}
+
+.email-template-header h1{
+    font-size:22px;
+}
+
+}

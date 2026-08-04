@@ -7,6 +7,19 @@ import { API_URL } from "../data/service";
 import { authHeaders } from "../utils/authHeaders";
 const ITEMS_PER_PAGE = 10;
 
+///Send mail to Multipple users
+
+const handleMultipleMail = () => {
+  if (selectedStudents.length === 0) {
+    alert("Please select at least one student.");
+    return;
+  }
+
+  console.log("Selected Students:", selectedStudents);
+
+  // We'll call the backend API here in the next step
+};
+
 // ─── Badge Components ───────────────────────────────────────────────────────
 
 function StatusBadge({ status }) {
@@ -257,6 +270,121 @@ function EditModal({ student, onClose, onSave }) {
             {saving ? "Saving..." : "Update Student"}
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+///SEND EMAIL
+
+function SendMailModal({ student, onClose }) {
+  const [link, setLink] = useState("");
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+
+
+const handleSendMail = async () => {
+
+  if (!link.trim()) {
+    setError("Please enter a manual link.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setError("");
+
+ const res = await fetch(`${API_URL}/api/send-mail`, {
+  method: "POST",
+  headers: authHeaders({
+    "Content-Type": "application/json",
+  }),
+  body: JSON.stringify({
+    studentId: student._id || student.id,
+    courseLink: link,
+  }),
+});
+
+    if (!res.ok) {
+      throw new Error("Failed to send email");
+    }
+
+    alert("Mail sent successfully.");
+
+    onClose();
+
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  if (!student) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div
+        className="modal-box"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="modal-header">
+          <div>
+            <h2 className="modal-title">Send Manual Link</h2>
+            <p className="modal-subtitle">
+              Student: {student.name}
+            </p>
+          </div>
+
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="modal-form">
+          {error && (
+  <div className="modal-error">
+    {error}
+  </div>
+)}
+
+          <label className="modal-label">
+            Enter Manual Link
+          </label>
+
+          <div className="modal-input-wrap">
+            <input
+              className="modal-input"
+              type="text"
+              placeholder="https://example.com/link"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+            />
+          </div>
+
+        </div>
+
+        <div className="modal-actions">
+
+          <button
+            className="modal-cancel-btn"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+
+          <button
+  className="modal-save-btn"
+  onClick={handleSendMail}
+  disabled={loading}
+>
+  {loading ? "Sending..." : "Send Mail"}
+</button>
+
+        </div>
+
       </div>
     </div>
   );
@@ -863,6 +991,12 @@ const [totalPages, setTotalPages] = useState(1);
   const [editStudent, setEditStudent] = useState(null);
   const [deleteStudent, setDeleteStudent] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [mailStudent, setMailStudent] = useState(null);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [showSendModal, setShowSendModal] = useState(false);
+  const [sendType, setSendType] = useState("email");
+  const [showEmailModal, setShowEmailModal] = useState(false);
+const [courseLink, setCourseLink] = useState("");
   const navigate = useNavigate();
 
   // ── Fetch ──────────────────────────────────────────────────────────────────
@@ -966,6 +1100,10 @@ const applySearchNow = () => {
 // useEffect(() => {
 //   fetchStudents();
 // }, []);
+
+useEffect(() => {
+  console.log(selectedStudents);
+}, [selectedStudents]);
 
 useEffect(() => {
   fetchStudents();
@@ -1158,13 +1296,42 @@ setDeleteStudent(null);
           </button>
         </div>
       </div>
-
+<div style={{ marginBottom: "10px", fontWeight: "bold" }}>
+  Selected Students: {selectedStudents.length}
+</div>
       {/* Table */}
       <div className="sm-card sm-table-card">
         <div className="sm-table-header">
           <h3 className="sm-card-title">Student Accounts ({total})</h3>
           <p className="sm-card-subtitle">Manage all student registrations and access</p>
         </div>
+
+        <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "15px",
+  }}
+>
+  <div style={{ fontWeight: "600" }}>
+    Selected Students: {selectedStudents.length}
+  </div>
+
+<button
+  className="sm-add-btn"
+  onClick={() => {
+    if (selectedStudents.length === 0) {
+      alert("Please choose at least one user.");
+      return;
+    }
+
+    setShowSendModal(true);
+  }}
+>
+  📤 Send
+</button>
+</div>
 
        
         {error && <p className="sm-error">Error: {error}</p>}
@@ -1174,6 +1341,7 @@ setDeleteStudent(null);
             <table className="sm-table">
               <thead>
                 <tr>
+                  <th>Select</th>
                   <th>Register date</th>
                   <th>Booking ID</th>
                   <th>Name</th>
@@ -1194,8 +1362,12 @@ setDeleteStudent(null);
                 </tr>
               </thead>
               <tbody>
+                
+               
+
                 {displayStudents.length === 0 ? (
                   <tr>
+                    
                     <td colSpan={17} style={{ textAlign: "center", padding: "2rem", color: colors.textIcon }}>
                       No students found.
                     </td>
@@ -1203,6 +1375,21 @@ setDeleteStudent(null);
                 ) : (
                   displayStudents.map((s) => (
                     <tr key={s.flowId}>
+                       <td>
+<input
+  type="checkbox"
+  checked={selectedStudents.some((stu) => stu.flowId === s.flowId)}
+  onChange={(e) => {
+    if (e.target.checked) {
+      setSelectedStudents([...selectedStudents, s]);
+    } else {
+      setSelectedStudents(
+        selectedStudents.filter((stu) => stu.flowId !== s.flowId)
+      );
+    }
+  }}
+/>
+</td>
                       <td>
                         <div className="sm-date">{s.registerDate}</div>
                         <div className="sm-time">{s.registerTime}</div>
@@ -1330,6 +1517,14 @@ setDeleteStudent(null);
                           >
                             🗑
                           </button>
+
+                          <button
+    className="sm-icon-btn"
+    title="Send Mail"
+    onClick={() => setMailStudent(s)}
+>
+    📧
+</button>
                         </div>
                       </td>
                     </tr>
@@ -1337,6 +1532,10 @@ setDeleteStudent(null);
                 )}
               </tbody>
             </table>
+
+            {/* <pre>
+{JSON.stringify(selectedStudents, null, 2)}
+</pre> */}
           </div>
         )}
 
@@ -1402,6 +1601,171 @@ disabled={currentPage === totalPages}
           onSave={handleAddSave}
         />
       )}
+
+      {mailStudent && (
+  <SendMailModal
+    student={mailStudent}
+    onClose={() => setMailStudent(null)}
+  />
+)}
+
+{showSendModal && (
+  <div className="modal-overlay">
+    <div className="send-modal">
+
+      <h2 className="send-heading">Choose Sending Method</h2>
+      <p className="send-subtitle">
+        Select how you want to send the course link.
+      </p>
+
+      <div
+        className={`send-option ${sendType === "email" ? "active" : ""}`}
+        onClick={() => setSendType("email")}
+      >
+        <div className="send-option-icon">📧</div>
+
+        <div>
+          <h4>Send via Email</h4>
+          <p>
+            Send course link to <b>{selectedStudents.length}</b> selected
+            student{selectedStudents.length > 1 ? "s" : ""}.
+          </p>
+        </div>
+      </div>
+
+      <div
+        className={`send-option ${sendType === "whatsapp" ? "active" : ""}`}
+        onClick={() => setSendType("whatsapp")}
+      >
+        <div className="send-option-icon">💬</div>
+
+        <div>
+          <h4>Send via WhatsApp</h4>
+          <p>
+            Share the course link through WhatsApp.
+          </p>
+        </div>
+      </div>
+
+      <div className="send-buttons">
+        <button
+          className="next-btn"
+          onClick={() => {
+            setShowSendModal(false);
+
+            if (sendType === "email") {
+              setShowEmailModal(true);
+            } else {
+              alert("WhatsApp functionality will be implemented later.");
+            }
+          }}
+        >
+          Continue
+        </button>
+
+        <button
+          className="cancel-btn"
+          onClick={() => setShowSendModal(false)}
+        >
+          Cancel
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
+
+{showEmailModal && (
+  <div className="modal-overlay">
+    <div className="send-modal">
+
+      <div className="send-modal-header">
+        <h2>📧 Send Email</h2>
+        <p>
+          Send course link to <strong>{selectedStudents.length}</strong> selected
+          student{selectedStudents.length > 1 ? "s" : ""}
+        </p>
+      </div>
+
+      <div className="send-modal-body">
+
+        <label className="input-label">
+          Course Link
+        </label>
+
+        <input
+          type="text"
+          className="course-input"
+          value={courseLink}
+          onChange={(e) => setCourseLink(e.target.value)}
+          placeholder="https://example.com/course-link"
+        />
+
+      </div>
+
+      <div className="send-modal-footer">
+
+        <button
+          className="next-btn"
+          onClick={async () => {
+            if (selectedStudents.length === 0) {
+              alert("Please select at least one student.");
+              return;
+            }
+
+            if (!courseLink.trim()) {
+              alert("Please enter course link.");
+              return;
+            }
+
+            try {
+              const res = await fetch(
+                `${API_URL}/api/send-mail/multiple`,
+                {
+                  method: "POST",
+                  headers: authHeaders({
+                    "Content-Type": "application/json",
+                  }),
+                  body: JSON.stringify({
+                    students: selectedStudents,
+                    courseLink,
+                  }),
+                }
+              );
+
+              const data = await res.json();
+
+              if (!res.ok) {
+                alert(data.message);
+                return;
+              }
+
+              alert("Emails sent successfully.");
+
+              setShowEmailModal(false);
+              setCourseLink("");
+
+            } catch (err) {
+              console.error(err);
+              alert("Failed to send emails.");
+            }
+          }}
+        >
+          📤 Send Email
+        </button>
+
+        <button
+          className="cancel-btn"
+          onClick={() => setShowEmailModal(false)}
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
     </div>
   );
 }

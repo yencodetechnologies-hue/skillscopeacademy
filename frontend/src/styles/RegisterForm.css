@@ -24,12 +24,14 @@
 
 .country-code {
     width: 80px;
-    padding: 12px;
+    padding: 11px 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background: #fff;
     font-size: 14px;
     outline: none;
+    height:40px;
+    margin-bottom:3px;
 }
 
 .phone-input {

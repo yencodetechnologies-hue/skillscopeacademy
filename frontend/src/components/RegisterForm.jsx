@@ -162,6 +162,7 @@ function RegisterForm() {
         initialValues: {
             name: "",
             email: "",
+            countryCode: "+61",
             phone: "",
             password: "",
             role: "Student",
@@ -178,10 +179,15 @@ function RegisterForm() {
 
             try {
 
-                const res = await axios.post(
-                    `${API_URL}/api/auth/register`,
-                    values
-                )
+               const payload = {
+    ...values,
+    phone: values.countryCode + values.phone,
+};
+
+const res = await axios.post(
+    `${API_URL}/api/auth/register`,
+    payload
+);
 
                 if (res.data.token) {
                   localStorage.setItem("token", res.data.token)
@@ -248,14 +254,37 @@ function RegisterForm() {
                 />
 
                 <label>Phone Number</label>
-                <input
-                    type="text"
-                    name="phone"
-                    placeholder="+1 (555) 123-4567"
-                    value={formik.values.phone}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
+
+<div className="phone-group">
+
+    <select
+        name="countryCode"
+        value={formik.values.countryCode}
+        onChange={formik.handleChange}
+        className="country-code"
+    >
+        <option value="+61">+61</option>
+        <option value="+91">+91</option>
+        <option value="+1">+1</option>
+        <option value="+44">+44</option>
+        <option value="+64">+64</option>
+        <option value="+65">+65</option>
+    </select>
+
+    <input
+        type="text"
+        name="phone"
+        placeholder="412345678"
+        value={formik.values.phone}
+        onChange={(e) => {
+            const value = e.target.value.replace(/\D/g, "");
+            formik.setFieldValue("phone", value);
+        }}
+        onBlur={formik.handleBlur}
+        className="phone-input"
+    />
+
+</div>
 
                 <label>Password</label>
                 <input

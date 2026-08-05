@@ -5,6 +5,8 @@ try {
   console.warn("Could not set DNS servers:", err.message);
 }
 require("dotenv").config({ path: require("path").join(__dirname, ".env") });
+require("./cron/birthdayCron");
+require("./cron/festivalCron");
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -23,6 +25,7 @@ const resultRoutes = require("./routes/resultRoutes");
 const mailRoutes = require("./routes/mailRoutes");
 const sendMultipleMailRoutes = require("./routes/sentMultiplemailRoutes");
 const emailTemplateRoutes = require("./routes/emailTemplateRoutes");
+
 connectDB();
 
 const app = express();

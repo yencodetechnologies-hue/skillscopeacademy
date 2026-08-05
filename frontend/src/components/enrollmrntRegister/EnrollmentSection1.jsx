@@ -20,13 +20,34 @@ function EnrollmentSection1({ userDetails, data, setData, next }) {
     useEffect(() => {
         if (!userDetails || !userDetails.name) return
         const parts = userDetails.name.trim().split(" ")
-        setData(prev => ({
-            ...prev,
-            givenName: parts[0] || "",
-            surname: parts.slice(1).join(" ") || "",
-            email: userDetails.email || "",
-            mobilePhone: userDetails.phone || userDetails.mobileNumber || userDetails.mobile || ""
-        }))
+      const fullPhone =
+    userDetails.phone ||
+    userDetails.mobileNumber ||
+    userDetails.mobile ||
+    "";
+
+let countryCode = "+61";
+let mobilePhone = fullPhone;
+
+if (fullPhone.startsWith("+61")) {
+    countryCode = "+61";
+    mobilePhone = fullPhone.replace("+61", "");
+} else if (fullPhone.startsWith("+91")) {
+    countryCode = "+91";
+    mobilePhone = fullPhone.replace("+91", "");
+} else if (fullPhone.startsWith("+1")) {
+    countryCode = "+1";
+    mobilePhone = fullPhone.replace("+1", "");
+}
+
+setData(prev => ({
+    ...prev,
+    givenName: parts[0] || "",
+    surname: parts.slice(1).join(" ") || "",
+    email: userDetails.email || "",
+    countryCode,
+    mobilePhone
+}));
     }, [userDetails])
 
     const handleNext = () => {
@@ -216,16 +237,39 @@ function EnrollmentSection1({ userDetails, data, setData, next }) {
 
                 <div className="er-row-2">
                     <div className="er-field-group">
-                        <label className={`er-label ${errors.includes("mobilePhone") ? "er-label-error" : ""}`}>
-                            Mobile Phone <span className="er-required">*</span>
-                        </label>
-                        <input
-                            id="er-mobilePhone"
-                            className={`er-input ${errors.includes("mobilePhone") ? "er-input-error" : ""}`}
-                            value={data.mobilePhone || ""}
-                            onChange={e => set("mobilePhone", e.target.value)}
-                        />
-                    </div>
+
+    <label className={`er-label ${errors.includes("mobilePhone") ? "er-label-error" : ""}`}>
+        Mobile Phone <span className="er-required">*</span>
+    </label>
+
+    <div className="er-phone-group">
+
+        <select
+            className="er-country-code"
+            value={data.countryCode || "+61"}
+            onChange={(e) => set("countryCode", e.target.value)}
+        >
+            <option value="+61">+61</option>
+            <option value="+91">+91</option>
+            <option value="+1">+1</option>
+            <option value="+44">+44</option>
+            <option value="+64">+64</option>
+            <option value="+65">+65</option>
+        </select>
+
+        <input
+            id="er-mobilePhone"
+            className={`er-input ${errors.includes("mobilePhone") ? "er-input-error" : ""}`}
+            placeholder="412345678"
+            value={data.mobilePhone || ""}
+            onChange={(e) =>
+                set("mobilePhone", e.target.value.replace(/\D/g, ""))
+            }
+        />
+
+    </div>
+
+</div>
                     <div className="er-field-group">
                         <label className={`er-label ${errors.includes("email") ? "er-label-error" : ""}`}>
                             Email <span className="er-required">*</span>

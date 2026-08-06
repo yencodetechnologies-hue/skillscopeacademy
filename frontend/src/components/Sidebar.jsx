@@ -152,10 +152,10 @@
 
 // export default Sidebar
 
-import "../styles/Sidebar.css"
-import { useState, useContext } from "react"
+import "../styles/Sidebar.css";
+import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
 
 const menu = {
   Student: [
@@ -180,7 +180,7 @@ const menu = {
     { name: "Dashboard", path: "/admin", icon: "fa-solid fa-table-columns" },
     { name: "Courses", path: "/admin/courses", icon: "fa-solid fa-book" },
     { name: "Students", path: "/admin/students", icon: "fa-solid fa-users" },
-    { name: "Companies", path: "/admin/companies", icon: "fa-solid fa-users" },
+    { name: "Companies", path: "/admin/companies", icon: "fa-solid fa-building" },
     { name: "Schedule", path: "/admin/schedule", icon: "fa-solid fa-calendar" },
     { name: "Teachers", path: "/admin/teachers", icon: "fa-solid fa-chalkboard-user" },
     { name: "LLN Results", path: "/admin/llnd-results", icon: "fa-solid fa-clipboard-check" },
@@ -199,121 +199,189 @@ const menu = {
     { name: "Site Banner", path: "/admin/site-banner", icon: "fa-solid fa-bullhorn" },
     { name: "Activity Logs", path: "/admin/activity-logs", icon: "fa-solid fa-clock-rotate-left" },
     { name: "Code of Practice", path: "/admin/code-of-practice", icon: "fa-solid fa-gavel" },
-    { name: "Email Templates", path: "/admin/email-templates", icon: "fa-solid fa-gavel" },
+
+    {
+      name: "Templates",
+      icon: "fa-solid fa-envelope",
+      children: [
+        {
+          name: "Email Templates",
+          path: "/admin/email-templates",
+          icon: "fa-solid fa-file-lines"
+        },
+        {
+          name: "Offers Mail",
+          path: "/admin/promotion-mail",
+          icon: "fa-solid fa-bullhorn"
+        },
+        {
+          name: "Custom Mail",
+          path: "/admin/custommail-student",
+          icon: "fa-solid fa-paper-plane"
+        },
+        // {
+        //   name: "Mail History",
+        //   path: "/admin/mail-history",
+        //   icon: "fa-solid fa-clock-rotate-left"
+        // }
+      ]
+    }
   ],
 
   Company: [
     { name: "Dashboard", path: "/company", icon: "fa-solid fa-table-columns" },
     { name: "Courses", path: "/company/companyCourses", icon: "fa-solid fa-book" },
     { name: "Payments", path: "/company/companyPayments", icon: "fa-solid fa-dollar-sign" },
-    { name: "Students", path: "/company/companyStudents", icon: "fa-solid fa-users" },
+    { name: "Students", path: "/company/companyStudents", icon: "fa-solid fa-users" }
   ]
-}
+};
 
-// Case-insensitive lookup: DB/legacy data can store role as "admin"
-// instead of "Admin", etc. Without this, menu[user.role] silently
-// returns undefined and the sidebar renders with no menu items.
 const getMenuForRole = (role) => {
-  if (!role) return []
+  if (!role) return [];
   const key = Object.keys(menu).find(
     (k) => k.toLowerCase() === String(role).toLowerCase()
-  )
-  return key ? menu[key] : []
-}
+  );
+  return key ? menu[key] : [];
+};
 
 function Sidebar({ user }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const navigate = useNavigate()
-  const location = useLocation()
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState("Email Management");
+
+  const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useContext(AuthContext);
 
-  const getActiveFromPath = () => {
-    const currentMenu = getMenuForRole(user?.role)
-    
-    // Special case for Student My Courses vs Buy New Course
-    if (user?.role === "Student" && location.pathname === "/student/my-courses") {
-      const searchParams = new URLSearchParams(location.search);
-      if (searchParams.get("tab") === "browse" || location.state?.tab === "browse") return "Buy New Course";
-      return "My Courses";
-    }
-
-    const matched = [...currentMenu]
-      .sort((a, b) => b.path.length - a.path.length)
-      .find(item => location.pathname.startsWith(item.path))
-    return matched?.name || "Dashboard"
-  }
-
-  const active = getActiveFromPath()
-
   const handleNavigate = (item) => {
-    if (user?.role === "Student") {
-      const assessmentPassedVal = localStorage.getItem("assessmentPassed");
-      const enrollmentFormSubmittedVal = localStorage.getItem("enrollmentFormSubmitted");
-
-      if (assessmentPassedVal !== null) {
-        const assessmentPassed = assessmentPassedVal === "true";
-        const enrollmentFormSubmitted = enrollmentFormSubmittedVal === "true";
-
-        // Rule 1: LLN Assessment not passed yet
-        if (!assessmentPassed) {
-          // Disallow navigating to any tab except Dashboard
-          if (item.name !== "Dashboard") {
-            alert("Please complete your LLN assessment before continuing");
-            return;
-          }
-        }
-
-        // Rule 2: LLN Assessment passed, but Enrollment Form not submitted yet
-        if (assessmentPassed && !enrollmentFormSubmitted) {
-          // Allow ONLY Dashboard, My Courses, and Enrollment Form
-          if (item.name !== "Dashboard" && item.name !== "My Courses" && item.name !== "Enrollment Form") {
-            alert("Please complete your enrollment form before continuing");
-            return;
-          }
-        }
-      }
-    }
-    navigate(item.path, { state: item.state })
-    setIsOpen(false)
-  }
+    navigate(item.path, { state: item.state });
+    setIsOpen(false);
+  };
 
   const handleLogout = () => {
-    logout()
-    navigate("/login")
-  }
+    logout();
+    navigate("/login");
+  };
 
   return (
     <>
-      <button className="sidebar-burger" onClick={() => setIsOpen(prev => !prev)}>
+      <button
+        className="sidebar-burger"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <i className={isOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars"}></i>
       </button>
 
       {isOpen && (
-        <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsOpen(false)}
+        />
       )}
 
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
-        {getMenuForRole(user?.role).map((item) => (
-          <button
-            key={item.name}
-            className={`menu-item ${active === item.name ? "active" : ""}`}
-            onClick={() => handleNavigate(item)}
-          >
-            <span className="menu-icon">
-              <i className={item.icon}></i>
-            </span>
-            <span className="menu-text">
-              {item.name}
-            </span>
-          </button>
-        ))}
+
+        {getMenuForRole(user?.role).map((item) => {
+
+          if (item.children) {
+
+            return (
+
+              <div key={item.name}>
+
+                <button
+                  className="menu-item"
+                  onClick={() =>
+                    setOpenMenu(
+                      openMenu === item.name ? "" : item.name
+                    )
+                  }
+                >
+
+                  <span className="menu-icon">
+                    <i className={item.icon}></i>
+                  </span>
+
+                  <span className="menu-text">
+                    {item.name}
+                  </span>
+
+                  <span style={{ marginLeft: "auto" }}>
+                    <i
+                      className={
+                        openMenu === item.name
+                          ? "fa-solid fa-chevron-up"
+                          : "fa-solid fa-chevron-down"
+                      }
+                    ></i>
+                  </span>
+
+                </button>
+
+                {openMenu === item.name && (
+
+                  <div className="submenu">
+
+                    {item.children.map((child) => (
+
+                      <button
+                        key={child.name}
+                        className={`submenu-item ${
+                          location.pathname === child.path ? "active" : ""
+                        }`}
+                        onClick={() => handleNavigate(child)}
+                      >
+
+                        <i className={child.icon}></i>
+
+                        <span>{child.name}</span>
+
+                      </button>
+
+                    ))}
+
+                  </div>
+
+                )}
+
+              </div>
+
+            );
+
+          }
+
+          return (
+
+            <button
+              key={item.name}
+              className={`menu-item ${
+                location.pathname === item.path ? "active" : ""
+              }`}
+              onClick={() => handleNavigate(item)}
+            >
+
+              <span className="menu-icon">
+                <i className={item.icon}></i>
+              </span>
+
+              <span className="menu-text">
+                {item.name}
+              </span>
+
+            </button>
+
+          );
+
+        })}
 
         <button className="logout" onClick={handleLogout}>
           Logout
         </button>
+
       </div>
+
     </>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

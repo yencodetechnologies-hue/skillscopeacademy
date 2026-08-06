@@ -255,6 +255,8 @@ import UniqueStudentIdentifier from "./pages/UniqueStudentIdentifier"
 import AdminFormDocuments from "./components/AdminFormDocument"
 import CodeOfPractice from "./components/CodeOfPractice"
 import AdminCodeOfPractice from "./components/AdminCodeOfPractice"
+import PromotionMail from "./components/PromotionMail";
+import CustomMail from "./components/CustomMail";
 
 function App() {
 
@@ -295,6 +297,7 @@ function App() {
                 <Route path="/code-of-practice" element={<CodeOfPractice />} />
                 <Route path="/usi" element={<UniqueStudentIdentifier />} />
                 <Route path="/enrollment-success" element={<EnrollmentSuccess />} />
+               
 
 
 
@@ -357,6 +360,8 @@ function App() {
                     <Route index element={<AdminDashboard />} />
                     <Route path="students" element={<Students />} />
                     <Route path="email-templates" element={<EmailTemplates />} />
+                    <Route path="/admin/promotion-mail" element={<PromotionMail />}/>
+                     <Route path="/admin/custommail-student" element={<CustomMail />} />
                     <Route path="schedule" element={<Schedule />} />
                     <Route path="teachers" element={<Teachers />} />
                     <Route path="llnd-results" element={<LlndResults />} />

@@ -8,7 +8,7 @@ console.log("✅ Birthday Cron Loaded");
 
 // Every minute (Testing)
 // Later change to "0 9 * * *"
-cron.schedule("* * * * *", async () => {
+cron.schedule("0 9 * * *", async () => {
 
     console.log("🎂 Birthday Cron Running...");
 
@@ -74,33 +74,214 @@ students.forEach((student) => {
                await sendEmail({
     to: "abinayaj142001@gmail.com",
     subject: "🎉 Happy Birthday!",
-    html: `
-        <div style="font-family: Arial, sans-serif; line-height:1.6;">
-            <h2>🎂 Happy Birthday ${student.name}!</h2>
+html: `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 
-            <p>Dear ${student.name},</p>
+<style>
 
-            <p>
-                Wishing you a very Happy Birthday! 🎉
-            </p>
+body{
+    margin:0;
+    padding:0;
+    background:#f4f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
-            <p>
-                May your day be filled with happiness, success and good health.
-            </p>
+.wrapper{
+    width:100%;
+    padding:30px 0;
+}
 
-            <p>
-                Thank you for being a valued student of
-                <strong>Safety Training Academy</strong>.
-            </p>
+.container{
+    max-width:650px;
+    margin:auto;
+    background:#ffffff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
 
-            <br>
+.header{
+    background:linear-gradient(135deg,#2563eb,#0f766e);
+    padding:35px;
+    text-align:center;
+    color:#fff;
+}
 
-            <p>
-                Best Regards,<br>
-                <strong>Safety Training Academy</strong>
-            </p>
-        </div>
-    `
+.header h1{
+    margin:0;
+    font-size:32px;
+}
+
+.header p{
+    margin-top:10px;
+    font-size:15px;
+    opacity:.95;
+}
+
+.content{
+    padding:35px;
+    color:#374151;
+    line-height:1.8;
+    font-size:15px;
+}
+
+.greeting{
+    font-size:20px;
+    font-weight:bold;
+    color:#111827;
+}
+
+.wish-box{
+    margin:25px 0;
+    padding:25px;
+    background:#f8fafc;
+    border-left:5px solid #2563eb;
+    border-radius:10px;
+}
+
+.wish-box h2{
+    margin-top:0;
+    color:#2563eb;
+}
+
+.button{
+    display:inline-block;
+    background:#2563eb;
+    color:#ffffff !important;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:8px;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.footer{
+    background:#f1f5f9;
+    padding:25px;
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+}
+
+.footer strong{
+    color:#0f172a;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="container">
+
+<div class="header">
+
+<h1>🎂 Happy Birthday!</h1>
+
+<p>Safety Training Academy</p>
+
+</div>
+
+<div class="content">
+
+<p class="greeting">
+
+Dear ${student.name},
+
+</p>
+
+<div class="wish-box">
+
+<h2>🎉 Wishing You a Wonderful Birthday!</h2>
+
+<p>
+
+On behalf of everyone at <strong>Safety Training Academy</strong>,
+we would like to wish you a very Happy Birthday!
+
+</p>
+
+<p>
+
+May this special day bring you happiness, good health,
+success, and many exciting opportunities in the year ahead.
+
+</p>
+
+<p>
+
+Thank you for being a valued member of our academy.
+We truly appreciate your trust and support.
+
+</p>
+
+</div>
+
+<p>
+
+Have a fantastic celebration with your family and friends.
+We wish you continued success in both your personal and professional journey.
+
+</p>
+
+<center>
+
+<a href="https://safetytrainingacademy.com"
+class="button">
+
+Visit Our Academy
+
+</a>
+
+</center>
+
+<br>
+
+<p>
+
+Warm Regards,
+
+<br><br>
+
+<strong>
+
+Safety Training Academy Team
+
+</strong>
+
+</p>
+
+</div>
+
+<div class="footer">
+
+<p>
+
+© 2026 Safety Training Academy
+
+</p>
+
+<p>
+
+Professional Safety Training • Workplace Compliance • Certification
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
+`
 });
 
 console.log("✅ Birthday mail sent to abinayaj142001@gmail.com");

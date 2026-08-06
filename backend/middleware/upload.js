@@ -222,6 +222,31 @@ const uploadCodeOfPractice = multer({
   storage: codeOfPracticeStorage,
   limits: { fileSize: FILE_SIZE_LIMIT },
 })
+
+// Promotion Mail Attachment Upload
+const promotionMailStorage = multer.memoryStorage();
+
+
+const uploadCustomMail = multer({
+
+  storage: promotionMailStorage,
+
+  limits: {
+    fileSize: FILE_SIZE_LIMIT
+  }
+
+});
+const customMailStorage = multer.memoryStorage();
+
+const uploadPromotionMail = multer({
+
+  storage: customMailStorage,
+
+  limits: {
+    fileSize: FILE_SIZE_LIMIT
+  }
+
+});
 module.exports = {
   uploadCourse,
   uploadPayment,
@@ -233,4 +258,6 @@ module.exports = {
   uploadSiteBanner,
     uploadFormDocument,
       uploadCodeOfPractice, 
+      uploadPromotionMail,
+      uploadCustomMail
 }

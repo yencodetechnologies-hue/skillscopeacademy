@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const sendEmail = async ({ to, subject, html, bcc }) => {
+const sendEmail = async ({ to, subject, html, bcc, attachments }) => {
   if (!to) {
     console.error("❌ sendEmail error: No recipient defined (to is empty)");
     return;
@@ -38,7 +38,8 @@ const sendEmail = async ({ to, subject, html, bcc }) => {
         to: to
       },
       subject,
-      html
+      html,
+        attachments
     };
 
     const info = await transporter.sendMail(mailOptions);

@@ -1,0 +1,362 @@
+.promotion-container {
+    padding: 25px;
+    background: #f8f9fa;
+    min-height: calc(100vh - 60px);
+}
+
+
+/* Header */
+
+.promotion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.promotion-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+
+.promotion-header span {
+    background: #ffffff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #555;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+
+
+/* Search */
+
+.search-box {
+    margin-bottom: 20px;
+}
+
+
+.search-box input {
+
+    width: 300px;
+
+    padding: 12px 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 14px;
+
+}
+
+
+.search-box input:focus {
+
+    border-color:#4f46e5;
+
+}
+
+
+
+
+/* Table */
+
+
+.table-wrapper {
+
+    background:white;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+
+    margin-bottom:25px;
+
+}
+
+
+
+table {
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+thead {
+
+    background:#f1f3f9;
+
+}
+
+
+
+thead th {
+
+    padding:14px;
+
+    text-align:left;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+
+
+tbody td {
+
+    padding:14px;
+
+    border-bottom:1px solid #eee;
+
+    font-size:14px;
+
+    color:#555;
+
+}
+
+
+
+tbody tr:hover {
+
+    background:#fafafa;
+
+}
+
+
+
+input[type="checkbox"] {
+
+    width:16px;
+
+    height:16px;
+
+    cursor:pointer;
+
+}
+
+
+
+/* Status Badge */
+
+
+.status {
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:500;
+
+}
+
+
+.status.active {
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+
+
+.status.inactive {
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+
+
+
+
+/* Mail Section */
+
+
+.mail-section {
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+
+}
+
+
+
+.mail-section label {
+
+    display:block;
+
+    margin-bottom:8px;
+
+    margin-top:15px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+
+
+.mail-section input,
+
+.mail-section textarea {
+
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    outline:none;
+
+    font-size:14px;
+
+}
+
+
+
+.mail-section input:focus,
+
+.mail-section textarea:focus {
+
+    border-color:#4f46e5;
+
+}
+
+
+
+
+
+.mail-section button {
+
+
+    margin-top:20px;
+
+    background:var(--color-brand-primary);;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 25px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+
+
+.mail-section button:hover {
+
+    background:#4338ca;
+
+}
+
+
+
+.mail-section button:disabled {
+
+    background:#999;
+
+    cursor:not-allowed;
+
+}
+
+
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:768px){
+
+
+    .promotion-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+
+
+    .search-box input{
+
+        width:100%;
+
+    }
+
+
+
+    .table-wrapper{
+
+        overflow-x:auto;
+
+    }
+
+
+
+    table{
+
+        min-width:900px;
+
+    }
+    .success-alert{
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    margin-bottom:20px;
+
+    font-weight:500;
+
+}
+
+
+}

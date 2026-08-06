@@ -7,6 +7,8 @@ try {
 require("dotenv").config({ path: require("path").join(__dirname, ".env") });
 require("./cron/birthdayCron");
 require("./cron/festivalCron");
+require("./cron/paymentReminderCron");
+require("./cron/courseReminderCron");
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -25,6 +27,13 @@ const resultRoutes = require("./routes/resultRoutes");
 const mailRoutes = require("./routes/mailRoutes");
 const sendMultipleMailRoutes = require("./routes/sentMultiplemailRoutes");
 const emailTemplateRoutes = require("./routes/emailTemplateRoutes");
+const promotionMailRoutes = require("./routes/promotionMailRoutes");
+const customMailRoutes =
+require("./routes/customMailRoutes");
+
+
+
+
 
 connectDB();
 
@@ -64,8 +73,13 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/api/send-mail", mailRoutes);
 app.use("/api/email-template", emailTemplateRoutes);
+app.use("/api/send-promotion-mail", promotionMailRoutes);
 
 app.use("/api/send-mail/multiple", sendMultipleMailRoutes);
+app.use(
+"/api/send-custom-mail",
+customMailRoutes
+);
 
 // ROUTES
 app.use("/api/auth", require("./routes/authRoutes"));

@@ -8,7 +8,7 @@ const emailTemplateSchema = new mongoose.Schema(
       enum: [
         "Birthday Wishes",
         "Festival Wishes",
-        "Course Expiry Reminder",
+        "Course Reminder",
         "Payment Reminder"
       ]
     },

@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 
 const StudentMain = require("../models/student_main");
-const Course = require("../models/course");
+const Course = require("../models/Course");
 const EmailTemplate = require("../models/EmailTemplate");
 const sendEmail = require("../config/sendEmail");
 

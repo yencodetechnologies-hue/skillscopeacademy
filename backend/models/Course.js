@@ -112,6 +112,7 @@ const courseSchema = new mongoose.Schema({
   duration: String,
   trainingDuration: String,
   certificateValidity: String,
+  courseValidity: String,
   deliveryMethod: String,
   location: String,
   image: String,

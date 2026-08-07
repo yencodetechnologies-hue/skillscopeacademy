@@ -52,7 +52,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
     const [lblUrlSlug, setLblUrlSlug]                     = useState("URL Slug *")
     const [lblDuration, setLblDuration]                   = useState("Duration (Optional)")
     const [lblCertValidity, setLblCertValidity]           = useState("Certificate Validity (Optional)")
-    const [lblCourseValidity, setLblCoursetValidity]           = useState("Course Validity (Optional)")
+    const [lblCourseValidity, setLblCourseValidity]           = useState("Course Validity (Optional)")
     const [lblDeliveryMethod, setLblDeliveryMethod]       = useState("Delivery Method")
     const [lblLocation, setLblLocation]                   = useState("Location")
     const [lblCourseImage, setLblCourseImage]             = useState("Course Image")
@@ -136,6 +136,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             category: editCourse?.category?._id || editCourse?.category || "",
             duration: editCourse?.duration || "",
             certificateValidity: editCourse?.certificateValidity || "",
+            courseValidity: editCourse?.courseValidity || "",
             deliveryMethod: editCourse?.deliveryMethod || "",
             location: editCourse?.location || "",
             courseImage: editCourse?.image || "",
@@ -162,6 +163,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             formData.append("category", values.category)
             formData.append("duration", values.duration)
             formData.append("certificateValidity", values.certificateValidity)
+            formData.append("courseValidity", values.courseValidity)
             formData.append("deliveryMethod", values.deliveryMethod)
             formData.append("location", values.location)
             formData.append("metaTitle", values.metaTitle || "")
@@ -202,7 +204,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             formData.append("lblUrlSlug", lblUrlSlug)
             formData.append("lblDuration", lblDuration)
             formData.append("lblCertValidity", lblCertValidity)
-            formData.append("lblCourseValidity", lblCoursetValidity)
+            formData.append("lblCourseValidity", lblCourseValidity)
             formData.append("lblDeliveryMethod", lblDeliveryMethod)
             formData.append("lblLocation", lblLocation)
             formData.append("lblCourseImage", lblCourseImage)
@@ -326,7 +328,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             setLblUrlSlug(editCourse.lblUrlSlug || "URL Slug *")
             setLblDuration(editCourse.lblDuration || "Duration (Optional)")
             setLblCertValidity(editCourse.lblCertValidity || "Certificate Validity (Optional)")
-            setLblCoursetValidity(editCourse.lblCourseValidity || "Course Validity (Optional)")
+            setLblCourseValidity(editCourse.lblCourseValidity || "Course Validity (Optional)")
             setLblDeliveryMethod(editCourse.lblDeliveryMethod || "Delivery Method")
             setLblLocation(editCourse.lblLocation || "Location")
             setLblCourseImage(editCourse.lblCourseImage || "Course Image")
@@ -382,7 +384,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             setLblUrlSlug("URL Slug *")
             setLblDuration("Duration (Optional)")
             setLblCertValidity("Certificate Validity (Optional)")
-            setLblCoursetValidity("Course Validity (Optional)")
+            setLblCourseValidity("Course Validity (Optional)")
             setLblDeliveryMethod("Delivery Method")
             setLblLocation("Location")
             setLblCourseImage("Course Image")
@@ -695,7 +697,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                     </div>
 
                                      <div className="form-group">
-                                        <EditableLabel value={lblCourseValidity} onChange={setLblCoursetValidity} />
+                                        <EditableLabel value={lblCourseValidity} onChange={setLblCourseValidity} />
                                         <input type="text" placeholder="e.g., 3 years"
                                             name="courseValidity"
                                             value={formik.values.courseValidity}

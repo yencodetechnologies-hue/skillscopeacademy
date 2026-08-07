@@ -1,172 +1,356 @@
+// jobs/courseReminderCron.js
+const mongoose = require("mongoose");
 const cron = require("node-cron");
 
-const StudentMain = require("../models/student_main");
+const EnrollmentFlow = require("../models/EnrollmentFlows");
 const Course = require("../models/Course");
-const EmailTemplate = require("../models/EmailTemplate");
 const sendEmail = require("../config/sendEmail");
 
-console.log("✅ Course Reminder Cron Loaded");
+console.log("✅ Course Reminder Cron Loaded — v8 (3-day-before reminder)");
 
-// Every 5 minutes (Testing)
-cron.schedule("*/5 * * * *", async () => {
+// Runs every day at 9:00 AM.
+// For testing, swap to "* * * * *" (every minute).
+cron.schedule("0 9 * * * ", async () => {
 
-    console.log("📚 Course Reminder Cron Running");
+    console.log("========================================");
+    console.log("📚 Course Reminder Cron Running...", new Date().toISOString());
 
     try {
 
-        // Check Email Template
-        const template = await EmailTemplate.findOne({
-            type: "Course Reminder"
+        const flowQuery = { status: "active", studentId: { $ne: null } };
+
+        const data = await EnrollmentFlow.find(flowQuery)
+            .populate("studentId", "name email")
+            .lean();
+
+        console.log(`🔍 Active enrollments found: ${data.length}`);
+
+        if (data.length === 0) return;
+
+        const courseIds = new Set();
+
+        data.forEach((flow) => {
+            const item = flow.items?.[0] || {};
+            const courseId = item.course?.courseId;
+            if (courseId && mongoose.Types.ObjectId.isValid(courseId)) {
+                courseIds.add(courseId.toString());
+            }
         });
 
-        if (!template) {
-            console.log("Course Reminder Template Not Found");
-            return;
-        }
+        const [courses] = await Promise.all([
+            Course.find({ _id: { $in: [...courseIds] } })
+                .select("title courseValidity")
+                .lean(),
+        ]);
 
-        if (template.status !== "Active") {
-            console.log("Course Reminder Template Inactive");
-            return;
-        }
+        console.log(`🔍 Courses loaded: ${courses.length}`);
 
-        console.log("Course Reminder Template Active");
+        const courseMap = Object.fromEntries(
+            courses.map((c) => [c._id.toString(), c])
+        );
 
-        // Get all active students
-        const students = await StudentMain.find({
-            status: "Active"
-        }).populate("courseId");
+        const todayOnly = new Date().toISOString().split("T")[0];
+        console.log("🔍 todayOnly:", todayOnly);
 
-        const today = new Date();
+        // How many days before expiry to send the reminder.
+        const REMINDER_DAYS_BEFORE = 3;
 
-        for (const student of students) {
+        let sentCount = 0;
+        let skippedCount = 0;
 
-            if (!student.courseId) continue;
+        for (const flow of data) {
 
-            if (!student.courseStartDate) continue;
+            try {
 
-            const course = student.courseId;
+                const student = flow.studentId || {};
+                const item = flow.items?.[0] || {};
+                const sessionDate = flow.sessionDate;
 
-            //---------------------------------------------------
-            // duration = "2 Days"
-            //---------------------------------------------------
+                if (!student.email) {
+                    console.log(`⏭️ [${flow._id}] skip — no student email`);
+                    skippedCount++;
+                    continue;
+                }
 
-            let durationDays = 0;
+                if (!sessionDate) {
+                    console.log(`⏭️ [${flow._id}] skip — no sessionDate`);
+                    skippedCount++;
+                    continue;
+                }
 
-            if (course.duration) {
+                const courseId = item.course?.courseId?.toString();
+                const course = courseId ? courseMap[courseId] : null;
 
-                durationDays = parseInt(course.duration);
+                if (!course) {
+                    console.log(`⏭️ [${flow._id}] skip — course not found for id ${courseId}`);
+                    skippedCount++;
+                    continue;
+                }
 
-                if (isNaN(durationDays)) durationDays = 0;
-            }
+                if (!course.courseValidity) {
+                    console.log(`⏭️ [${flow._id}] skip — courseValidity missing on course "${course.title}"`);
+                    skippedCount++;
+                    continue;
+                }
 
-            if (durationDays === 0) continue;
+                const years = parseInt(course.courseValidity, 10);
+                if (isNaN(years)) {
+                    console.log(`⏭️ [${flow._id}] skip — unparseable courseValidity: "${course.courseValidity}"`);
+                    skippedCount++;
+                    continue;
+                }
 
-            //---------------------------------------------------
-            // Course End Date
-            //---------------------------------------------------
+                const expiryDate = new Date(sessionDate);
+                expiryDate.setFullYear(expiryDate.getFullYear() + years);
 
-            const startDate = new Date(student.courseStartDate);
+                // ── Reminder = N days BEFORE expiry ──
+                const reminderDate = new Date(expiryDate);
+                reminderDate.setDate(reminderDate.getDate() - REMINDER_DAYS_BEFORE);
+               const reminderOnly = reminderDate.toISOString().split("T")[0];
+             // const reminderOnly = new Date().toISOString().split("T")[0];
 
-            const endDate = new Date(startDate);
+                console.log(`🔍 [${flow._id}] expiryDate: ${expiryDate.toISOString()} | reminderOnly (${REMINDER_DAYS_BEFORE}d before): ${reminderOnly}`);
 
-            endDate.setDate(endDate.getDate() + durationDays);
+                if (todayOnly !== reminderOnly) {
+                    console.log(`⏭️ [${flow._id}] skip — not reminder day`);
+                    skippedCount++;
+                    continue;
+                }
 
-            //---------------------------------------------------
-            // Reminder One Day Before
-            //---------------------------------------------------
+                const courseName = item.course?.courseName || course.title || "";
+                const expiryDateFormatted = expiryDate.toDateString();
 
-            const reminderDate = new Date(endDate);
-
-            reminderDate.setDate(reminderDate.getDate() - 1);
-
-            const todayOnly = today.toISOString().split("T")[0];
-
-            const reminderOnly = reminderDate.toISOString().split("T")[0];
-
-            if (todayOnly !== reminderOnly) continue;
-
-            console.log("Sending Reminder:", student.name);
-
-            await sendEmail({
-
-                to: student.email,
-
-                subject: `Course Reminder - ${course.title}`,
-
-                html: `
+                await sendEmail({
+                    to: student.email,
+                    subject: `⏰ Your ${courseName} Certificate Expires in ${REMINDER_DAYS_BEFORE} Days`,
+                    html: `
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
 
-<body style="font-family:Arial;background:#f5f7fa;padding:20px;">
+<style>
 
-<div style="max-width:650px;margin:auto;background:#fff;border-radius:10px;padding:35px;">
+body{
+    margin:0;
+    padding:0;
+    background:#f4f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
-<h2 style="color:#2563eb;">
-Course Reminder
-</h2>
+.wrapper{
+    width:100%;
+    padding:30px 0;
+}
+
+.container{
+    max-width:650px;
+    margin:auto;
+    background:#ffffff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.header{
+    background:linear-gradient(135deg,#2563eb,#0f766e);
+    padding:35px;
+    text-align:center;
+    color:#fff;
+}
+
+.header h1{
+    margin:0;
+    font-size:32px;
+}
+
+.header p{
+    margin-top:10px;
+    font-size:15px;
+    opacity:.95;
+}
+
+.content{
+    padding:35px;
+    color:#374151;
+    line-height:1.8;
+    font-size:15px;
+}
+
+.greeting{
+    font-size:20px;
+    font-weight:bold;
+    color:#111827;
+}
+
+.wish-box{
+    margin:25px 0;
+    padding:25px;
+    background:#f8fafc;
+    border-left:5px solid #2563eb;
+    border-radius:10px;
+}
+
+.wish-box h2{
+    margin-top:0;
+    color:#2563eb;
+}
+
+.expiry-date{
+    font-size:18px;
+    font-weight:bold;
+    color:#0f766e;
+}
+
+.button{
+    display:inline-block;
+    background:#2563eb;
+    color:#ffffff !important;
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:8px;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.footer{
+    background:#f1f5f9;
+    padding:25px;
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+}
+
+.footer strong{
+    color:#0f172a;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="container">
+
+<div class="header">
+
+<h1>⏰ Certificate Expiring in ${REMINDER_DAYS_BEFORE} Days</h1>
+
+<p>Safety Training Academy</p>
+
+</div>
+
+<div class="content">
+
+<p class="greeting">
+
+Dear ${student.name || "Student"},
+
+</p>
+
+<div class="wish-box">
+
+<h2>Your Certification is About to Expire</h2>
 
 <p>
-Dear <b>${student.name}</b>,
+
+This is a reminder that your certification for
+<strong>${courseName}</strong> is due to expire in
+<strong>${REMINDER_DAYS_BEFORE} days</strong>, on
+<span class="expiry-date">${expiryDateFormatted}</span>.
+
 </p>
 
 <p>
-This is a friendly reminder that your course is nearing completion.
+
+To avoid any interruption to your qualification and remain
+compliant, we strongly recommend booking your renewal
+training before this date.
+
 </p>
 
-<table style="width:100%;border-collapse:collapse;margin-top:20px;">
+</div>
 
-<tr>
-<td style="padding:10px;border:1px solid #ddd;"><b>Course</b></td>
-<td style="padding:10px;border:1px solid #ddd;">${course.title}</td>
-</tr>
+<p>
 
-<tr>
-<td style="padding:10px;border:1px solid #ddd;"><b>Course Code</b></td>
-<td style="padding:10px;border:1px solid #ddd;">${course.courseCode}</td>
-</tr>
+If you have already completed your renewal, please disregard
+this message. Otherwise, our team is ready to help you book
+your next session at a time that suits you.
 
-<tr>
-<td style="padding:10px;border:1px solid #ddd;"><b>Duration</b></td>
-<td style="padding:10px;border:1px solid #ddd;">${course.duration}</td>
-</tr>
+</p>
 
-<tr>
-<td style="padding:10px;border:1px solid #ddd;"><b>Training Method</b></td>
-<td style="padding:10px;border:1px solid #ddd;">${course.deliveryMethod}</td>
-</tr>
+<center>
 
-<tr>
-<td style="padding:10px;border:1px solid #ddd;"><b>Location</b></td>
-<td style="padding:10px;border:1px solid #ddd;">${course.location}</td>
-</tr>
+<a href="https://safetytrainingacademy.com"
+class="button">
 
-</table>
+Renew Now
 
-<p style="margin-top:25px;">
-Please complete all pending requirements before your course ends.
+</a>
+
+</center>
+
+<br>
+
+<p>
+
+Warm Regards,
+
+<br><br>
+
+<strong>
+
+Safety Training Academy Team
+
+</strong>
+
+</p>
+
+</div>
+
+<div class="footer">
+
+<p>
+
+© 2026 Safety Training Academy
+
 </p>
 
 <p>
-Regards,<br>
-<b>Safety Training Academy</b>
+
+Professional Safety Training • Workplace Compliance • Certification
+
 </p>
+
+</div>
+
+</div>
 
 </div>
 
 </body>
 </html>
 `
-            });
+                });
 
-            console.log("Reminder Sent:", student.email);
+                console.log(`✅ [${flow._id}] Reminder sent to ${student.email}`);
+                sentCount++;
 
+            } catch (innerErr) {
+                console.error(`❌ [${flow._id}] failed:`, innerErr.message);
+                skippedCount++;
+            }
         }
 
-    }
-    catch (err) {
+        console.log(`📚 Run complete — sent: ${sentCount}, skipped: ${skippedCount}`);
 
-        console.log(err);
-
+    } catch (err) {
+        console.error("❌ Course Reminder Cron Error:", err);
     }
 
 });
+
+module.exports = {}; // exported for require() side-effect registration

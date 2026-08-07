@@ -170,7 +170,7 @@ function LoginForm() {
             teacher: "/teacher",
             company: "/company"
           };
-         // navigate(dashboardRoutes[role] || "/");
+         navigate(dashboardRoutes[role] || "/");
         }
       } catch (err) {
         alert(err.response?.data?.message || "Login failed");

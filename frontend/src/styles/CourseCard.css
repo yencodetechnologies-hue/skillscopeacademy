@@ -1,5 +1,82 @@
+.course-price-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e9ecef; /* Soft gray track background */
+  border-radius: 9999px;
+  padding: 6px 6px 6px 28px;
+  width: 100%;
+  margin: 14px 0;
+  box-sizing: border-box;
+}
+/* Container for the option box mini-toggle track */
+.cc-cob-mini-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e9ecef;
+  border-radius: 9999px;
+  padding: 2px 2px 2px 8px;
+  gap: 6px;
+  margin-top: 6px;
+  width: auto;
+}
 
-/* ===== CARD ===== */
+/* Strikethrough Original Price inside option box */
+.cc-cob-toggle-old {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+/* Active Price Green Pill inside option box */
+.cc-cob-toggle-active {
+  background-color: #00b87c;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+}
+/* Left side: Strike-through Original Price */
+.price-toggle-original {
+  font-size: 16px;
+  font-weight: 800;
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+/* Right side: Solid Green Button Pill */
+.price-toggle-green-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #00b87c; /* Vibrant green fill */
+  border-radius: 9999px;
+  padding: 8px 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Current active price inside green pill */
+.price-toggle-main-price {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* SAVE $XX White Pill Badge */
+.price-toggle-save-badge {
+  background-color: #e6f4ea; /* Light mint/white badge */
+  color: #00b87c;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.3px;
+}
 .course-card {
   background: var(--color-surface); border: 1.5px solid #ddeef8; border-radius: 16px;
   overflow: hidden; display: flex; flex-direction: column;

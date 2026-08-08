@@ -28,7 +28,6 @@ function CourseCard({ course, fromPortal }) {
 
     const savings = displayOriginal > displayPrice ? displayOriginal - displayPrice : null
 
-
     return (
         <>
             <div className="course-card">
@@ -59,18 +58,6 @@ function CourseCard({ course, fromPortal }) {
                 {/* BODY */}
                 <div className="course-body">
 
-                    {/* Price */}
-                    <div className="course-price-row">
-                        <div className="course-exp-prices">
-                            <span className="course-price-main">${displayPrice}</span>
-                            {displayOriginal && displayOriginal > displayPrice && (
-                                <span className="course-price-old">${displayOriginal}</span>
-                            )}
-                            {savings > 0 && (
-                                <span className="course-save-badge">Save ${savings}</span>
-                            )}
-                        </div>
-                    </div>
                     {/* Title */}
                     <h3
                         className="course-title"
@@ -84,7 +71,6 @@ function CourseCard({ course, fromPortal }) {
                     <div className="course-info-row">
                         <span className="course-info-item">
                             <i className="fa-regular fa-calendar-days" />
-                            {/* {course.duration}/ */}
                         </span>
                         <span className="course-info-item">
                             <i className="fa-solid fa-location-dot" />
@@ -96,29 +82,65 @@ function CourseCard({ course, fromPortal }) {
                         </span>
                     </div>
 
-                    {/* ── DISPLAY OPTIONS — card-ல காட்டு, VOC மட்டும் direct navigate ── */}
-                    <div className="cc-card-opts">
-                        <div className="cc-card-opts-lbl">Select option</div>
-                        <div className="cc-card-opt-boxes">
-                            {options.map((opt, i) => (
-                                <div
-                                    key={i}
-                                    className={`cc-card-opt-box ${opt.isVoc ? "cc-card-opt-box--voc" : "cc-card-opt-box--display"}`}
-                                    onClick={() => {
-                                        setSelectedOptionId(opt.id)
-                                        setShowModal(true)
-                                    }}
-                                    title={`Click to book ${opt.label}`}
-                                >
-                                    <div className="cc-cob-label">{opt.label}</div>
-                                    <div className="cc-cob-price">${opt.price}</div>
-                                 
-                           
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+               {/* Price Toggle Banner */}
+{(() => {
+  const activeDisplayPrice = displayPrice || 0;
+  const effectiveOriginal = displayOriginal || course?.originalPrice || 1000;
+  const effectiveSavings = effectiveOriginal > activeDisplayPrice ? effectiveOriginal - activeDisplayPrice : 0;
 
+  return (
+    <div className="course-price-toggle-wrapper">
+      <span className="price-toggle-original">
+        ${effectiveOriginal}
+      </span>
+      
+      <div className="price-toggle-green-pill">
+        <span className="price-toggle-main-price">${activeDisplayPrice}</span>
+        {effectiveSavings > 0 && (
+          <span className="price-toggle-save-badge">SAVE ${effectiveSavings}</span>
+        )}
+      </div>
+    </div>
+  );
+})()}
+
+               {/* ── DISPLAY OPTIONS (With Temporary $1000 Strike Price Fallback) ── */}
+<div className="cc-card-opts">
+  <div className="cc-card-opts-lbl">Select option</div>
+  <div className="cc-card-opt-boxes">
+    {options.map((opt, i) => {
+      const activePrice = opt.price || 0;
+      // Temporary fallback set to 1000 if strike price is empty/missing
+      const strikePrice = opt.originalPrice || displayOriginal || course?.originalPrice || 1000;
+      
+      const hasDiscount = Number(strikePrice) > Number(activePrice);
+
+      return (
+       <div
+  key={i}
+  className={`cc-card-opt-box ${opt.isVoc ? "cc-card-opt-box--voc" : "cc-card-opt-box--display"}`}
+  onClick={() => {
+    setSelectedOptionId(opt.id);
+    setShowModal(true);
+  }}
+  title={`Click to book ${opt.label}`}
+>
+  <div className="cc-cob-label">{opt.label}</div>
+
+  {/* Mini Price Toggle Pill */}
+  <div className="cc-cob-mini-toggle">
+    {hasDiscount && (
+      <span className="cc-cob-toggle-old">${strikePrice}</span>
+    )}
+    <div className="cc-cob-toggle-active">
+      <span>${activePrice}</span>
+    </div>
+  </div>
+</div>
+      );
+    })}
+  </div>
+</div>
                     {/* Book Now */}
                     <button
                         className="course-btn course-btn--primary"

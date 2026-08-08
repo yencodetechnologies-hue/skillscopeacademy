@@ -351,7 +351,7 @@ function renderQualificationCertificates(qual) {
                     <img class="sta-logo" src="./assets/staLogo.png" alt="SafeTicks logo">
                 </div>
                 <div class="col-6 text-center">
-                    <div class="fw-black sta-title">SAFETY TRAINING ACADEMY</div>
+                    <div class="fw-black sta-title">Safeticks</div>
                     <div class="fw-black sta-subtitle">ENROLMENT FORM</div>
                     <div class="fw-black sta-rto">RTO : 45234</div>
                 </div>

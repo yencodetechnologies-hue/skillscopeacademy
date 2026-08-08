@@ -297,7 +297,7 @@ function Digital({ next }) {
                 {question.type === "input-url" && (
                     <>
                         <p className="digital-instruction">
-                            Your trainer asks you to find information about Safety training academy.
+                            Your trainer asks you to find information about Safeticks.
                         </p>
                         <img src={logo} className="digital-logo" alt="" />
                         <p className="url-label">Fill in the URL</p>

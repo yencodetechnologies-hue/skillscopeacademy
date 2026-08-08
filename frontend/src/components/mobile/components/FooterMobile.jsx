@@ -64,7 +64,7 @@ function FooterMobile() {
           </a>
         </div>
       </div>
-<div className="footer-logo">SAFETY TRAINING ACADEMY</div>
+<div className="footer-logo">Safeticks</div>
       <div className="footer-divider"></div>
 
       <div className="footer-middle">

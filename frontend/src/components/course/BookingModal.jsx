@@ -104,14 +104,12 @@ export function getBookingOptions(course) {
 }
 
 
-export default function     BookingModal({ course, onClose, initialSelection = null, extraQueryParams = "" }) {
+export default function BookingModal({ course, onClose, initialSelection = null, extraQueryParams = "" }) {
     const navigate = useNavigate()
     const options  = getBookingOptions(course)
     const [selected, setSelected] = useState(initialSelection)
     const [shake,    setShake]    = useState(false)
     const [showErr,  setShowErr]  = useState(false)
-
-
 
     if (!course) return null;
     const selectedOption = options.find(o => o.id === selected)
@@ -162,8 +160,11 @@ export default function     BookingModal({ course, onClose, initialSelection = n
 
                 <div className="cc-modal-options">
                     {options.map(opt => {
-                        const saving = opt.originalPrice && opt.originalPrice > opt.price
-                            ? opt.originalPrice - opt.price : null
+                        const activePrice = opt.price || 0;
+                        // Fallback strike price to opt.originalPrice -> course.originalPrice -> temporary default value 1000
+                        const strikePrice = opt.originalPrice || course?.originalPrice || 1000;
+                        const saving = strikePrice > activePrice ? strikePrice - activePrice : 0;
+
                         return (
                             <div
                                 key={opt.id}
@@ -183,14 +184,16 @@ export default function     BookingModal({ course, onClose, initialSelection = n
                                         <div className="cc-mo-desc">{opt.description}</div>
                                     </div>
                                 </div>
-                                <div className="cc-mo-right">
-                                    <div className="cc-mo-price">${opt.price}</div>
-                                    {opt.originalPrice && opt.originalPrice > opt.price && (
-                                        <div className="cc-mo-was">${opt.originalPrice}</div>
-                                    )}
-                                    {saving && (
-                                        <div className="cc-mo-save">Save ${saving}</div>
-                                    )}
+
+                                {/* Price Toggle Pill */}
+                                <div className="cc-mo-toggle-wrapper">
+                                    <span className="cc-mo-toggle-strike">${strikePrice}</span>
+                                    <div className="cc-mo-toggle-pill">
+                                        <span className="cc-mo-toggle-price">${activePrice}</span>
+                                        {saving > 0 && (
+                                            <span className="cc-mo-toggle-save">SAVE ${saving}</span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         )
@@ -207,7 +210,7 @@ export default function     BookingModal({ course, onClose, initialSelection = n
                 <div className="cc-modal-footer">
                     <div className="cc-modal-total">
                         <span>Total</span>
-                        <strong>{selectedOption ? `$${selectedOption.price}` : "—"}</strong>
+                        <strong>{selectedOption ? `$${selectedOption.price || 0}` : "—"}</strong>
                     </div>
                     <button className="cc-modal-confirm" onClick={handleConfirm}>
                         Book Now {selectedOption ? `— ${selectedOption.label}` : ""}

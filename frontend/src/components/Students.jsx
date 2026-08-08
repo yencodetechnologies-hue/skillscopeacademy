@@ -997,6 +997,8 @@ const [totalPages, setTotalPages] = useState(1);
   const [sendType, setSendType] = useState("email");
   const [showEmailModal, setShowEmailModal] = useState(false);
 const [courseLink, setCourseLink] = useState("");
+const [showWhatsappModal, setShowWhatsappModal] = useState(false);
+const [whatsappLink, setWhatsappLink] = useState("");
   const navigate = useNavigate();
 
   // ── Fetch ──────────────────────────────────────────────────────────────────
@@ -1656,7 +1658,8 @@ disabled={currentPage === totalPages}
             if (sendType === "email") {
               setShowEmailModal(true);
             } else {
-              alert("WhatsApp functionality will be implemented later.");
+              // alert("WhatsApp functionality will be implemented later.");
+              setShowWhatsappModal(true);
             }
           }}
         >
@@ -1757,6 +1760,109 @@ disabled={currentPage === totalPages}
         <button
           className="cancel-btn"
           onClick={() => setShowEmailModal(false)}
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
+
+{showWhatsappModal && (
+  <div className="modal-overlay">
+    <div className="send-modal">
+
+      <div className="send-modal-header">
+        <h2>💬 Send via WhatsApp</h2>
+
+        <p>
+          Send course link to{" "}
+          <strong>{selectedStudents.length}</strong>{" "}
+          selected student
+          {selectedStudents.length > 1 ? "s" : ""}
+        </p>
+      </div>
+
+      <div className="send-modal-body">
+
+        <label className="input-label">
+          Course Link
+        </label>
+
+        <input
+          type="text"
+          className="course-input"
+          value={courseLink}
+          onChange={(e) => setCourseLink(e.target.value)}
+          placeholder="https://example.com/course-link"
+        />
+
+        <div style={{
+          display: "flex",
+          gap: "10px",
+          marginTop: "15px"
+        }}>
+
+          {/* Copy Link */}
+          <button
+            className="cancel-btn"
+            onClick={async () => {
+              if (!courseLink.trim()) {
+                alert("Please enter course link.");
+                return;
+              }
+
+              try {
+                await navigator.clipboard.writeText(courseLink);
+                alert("Course link copied!");
+              } catch (error) {
+                alert("Failed to copy link.");
+              }
+            }}
+          >
+            📋 Copy Link
+          </button>
+
+          {/* Open WhatsApp */}
+          <button
+            className="next-btn"
+            onClick={() => {
+
+              if (!courseLink.trim()) {
+                alert("Please enter course link.");
+                return;
+              }
+
+              const message =
+                `Hello,\n\nPlease use the following course link:\n${courseLink}\n\nThank you.`;
+
+              const encodedMessage =
+                encodeURIComponent(message);
+
+              // Open WhatsApp Web
+              window.open(
+                `https://web.whatsapp.com/send?text=${encodedMessage}`,
+                "_blank"
+              );
+            }}
+          >
+            💬 Open WhatsApp
+          </button>
+
+        </div>
+
+      </div>
+
+      <div className="send-modal-footer">
+
+        <button
+          className="cancel-btn"
+          onClick={() => {
+            setShowWhatsappModal(false);
+            setCourseLink("");
+          }}
         >
           Cancel
         </button>

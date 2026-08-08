@@ -1,9 +1,49 @@
-.custom-mail-container {
 
-    padding:30px;
-    background:#f8fafc;
-    min-height:100vh;
+.button-container {
+  display: flex;
+  gap: 10px;
+}
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 20px;
+  border-top: 1px solid #e9ecef;
+  background: #fff;
+}
+
+.pagination button {
+  min-width: 80px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #d9dee3;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #f5f7fa;
+  border-color: #999;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  min-width: 100px;
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
 }
 
 

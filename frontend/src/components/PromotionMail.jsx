@@ -21,6 +21,34 @@ const PromotionMail = () => {
   const [attachment, setAttachment] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
+  
+  const filteredCompanies = companies.filter(
+    (company)=>
+      company.companyName
+      ?.toLowerCase()
+      .includes(
+        search.toLowerCase()
+      )
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+const recordsPerPage = 10;
+
+const totalPages = Math.ceil(
+  filteredCompanies.length / recordsPerPage
+);
+
+const indexOfLastRecord =
+  currentPage * recordsPerPage;
+
+const indexOfFirstRecord =
+  indexOfLastRecord - recordsPerPage;
+
+const currentCompanies =
+  filteredCompanies.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
+
 
 
   // Fetch Companies
@@ -79,14 +107,6 @@ const PromotionMail = () => {
 
   // Search
 
-  const filteredCompanies = companies.filter(
-    (company)=>
-      company.companyName
-      ?.toLowerCase()
-      .includes(
-        search.toLowerCase()
-      )
-  );
 
 
 
@@ -249,6 +269,32 @@ const handleSendMail = async () => {
 };
 
 
+const handleSendWhatsApp = () => {
+
+  if (selectedCompanies.length === 0) {
+    alert("Please select at least one company");
+    return;
+  }
+
+  if (!message.trim()) {
+    alert("Please enter promotion message");
+    return;
+  }
+
+  const whatsappMessage =
+    `${subject ? subject + "\n\n" : ""}${message}`;
+
+  const encodedMessage =
+    encodeURIComponent(whatsappMessage);
+
+  // Open WhatsApp Web
+  window.open(
+    `https://web.whatsapp.com/send?text=${encodedMessage}`,
+    "_blank"
+  );
+};
+
+
 
 
 
@@ -297,19 +343,15 @@ const handleSendMail = async () => {
       <div className="search-box">
 
 
-        <input
-
-          type="text"
-
-          placeholder="Search Company..."
-
-          value={search}
-
-          onChange={
-            e=>setSearch(e.target.value)
-          }
-
-        />
+<input
+  type="text"
+  placeholder="Search Company..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }}
+/>
 
 
       </div>
@@ -370,97 +412,114 @@ const handleSendMail = async () => {
 
 
 
-          <tbody>
+<tbody>
 
+  {currentCompanies.length > 0 ? (
 
-          {
-            filteredCompanies.map(
-              company=>(
+    currentCompanies.map((company) => (
 
+      <tr key={company._id || company.id}>
 
-              <tr key={company._id || company.id}>
+        <td>
+          <input
+            type="checkbox"
+            checked={selectedCompanies.some(
+              item =>
+                (item._id || item.id) ===
+                (company._id || company.id)
+            )}
+            onChange={() =>
+              handleCheckboxChange(company)
+            }
+          />
+        </td>
 
+        <td>
+          {company.companyName || "-"}
+        </td>
 
-                <td>
+        <td>
+          {company.contactPerson || "-"}
+        </td>
 
+        <td>
+          {company.email || "-"}
+        </td>
 
-                  <input
+        <td>
+          {company.mobileNumber || "-"}
+        </td>
 
-                    type="checkbox"
+        <td>
+          <span
+            className={
+              company.status === "Active"
+                ? "status active"
+                : "status inactive"
+            }
+          >
+            {company.status || "-"}
+          </span>
+        </td>
 
+      </tr>
 
-                    checked={
-                      selectedCompanies.some(
-                        item=>
-                        (item._id || item.id) === 
-                        (company._id || company.id)
-                      )
-                    }
+    ))
 
+  ) : (
 
-                    onChange={()=>
-                      handleCheckboxChange(company)
-                    }
+    <tr>
+      <td
+        colSpan="6"
+        style={{
+          textAlign: "center",
+          padding: "30px"
+        }}
+      >
+        No records found
+      </td>
+    </tr>
 
+  )}
 
-                  />
+</tbody>
 
-
-                </td>
-
-
-
-                <td>
-                  {company.companyName}
-                </td>
-
-
-                <td>
-                  {company.contactPerson}
-                </td>
-
-
-                <td>
-                  {company.email}
-                </td>
-
-
-                <td>
-                  {company.mobileNumber}
-                </td>
-
-
-                <td>
-
-                  <span
-                    className={
-                      company.status==="Active"
-                      ?
-                      "status active"
-                      :
-                      "status inactive"
-                    }
-                  >
-
-                    {company.status}
-
-                  </span>
-
-
-                </td>
-
-
-              </tr>
-
-
-            ))
-          }
-
-
-          </tbody>
+          
 
 
         </table>
+
+        {totalPages > 0 && (
+  <div className="pagination">
+
+    <button
+      onClick={() =>
+        setCurrentPage(prev =>
+          Math.max(prev - 1, 1)
+        )
+      }
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
+
+    <span>
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      onClick={() =>
+        setCurrentPage(prev =>
+          Math.min(prev + 1, totalPages)
+        )
+      }
+      disabled={currentPage === totalPages}
+    >
+      Next
+    </button>
+
+  </div>
+)}
 
 
       </div>
@@ -528,7 +587,7 @@ const handleSendMail = async () => {
 />
 
 
-
+<div class="button-container">
 
         <button
 
@@ -543,12 +602,19 @@ const handleSendMail = async () => {
             ?
             "Sending..."
             :
-            "Send Promotion Mail"
+            "Send Mail"
           }
 
 
         </button>
 
+        <button
+  type="button"
+  onClick={handleSendWhatsApp}
+>
+  💬 Send via WhatsApp
+</button>
+</div>
 
 
       </div>

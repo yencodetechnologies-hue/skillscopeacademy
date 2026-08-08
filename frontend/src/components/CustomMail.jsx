@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/PromotionMail.css";
+import "../styles/customMail.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,6 +22,8 @@ const CustomMail = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+const recordsPerPage = 10;
 
 
 
@@ -151,8 +153,48 @@ const CustomMail = () => {
 
   });
 
+  // Pagination
+const totalPages = Math.ceil(
+  filteredStudents.length / recordsPerPage
+);
+
+const indexOfLastStudent =
+  currentPage * recordsPerPage;
+
+const indexOfFirstStudent =
+  indexOfLastStudent - recordsPerPage;
+
+const currentStudents =
+  filteredStudents.slice(
+    indexOfFirstStudent,
+    indexOfLastStudent
+  );
 
 
+const handleSendWhatsApp = () => {
+  if (selectedStudents.length === 0) {
+    alert("Please select at least one student");
+    return;
+  }
+
+  if (!message.trim()) {
+    alert("Please enter mail message");
+    return;
+  }
+
+  // Combine subject + message
+  const whatsappMessage =
+    `${subject ? subject + "\n\n" : ""}${message}`;
+
+  const encodedMessage =
+    encodeURIComponent(whatsappMessage);
+
+  // Open WhatsApp Web
+  window.open(
+    `https://web.whatsapp.com/send?text=${encodedMessage}`,
+    "_blank"
+  );
+};
 
 
 
@@ -466,17 +508,13 @@ Selected Students :
 
 
 <input
-
-type="text"
-
-placeholder="Search Student..."
-
-value={search}
-
-onChange={
-e=>setSearch(e.target.value)
-}
-
+  type="text"
+  placeholder="Search Student..."
+  value={search}
+  onChange={(e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }}
 />
 
 
@@ -555,111 +593,99 @@ Mobile Number
 
 <tbody>
 
+  {currentStudents.length > 0 ? (
 
-{
+    currentStudents.map((student) => (
 
-filteredStudents.map(student=>(
+      <tr key={getStudentId(student)}>
 
+        <td>
+          <input
+            type="checkbox"
+            checked={selectedStudents.some(
+              item =>
+                getStudentId(item) ===
+                getStudentId(student)
+            )}
+            onChange={() =>
+              handleCheckboxChange(student)
+            }
+          />
+        </td>
 
-<tr key={getStudentId(student)}>
+        <td>
+          {student.name || "-"}
+        </td>
 
+        <td>
+          {student.email || "-"}
+        </td>
 
+        <td>
+          {student.mobileNumber ||
+            student.mobile ||
+            student.phoneNumber ||
+            student.phone ||
+            "No Number"}
+        </td>
 
-<td>
+      </tr>
 
+    ))
 
-<input
+  ) : (
 
-type="checkbox"
+    <tr>
+      <td
+        colSpan="4"
+        style={{
+          textAlign: "center",
+          padding: "30px",
+          color: "#777"
+        }}
+      >
+        No records found
+      </td>
+    </tr>
 
-
-checked={
-
-selectedStudents.some(
-
-item =>
-
-getStudentId(item) ===
-
-getStudentId(student)
-
-)
-
-}
-
-
-onChange={()=>handleCheckboxChange(student)}
-
-
-/>
-
-
-</td>
-
-
-
-
-
-<td>
-
-{
-student.name || "-"
-}
-
-</td>
-
-
-
-
-
-<td>
-
-{
-student.email || "-"
-}
-
-</td>
-
-
-
-
-
-<td>
-
-{
-
-student.mobileNumber ||
-
-student.mobile ||
-
-student.phoneNumber ||
-
-student.phone ||
-
-"No Number"
-
-}
-
-</td>
-
-
-
-
-
-</tr>
-
-
-))
-
-
-}
-
-
+  )}
 
 </tbody>
 
 
 </table>
+
+{totalPages > 0 && (
+  <div className="pagination">
+
+    <button
+      onClick={() =>
+        setCurrentPage((prev) =>
+          Math.max(prev - 1, 1)
+        )
+      }
+      disabled={currentPage === 1}
+    >
+      Previous
+    </button>
+
+    <span>
+      Page {currentPage} of {totalPages}
+    </span>
+
+    <button
+      onClick={() =>
+        setCurrentPage((prev) =>
+          Math.min(prev + 1, totalPages)
+        )
+      }
+      disabled={currentPage === totalPages}
+    >
+      Next
+    </button>
+
+  </div>
+)}
 
 
 </div>
@@ -738,8 +764,8 @@ e=>setAttachment(e.target.files[0])
 
 
 
-
-<button
+<div class="button-container">
+<button 
 
 onClick={handleSendMail}
 
@@ -758,12 +784,22 @@ loading
 
 :
 
-"Send Custom Mail"
+"Send Mail"
 
 }
 
 
 </button>
+
+
+<button
+  type="button"
+  onClick={handleSendWhatsApp}
+  className="whatsapp-btn"
+>
+  💬 Send via WhatsApp
+</button>
+</div>
 
 
 

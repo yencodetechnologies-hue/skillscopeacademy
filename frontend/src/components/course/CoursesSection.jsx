@@ -58,27 +58,57 @@ function CoursesSection() {
                 </div>
 
                 {/* TAB NAV */}
-                <div className="cs-tabs-wrapper">
-                    <div className="cs-tab-nav">
-                        {categories.map(cat => (
-                            <button
-                                key={cat}
-                                className={`cs-tab-btn ${activeTab === cat ? "cs-tab-btn--active" : ""}`}
-                                onClick={() => {
-                                    setActiveTab(cat)
-                                    setExpanded({})
-                                }}
-                            >
-                                {cat}
-                                <span className="cs-tab-count">
-                                    {courses.filter(c => c.category === cat).length}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
+                 <div className="cs-content-layout">
 
-                    {/* COURSE GRID */}
-                    <div className="cs-panels-wrap">
+            {/* LEFT TAB SIDEBAR */}
+            <div className="cs-tab-sidebar">
+                <div className="cs-tab-heading">
+                    <span>Categories</span>
+                </div>
+
+                <div className="cs-tab-nav">
+                    {categories.map((category) => (
+                       <button
+    key={category}
+    type="button"
+    className={`cs-tab-btn ${activeTab === category ? "cs-tab-btn--active" : ""}`}
+    onClick={() => setActiveTab(category)}
+>
+    {activeTab === category && (
+        <>
+            <span className="cs-notch cs-notch--top" />
+            <span className="cs-notch cs-notch--bottom" />
+        </>
+    )}
+    <span className="cs-tab-label">{category}</span>
+    <span className="cs-tab-count">
+        {courses.filter(course => course.category === category).length}
+    </span>
+</button>
+                    ))}
+                </div>
+            </div>
+
+            {/* RIGHT COURSE AREA */}
+            <div className="cs-course-area">
+
+                {activeTab && (
+                    <>
+                        <div className="cs-course-header">
+                            <div>
+                                <span className="cs-course-kicker">
+                                    Selected Category
+                                </span>
+
+                                <h3>{activeTab}</h3>
+                            </div>
+
+                            <span className="cs-course-total">
+                                {categoryCourses.length} Courses
+                            </span>
+                        </div>
+
+                        <div className="cs-panels-wrap">
                         {activeTab && (
                             <div className="cs-grid">
                                 {visibleCourses.map(course => (
@@ -104,7 +134,11 @@ function CoursesSection() {
                             </div>
                         )}
                     </div>
-                </div>
+                    </>
+                )}
+
+            </div>
+        </div>
 
             </section>
         </div>

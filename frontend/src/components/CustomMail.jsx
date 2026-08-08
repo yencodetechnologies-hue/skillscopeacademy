@@ -764,7 +764,7 @@ e=>setAttachment(e.target.files[0])
 
 
 
-<div class="button-container">
+<div className="button-container">
 <button 
 
 onClick={handleSendMail}

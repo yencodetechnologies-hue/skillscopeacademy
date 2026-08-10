@@ -132,7 +132,11 @@ function BookNow() {
     const [isPublicCompanyLink, setIsPublicCompanyLink] = useState(false);
     const [isDashboardCompany, setIsDashboardCompany] = useState(false);
     const [enrollmentType, setEnrollmentType] = useState(enrollType === "company" ? "company" : "individual");
-    const [step, setStep] = useState(1);
+    //const [searchParams] = useSearchParams();
+
+const [step, setStep] = useState(() => {
+    return searchParams.get("step") === "2" ? 2 : 1;
+});
     const [selectedSession, setSelectedSession] = useState(null);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [enrollSection, setEnrollSection] = useState(1);

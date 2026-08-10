@@ -66,6 +66,7 @@ export default function HomePage({ courses = [] }) {
 
   return (
     <section className="hp-section">
+      <div class="cat-section">
       <div className="hp-header">
         <div className="hp-header-left">
           {/* <p className="hp-tagline">Explore Our Courses</p> */}
@@ -106,6 +107,7 @@ export default function HomePage({ courses = [] }) {
                 </div>
               ))}
         </div>
+      </div>
       </div>
     </section>
   );

@@ -1,27 +1,21 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "../../styles/SessionsBar.css"
 import { API_URL } from "../../data/service"
 
 const FALLBACK = [
-    { day: "19", mon: "Jul", course: { title: "Working at Heights" },          startTime: "8:00am", location: "Sefton", spotsType: "ok",  spotsLabel: "8 spots"  },
-    { day: "21", mon: "Jul", course: { title: "Confined Space Entry" },        startTime: "8:30am", location: "Sefton", spotsType: "low", spotsLabel: "2 left"   },
-    { day: "22", mon: "Jul", course: { title: "Forklift Licence" },            startTime: "7:30am", location: "Sefton", spotsType: "ok",  spotsLabel: "12 spots" },
-    { day: "23", mon: "Jul", course: { title: "First Aid (HLTAID011)" },       startTime: "8:00am", location: "Sefton", spotsType: "ok",  spotsLabel: "10 spots" },
-    { day: "24", mon: "Jul", course: { title: "Traffic Control" },             startTime: "7:30am", location: "Sefton", spotsType: "low", spotsLabel: "3 left"   },
-    { day: "25", mon: "Jul", course: { title: "EWP Boom Lift Licence" },       startTime: "8:00am", location: "Sefton", spotsType: "ok",  spotsLabel: "6 spots"  },
-    { day: "26", mon: "Jul", course: { title: "Asbestos Awareness" },          startTime: "9:00am", location: "Sefton", spotsType: "ok",  spotsLabel: "15 spots" },
-    { day: "28", mon: "Jul", course: { title: "Skid Steer Loader Licence" },   startTime: "7:30am", location: "Sefton", spotsType: "low", spotsLabel: "1 left"   },
+    { scheduleId: "6a79767da99dce108b4c15a0", sessionId: "6a79767da99dce108b4c15a1", date: "2026-08-11T00:00:00.000Z", day: "11", mon: "Aug", course: { id: "c1", slug: "conduct-civil-construction-excavator-operations-training-syd", title: "Excavator Operations Training", price: 220 }, startTime: "13:27", location: "Sefton", spotsType: "ok", spotsLabel: "8 spots" },
+    { scheduleId: "6a79767da99dce108b4c15a2", sessionId: "6a79767da99dce108b4c15a3", date: "2026-08-12T00:00:00.000Z", day: "12", mon: "Aug", course: { id: "c2", slug: "working-at-heights", title: "Working at Heights", price: 250 }, startTime: "08:30", location: "Sefton", spotsType: "low", spotsLabel: "2 left" },
 ]
 
 function SessionsBar() {
-    const navigate  = useNavigate()
+    const navigate = useNavigate()
     const [sessions, setSessions] = useState([])
-    const [loading,  setLoading]  = useState(true)
-    const trackRef  = useRef(null)
-    const rafRef    = useRef(null)
-    const posRef    = useRef(0)
+    const [selectedCourse, setSelectedCourse] = useState("") // Empty initially so no dates show by default
+    const [selectedDateKey, setSelectedDateKey] = useState(null)
+    const [selectedTimeId, setSelectedTimeId] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         axios.get(`${API_URL}/api/schedules/upcoming?limit=12`)
@@ -33,111 +27,211 @@ function SessionsBar() {
             .finally(() => setLoading(false))
     }, [])
 
-    // JS-driven marquee — immune to CSS animation bugs
-    useEffect(() => {
-        if (loading || sessions.length === 0) return
-        const track = trackRef.current
-        if (!track) return
+    const slugify = (text) => {
+        if (!text) return "course"
+        return text
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/[\s\W-]+/g, "-")
+    }
 
-        let paused = false
-        const speed = 0.6  // px per frame
+    const handleSlotClick = (s) => {
+        const slotId = s.sessionId || s.scheduleId
+        setSelectedTimeId(slotId)
 
-        const animate = () => {
-            if (!paused) {
-                posRef.current -= speed
-                // Reset when first half scrolled out
-                const half = track.scrollWidth / 2
-                if (Math.abs(posRef.current) >= half) posRef.current = 0
-                track.style.transform = `translateX(${posRef.current}px)`
+        const slug = s.course?.slug || slugify(s.course?.title)
+        
+        const queryParams = new URLSearchParams({
+            scheduleId: s.scheduleId || "",
+            sessionId: s.sessionId || "",
+            date: s.date || "",
+            time: s.startTime || s.time || "",
+            step: "2"
+        }).toString();
+
+        setTimeout(() => {
+            navigate(`/book-now/course/${slug}?${queryParams}`)
+        }, 150)
+    }
+
+    const coursesList = useMemo(() => {
+        const map = new Map()
+        sessions.forEach(s => {
+            if (s.course?.title) map.set(s.course.title, s.course)
+        })
+        return Array.from(map.values())
+    }, [sessions])
+
+    const filteredSessions = useMemo(() => {
+        if (!selectedCourse) return []
+        if (selectedCourse === "ALL") return sessions
+        return sessions.filter(s => s.course?.title === selectedCourse)
+    }, [sessions, selectedCourse])
+
+    const datesMap = useMemo(() => {
+        const map = new Map()
+        filteredSessions.forEach(s => {
+            const key = `${s.day}-${s.mon}`
+            if (!map.has(key)) {
+                map.set(key, {
+                    key,
+                    day: s.day,
+                    mon: s.mon,
+                    isSunday: s.isSunday,
+                    sessions: []
+                })
             }
-            rafRef.current = requestAnimationFrame(animate)
-        }
-        rafRef.current = requestAnimationFrame(animate)
+            map.get(key).sessions.push(s)
+        })
+        return Array.from(map.values())
+    }, [filteredSessions])
 
-        const pause  = () => { paused = true }
-        const resume = () => { paused = false }
-        track.addEventListener("mouseenter", pause)
-        track.addEventListener("mouseleave", resume)
+    const activeDateObj = useMemo(() => {
+        if (!selectedDateKey) return null
+        return datesMap.find(d => d.key === selectedDateKey) || null
+    }, [datesMap, selectedDateKey])
 
-        return () => {
-            cancelAnimationFrame(rafRef.current)
-            track.removeEventListener("mouseenter", pause)
-            track.removeEventListener("mouseleave", resume)
-        }
-    }, [sessions, loading])
-
-    if (loading) return (
-        <div className="sb-bar">
-            <div className="sb-header">
-                <div className="sb-label">Don't miss out</div>
-                <div className="sb-heading">Upcoming Courses</div>
-            </div>
-            <div className="sb-scroll">
-                <div className="sb-track">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="sb-chip sb-chip--skeleton">
-                            <div className="sb-skeleton-date" />
-                            <div className="sb-skeleton-info">
-                                <div className="sb-skeleton-line sb-skeleton-line--title" />
-                                <div className="sb-skeleton-line sb-skeleton-line--sub" />
-                            </div>
-                            <div className="sb-skeleton-pill" />
-                        </div>
-                    ))}
+    if (loading) {
+        return (
+            <div className="sb-section">
+                <div className="sb-container">
+                    <div className="sb-skeleton-header" />
+                    <div className="sb-date-grid">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="sb-date-card sb-card--skeleton" />
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-    )
-
-    // Double the list for seamless loop
-    const looped = [...sessions, ...sessions]
+        )
+    }
 
     return (
-        <div className="sb-bar">
-            <div className="sb-header">
-                <div className="sb-label">Don't miss out</div>
-                <div className="sb-heading">Upcoming Courses</div>
-            </div>
+        <section className="sb-section">
+            <div className="sb-container">
+                <div className="sb-filter-bar">
+                    <div className="sb-header">
+                        <span className="sb-badge">Fast Booking</span>
+                        <h2 className="sb-title">Select Date & Timing</h2>
+                    </div>
 
-            <div className="sb-scroll">
-                <div className="sb-track" ref={trackRef}>
-                    {looped.map((s, i) => (
-                        <div
-                            key={i}
-                            className="sb-chip"
-                            onClick={() => {
-                                if (s.course?.slug) {
-                                    navigate(`/book-now/course/${s.course.slug}?scheduleId=${s.scheduleId}&sessionId=${s.sessionId}&date=${s.date}&time=${s.startTime}`)
-                                } else if (s.course?.id) {
-                                    navigate(`/book-now?courseId=${s.course.id}&scheduleId=${s.scheduleId}&sessionId=${s.sessionId}&date=${s.date}&time=${s.startTime}`)
-                                } else {
-                                    navigate("/courses")
-                                }
-                            }}
-                        >
-                            <div className={`sb-date${s.isSunday ? " sb-date--sunday" : ""}`}>
-                                <div className="sb-day">{s.day}</div>
-                                <div className="sb-mon">{s.mon}</div>
-                            </div>
+                    <div className="sb-dropdown-wrapper">
+                        <label htmlFor="course-select" className="sb-dropdown-label">Select Course:</label>
+                        <div className="sb-select-custom">
+                            <select
+                                id="course-select"
+                                value={selectedCourse}
+                                onChange={(e) => {
+                                    setSelectedCourse(e.target.value)
+                                    setSelectedDateKey(null)
+                                    setSelectedTimeId(null)
+                                }}
+                            >
+                                <option value="" disabled>-- Please Choose a Course --</option>
+                                {/* <option value="ALL">All Available Courses ({coursesList.length})</option> */}
+                                {coursesList.map((c, idx) => (
+                                    <option key={idx} value={c.title}>{c.title}</option>
+                                ))}
+                            </select>
+                            <span className="sb-select-arrow">▼</span>
+                        </div>
+                    </div>
+                </div>
 
-                            <div className="sb-info">
-                                <div className="sb-course">{s.course?.title}</div>
-                                <div className="sb-detail">
-                                    {s.startTime}
-                                    {s.location && s.location.toLowerCase() !== "face to face" ? ` · ${s.location}` : ""}
-                                    {s.course?.price ? ` · $${s.course.price}` : ""}
+                {/* Initial State: Prompt Box when no course is chosen */}
+                {!selectedCourse ? (
+                    <div className="sb-prompt-box">
+                        <div className="sb-prompt-icon">📚</div>
+                        <h3 className="sb-prompt-title">Please Select a Course</h3>
+                        {/* <p className="sb-prompt-text">
+                            Select a course from the dropdown above to view all upcoming available dates and time slots.
+                        </p> */}
+                    </div>
+                ) : (
+                    <>
+                        {/* Step 1: Choose Date */}
+                        <div className="sb-step-wrapper">
+                            <span className="sb-step-label">Step 1: Choose a Date</span>
+                            {datesMap.length > 0 ? (
+                                <div className="sb-date-grid">
+                                    {datesMap.map((d) => {
+                                        const isSelected = d.key === selectedDateKey
+                                        return (
+                                            <div
+                                                key={d.key}
+                                                className={`sb-date-card ${isSelected ? "sb-date-card--active" : ""}`}
+                                                onClick={() => {
+                                                    setSelectedDateKey(isSelected ? null : d.key)
+                                                    setSelectedTimeId(null)
+                                                }}
+                                            >
+                                                <div className={`sb-date-badge ${d.isSunday ? "sb-date-badge--sunday" : ""}`}>
+                                                    <span className="sb-day">{d.day}</span>
+                                                    <span className="sb-mon">{d.mon}</span>
+                                                </div>
+                                                <div className="sb-date-info">
+                                                    <span className="sb-date-action-text">
+                                                        {isSelected ? "Selected" : "Click to view times"}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="sb-empty-state">No dates available for this course.</div>
+                            )}
+                        </div>
+
+                        {/* Step 2: Choose Time Slot */}
+                        {activeDateObj && (
+                            <div className="sb-step-wrapper sb-fade-in">
+                                <span className="sb-step-label">
+                                    Step 2: Select Time for {activeDateObj.day} {activeDateObj.mon}
+                                </span>
+
+                                <div className="sb-slots-grid">
+                                    {activeDateObj.sessions.map((s, idx) => {
+                                        const currentId = s.sessionId || s.scheduleId || idx
+                                        const isTimeSelected = selectedTimeId === currentId
+
+                                        return (
+                                            <div
+                                                key={currentId}
+                                                className={`sb-time-card ${isTimeSelected ? "sb-time-card--active" : ""}`}
+                                                onClick={() => handleSlotClick(s)}
+                                            >
+                                                <div className="sb-time-primary">
+                                                    <span className="sb-time-text">{s.startTime || s.time}</span>
+                                                    <span className="sb-time-course">{s.course?.title}</span>
+                                                </div>
+
+                                                <div className="sb-time-details">
+                                                    {s.location && s.location.toLowerCase() !== "face to face" && (
+                                                        <span className="sb-loc-text">📍 {s.location}</span>
+                                                    )}
+                                                    {s.course?.price && (
+                                                        <span className="sb-price-text">${s.course.price}</span>
+                                                    )}
+                                                </div>
+
+                                                <div className="sb-time-action">
+                                                    <span className={`sb-status-pill sb-status--${s.spotsType}`}>
+                                                        {s.spotsLabel}
+                                                    </span>
+                                                    <span className="sb-arrow-btn">➔</span>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
-
-                            <div className={`sb-spots sb-spots--${s.spotsType}`}>
-                                <button onClick={e => e.stopPropagation()}>Book</button>
-                                <p>{s.spotsLabel}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        )}
+                    </>
+                )}
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -300,11 +300,13 @@ function SessionsBar() {
                         </div>
 
                         {!selectedDateKey ? (
-                            <div className="sb-prompt-card">
-                                <div className="sb-prompt-icon">🟢</div>
-                                <h3>Select a Green Date</h3>
-                                <p>Click any green highlighted date on the calendar to view its time slots.</p>
-                            </div>
+                           <div className="sb-prompt-card">
+    <div className="sb-prompt-icon">🟡</div>
+    <h3>Select an Available Date</h3>
+    <p>
+        Click any <span className="sb-highlight-badge">highlighted date</span> on the calendar to view its time slots.
+    </p>
+</div>
                         ) : (
                             <div className="sb-slots-list sb-fade-in">
                                 {activeDateObj?.sessions.map((slot) => {

@@ -1,6 +1,6 @@
-/* ===== SECTION ROOT & LAYOUT ===== */
+/* ===== SECTION ROOT & CONTAINER ===== */
 .sb-section {
-    background: #f8fafc;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     padding: 32px 16px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: #0f172a;
@@ -11,39 +11,44 @@
     margin: 0 auto;
 }
 
+/* Layout */
 .sb-grid-layout {
     display: grid;
     grid-template-columns: 360px 1fr;
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
 }
 
 /* ===== LEFT SIDEBAR ===== */
 .sb-sidebar {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 16px; /* Reduced from 24px */
-    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(245, 166, 35, 0.25); /* #F5A623 Soft Border */
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Reduced from 20px */
+    gap: 16px;
+    height: 100%;
 }
 
 .sb-header {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding-bottom: 8px; /* Reduced from 12px */
-    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(245, 166, 35, 0.2);
+    margin-bottom:20px;
 }
 
 .sb-badge {
     font-size: 11px;
-    font-weight: 700;
-    color: #2563eb;
+    font-weight: 800;
+    color: #F5A623; /* #F5A623 Accent */
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
 }
 
 .sb-title {
@@ -61,11 +66,11 @@
 }
 
 .sb-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: #475569;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
 }
 
 .sb-select-wrapper {
@@ -77,11 +82,11 @@
     width: 100%;
     appearance: none;
     -webkit-appearance: none;
-    background: #f8fafc;
-    border: 1.5px solid #cbd5e1;
-    border-radius: 10px;
-    padding: 12px 36px 12px 14px;
-    font-size: 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1.5px solid rgba(245, 166, 35, 0.35); /* #F5A623 Border */
+    border-radius: 12px;
+    padding: 10px 36px 10px 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #0f172a;
     cursor: pointer;
@@ -91,118 +96,18 @@
 
 .sb-select-wrapper select:focus,
 .sb-select-wrapper select:hover {
-    border-color: #059669;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-}
-.sb-step-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px; /* Reduced from 12px */
+    border-color: #F5A623;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.15);
 }
 
-/* ===== GREEN HIGHLIGHTED CALENDAR (COMPACT) ===== */
-.sb-calendar-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 12px; /* Reduced from 16px */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-}
-
-.sb-cal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px; /* Reduced from 12px */
-}
-
-.sb-cal-nav-btn {
-    width: 24px; /* Reduced from 28px */
-    height: 24px;
-    font-size: 14px;
-}
-
-.sb-cal-weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    font-size: 10px;
-    font-weight: 700;
-    color: #94a3b8;
-    margin-bottom: 4px; /* Reduced from 8px */
-}
-
-.sb-cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 3px; /* Tighter gap */
-}
-
-/* Compact day cells */
-.sb-cal-day {
-    height: 32px; /* Fixed compact height instead of full aspect-ratio square */
-    width: 100%;
-    border: none;
-    border-radius: 6px;
-    background: transparent;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.sb-cal-dot {
-    width: 3px;
-    height: 3px;
-    background: #15803d;
-    border-radius: 50%;
-    margin-top: 1px;
-}
-
-.sb-cal-legend {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-top: 8px; /* Reduced from 14px */
-    padding-top: 8px; /* Reduced from 10px */
-    border-top: 1px solid #f1f5f9;
-    font-size: 10px;
-    color: #64748b;
-}
-
-/* ===== MAIN CONTENT EQUAL HEIGHT ALIGNMENT ===== */
-.sb-grid-layout {
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 20px;
-    align-items: start;
-}
-
-.sb-main-content {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 20px;
-    min-height: auto; /* Let it shrink to match content */
-    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
 .sb-select-chevron {
     position: absolute;
     right: 14px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 12px;
-    color: #64748b;
+    color: #F5A623;
     pointer-events: none;
 }
 
@@ -211,7 +116,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
 .sb-step-num {
@@ -228,143 +133,177 @@
 }
 
 .sb-step-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: #1e293b;
 }
 
 .sb-sidebar-hint {
-    padding: 16px;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 10px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px dashed rgba(245, 166, 35, 0.4);
+    border-radius: 12px;
     font-size: 12px;
-    color: #64748b;
+    color: #475569;
     line-height: 1.5;
 }
 
-/* ===== GREEN HIGHLIGHTED CALENDAR ===== */
+/* ===== TRANSLUCENT GLASS CALENDAR ===== */
 .sb-calendar-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(245, 166, 35, 0.3); /* #F5A623 Accent Border */
+    border-radius: 16px;
     padding: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    position: relative;
 }
 
+/* Calendar Header */
 .sb-cal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
+    padding: 0 2px;
 }
 
 .sb-cal-month-title {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 800;
     color: #0f172a;
+    letter-spacing: -0.02em;
 }
 
 .sb-cal-nav-btn {
-    background: #f1f5f9;
-    border: none;
-    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    border-radius: 8px;
     width: 28px;
     height: 28px;
-    font-size: 16px;
+    font-size: 13px;
     cursor: pointer;
-    color: #475569;
+    color: #0f172a;
+    font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .sb-cal-nav-btn:hover {
-    background: #e2e8f0;
+    background: #F5A623;
+    color: #ffffff;
+    border-color: #F5A623;
+    transform: translateY(-1px);
 }
 
+/* Weekday Labels */
 .sb-cal-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
     font-size: 11px;
-    font-weight: 700;
-    color: #94a3b8;
+    font-weight: 800;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     margin-bottom: 8px;
 }
 
+/* Calendar Grid */
 .sb-cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
+    gap: 5px;
 }
 
+/* Base Day Buttons */
 .sb-cal-day {
-    aspect-ratio: 1;
-    border: none;
-    border-radius: 8px;
+    height: 36px;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 10px;
     background: transparent;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Disabled non-slot days */
+/* BRIGHT & CLEAR DISABLED DATES */
 .sb-cal-day--disabled {
-    color: #cbd5e1;
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     cursor: not-allowed;
+    opacity: 1;
 }
 
-/* Green Highlighted Days (Has Slots) */
+/* AVAILABLE DATES (Warm #F5A623 Accent Tone) */
 .sb-cal-day--available {
-    background: #dcfce7;
-    color: #15803d;
-    font-weight: 700;
-    border: 1.5px solid #86efac;
+    background: #fff8ec;
+    color: #d97706;
+    font-weight: 800;
+    border: 1.5px solid #fde68a;
+    box-shadow: 0 2px 6px rgba(245, 166, 35, 0.12);
 }
 
 .sb-cal-day--available:hover {
-    background: #bbf7d0;
-    transform: scale(1.05);
+    background: #F5A623;
+    color: #ffffff;
+    border-color: #F5A623;
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 6px 14px rgba(245, 166, 35, 0.35);
 }
 
+/* Glowing Accent Indicator Dot */
 .sb-cal-dot {
     width: 4px;
     height: 4px;
-    background: #15803d;
+    background: #F5A623;
     border-radius: 50%;
     margin-top: 2px;
 }
 
-/* Selected Date Style */
+.sb-cal-day--available:hover .sb-cal-dot {
+    background: #ffffff;
+}
+
+/* ACTIVE / SELECTED BUTTON (PROFESSIONAL EMERALD GREEN ONLY) */
 .sb-cal-day--selected,
-.sb-cal-day--selected:hover {
-    background: #059669 !important;
+.sb-cal-day--selected:hover,
+.sb-cal-day--active {
+    background: #10b981 !important; /* Professional Emerald Green */
     color: #ffffff !important;
-    border-color: #047857 !important;
-    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+    border-color: #059669 !important;
+    font-weight: 800 !important;
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
 }
 
 .sb-cal-day--selected .sb-cal-dot {
     background: #ffffff;
 }
 
+/* Legend */
 .sb-cal-legend {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin-top: 14px;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
     padding-top: 10px;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px dashed rgba(245, 166, 35, 0.25);
     font-size: 11px;
-    color: #64748b;
+    font-weight: 700;
+    color: #0f172a;
 }
 
 .sb-legend-item {
@@ -374,25 +313,36 @@
 }
 
 .sb-legend-color {
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
 }
 
-.sb-legend-color--available { background: #86efac; }
-.sb-legend-color--selected { background: #059669; }
+.sb-legend-color--disabled {
+    background: #0f172a;
+}
+
+.sb-legend-color--available {
+    background: #F5A623;
+}
+
+.sb-legend-color--selected {
+    background: #10b981;
+}
 
 /* ===== RIGHT MAIN CONTENT ===== */
 .sb-main-content {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(245, 166, 35, 0.25);
+    border-radius: 20px;
     padding: 24px;
-    min-height: 410px;
-    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 100%;
 }
 
 .sb-prompt-card {
@@ -401,10 +351,10 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 60px 20px;
-    background: #f8fafc;
-    border: 2px dashed #e2e8f0;
-    border-radius: 12px;
+    padding: 50px 20px;
+    background: rgba(255, 255, 255, 0.45);
+    border: 2px dashed rgba(245, 166, 35, 0.35);
+    border-radius: 16px;
     margin: auto 0;
 }
 
@@ -415,14 +365,14 @@
 
 .sb-prompt-card h3 {
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
     color: #0f172a;
     margin: 0 0 6px 0;
 }
 
 .sb-prompt-card p {
     font-size: 13px;
-    color: #64748b;
+    color: #475569;
     max-width: 340px;
     margin: 0;
     line-height: 1.5;
@@ -436,26 +386,26 @@
 }
 
 .sb-slot-card {
-    background: #ffffff;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1.5px solid rgba(226, 232, 240, 0.8);
+    border-radius: 14px;
     padding: 16px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sb-slot-card:hover {
-    border-color: #059669;
-    background: #f0fdf4;
-    box-shadow: 0 6px 16px rgba(5, 150, 105, 0.08);
+    border-color: #10b981;
+    background: rgba(240, 253, 244, 0.85);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.12);
     transform: translateY(-2px);
 }
 
 .sb-slot-card--active {
-    border-color: #059669;
+    border-color: #10b981;
     background: #ecfdf5;
 }
 
@@ -492,7 +442,7 @@
 
 .sb-slot-price {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     color: #0f172a;
 }
 
@@ -514,27 +464,29 @@
 .sb-status--full { background: #fee2e2; color: #b91c1c; }
 
 .sb-book-btn {
-    background: #059669;
+    background: #10b981; /* Professional Emerald Green Button */
     color: #ffffff;
     border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 9px 18px;
+    border-radius: 10px;
     font-size: 13px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
-    transition: background 0.2s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    transition: all 0.2s ease;
 }
 
 .sb-slot-card:hover .sb-book-btn {
-    background: #047857;
+    background: #059669;
+    transform: scale(1.02);
 }
 
 .sb-skeleton-box {
     height: 400px;
-    background: #e2e8f0;
+    background: rgba(226, 232, 240, 0.6);
     border-radius: 16px;
     animation: pulse 1.5s infinite;
 }

@@ -4,49 +4,169 @@ import axios from "axios"
 import "../../styles/SessionsBar.css"
 import { API_URL } from "../../data/service"
 
-const FALLBACK = [
-    { scheduleId: "6a79767da99dce108b4c15a0", sessionId: "6a79767da99dce108b4c15a1", date: "2026-08-11T00:00:00.000Z", day: "11", mon: "Aug", course: { id: "c1", slug: "conduct-civil-construction-excavator-operations-training-syd", title: "Excavator Operations Training", price: 220 }, startTime: "13:27", location: "Sefton", spotsType: "ok", spotsLabel: "8 spots" },
-    { scheduleId: "6a79767da99dce108b4c15a2", sessionId: "6a79767da99dce108b4c15a3", date: "2026-08-12T00:00:00.000Z", day: "12", mon: "Aug", course: { id: "c2", slug: "working-at-heights", title: "Working at Heights", price: 250 }, startTime: "08:30", location: "Sefton", spotsType: "low", spotsLabel: "2 left" },
-]
+const MONTH_NAMES = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"
+];
+const MONTH_ABBRS = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+// Strictly parse ISO date strings to eliminate timezone shifts
+const parseIsoDate = (dateStr) => {
+    if (!dateStr) return null;
+    const str = typeof dateStr === "string" ? dateStr : new Date(dateStr).toISOString();
+    const datePart = str.split("T")[0]; // E.g., "2026-08-11"
+    const parts = datePart.split("-").map(Number);
+    if (parts.length < 3) return null;
+
+    const year = parts[0];
+    const monthIndex = parts[1] - 1; // 0-based index
+    const day = parts[2];
+
+    return {
+        year,
+        monthIndex,
+        day,
+        monAbbr: MONTH_ABBRS[monthIndex],
+        matchKey: `${year}-${monthIndex}-${day}`
+    };
+};
 
 function SessionsBar() {
     const navigate = useNavigate()
     const [sessions, setSessions] = useState([])
-    const [selectedCourse, setSelectedCourse] = useState("") // Empty initially so no dates show by default
+    const [selectedCourse, setSelectedCourse] = useState("ALL") 
     const [selectedDateKey, setSelectedDateKey] = useState(null)
     const [selectedTimeId, setSelectedTimeId] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    // Calendar view date
+    const [currentCalDate, setCurrentCalDate] = useState(new Date())
+
     useEffect(() => {
-        axios.get(`${API_URL}/api/schedules/upcoming?limit=12`)
+        axios.get(`${API_URL}/api/schedules/upcoming?limit=50`)
             .then(res => {
                 const data = Array.isArray(res.data) ? res.data : []
-                setSessions(data.length > 0 ? data : FALLBACK)
+                setSessions(data)
+
+                // Auto-set calendar month to match the earliest session date
+                if (data.length > 0 && data[0].date) {
+                    const parsed = parseIsoDate(data[0].date)
+                    if (parsed) {
+                        setCurrentCalDate(new Date(parsed.year, parsed.monthIndex, 1))
+                    }
+                }
             })
-            .catch(() => setSessions(FALLBACK))
+            .catch(err => {
+                console.error("❌ Error fetching sessions:", err)
+                setSessions([])
+            })
             .finally(() => setLoading(false))
     }, [])
 
     const slugify = (text) => {
         if (!text) return "course"
-        return text
-            .toString()
-            .toLowerCase()
-            .trim()
-            .replace(/[\s\W-]+/g, "-")
+        return text.toString().toLowerCase().trim().replace(/[\s\W-]+/g, "-")
     }
 
-    const handleSlotClick = (s) => {
-        const slotId = s.sessionId || s.scheduleId
-        setSelectedTimeId(slotId)
+    // Extract unique course titles for the select dropdown
+    const coursesList = useMemo(() => {
+        const map = new Map()
+        sessions.forEach(item => {
+            const title = item.course?.title
+            if (title && !map.has(title)) {
+                map.set(title, item.course)
+            }
+        })
+        return Array.from(map.values())
+    }, [sessions])
 
-        const slug = s.course?.slug || slugify(s.course?.title)
-        
+    // Group flat sessions into strict date buckets (prevents session merging)
+    const datesMap = useMemo(() => {
+        const map = new Map()
+
+        const filtered = sessions.filter(s => {
+            if (!selectedCourse || selectedCourse === "ALL") return true
+            return s.course?.title?.toLowerCase() === selectedCourse.toLowerCase()
+        })
+
+        filtered.forEach(session => {
+            const parsed = parseIsoDate(session.date)
+            if (!parsed) return
+
+            const { matchKey, year, monthIndex, day, monAbbr } = parsed
+
+            if (!map.has(matchKey)) {
+                map.set(matchKey, {
+                    matchKey,
+                    year,
+                    monthIndex,
+                    day,
+                    mon: monAbbr,
+                    sessions: []
+                })
+            }
+
+            // Directly push the session into its specific date bucket
+            map.get(matchKey).sessions.push(session)
+        })
+
+        return map
+    }, [sessions, selectedCourse])
+
+    // Selected date sessions container
+    const activeDateObj = useMemo(() => {
+        if (!selectedDateKey) return null
+        return datesMap.get(selectedDateKey) || null
+    }, [datesMap, selectedDateKey])
+
+    // Calendar grid matrix builder
+    const calendarDays = useMemo(() => {
+        const year = currentCalDate.getFullYear()
+        const monthIndex = currentCalDate.getMonth()
+
+        const firstDayIndex = new Date(year, monthIndex, 1).getDay()
+        const totalDaysInMonth = new Date(year, monthIndex + 1, 0).getDate()
+
+        const days = []
+        for (let i = 0; i < firstDayIndex; i++) {
+            days.push(null)
+        }
+
+        for (let d = 1; d <= totalDaysInMonth; d++) {
+            const matchKey = `${year}-${monthIndex}-${d}`
+            const hasSlots = datesMap.has(matchKey)
+            const dateData = hasSlots ? datesMap.get(matchKey) : null
+
+            days.push({
+                dayNumber: d,
+                matchKey,
+                hasSlots,
+                slotsCount: dateData ? dateData.sessions.length : 0
+            })
+        }
+        return days
+    }, [currentCalDate, datesMap])
+
+    const handlePrevMonth = () => {
+        setCurrentCalDate(new Date(currentCalDate.getFullYear(), currentCalDate.getMonth() - 1, 1))
+    }
+
+    const handleNextMonth = () => {
+        setCurrentCalDate(new Date(currentCalDate.getFullYear(), currentCalDate.getMonth() + 1, 1))
+    }
+
+    const handleSlotClick = (slot) => {
+        setSelectedTimeId(slot.sessionId)
+
+        const slug = slot.course?.slug || slugify(slot.course?.title)
         const queryParams = new URLSearchParams({
-            scheduleId: s.scheduleId || "",
-            sessionId: s.sessionId || "",
-            date: s.date || "",
-            time: s.startTime || s.time || "",
+            scheduleId: slot.scheduleId || "",
+            sessionId: slot.sessionId || "",
+            date: slot.date || "",
+            time: slot.startTime || "",
             step: "2"
         }).toString();
 
@@ -55,52 +175,13 @@ function SessionsBar() {
         }, 150)
     }
 
-    const coursesList = useMemo(() => {
-        const map = new Map()
-        sessions.forEach(s => {
-            if (s.course?.title) map.set(s.course.title, s.course)
-        })
-        return Array.from(map.values())
-    }, [sessions])
-
-    const filteredSessions = useMemo(() => {
-        if (!selectedCourse) return []
-        if (selectedCourse === "ALL") return sessions
-        return sessions.filter(s => s.course?.title === selectedCourse)
-    }, [sessions, selectedCourse])
-
-    const datesMap = useMemo(() => {
-        const map = new Map()
-        filteredSessions.forEach(s => {
-            const key = `${s.day}-${s.mon}`
-            if (!map.has(key)) {
-                map.set(key, {
-                    key,
-                    day: s.day,
-                    mon: s.mon,
-                    isSunday: s.isSunday,
-                    sessions: []
-                })
-            }
-            map.get(key).sessions.push(s)
-        })
-        return Array.from(map.values())
-    }, [filteredSessions])
-
-    const activeDateObj = useMemo(() => {
-        if (!selectedDateKey) return null
-        return datesMap.find(d => d.key === selectedDateKey) || null
-    }, [datesMap, selectedDateKey])
-
     if (loading) {
         return (
             <div className="sb-section">
                 <div className="sb-container">
-                    <div className="sb-skeleton-header" />
-                    <div className="sb-date-grid">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                            <div key={i} className="sb-date-card sb-card--skeleton" />
-                        ))}
+                    <div className="sb-grid-layout">
+                        <div className="sb-sidebar sb-skeleton-box" />
+                        <div className="sb-main-content sb-skeleton-box" />
                     </div>
                 </div>
             </div>
@@ -110,126 +191,161 @@ function SessionsBar() {
     return (
         <section className="sb-section">
             <div className="sb-container">
-                <div className="sb-filter-bar">
-                    <div className="sb-header">
-                        <span className="sb-badge">Fast Booking</span>
-                        <h2 className="sb-title">Select Date & Timing</h2>
-                    </div>
-
-                    <div className="sb-dropdown-wrapper">
-                        <label htmlFor="course-select" className="sb-dropdown-label">Select Course:</label>
-                        <div className="sb-select-custom">
-                            <select
-                                id="course-select"
-                                value={selectedCourse}
-                                onChange={(e) => {
-                                    setSelectedCourse(e.target.value)
-                                    setSelectedDateKey(null)
-                                    setSelectedTimeId(null)
-                                }}
-                            >
-                                <option value="" disabled>-- Please Choose a Course --</option>
-                                {/* <option value="ALL">All Available Courses ({coursesList.length})</option> */}
-                                {coursesList.map((c, idx) => (
-                                    <option key={idx} value={c.title}>{c.title}</option>
-                                ))}
-                            </select>
-                            <span className="sb-select-arrow">▼</span>
+                  <div className="sb-header">
+                            <span className="cs-label">Fast Booking</span>
+                            <h2 className="cs-title">Select Date & Time</h2>
                         </div>
-                    </div>
-                </div>
 
-                {/* Initial State: Prompt Box when no course is chosen */}
-                {!selectedCourse ? (
-                    <div className="sb-prompt-box">
-                        <div className="sb-prompt-icon">📚</div>
-                        <h3 className="sb-prompt-title">Please Select a Course</h3>
-                        {/* <p className="sb-prompt-text">
-                            Select a course from the dropdown above to view all upcoming available dates and time slots.
-                        </p> */}
-                    </div>
-                ) : (
-                    <>
-                        {/* Step 1: Choose Date */}
-                        <div className="sb-step-wrapper">
-                            <span className="sb-step-label">Step 1: Choose a Date</span>
-                            {datesMap.length > 0 ? (
-                                <div className="sb-date-grid">
-                                    {datesMap.map((d) => {
-                                        const isSelected = d.key === selectedDateKey
+                <div className="sb-grid-layout">
+                    
+                    
+                    {/* ===== LEFT SIDEBAR: CALENDAR & FILTERS ===== */}
+                    <aside className="sb-sidebar">
+                      
+                        {/* Course Filter Dropdown */}
+                        <div className="sb-field-group">
+                            <label htmlFor="course-select" className="sb-label">Select Course</label>
+                            <div className="sb-select-wrapper">
+                                <select
+                                    id="course-select"
+                                    value={selectedCourse}
+                                    onChange={(e) => {
+                                        setSelectedCourse(e.target.value)
+                                        setSelectedDateKey(null)
+                                        setSelectedTimeId(null)
+                                    }}
+                                >
+                                    <option value="ALL">All Courses</option>
+                                    {coursesList.map((c, idx) => (
+                                        <option key={idx} value={c.title}>{c.title}</option>
+                                    ))}
+                                </select>
+                                <span className="sb-select-chevron">▾</span>
+                            </div>
+                        </div>
+
+                        {/* Calendar */}
+                        <div className="sb-calendar-wrapper">
+                            {/* <div className="sb-step-header">
+                                <span className="sb-step-num">1</span>
+                                <span className="sb-step-title">Choose Date</span>
+                            </div> */}
+
+                            <div className="sb-calendar-card">
+                                <div className="sb-cal-header">
+                                    <button type="button" onClick={handlePrevMonth} className="sb-cal-nav-btn">‹</button>
+                                    <span className="sb-cal-month-title">
+                                        {MONTH_NAMES[currentCalDate.getMonth()]} {currentCalDate.getFullYear()}
+                                    </span>
+                                    <button type="button" onClick={handleNextMonth} className="sb-cal-nav-btn">›</button>
+                                </div>
+
+                                <div className="sb-cal-weekdays">
+                                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                                </div>
+
+                                <div className="sb-cal-grid">
+                                    {calendarDays.map((item, index) => {
+                                        if (!item) {
+                                            return <div key={`empty-${index}`} className="sb-cal-day sb-cal-day--empty" />
+                                        }
+
+                                        const isSelected = selectedDateKey === item.matchKey
+
                                         return (
-                                            <div
-                                                key={d.key}
-                                                className={`sb-date-card ${isSelected ? "sb-date-card--active" : ""}`}
+                                            <button
+                                                type="button"
+                                                key={item.matchKey}
+                                                disabled={!item.hasSlots}
+                                                className={`sb-cal-day ${
+                                                    item.hasSlots ? "sb-cal-day--available" : "sb-cal-day--disabled"
+                                                } ${isSelected ? "sb-cal-day--selected" : ""}`}
                                                 onClick={() => {
-                                                    setSelectedDateKey(isSelected ? null : d.key)
+                                                    const nextKey = isSelected ? null : item.matchKey
+                                                    setSelectedDateKey(nextKey)
                                                     setSelectedTimeId(null)
                                                 }}
                                             >
-                                                <div className={`sb-date-badge ${d.isSunday ? "sb-date-badge--sunday" : ""}`}>
-                                                    <span className="sb-day">{d.day}</span>
-                                                    <span className="sb-mon">{d.mon}</span>
-                                                </div>
-                                                <div className="sb-date-info">
-                                                    <span className="sb-date-action-text">
-                                                        {isSelected ? "Selected" : "Click to view times"}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                                <span className="sb-cal-day-num">{item.dayNumber}</span>
+                                                {item.hasSlots && <span className="sb-cal-dot" />}
+                                            </button>
                                         )
                                     })}
                                 </div>
-                            ) : (
-                                <div className="sb-empty-state">No dates available for this course.</div>
-                            )}
+
+                                {/* <div className="sb-cal-legend">
+                                    <div className="sb-legend-item">
+                                        <span className="sb-legend-color sb-legend-color--available" />
+                                        <span>Available (Green)</span>
+                                    </div>
+                                    <div className="sb-legend-item">
+                                        <span className="sb-legend-color sb-legend-color--selected" />
+                                        <span>Selected</span>
+                                    </div>
+                                </div> */}
+                            </div>
+                        </div>
+                    </aside>
+
+                    {/* ===== RIGHT CONTENT: TIME SLOTS FOR SELECTED DATE ===== */}
+                    <main className="sb-main-content">
+                        <div className="sb-step-header">
+                            {/* <span className="sb-step-num">2</span> */}
+                            <span className="sb-step-title">
+                                {activeDateObj 
+                                    ? `Available Slots on ${activeDateObj.day} ${activeDateObj.mon} (${activeDateObj.sessions.length})`
+                                    : "Available Time Slots"
+                                }
+                            </span>
                         </div>
 
-                        {/* Step 2: Choose Time Slot */}
-                        {activeDateObj && (
-                            <div className="sb-step-wrapper sb-fade-in">
-                                <span className="sb-step-label">
-                                    Step 2: Select Time for {activeDateObj.day} {activeDateObj.mon}
-                                </span>
+                        {!selectedDateKey ? (
+                            <div className="sb-prompt-card">
+                                <div className="sb-prompt-icon">🟢</div>
+                                <h3>Select a Green Date</h3>
+                                <p>Click any green highlighted date on the calendar to view its time slots.</p>
+                            </div>
+                        ) : (
+                            <div className="sb-slots-list sb-fade-in">
+                                {activeDateObj?.sessions.map((slot) => {
+                                    const isTimeSelected = selectedTimeId === slot.sessionId
 
-                                <div className="sb-slots-grid">
-                                    {activeDateObj.sessions.map((s, idx) => {
-                                        const currentId = s.sessionId || s.scheduleId || idx
-                                        const isTimeSelected = selectedTimeId === currentId
-
-                                        return (
-                                            <div
-                                                key={currentId}
-                                                className={`sb-time-card ${isTimeSelected ? "sb-time-card--active" : ""}`}
-                                                onClick={() => handleSlotClick(s)}
-                                            >
-                                                <div className="sb-time-primary">
-                                                    <span className="sb-time-text">{s.startTime || s.time}</span>
-                                                    <span className="sb-time-course">{s.course?.title}</span>
-                                                </div>
-
-                                                <div className="sb-time-details">
-                                                    {s.location && s.location.toLowerCase() !== "face to face" && (
-                                                        <span className="sb-loc-text">📍 {s.location}</span>
-                                                    )}
-                                                    {s.course?.price && (
-                                                        <span className="sb-price-text">${s.course.price}</span>
-                                                    )}
-                                                </div>
-
-                                                <div className="sb-time-action">
-                                                    <span className={`sb-status-pill sb-status--${s.spotsType}`}>
-                                                        {s.spotsLabel}
-                                                    </span>
-                                                    <span className="sb-arrow-btn">➔</span>
-                                                </div>
+                                    return (
+                                        <div
+                                            key={slot.sessionId}
+                                            className={`sb-slot-card ${isTimeSelected ? "sb-slot-card--active" : ""}`}
+                                            onClick={() => handleSlotClick(slot)}
+                                        >
+                                            <div className="sb-slot-time-col">
+                                                <span className="sb-slot-time">{slot.startTime}</span>
+                                                <span className="sb-slot-course-title">{slot.course?.title}</span>
                                             </div>
-                                        )
-                                    })}
-                                </div>
+
+                                            <div className="sb-slot-info-col">
+                                                {slot.location && (
+                                                    <span className="sb-slot-tag">📍 {slot.location}</span>
+                                                )}
+                                                {slot.course?.price && (
+                                                    <span className="sb-slot-price">${slot.course.price} AUD</span>
+                                                )}
+                                            </div>
+
+                                            <div className="sb-slot-cta-col">
+                                                <span className={`sb-status-pill sb-status--${slot.spotsType}`}>
+                                                    {slot.spotsLabel}
+                                                </span>
+                                                <button type="button" className="sb-book-btn">
+                                                    Book Now <span>➔</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         )}
-                    </>
-                )}
+                    </main>
+
+                </div>
             </div>
         </section>
     )

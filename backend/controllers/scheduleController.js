@@ -58,66 +58,71 @@ const getUpcomingSessions = async (req, res) => {
         const nowSydney = new Date(new Date().toLocaleString("en-US", { timeZone: "Australia/Sydney" }));
         const today = new Date(nowSydney.getFullYear(), nowSydney.getMonth(), nowSydney.getDate());
 
-        const limit = parseInt(req.query.limit) || 10
+        const limit = parseInt(req.query.limit) || 20;
 
         const schedules = await Schedule.find({
             date: { $gte: today }
         })
             .populate(populateActiveCourse)
             .sort({ date: 1 })
-            .lean()
+            .lean();
 
-        const upcoming = []
+        const upcoming = [];
 
         schedules.forEach(schedule => {
-            if (!schedule.course) return
+            if (!schedule.course) return;
 
-            const dateObj  = new Date(schedule.date)
-            const isSunday = dateObj.getDay() === 0
+            const dateObj  = new Date(schedule.date);
+            const isSunday = dateObj.getDay() === 0;
 
-            const day = dateObj.getDate().toString()
-            const mon = dateObj.toLocaleString("en-AU", { month: "short", timeZone: "Australia/Sydney" })
+            const day = dateObj.getDate().toString();
+            const mon = dateObj.toLocaleString("en-AU", { month: "short", timeZone: "Australia/Sydney" });
 
-            const activeSession = schedule.sessions?.find(s => s.status === "Active")
-            if (!activeSession) return
+            // 1. Use .filter() instead of .find() to get ALL active sessions in this schedule
+            const activeSessions = schedule.sessions?.filter(s => s.status === "Active") || [];
+            
+            if (activeSessions.length === 0) return;
 
-            const slots = activeSession.availableSlots
-            let spotsType = "ok"
-            if (slots === 0)      spotsType = "full"
-            else if (slots <= 3)  spotsType = "low"
+            // 2. Loop through every active session and push to the response
+            activeSessions.forEach(activeSession => {
+                const slots = activeSession.availableSlots ?? 0;
+                let spotsType = "ok";
+                if (slots === 0)       spotsType = "full";
+                else if (slots <= 3)  spotsType = "low";
 
-            upcoming.push({
-                scheduleId:    schedule._id,
-                sessionId:     activeSession._id,
-                date:          schedule.date,
-                day,
-                mon,
-                isSunday,
-                startTime:     activeSession.startTime  || "8:30am",
-                endTime:       activeSession.endTime    || "4:30pm",
-                location:      activeSession.location   || schedule.course.location || "Sefton",
-                availableSlots: slots,
-                spotsLabel:    slots === 0 ? "Full" : `${slots} spots`,
-                spotsType,
-                sessionType:   activeSession.sessionType,
-                course: {
-                    id:       schedule.course._id,
-                    title:    schedule.course.title,
-                    price:    resolveDisplayPrice(schedule.course),
-                    location: schedule.course.location || "Sefton",
-                    duration: schedule.course.duration,
-                    slug:     schedule.course.slug,
-                },
-            })
-        })
+                upcoming.push({
+                    scheduleId:     schedule._id,
+                    sessionId:      activeSession._id,
+                    date:           schedule.date,
+                    day,
+                    mon,
+                    isSunday,
+                    startTime:     activeSession.startTime  || "8:30am",
+                    endTime:       activeSession.endTime    || "4:30pm",
+                    location:      activeSession.location   || schedule.course.location || "Sefton",
+                    availableSlots: slots,
+                    spotsLabel:    slots === 0 ? "Full" : `${slots} spots`,
+                    spotsType,
+                    sessionType:   activeSession.sessionType,
+                    course: {
+                        id:       schedule.course._id,
+                        title:    schedule.course.title,
+                        price:    resolveDisplayPrice(schedule.course),
+                        location: schedule.course.location || "Sefton",
+                        duration: schedule.course.duration,
+                        slug:     schedule.course.slug,
+                    },
+                });
+            });
+        });
 
-        res.json(upcoming.slice(0, limit))
+        res.json(upcoming.slice(0, limit));
 
     } catch (err) {
-        console.error("getUpcomingSessions error:", err)
-        res.status(500).json({ message: "Server error", error: err.message })
+        console.error("getUpcomingSessions error:", err);
+        res.status(500).json({ message: "Server error", error: err.message });
     }
-}
+};
 
 const editSession = async (req, res) => {
   try {

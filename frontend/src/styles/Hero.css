@@ -162,7 +162,7 @@ transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 .hero-container {
     position: relative;
     z-index: 12;
-    margin: auto;
+    margin-top:150px;
     padding: 0 9%;
     width: 100%;
     display: flex;
@@ -593,7 +593,7 @@ transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .announcement-bar {
-  position: absolute;
+
   top: 0;
   left: 0;
   width: 100%;

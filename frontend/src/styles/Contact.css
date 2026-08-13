@@ -18,6 +18,7 @@
     position: relative;
     overflow: hidden;
     border-bottom: 4px solid var(--color-brand-primary);
+    margin-top:55px;
 }
 
 .cp-hero::before {

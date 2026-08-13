@@ -30,6 +30,7 @@ const emailTemplateRoutes = require("./routes/emailTemplateRoutes");
 const promotionMailRoutes = require("./routes/promotionMailRoutes");
 const customMailRoutes =
 require("./routes/customMailRoutes");
+const marqueeRoutes = require("./routes/marqueeRoutes");
 
 
 
@@ -74,6 +75,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/api/send-mail", mailRoutes);
 app.use("/api/email-template", emailTemplateRoutes);
 app.use("/api/send-promotion-mail", promotionMailRoutes);
+app.use("/api/marquee", marqueeRoutes);
 
 app.use("/api/send-mail/multiple", sendMultipleMailRoutes);
 app.use(

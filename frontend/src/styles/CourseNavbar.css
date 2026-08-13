@@ -36,7 +36,7 @@
 
 .navbar-logo > img {
   height: 50px;
-  margin-left: 70px;
+  
 }
 
 .logo span {
@@ -208,12 +208,12 @@
 
 /* RESOURCES DROPDOWN */
 .resources-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  top: 80px;
+  left: 300px;
   background: #0d1b2a;
   color: var(--color-surface);
-  width: 250px;
+  width: 500px;
   border-radius: 10px;
   padding: 10px 0;
   z-index: 999;
@@ -281,9 +281,9 @@
 
 /* COURSES DROPDOWN */
 .courses-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  top: 90px;
+  left: 80px;
   width: 800px;
   display: flex;
   background: #0d1b2a;

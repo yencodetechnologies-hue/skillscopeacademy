@@ -36,7 +36,7 @@
 
 .navbar-logo > img {
   height: 50px;
-  margin-left: 70px;
+  /* margin-left: 70px; */
 }
 
 .logo span {
@@ -207,12 +207,12 @@
 
 /* RESOURCES DROPDOWN */
 .resources-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  top: 80px;
+  left: 300px;
   background: #0d1b2a;
   color: var(--color-surface);
-  width: 250px;
+  width: 500px;
   border-radius: 10px;
   padding: 10px 0;
   z-index: 999;
@@ -269,9 +269,9 @@
    <li> while moving toward a category. Without this the dropdown closes
    the moment the cursor enters the empty space. */
 .courses-dropdown-bridge {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  top: 100px;
+  left: 80px;
   width: 800px;          /* match .courses-dropdown width */
   height: 12px;          /* slightly more than .courses-dropdown's margin-top */
   background: transparent;
@@ -280,9 +280,9 @@
 
 /* COURSES DROPDOWN */
 .courses-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  top: 100px;
+  left: 100px;
   width: 800px;
   display: flex;
   background: #0d1b2a;
@@ -486,7 +486,7 @@
 
 @media (min-width: 1400px) {
   .navbar-container {
-    max-width: 1500px;
+    max-width: 1500px
   }
 
   .nav-links li {

@@ -96,6 +96,24 @@ grid-template-columns:1fr;
    The big rounded "card" that holds the floating navbar +
    the hero image together, matching the reference design.
 ========================================================= */
+.cdp-sidebar .cdp-sb-card{
+    background: var(--color-navy-deep);
+
+    .cdp-sb-title{
+        color:#ecfdf5;
+    }
+    .cdp-sb-exp-label{color:#ecfdf5;}
+    .cdp-sb-price{color:#f5a623}
+    .cdp-sb-note{border-color:#f5a623;color:#ecfdf5}
+    .cdp-experience-primary{
+        background-color: #f5a623;
+        font-size: 13px;
+    }
+    .cdp-sb-card-btn{font-size:13px}
+    .cdp-btn-voc{margin: 0px;font-size: 13px;}
+    .cdp-sb-mini-list li{color:#ecfdf5}
+
+}
 .cdp-hero-frame {
   position: relative;
   overflow: hidden;
@@ -233,7 +251,7 @@ grid-template-columns:1fr;
 
 .cdp-sb-card {
     position: relative;
-    background: #ffffff;
+    background: var(--color-navy-deep);
     border: 1px solid rgba(23, 47, 20, 0.12);
     border-radius: 20px;
     padding: 26px;
@@ -244,7 +262,7 @@ grid-template-columns:1fr;
 }
 .cdp-sb-card-btn{
     border: 0.5px solid #f5a623;
-    font-size: 10px !important;
+    /* font-size: 10px !important; */
     margin-bottom: 13px;
     font-weight: none !important;
 

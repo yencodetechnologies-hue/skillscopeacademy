@@ -147,9 +147,7 @@ function Hero() {
         />
         <div className="hero-overlay"></div>
       </div>
-      <div className="announcement-bar">
-        <p>🔥 SUNDAY CLASSES AVAILABLE • ENROLL NOW • LIMITED SEATS 🔥     NATIONALLY RECOGNIZED CERTIFICATES •      GET CERTIFIED WITH CREDENTIALS THAT ARE RECOGNIZED ACROSS ALL STATES AND TERRITORIES </p>
-      </div>
+     
       <div className="hero-container">
        <div className="hero-pill">
          <span className="hero-pill-dot" />

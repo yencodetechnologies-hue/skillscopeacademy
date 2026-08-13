@@ -1,524 +1,1408 @@
-/* ===== SECTION ROOT & CONTAINER ===== */
+/* =========================================================
+   SESSION BOOKING SECTION
+   ========================================================= */
+
 .sb-section {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    padding: 32px 16px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    width: 100%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc 0%,
+            #f1f5f9 100%
+        );
+
+    padding: 36px 16px;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+
     color: #0f172a;
 }
 
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
 .sb-container {
-    max-width: 95%;
+    width: 95%;
+    max-width: 1450px;
+
     margin: 0 auto;
 }
 
-/* Layout */
-.sb-grid-layout {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    gap: 24px;
-    align-items: stretch;
-}
 
-/* ===== LEFT SIDEBAR ===== */
-.sb-sidebar {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1.5px solid rgba(245, 166, 35, 0.25); /* #F5A623 Soft Border */
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 100%;
-}
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
 
 .sb-header {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(245, 166, 35, 0.2);
-    margin-bottom:20px;
+
+    gap: 4px;
+
+    padding-bottom: 18px;
+
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid
+        rgba(245, 166, 35, 0.22);
 }
 
-.sb-badge {
-    font-size: 11px;
+
+.sb-header-label {
+    font-size: 10px;
+
     font-weight: 800;
-    color: #F5A623; /* #F5A623 Accent */
+
+    letter-spacing: 0.12em;
+
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+
+    color: #f5a623;
 }
 
-.sb-title {
-    font-size: 20px;
-    font-weight: 800;
-    color: #0f172a;
+
+.sb-header-title {
     margin: 0;
+
+    font-size: 24px;
+
+    line-height: 1.25;
+
+    font-weight: 800;
+
+    letter-spacing: -0.025em;
+
+    color: #172f14;
 }
 
-/* FORM FIELDS */
-.sb-field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
 
-.sb-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: #475569;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
+.sb-header-subtitle {
+    margin: 2px 0 0;
 
-.sb-select-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.sb-select-wrapper select {
-    width: 100%;
-    appearance: none;
-    -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.7);
-    border: 1.5px solid rgba(245, 166, 35, 0.35); /* #F5A623 Border */
-    border-radius: 12px;
-    padding: 10px 36px 10px 14px;
     font-size: 13px;
-    font-weight: 600;
-    color: #0f172a;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    outline: none;
-}
 
-.sb-select-wrapper select:focus,
-.sb-select-wrapper select:hover {
-    border-color: #F5A623;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.15);
-}
+    color: #64748b;
 
-.sb-select-chevron {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    color: #F5A623;
-    pointer-events: none;
-}
-
-/* STEP HEADERS */
-.sb-step-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-}
-
-.sb-step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #0f172a;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sb-step-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #1e293b;
-}
-
-.sb-sidebar-hint {
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.45);
-    border: 1px dashed rgba(245, 166, 35, 0.4);
-    border-radius: 12px;
-    font-size: 12px;
-    color: #475569;
     line-height: 1.5;
 }
 
-/* ===== TRANSLUCENT GLASS CALENDAR ===== */
-.sb-calendar-card {
-    background: rgba(255, 255, 255, 0.55);
+
+/* =========================================================
+   MAIN GRID
+   ========================================================= */
+
+.sb-grid-layout {
+    display: grid;
+
+    grid-template-columns: 330px minmax(0, 1fr);
+
+    gap: 22px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   LEFT SIDEBAR
+   ========================================================= */
+
+.sb-sidebar {
+    background: rgba(255, 255, 255, 0.75);
+
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1.5px solid rgba(245, 166, 35, 0.3); /* #F5A623 Accent Border */
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
-    position: relative;
+
+    border: 1px solid
+        rgba(245, 166, 35, 0.25);
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.05);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    height: fit-content;
 }
 
-/* Calendar Header */
+
+/* =========================================================
+   COURSE FIELD
+   ========================================================= */
+
+.sb-field-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.sb-label {
+    font-size: 10px;
+
+    font-weight: 800;
+
+    color: #475569;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.07em;
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.sb-select-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.sb-select-wrapper select {
+    width: 100%;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    padding: 11px 36px 11px 12px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #172f14;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.sb-select-wrapper select:hover {
+    border-color: #f5a623;
+}
+
+
+.sb-select-wrapper select:focus {
+    border-color: #f5a623;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(245, 166, 35, 0.12);
+}
+
+
+.sb-select-chevron {
+    position: absolute;
+
+    right: 13px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #f5a623;
+
+    font-size: 12px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.sb-calendar-wrapper {
+    width: 100%;
+}
+
+
+.sb-calendar-card {
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.035);
+}
+
+
+/* =========================================================
+   CALENDAR HEADER
+   ========================================================= */
+
 .sb-cal-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
-    margin-bottom: 12px;
-    padding: 0 2px;
+
+    margin-bottom: 14px;
 }
+
 
 .sb-cal-month-title {
-    font-size: 15px;
+    font-size: 14px;
+
     font-weight: 800;
-    color: #0f172a;
-    letter-spacing: -0.02em;
+
+    color: #172f14;
+
+    letter-spacing: -0.01em;
 }
+
 
 .sb-cal-nav-btn {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(245, 166, 35, 0.4);
-    border-radius: 8px;
     width: 28px;
+
     height: 28px;
-    font-size: 13px;
-    cursor: pointer;
-    color: #0f172a;
-    font-weight: 800;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-    transition: all 0.2s ease;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 7px;
+
+    color: #172f14;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
+
 .sb-cal-nav-btn:hover {
-    background: #F5A623;
+    background: #f5a623;
+
+    border-color: #f5a623;
+
     color: #ffffff;
-    border-color: #F5A623;
+}
+
+
+/* =========================================================
+   WEEKDAYS
+   ========================================================= */
+
+.sb-cal-weekdays {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    text-align: center;
+
+    margin-bottom: 7px;
+}
+
+
+.sb-cal-weekdays span {
+    font-size: 9px;
+
+    font-weight: 800;
+
+    color: #94a3b8;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   CALENDAR GRID
+   ========================================================= */
+
+.sb-cal-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 4px;
+}
+
+
+/* =========================================================
+   CALENDAR DAY
+   ========================================================= */
+
+.sb-cal-day {
+    width: 100%;
+
+    height: 34px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    color: #64748b;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.sb-cal-day--empty {
+    cursor: default;
+}
+
+
+/* =========================================================
+   DISABLED DATE
+   ========================================================= */
+
+.sb-cal-day--disabled {
+    background: #f8fafc;
+
+    border-color: #f1f5f9;
+
+    color: #cbd5e1;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   AVAILABLE DATE
+   ========================================================= */
+
+.sb-cal-day--available {
+    background: #f0fdf4;
+
+    border-color: #bbf7d0;
+
+    color: #059669;
+
+    font-weight: 800;
+}
+
+
+.sb-cal-day--available:hover {
+    background: #10b981;
+
+    border-color: #10b981;
+
+    color: #ffffff;
+
     transform: translateY(-1px);
 }
 
-/* Weekday Labels */
-.sb-cal-weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    font-size: 11px;
-    font-weight: 800;
-    color: #0f172a;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 8px;
+
+/* =========================================================
+   DATE NUMBER
+   ========================================================= */
+
+.sb-cal-day-num {
+    line-height: 1;
 }
 
-/* Calendar Grid */
-.sb-cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
 
-/* Base Day Buttons */
-.sb-cal-day {
-    height: 36px;
-    width: 100%;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    background: transparent;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* =========================================================
+   AVAILABLE DOT
+   ========================================================= */
 
-/* BRIGHT & CLEAR DISABLED DATES */
-.sb-cal-day--disabled {
-    color: #0f172a;
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    cursor: not-allowed;
-    opacity: 1;
-}
-
-/* AVAILABLE DATES (Warm #F5A623 Accent Tone) */
-.sb-cal-day--available {
-    background: #fff8ec;
-    color: #d97706;
-    font-weight: 800;
-    border: 1.5px solid #fde68a;
-    box-shadow: 0 2px 6px rgba(245, 166, 35, 0.12);
-}
-
-.sb-cal-day--available:hover {
-    background: #F5A623;
-    color: #ffffff;
-    border-color: #F5A623;
-    transform: translateY(-2px) scale(1.06);
-    box-shadow: 0 6px 14px rgba(245, 166, 35, 0.35);
-}
-
-/* Glowing Accent Indicator Dot */
 .sb-cal-dot {
-    width: 4px;
-    height: 4px;
-    background: #F5A623;
+    width: 3px;
+
+    height: 3px;
+
+    margin-top: 3px;
+
     border-radius: 50%;
-    margin-top: 2px;
+
+    background: #10b981;
 }
 
-.sb-cal-day--available:hover .sb-cal-dot {
+
+.sb-cal-day--available:hover
+.sb-cal-dot {
     background: #ffffff;
 }
 
-/* ACTIVE / SELECTED BUTTON (PROFESSIONAL EMERALD GREEN ONLY) */
+
+/* =========================================================
+   SELECTED DATE
+   ========================================================= */
+
 .sb-cal-day--selected,
-.sb-cal-day--selected:hover,
-.sb-cal-day--active {
-    background: #10b981 !important; /* Professional Emerald Green */
-    color: #ffffff !important;
+.sb-cal-day--selected:hover {
+    background: #10b981 !important;
+
     border-color: #059669 !important;
-    font-weight: 800 !important;
-    transform: translateY(-2px) scale(1.08);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px
+        rgba(16, 185, 129, 0.22);
 }
+
 
 .sb-cal-day--selected .sb-cal-dot {
     background: #ffffff;
 }
 
-/* Legend */
-.sb-cal-legend {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px dashed rgba(245, 166, 35, 0.25);
-    font-size: 11px;
-    font-weight: 700;
-    color: #0f172a;
-}
 
-.sb-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+/* =========================================================
+   RIGHT CONTENT
+   ========================================================= */
 
-.sb-legend-color {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
-
-.sb-legend-color--disabled {
-    background: #0f172a;
-}
-
-.sb-legend-color--available {
-    background: #F5A623;
-}
-
-.sb-legend-color--selected {
-    background: #10b981;
-}
-
-/* ===== RIGHT MAIN CONTENT ===== */
 .sb-main-content {
-    background: rgba(255, 255, 255, 0.55);
+    min-width: 0;
+
+    background: rgba(255, 255, 255, 0.72);
+
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1.5px solid rgba(245, 166, 35, 0.25);
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+
+    border: 1px solid
+        rgba(245, 166, 35, 0.22);
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.05);
+
     display: flex;
+
     flex-direction: column;
-    gap: 20px;
-    height: 100%;
+
+    gap: 16px;
 }
 
-.sb-prompt-card {
+
+/* =========================================================
+   RIGHT HEADER
+   ========================================================= */
+
+.sb-step-header {
     display: flex;
-    flex-direction: column;
+
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.45);
-    border: 2px dashed rgba(245, 166, 35, 0.35);
-    border-radius: 16px;
-    margin: auto 0;
+
+    justify-content: space-between;
+
+    padding-bottom: 13px;
+
+    border-bottom: 1px solid #eef2f7;
 }
 
-.sb-prompt-icon {
-    font-size: 2.5rem;
-    margin-bottom: 12px;
-}
 
-.sb-prompt-card h3 {
-    font-size: 18px;
+.sb-step-eyebrow {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 9px;
+
     font-weight: 800;
-    color: #0f172a;
-    margin: 0 0 6px 0;
+
+    letter-spacing: 0.1em;
+
+    color: #f5a623;
+
+    text-transform: uppercase;
 }
 
-.sb-prompt-card p {
-    font-size: 13px;
-    color: #475569;
-    max-width: 340px;
-    margin: 0;
-    line-height: 1.5;
+
+.sb-step-title {
+    display: block;
+
+    font-size: 15px;
+
+    font-weight: 750;
+
+    color: #172f14;
+
+    line-height: 1.35;
 }
 
-/* TIME SLOTS LIST */
+
+/* =========================================================
+   SESSION LIST
+   ========================================================= */
+
 .sb-slots-list {
     display: flex;
+
     flex-direction: column;
-    gap: 12px;
+
+    gap: 9px;
 }
 
+
+/* =========================================================
+   SESSION CARD
+   ========================================================= */
+
 .sb-slot-card {
-    background: rgba(255, 255, 255, 0.75);
-    border: 1.5px solid rgba(226, 232, 240, 0.8);
-    border-radius: 14px;
-    padding: 16px 20px;
-    display: flex;
+    display: grid;
+
+    /*
+       DATE
+       COURSE
+       LOCATION / PRICE
+       REFERRAL
+       ACTION
+    */
+
+    grid-template-columns:
+        82px
+        minmax(250px, 1fr)
+        minmax(125px, 0.65fr)
+        minmax(90px, 0.45fr)
+        auto;
+
     align-items: center;
-    justify-content: space-between;
+
+    gap: 17px;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 11px;
+
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
 }
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
 
 .sb-slot-card:hover {
     border-color: #10b981;
-    background: rgba(240, 253, 244, 0.85);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.12);
-    transform: translateY(-2px);
+
+    background: #fbfffd;
+
+    box-shadow:
+        0 6px 18px
+        rgba(15, 23, 42, 0.07);
+
+    transform: translateY(-1px);
 }
+
+
+/* =========================================================
+   CARD ACTIVE
+   ========================================================= */
 
 .sb-slot-card--active {
     border-color: #10b981;
-    background: #ecfdf5;
+
+    background: #f0fdf4;
+
+    box-shadow:
+        0 5px 15px
+        rgba(16, 185, 129, 0.10);
 }
 
-.sb-slot-time-col {
+
+/* =========================================================
+   DATE COLUMN
+   ========================================================= */
+
+.sb-slot-date-col {
     display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+}
+
+
+.sb-slot-date {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 60px;
+
+    padding: 7px 9px;
+
+    border-radius: 7px;
+
+    background: #fff7ed;
+
+    border: 1px solid #fed7aa;
+
+    color: #172f14;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   COURSE MAIN COLUMN
+   ========================================================= */
+
+.sb-slot-main-col {
+    min-width: 0;
+
+    display: flex;
+
     flex-direction: column;
-    gap: 2px;
+
+    gap: 5px;
 }
 
-.sb-slot-time {
-    font-size: 18px;
-    font-weight: 800;
-    color: #0f172a;
+
+/* =========================================================
+   COURSE NAME + CODE
+   ========================================================= */
+
+.sb-slot-course-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-width: 0;
 }
 
-.sb-slot-course-title {
-    font-size: 12px;
-    font-weight: 600;
+
+/* COURSE NAME */
+
+.sb-slot-course-title-main {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #172f14;
+
+    font-size: 15px;
+
+    font-weight: 750;
+
+    line-height: 1.3;
+
+    letter-spacing: -0.01em;
+}
+
+
+/* COURSE CODE */
+
+.sb-slot-course-code {
+    flex-shrink: 0;
+
+    padding: 3px 7px;
+
+    border-radius: 5px;
+
+    background: #f1f5f9;
+
+    border: 1px solid #e2e8f0;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TIME
+   ========================================================= */
+
+.sb-slot-time-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
     color: #64748b;
 }
 
+
+.sb-time-icon {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+.sb-slot-time {
+    /*
+       SMALLER THAN COURSE
+    */
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   LOCATION + PRICE
+   ========================================================= */
+
 .sb-slot-info-col {
+    min-width: 0;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: flex-start;
+
     gap: 4px;
 }
 
+
 .sb-slot-tag {
-    font-size: 12px;
-    color: #475569;
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    max-width: 150px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #64748b;
+
+    font-size: 10px;
+
     font-weight: 500;
 }
 
-.sb-slot-price {
-    font-size: 14px;
-    font-weight: 800;
-    color: #0f172a;
+
+.sb-location-icon {
+    color: #94a3b8;
+
+    font-size: 11px;
 }
+
+
+.sb-slot-price {
+    color: #172f14;
+
+    font-size: 11px;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   REFERRAL
+   ========================================================= */
+
+.sb-referral-col {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 3px;
+}
+
+
+.sb-referral-label {
+    color: #94a3b8;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+
+.sb-referral-code {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    background: #f8fafc;
+
+    border: 1px dashed #cbd5e1;
+
+    color: #475569;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS + CTA
+   ========================================================= */
 
 .sb-slot-cta-col {
     display: flex;
+
     align-items: center;
-    gap: 12px;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    white-space: nowrap;
 }
+
 
 .sb-status-pill {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
+    padding: 4px 8px;
+
     border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
 }
 
-.sb-status--ok { background: #dcfce7; color: #15803d; }
-.sb-status--low { background: #fef3c7; color: #b45309; }
-.sb-status--full { background: #fee2e2; color: #b91c1c; }
+
+.sb-status--ok {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+
+.sb-status--low {
+    background: #fef3c7;
+
+    color: #b45309;
+}
+
+
+.sb-status--full {
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   BOOK BUTTON
+   ========================================================= */
 
 .sb-book-btn {
-    background: #10b981; /* Professional Emerald Green Button */
-    color: #ffffff;
-    border: none;
-    padding: 9px 18px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
+    display: inline-flex;
+
     align-items: center;
-    gap: 6px;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 8px 12px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #10b981;
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-    transition: all 0.2s ease;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 3px 8px
+        rgba(16, 185, 129, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.sb-slot-card:hover .sb-book-btn {
+
+.sb-book-btn:hover {
     background: #059669;
-    transform: scale(1.02);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px
+        rgba(16, 185, 129, 0.25);
 }
+
+
+.sb-book-arrow {
+    font-size: 12px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.sb-book-btn:hover
+.sb-book-arrow {
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.sb-prompt-card {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    min-height: 260px;
+
+    padding: 40px 20px;
+
+    background: #ffffff;
+
+    border: 1px dashed #cbd5e1;
+
+    border-radius: 12px;
+}
+
+
+.sb-prompt-icon {
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+
+    background: #f0fdf4;
+
+    color: #10b981;
+
+    font-size: 22px;
+}
+
+
+.sb-prompt-card h3 {
+    margin: 0 0 5px;
+
+    color: #172f14;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+
+.sb-prompt-card p {
+    max-width: 360px;
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SKELETON
+   ========================================================= */
 
 .sb-skeleton-box {
-    height: 400px;
-    background: rgba(226, 232, 240, 0.6);
-    border-radius: 16px;
-    animation: pulse 1.5s infinite;
+    min-height: 380px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f1f5f9 25%,
+            #e2e8f0 50%,
+            #f1f5f9 75%
+        );
+
+    background-size: 200% 100%;
+
+    animation:
+        sbSkeleton 1.5s infinite;
 }
 
-@keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 0.9; }
-    100% { opacity: 0.6; }
+
+@keyframes sbSkeleton {
+
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
 }
+
+
+/* =========================================================
+   FADE ANIMATION
+   ========================================================= */
 
 .sb-fade-in {
-    animation: fadeIn 0.25s ease-in-out;
+    animation:
+        sbFadeIn 0.25s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+
+@keyframes sbFadeIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
 }
 
-@media (max-width: 868px) {
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .sb-grid-layout {
+        grid-template-columns:
+            290px minmax(0, 1fr);
+    }
+
+
+    .sb-slot-card {
+        grid-template-columns:
+            72px
+            minmax(210px, 1fr)
+            minmax(110px, 0.6fr)
+            auto;
+    }
+
+
+    .sb-referral-col {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL LAPTOP / TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
     .sb-grid-layout {
         grid-template-columns: 1fr;
     }
 
-    .sb-slot-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+
+    .sb-sidebar {
+        width: 100%;
     }
 
-    .sb-slot-cta-col {
+
+    .sb-main-content {
         width: 100%;
-        justify-content: space-between;
     }
+
+
+    .sb-slot-card {
+        grid-template-columns:
+            72px
+            minmax(220px, 1fr)
+            auto;
+    }
+
+
+    .sb-slot-info-col {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .sb-section {
+        padding: 25px 12px;
+    }
+
+
+    .sb-container {
+        width: 100%;
+    }
+
+
+    .sb-header-title {
+        font-size: 21px;
+    }
+
+
+    .sb-main-content {
+        padding: 15px;
+    }
+
+
+    .sb-sidebar {
+        padding: 15px;
+    }
+
+
+    .sb-slot-card {
+        grid-template-columns:
+            62px minmax(0, 1fr);
+
+        gap: 10px;
+
+        padding: 12px;
+    }
+
+
+    .sb-slot-date-col {
+        grid-row: span 2;
+
+        align-self: start;
+    }
+
+
+    .sb-slot-main-col {
+        grid-column: 2;
+
+        min-width: 0;
+    }
+
+
+    .sb-slot-course-row {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+
+        gap: 5px;
+    }
+
+
+    .sb-slot-course-title-main {
+        font-size: 13px;
+
+        white-space: normal;
+
+        display: -webkit-box;
+
+        -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+    }
+
+
+    .sb-slot-course-code {
+        font-size: 8px;
+    }
+
+
+    .sb-slot-time {
+        font-size: 10px;
+    }
+
+
+    .sb-slot-cta-col {
+        grid-column: 2;
+
+        justify-content: flex-start;
+
+        width: 100%;
+    }
+
+
+    .sb-status-pill {
+        font-size: 8px;
+    }
+
+
+    .sb-book-btn {
+        padding: 7px 11px;
+
+        font-size: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .sb-slot-date {
+        min-width: 54px;
+
+        padding: 6px 7px;
+
+        font-size: 10px;
+    }
+
+
+    .sb-slot-card {
+        grid-template-columns:
+            58px minmax(0, 1fr);
+    }
+
+
+    .sb-slot-course-title-main {
+        font-size: 12px;
+    }
+
 }

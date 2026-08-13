@@ -79,7 +79,7 @@
 //           <TrustBar />
 //         </div>
 //       </div>
-//       <div className="sessions-bar" > 
+//       <div className="sessions-bar" >
 //         <SessionsBar />
 //         </div>
 //       <div>
@@ -129,7 +129,7 @@ import SiteBannerPopup from "../components/landingPage/SiteBannerPopup";
 // ── Custom hook: returns true when viewport is ≤ 768 px ──────────────────────
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(
-    () => window.innerWidth <= breakpoint
+    () => window.innerWidth <= breakpoint,
   );
 
   useEffect(() => {
@@ -145,6 +145,7 @@ function useIsMobile(breakpoint = 768) {
 function LandingPage() {
   const [courses, setCourses] = useState([]);
   const [categories, setCategories] = useState([]);
+   const [marqueeContent, setMarqueeContent] = useState("");
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -153,9 +154,7 @@ function LandingPage() {
         const res = await axios.get(`${API_URL}/api/courses?status=Active`);
         const active = filterActiveCourses(res.data);
         setCourses(active);
-        const uniqueCategories = [
-          ...new Set(active.map((c) => c.category)),
-        ];
+        const uniqueCategories = [...new Set(active.map((c) => c.category))];
         setCategories(uniqueCategories);
       } catch (err) {
         console.error(err);
@@ -164,38 +163,72 @@ function LandingPage() {
     fetchCourses();
   }, []);
 
+  useEffect(() => {
+    const fetchMarquee = async () => {
+      try {
+        const res = await axios.get(
+          `${API_URL}/api/marquee/active`
+        );
+
+        if (res.data?.data?.isActive) {
+          setMarqueeContent(
+            res.data.data.content || ""
+          );
+        } else {
+          setMarqueeContent("");
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching marquee content:",
+          error
+        );
+
+        setMarqueeContent("");
+      }
+    };
+
+    fetchMarquee();
+  }, []);
+
   return (
     <>
       <SiteBannerPopup />
       {isMobile ? (
         <MobileLandingPage courses={courses} />
       ) : (
-      <div>
-      <TopNav />
-      <PublicNavbar courses={courses} />
-      <Hero />
-
-      <div className="adv-bar">
         <div>
-          <PromoBar />
-        </div>
-      </div>
-      <div className="sessions-bar" > 
-        <SessionsBar />
-        </div>
-      <div>
-        <Carousel courses={courses} />
-      </div>
+          <div className="site-header">
+            <TopNav />
+            <PublicNavbar courses={courses} />
+             {marqueeContent && (
+              <div className="announcement-bar">
+                <p>{marqueeContent}</p>
+              </div>
+            )}
+          </div>
+          <Hero />
 
-      <div id="courses">
-        <CoursesSection categories={categories} />
-      </div>
+          <div className="adv-bar">
+            <div>
+              <PromoBar />
+            </div>
+          </div>
+          <div className="sessions-bar">
+            <SessionsBar />
+          </div>
+          <div>
+            <Carousel courses={courses} />
+          </div>
 
-      <AboutSection />
-      <CTABanner />
-      {/* <ContactEnrollment /> */}
-      <Footer />
-      </div>
+          <div id="courses">
+            <CoursesSection categories={categories} />
+          </div>
+
+          <AboutSection />
+          <CTABanner />
+          {/* <ContactEnrollment /> */}
+          <Footer />
+        </div>
       )}
     </>
   );

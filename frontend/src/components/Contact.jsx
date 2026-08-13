@@ -38,8 +38,10 @@ function ContactPage() {
 
     return (
         <div className="cp-page">
+            <div className="site-header">
             <TopNav />
             <PublicNavbar />
+            </div>
 
             {/* ── HERO ── */}
             <section className="cp-hero">

@@ -47,8 +47,10 @@ const VALUES = [
 function AboutPage() {
     return (
         <div className="ab-page">
+            <div className="site-header">
             <TopNav />
             <PublicNavbar />
+            </div>
 
             {/* ── HERO ── */}
             <section className="ab-hero">

@@ -89,6 +89,10 @@ const getUpcomingSessions = async (req, res) => {
                 let spotsType = "ok";
                 if (slots === 0)       spotsType = "full";
                 else if (slots <= 3)  spotsType = "low";
+                console.log("COURSE:", {
+    title: schedule.course.title,
+    courseCode: schedule.course.courseCode,
+});
 
                 upcoming.push({
                     scheduleId:     schedule._id,
@@ -111,6 +115,7 @@ const getUpcomingSessions = async (req, res) => {
                         location: schedule.course.location || "Sefton",
                         duration: schedule.course.duration,
                         slug:     schedule.course.slug,
+                        courseCode: schedule.course.courseCode,
                     },
                 });
             });

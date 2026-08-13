@@ -907,7 +907,7 @@
 
 // export default PublicNavbar;
 
-import "../styles/PublicNavbar.css";
+import "../styles/CourseNavbar.css";
 import logo from "../assets/staLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -929,7 +929,7 @@ const mobileMenuItems = [
   { label: "Sign In", path: "/login" },
 ];
 
-function PublicNavbar({ courses: propCourses }) {
+function CourseNavbar({ courses: propCourses }) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -1222,4 +1222,4 @@ const handleOpenCop = (doc) => {
   );
 }
 
-export default PublicNavbar;
+export default CourseNavbar;

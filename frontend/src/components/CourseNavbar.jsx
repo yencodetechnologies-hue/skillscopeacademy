@@ -1,5 +1,3 @@
-
-
 // import "../styles/PublicNavbar.css";
 // import logo from "../assets/staLogo.png";
 // import { Link, useNavigate } from "react-router-dom";
@@ -29,7 +27,6 @@
 //   const [activeCategory, setActiveCategory] = useState(null);
 //   const [showResources, setShowResources] = useState(false);
 //   const [courses, setCourses] = useState(propCourses || []);
-
 
 //   const [showCOP, setShowCOP] = useState(false);
 // const [copDocs, setCopDocs] = useState([]);
@@ -233,13 +230,13 @@
 //                 <div
 //                   key={index}
 //                   className="mobile-fullmenu-item"
-//                   onClick={() => { 
+//                   onClick={() => {
 //                     if (item.path.startsWith("http")) {
 //                       window.open(item.path, "_blank");
 //                     } else {
-//                       navigate(item.path); 
+//                       navigate(item.path);
 //                     }
-//                     closeMenu(); 
+//                     closeMenu();
 //                   }}
 //                 >
 //                   {item.label}
@@ -430,13 +427,13 @@
 //                 <div
 //                   key={index}
 //                   className="mobile-fullmenu-item"
-//                   onClick={() => { 
+//                   onClick={() => {
 //                     if (item.path.startsWith("http")) {
 //                       window.open(item.path, "_blank");
 //                     } else {
-//                       navigate(item.path); 
+//                       navigate(item.path);
 //                     }
-//                     closeMenu(); 
+//                     closeMenu();
 //                   }}
 //                 >
 //                   {item.label}
@@ -489,7 +486,6 @@
 //   const [activeCategory, setActiveCategory] = useState(null);
 //   const [showResources, setShowResources] = useState(false);
 //   const [courses, setCourses] = useState(propCourses || []);
-
 
 //   const [showCOP, setShowCOP] = useState(false);
 // const [copDocs, setCopDocs] = useState([]);
@@ -680,13 +676,13 @@
 //                 <div
 //                   key={index}
 //                   className="mobile-fullmenu-item"
-//                   onClick={() => { 
+//                   onClick={() => {
 //                     if (item.path.startsWith("http")) {
 //                       window.open(item.path, "_blank");
 //                     } else {
-//                       navigate(item.path); 
+//                       navigate(item.path);
 //                     }
-//                     closeMenu(); 
+//                     closeMenu();
 //                   }}
 //                 >
 //                   {item.label}
@@ -877,13 +873,13 @@
 //                 <div
 //                   key={index}
 //                   className="mobile-fullmenu-item"
-//                   onClick={() => { 
+//                   onClick={() => {
 //                     if (item.path.startsWith("http")) {
 //                       window.open(item.path, "_blank");
 //                     } else {
-//                       navigate(item.path); 
+//                       navigate(item.path);
 //                     }
-//                     closeMenu(); 
+//                     closeMenu();
 //                   }}
 //                 >
 //                   {item.label}
@@ -907,7 +903,7 @@
 
 // export default PublicNavbar;
 
-import "../styles/PublicNavbar.css";
+import "../styles/CourseNavbar.css";
 import logo from "../assets/staLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -929,7 +925,7 @@ const mobileMenuItems = [
   { label: "Sign In", path: "/login" },
 ];
 
-function PublicNavbar({ courses: propCourses }) {
+function CourseNavbar({ courses: propCourses }) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -937,47 +933,48 @@ function PublicNavbar({ courses: propCourses }) {
   const [showResources, setShowResources] = useState(false);
   const [courses, setCourses] = useState(propCourses || []);
 
-
   const [showCOP, setShowCOP] = useState(false);
-const [copDocs, setCopDocs] = useState([]);
-const [copLoaded, setCopLoaded] = useState(false);
-const resourcesRef = useRef(null);
+  const [copDocs, setCopDocs] = useState([]);
+  const [copLoaded, setCopLoaded] = useState(false);
+  const resourcesRef = useRef(null);
 
-useEffect(() => {
-  // Kept for safety: close menus if user clicks anywhere outside
-  function handleClickOutside(e) {
-    if (resourcesRef.current && !resourcesRef.current.contains(e.target)) {
-      setShowResources(false);
-      setShowCOP(false);
+  useEffect(() => {
+    // Kept for safety: close menus if user clicks anywhere outside
+    function handleClickOutside(e) {
+      if (resourcesRef.current && !resourcesRef.current.contains(e.target)) {
+        setShowResources(false);
+        setShowCOP(false);
+      }
     }
-  }
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-useEffect(() => {
-  if (!showResources || copLoaded) return;
-  let mounted = true;
-  const loadCop = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/code-of-practice/public`);
-      const data = await res.json();
-      if (mounted) setCopDocs(Array.isArray(data?.data) ? data.data : []);
-    } catch (err) {
-      console.error("Code of Practice fetch error:", err);
-    } finally {
-      if (mounted) setCopLoaded(true);
-    }
+  useEffect(() => {
+    if (!showResources || copLoaded) return;
+    let mounted = true;
+    const loadCop = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/code-of-practice/public`);
+        const data = await res.json();
+        if (mounted) setCopDocs(Array.isArray(data?.data) ? data.data : []);
+      } catch (err) {
+        console.error("Code of Practice fetch error:", err);
+      } finally {
+        if (mounted) setCopLoaded(true);
+      }
+    };
+    loadCop();
+    return () => {
+      mounted = false;
+    };
+  }, [showResources, copLoaded]);
+
+  const handleOpenCop = (doc) => {
+    openPdf(doc.fileUrl);
+    setShowCOP(false);
+    setShowResources(false);
   };
-  loadCop();
-  return () => { mounted = false; };
-}, [showResources, copLoaded]);
-
-const handleOpenCop = (doc) => {
-  openPdf(doc.fileUrl);
-  setShowCOP(false);
-  setShowResources(false);
-};
   useEffect(() => {
     if (!propCourses || propCourses.length === 0) {
       const fetchCourses = async () => {
@@ -1005,17 +1002,18 @@ const handleOpenCop = (doc) => {
 
   return (
     <>
-            {/* OVERLAY - outside click pannuna close */}
-      {mobileMenuOpen && (
-        <div className="mobile-overlay" onClick={closeMenu} />
-      )}
+      {/* OVERLAY - outside click pannuna close */}
+      {mobileMenuOpen && <div className="mobile-overlay" onClick={closeMenu} />}
 
       <header className="public-navbar">
         <div className="navbar-container">
-
           {/* LOGO */}
           <div className="navbar-logo">
-            <img src={logo} alt="SafeTicks Logo" onClick={() => navigate("/")} />
+            <img
+              src={logo}
+              alt="SafeTicks Logo"
+              onClick={() => navigate("/")}
+            />
           </div>
 
           {/* DESKTOP NAV LINKS */}
@@ -1028,7 +1026,9 @@ const handleOpenCop = (doc) => {
             </li>
 
             <li
-              className={location.pathname.startsWith("/course") ? "active" : ""}
+              className={
+                location.pathname.startsWith("/course") ? "active" : ""
+              }
               onMouseEnter={() => {
                 setShowDropdown(true);
                 if (!activeCategory && Object.keys(groupedCourses).length > 0) {
@@ -1047,32 +1047,37 @@ const handleOpenCop = (doc) => {
                       user can reach a category. */}
                   <div className="courses-dropdown-bridge" />
                   <div className="courses-dropdown">
-                  <div className="courses-dropdown-left">
-                    {Object.keys(groupedCourses).map((cat) => (
-                      <div
-                        key={cat}
-                        onMouseEnter={() => setActiveCategory(cat)}
-                        className={`category-item ${activeCategory === cat ? "active" : ""}`}
-                      >
-                        {cat}
-                      </div>
-                    ))}
+                    <div className="courses-dropdown-left">
+                      {Object.keys(groupedCourses).map((cat) => (
+                        <div
+                          key={cat}
+                          onMouseEnter={() => setActiveCategory(cat)}
+                          className={`category-item ${activeCategory === cat ? "active" : ""}`}
+                        >
+                          {cat}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="courses-dropdown-right">
+                      {activeCategory &&
+                        groupedCourses[activeCategory].map((course) => (
+                          <div
+                            key={course._id}
+                            onClick={() => navigate(`/course/${course.slug}`)}
+                            className="course-item"
+                          >
+                            {course.courseCode && (
+                              <span className="course-item-code">
+                                {course.courseCode}
+                              </span>
+                            )}
+                            <span className="course-item-title">
+                              {course.title}
+                            </span>
+                          </div>
+                        ))}
+                    </div>
                   </div>
-                  <div className="courses-dropdown-right">
-                    {activeCategory && groupedCourses[activeCategory].map((course) => (
-                      <div
-                        key={course._id}
-                        onClick={() => navigate(`/course/${course.slug}`)}
-                        className="course-item"
-                      >
-                        {course.courseCode && (
-                          <span className="course-item-code">{course.courseCode}</span>
-                        )}
-                        <span className="course-item-title">{course.title}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
                 </>
               )}
             </li>
@@ -1080,20 +1085,46 @@ const handleOpenCop = (doc) => {
             <li
               ref={resourcesRef}
               className={
-                ["/forms", "/fees-refund", "/usi", "/gallery"].includes(location.pathname)
+                ["/forms", "/fees-refund", "/usi", "/gallery"].includes(
+                  location.pathname,
+                )
                   ? "active"
                   : ""
               }
               onMouseEnter={() => setShowResources(true)}
-              onMouseLeave={() => { setShowResources(false); setShowCOP(false); }}
+              onMouseLeave={() => {
+                setShowResources(false);
+                setShowCOP(false);
+              }}
               style={{ position: "relative" }}
             >
               Resources <i className="fa-solid fa-angle-down"></i>
               {showResources && (
                 <div className="resources-dropdown">
-                  <div onClick={() => { navigate("/forms"); setShowResources(false); }}>Forms</div>
-                  <div onClick={() => { navigate("/fees-refund"); setShowResources(false); }}>Fees & Refund</div>
-                  <div onClick={() => { navigate("/usi"); setShowResources(false); }}>Unique Student Identifier (USI)</div>
+                  <div
+                    onClick={() => {
+                      navigate("/forms");
+                      setShowResources(false);
+                    }}
+                  >
+                    Forms
+                  </div>
+                  <div
+                    onClick={() => {
+                      navigate("/fees-refund");
+                      setShowResources(false);
+                    }}
+                  >
+                    Fees & Refund
+                  </div>
+                  <div
+                    onClick={() => {
+                      navigate("/usi");
+                      setShowResources(false);
+                    }}
+                  >
+                    Unique Student Identifier (USI)
+                  </div>
                   <div
                     className="resources-dropdown-item has-submenu"
                     onMouseEnter={() => setShowCOP(true)}
@@ -1113,10 +1144,15 @@ const handleOpenCop = (doc) => {
                         {!copLoaded ? (
                           <div className="cop-submenu-empty">Loading…</div>
                         ) : copDocs.length === 0 ? (
-                          <div className="cop-submenu-empty">No documents yet</div>
+                          <div className="cop-submenu-empty">
+                            No documents yet
+                          </div>
                         ) : (
                           copDocs.map((doc) => (
-                            <div key={doc._id} onClick={() => handleOpenCop(doc)}>
+                            <div
+                              key={doc._id}
+                              onClick={() => handleOpenCop(doc)}
+                            >
                               {doc.title}
                             </div>
                           ))
@@ -1124,7 +1160,14 @@ const handleOpenCop = (doc) => {
                       </div>
                     )}
                   </div>
-                  <div onClick={() => { navigate("/gallery"); setShowResources(false); }}>Gallery</div>
+                  <div
+                    onClick={() => {
+                      navigate("/gallery");
+                      setShowResources(false);
+                    }}
+                  >
+                    Gallery
+                  </div>
                 </div>
               )}
             </li>
@@ -1145,7 +1188,6 @@ const handleOpenCop = (doc) => {
 
           {/* DESKTOP BUTTONS */}
           <div className="nav-buttons">
-
             {/* PHONE */}
             <a href="tel:1300123456" className="phone-block">
               <span className="phone-icon">
@@ -1158,7 +1200,10 @@ const handleOpenCop = (doc) => {
             </a>
 
             <div className="combo-nav-wrapper">
-              <button onClick={() => navigate("/combo-courses")} className="combo-btn-nav">
+              <button
+                onClick={() => navigate("/combo-courses")}
+                className="combo-btn-nav"
+              >
                 Combo Courses <span className="save-badge">Save More</span>
               </button>
             </div>
@@ -1175,10 +1220,12 @@ const handleOpenCop = (doc) => {
           </div>
 
           {/* MOBILE BURGER */}
-          <div className="mobile-menu" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <div
+            className="mobile-menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
             {mobileMenuOpen ? "✕" : "☰"}
           </div>
-
         </div>
 
         {/* MOBILE DROPDOWN PANEL */}
@@ -1206,20 +1253,40 @@ const handleOpenCop = (doc) => {
 
             {/* Buttons - always visible at bottom */}
             <div className="mobile-fullmenu-buttons">
-              <a href="tel:1300123456" className="mobile-phone-block" onClick={closeMenu}>
+              <a
+                href="tel:1300123456"
+                className="mobile-phone-block"
+                onClick={closeMenu}
+              >
                 <i className="fa-solid fa-phone"></i> 1300 123 456
               </a>
-              <button onClick={() => { navigate("/combo-courses"); closeMenu(); }}>Combo Courses</button>
-              <button onClick={() => { navigate("/book-now"); closeMenu(); }}>Book now</button>
-              <button><Link className="login-link" to="/login">Login</Link></button>
+              <button
+                onClick={() => {
+                  navigate("/combo-courses");
+                  closeMenu();
+                }}
+              >
+                Combo Courses
+              </button>
+              <button
+                onClick={() => {
+                  navigate("/book-now");
+                  closeMenu();
+                }}
+              >
+                Book now
+              </button>
+              <button>
+                <Link className="login-link" to="/login">
+                  Login
+                </Link>
+              </button>
             </div>
           </div>
         )}
-
       </header>
-
     </>
   );
 }
 
-export default PublicNavbar;
+export default CourseNavbar;

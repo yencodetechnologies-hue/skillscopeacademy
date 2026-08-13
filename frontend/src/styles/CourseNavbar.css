@@ -72,6 +72,7 @@
 /* Active/current route underline */
 .nav-links li.active {
   color: var(--color-brand-primary);
+  background: none !important;
 }
 
 .nav-links li.active::after {

@@ -103,7 +103,7 @@ const getUpcomingSessions = async (req, res) => {
 
             if (activeSessions.length === 0) return;
 
-            // Debug
+         
             console.log("COURSE:", {
                 title: schedule.course.title,
                 courseCode: schedule.course.courseCode
@@ -164,7 +164,6 @@ const getUpcomingSessions = async (req, res) => {
                         title:
                             schedule.course.title,
 
-                        // ONLY NEW FIELD
                         courseCode:
                             schedule.course.courseCode || "",
 

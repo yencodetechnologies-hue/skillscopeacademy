@@ -81,7 +81,7 @@ const getUpcomingSessions = async (req, res) => {
 
         const upcoming = [];
 
-        schedules.forEach(schedule => {
+        schedules.forEach((schedule) => {
             if (!schedule.course) return;
 
             const dateObj = new Date(schedule.date);
@@ -98,20 +98,15 @@ const getUpcomingSessions = async (req, res) => {
             // Get ALL active sessions
             const activeSessions =
                 schedule.sessions?.filter(
-                    s => s.status === "Active"
+                    (s) => s.status === "Active"
                 ) || [];
 
             if (activeSessions.length === 0) return;
 
-         
-            console.log("COURSE:", {
-                title: schedule.course.title,
-                courseCode: schedule.course.courseCode
-            });
+            console.log("COURSE:", schedule.course);
 
             // Loop through every active session
-            activeSessions.forEach(activeSession => {
-
+            activeSessions.forEach((activeSession) => {
                 const slots = activeSession.availableSlots ?? 0;
 
                 let spotsType = "ok";
@@ -158,30 +153,8 @@ const getUpcomingSessions = async (req, res) => {
                     sessionType:
                         activeSession.sessionType,
 
-                    course: {
-                        id: schedule.course._id,
-
-                        title:
-                            schedule.course.title,
-
-                        courseCode:
-                            schedule.course.courseCode || "",
-
-                        price:
-                            resolveDisplayPrice(
-                                schedule.course
-                            ),
-
-                        location:
-                            schedule.course.location ||
-                            "Sefton",
-
-                        duration:
-                            schedule.course.duration,
-
-                        slug:
-                            schedule.course.slug
-                    }
+                    // 🔥 COMPLETE COURSE OBJECT
+                    course: schedule.course
                 });
             });
         });
@@ -191,7 +164,6 @@ const getUpcomingSessions = async (req, res) => {
         );
 
     } catch (err) {
-
         console.error(
             "getUpcomingSessions error:",
             err

@@ -7,6 +7,7 @@ import BookingModal, { getBookingOptions } from "./BookingModal"
 
 // ── Course Card ───────────────────────────────────────────────────────────────
 function CourseCard({ course, fromPortal }) {
+    console.log(course,"course");
     const navigate    = useNavigate()
     const [showModal, setShowModal] = useState(false)
     const [selectedOptionId, setSelectedOptionId] = useState(null)

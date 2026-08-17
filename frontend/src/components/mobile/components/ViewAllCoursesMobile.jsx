@@ -669,7 +669,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
             </svg>
           </a> */}
 
-          <a href="https://wa.me/611300976097" class="vac-sticky-wa"><span><i class="fa-brands fa-whatsapp"></i></span></a>
+          <a href="https://wa.me/611300976097" class="vac-sticky-wa"><span><i class="fa-brands fa-whatsapp"></i></span></a>x``
 
         </div>
       </div>

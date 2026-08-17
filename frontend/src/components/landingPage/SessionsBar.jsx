@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/SessionsBar.css";
 import { API_URL } from "../../data/service";
+import BookingModal from "../course/BookingModal";
 
 const MONTH_NAMES = [
   "January",
@@ -151,6 +152,26 @@ function SessionsBar() {
 
   const [currentCalDate, setCurrentCalDate] =
     useState(new Date());
+
+  // FIX: modal state now tracks the specific slot that was clicked,
+  // instead of a bare boolean that got duplicated once per card in the map().
+  const [showModal, setShowModal] = useState(false);
+  const [selectedOptionId, setSelectedOptionId] = useState(null);
+  const [selectedBookingSlot, setSelectedBookingSlot] = useState(null);
+  console.log(selectedBookingSlot,"selectedBookingSlot");
+
+  // FIX: "fromPortal" was referenced in BookingModal's props but never
+  // declared anywhere — that was a ReferenceError waiting to crash the
+  // component the first time the modal opened. Derive it from the URL
+  // instead, which is how this flag is normally passed into the flow.
+  const fromPortal = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      new URLSearchParams(window.location.search).get(
+        "fromPortal"
+      ) === "true"
+    );
+  }, []);
 
   /* =========================================================
      FETCH SESSIONS
@@ -427,7 +448,7 @@ function SessionsBar() {
   };
 
   /* =========================================================
-     SLOT CLICK
+     SLOT CLICK (navigates to full booking page)
      ========================================================= */
 
   const handleSlotClick = (slot) => {
@@ -450,6 +471,21 @@ function SessionsBar() {
         `/book-now/course/${slug}?${queryParams}`
       );
     }, 150);
+  };
+
+  /* =========================================================
+     BOOK NOW CLICK (opens modal for this specific slot)
+     ========================================================= */
+
+  const handleBookNowClick = (e, slot) => {
+    // FIX: without stopPropagation, this click also bubbled up to the
+    // card's onClick={() => handleSlotClick(slot)}, so opening the modal
+    // ALSO queued a navigate() 150ms later, yanking the user off the page
+    // right after the modal appeared.
+    e.stopPropagation();
+    setSelectedBookingSlot(slot);
+    setSelectedOptionId(null);
+    setShowModal(true);
   };
 
   /* =========================================================
@@ -767,17 +803,6 @@ function SessionsBar() {
               <div className="sb-slots-list sb-fade-in">
 
                 {visibleSessions.map((slot) => {
-                    console.log("SESSION DATA:", slot);
-  console.log("COURSE DATA:", slot.course);
-  console.log("COURSE CODE:", slot.course?.courseCode);
-
-   console.log("COURSE CODE VALUES:", {
-    courseCode: slot.course?.courseCode,
-    code: slot.course?.code,
-    course_code: slot.course?.course_code,
-    courseCodeValue: slot.course?.course_code,
-    title: slot.course?.title,
-  });
 
                   const isTimeSelected =
                     selectedTimeId ===
@@ -938,13 +963,9 @@ function SessionsBar() {
                         <button
                           type="button"
                           className="sb-book-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-
-                            handleSlotClick(
-                              slot
-                            );
-                          }}
+                          onClick={(e) =>
+                            handleBookNowClick(e, slot)
+                          }
                         >
                           Book Now
 
@@ -995,6 +1016,25 @@ function SessionsBar() {
         </div>
 
       </div>
+
+      {/* =================================================
+          BOOKING MODAL — rendered once, outside the list,
+          bound to whichever slot was actually clicked.
+          ================================================= */}
+
+      {showModal && selectedBookingSlot && (
+        
+        <BookingModal
+          course={selectedBookingSlot.course}
+          onClose={() => {
+            setShowModal(false);
+            setSelectedOptionId(null);
+            setSelectedBookingSlot(null);
+          }}
+          initialSelection={selectedOptionId}
+          extraQueryParams={fromPortal ? "fromPortal=true" : ""}
+        />
+      )}
 
     </section>
   );

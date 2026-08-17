@@ -409,7 +409,7 @@ function Schedule() {
                       className={`dd-opt ${selectedCourse === "all" ? "dd-opt--active" : ""}`}
                       onMouseDown={() => selectCourse("all")}
                     >
-                      All courses
+                      All course
                       {selectedCourse === "all" && <span className="dd-check">✓</span>}
                     </div>
                     {courses.map(c => (

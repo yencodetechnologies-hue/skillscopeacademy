@@ -641,7 +641,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
           >
             Enroll Now
 
-            <span className="vac-sticky-arrow">
+            {/* <span className="vac-sticky-arrow">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -650,7 +650,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
               >
                 <path d="M9 18l6-6-6-6" />
               </svg>
-            </span>
+            </span> */}
 
           </button>
 

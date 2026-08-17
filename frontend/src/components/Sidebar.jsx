@@ -180,7 +180,7 @@ const menu = {
     { name: "Dashboard", path: "/admin", icon: "fa-solid fa-table-columns" },
     { name: "Courses", path: "/admin/courses", icon: "fa-solid fa-book" },
     { name: "Students", path: "/admin/students", icon: "fa-solid fa-users" },
-     { name: "Marquee Content", path: "/admin/marquee-content", icon: "fa-solid fa-users" },
+     { name: "Marquee Content", path: "/admin/marquee-content", icon: "fa-solid fa-bullhorn" },
     { name: "Companies", path: "/admin/companies", icon: "fa-solid fa-building" },
     { name: "Schedule", path: "/admin/schedule", icon: "fa-solid fa-calendar" },
     { name: "Teachers", path: "/admin/teachers", icon: "fa-solid fa-chalkboard-user" },

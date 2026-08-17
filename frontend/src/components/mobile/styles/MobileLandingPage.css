@@ -1900,10 +1900,10 @@
   transition: all 0.2s ease;
 }
 
-.mlp-course-select:focus {
+/* .mlp-course-select:focus {
   border-color: #f5a623;
   box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.12);
-}
+} */
 
 .mlp-course-chevron {
   position: absolute;

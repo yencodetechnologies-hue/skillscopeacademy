@@ -578,7 +578,7 @@ function SessionsBar() {
                 >
 
                   <option value="ALL">
-                    All Courses
+                    All Course
                   </option>
 
                   {coursesList.map(

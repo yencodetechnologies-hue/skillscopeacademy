@@ -368,14 +368,16 @@ export default function ViewCourseDetailMobile({
   return (
     <div className="cdm-root">
       {/* ── Top Bar ── */}
+      
+
+      <MobileNavbar courses={courses} />
+
       <div className="cdm-topbar">
         <button className="cdm-back-btn" onClick={() => navigate(-1)}>
           ‹
         </button>
         <span className="cdm-topbar-title">Course Details</span>
       </div>
-
-      <MobileNavbar courses={courses} />
 
       {/* ───────────── HERO ───────────── */}
 <div className="cdm-hero">

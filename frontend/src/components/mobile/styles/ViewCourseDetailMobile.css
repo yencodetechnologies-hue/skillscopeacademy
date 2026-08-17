@@ -1,5 +1,945 @@
 /* CourseDetailMobile.css — all classes prefixed cdm- */
 
+/* =========================================================
+   COURSE DETAIL MOBILE - EXACT MOBILE DESIGN
+   ========================================================= */
+
+.cdm-root {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #071f42;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  padding-bottom: 70px;
+}
+
+.cdm-root *,
+.cdm-root *::before,
+.cdm-root *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.cdm-hero {
+  position: relative;
+  width: 100%;
+  background: #071f42;
+}
+
+
+/* Image area */
+
+.cdm-hero-img {
+  position: relative;
+  width: 100%;
+  height: 285px;
+  overflow: hidden;
+  background: #071f42;
+}
+
+
+.cdm-hero-img-el {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+}
+
+
+/* Dark blue gradient */
+
+.cdm-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(3, 30, 62, 0.02) 0%,
+      rgba(3, 30, 62, 0.08) 25%,
+      rgba(3, 30, 62, 0.30) 48%,
+      rgba(3, 30, 62, 0.88) 78%,
+      rgba(3, 30, 62, 0.98) 100%
+    );
+
+  z-index: 1;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.cdm-hero-content {
+  position: absolute;
+
+  left: 24px;
+  right: 20px;
+  bottom: 72px;
+
+  z-index: 3;
+}
+
+
+/* Course code */
+
+.cdm-hero-code {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 38px;
+
+  padding: 6px 14px;
+
+  background: #ffb51b;
+  color: #071f42;
+
+  border-radius: 22px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1.15;
+
+  margin-bottom: 9px;
+
+  max-width: 210px;
+}
+
+
+/* Course title */
+
+.cdm-hero-title {
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  line-height: 1.12;
+
+  letter-spacing: -0.35px;
+
+  max-width: 330px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+
+/* Hero price */
+
+.cdm-hero-price-num {
+  margin-top: 8px;
+
+  color: #ffb51b;
+
+  font-size: 27px;
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   BOOK VOC BUTTON
+   ========================================================= */
+
+.cdm-hero-price {
+  position: absolute;
+
+  right: 18px;
+  bottom: 34px;
+
+  z-index: 5;
+}
+
+
+.cdm-hero-btn {
+  appearance: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 43px;
+
+  padding: 0 15px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: #ffb51b;
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.cdm-hero-btn:active {
+  transform: scale(0.97);
+}
+
+
+.cdm-hero-btn-icon {
+  width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+}
+
+
+/* =========================================================
+   QUICK FACTS CARD
+   ========================================================= */
+
+.cdm-quick-facts {
+  position: relative;
+
+  z-index: 10;
+
+  margin:
+    -4px
+    24px
+    0;
+
+  min-height: 102px;
+
+  padding: 14px 8px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  display: flex;
+  align-items: stretch;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Each fact */
+
+.cdm-fact {
+  position: relative;
+
+  flex: 1;
+  min-width: 0;
+
+  text-align: center;
+
+  padding:
+    0 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+/* Vertical divider */
+
+.cdm-fact:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 13px;
+  bottom: 13px;
+
+  width: 1px;
+
+  background: #e9e9e9;
+}
+
+
+/* Fact icon */
+
+.cdm-fact-icon {
+  width: 34px;
+  height: 34px;
+
+  margin: 0 auto 6px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* Icon backgrounds */
+
+.cdm-fact-icon--blue {
+  background: #e8f4ff;
+  color: #1695ed;
+}
+
+.cdm-fact-icon--red {
+  background: #ffe8ee;
+  color: #ff5575;
+}
+
+.cdm-fact-icon--pink {
+  background: #ffe8f0;
+  color: #ec5d89;
+}
+
+.cdm-fact-icon--purple {
+  background: #eee7ff;
+  color: #8058d8;
+}
+
+.cdm-fact-icon--orange {
+  background: #fff0dd;
+  color: #f59b20;
+}
+
+
+/* Fact value */
+
+.cdm-fact-val {
+  color: #182b45;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* Fact label */
+
+.cdm-fact-label {
+  margin-top: 4px;
+
+  color: #68758a;
+
+  font-size: 8px;
+  font-weight: 500;
+
+  line-height: 1.1;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRICE SECTION
+   ========================================================= */
+
+.cdm-price-section {
+  width: 100%;
+
+  background: #071f42;
+
+  padding:
+    27px
+    24px
+    18px;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   CHOOSE YOUR OPTION
+   ========================================================= */
+
+.cdm-price-label {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 12px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+}
+
+
+.cdm-price-label-icon {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffb51b;
+
+  font-size: 18px;
+}
+
+
+/* =========================================================
+   VARIANT ROW
+   ========================================================= */
+
+.cdm-variant-row {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   VARIANT CARD
+   ========================================================= */
+
+.cdm-variant-btn {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 87px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding:
+    12px
+    14px;
+
+  border-radius: 13px;
+
+  font-family: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+
+.cdm-variant-btn:active {
+  transform: scale(0.985);
+}
+
+
+/* =========================================================
+   BEST VALUE CARD
+   ========================================================= */
+
+.cdm-variant-btn--best {
+  background: #ffffff;
+
+  border: 2px solid #ffb51b;
+
+  box-shadow:
+    0 4px 10px rgba(255, 181, 27, 0.14);
+}
+
+
+/* =========================================================
+   ALTERNATIVE CARD
+   ========================================================= */
+
+.cdm-variant-btn--alt {
+  background: #ffffff;
+
+  border: 2px solid #2c94ef;
+
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   USER AVATAR
+   ========================================================= */
+
+.cdm-variant-avatar {
+  flex-shrink: 0;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.cdm-variant-btn--best .cdm-variant-avatar {
+  background: #fff4df;
+}
+
+
+.cdm-variant-btn--alt .cdm-variant-avatar {
+  background: #e8f3ff;
+}
+
+
+.cdm-user-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+
+.cdm-variant-btn--best .cdm-user-icon {
+  color: #ffad13;
+}
+
+
+.cdm-variant-btn--alt .cdm-user-icon {
+  color: #178be9;
+}
+
+
+/* =========================================================
+   VARIANT BODY
+   ========================================================= */
+
+.cdm-variant-body {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.cdm-variant-title {
+  color: #172b45;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  line-height: 1.25;
+
+  white-space: nowrap;
+}
+
+
+.cdm-variant-sub {
+  margin-top: 5px;
+
+  color: #68758a;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   VARIANT PRICE
+   ========================================================= */
+
+.cdm-variant-price-col {
+  flex-shrink: 0;
+
+  min-width: 67px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  text-align: right;
+}
+
+
+.cdm-variant-price {
+  display: block;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+.cdm-variant-btn--best .cdm-variant-price {
+  color: #ffad13;
+}
+
+
+.cdm-variant-btn--alt .cdm-variant-price {
+  color: #1389e9;
+}
+
+
+/* =========================================================
+   BEST VALUE TAG
+   ========================================================= */
+
+.cdm-variant-best-tag {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 5px;
+
+  padding:
+    3px
+    10px;
+
+  border-radius: 12px;
+
+  background: #ffb51b;
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BEST VALUE CORNER STAR
+   ========================================================= */
+
+.cdm-variant-ribbon {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  background: #ffb51b;
+
+  clip-path: polygon(
+    100% 0,
+    100% 100%,
+    0 0
+  );
+
+  font-size: 11px;
+
+  padding-left: 11px;
+  padding-bottom: 11px;
+}
+
+
+/* =========================================================
+   SAFEWORK CARD
+   ========================================================= */
+
+.cdm-price-note--centered {
+  width: 100%;
+
+  min-height: 56px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 2px;
+
+  padding:
+    9px
+    12px;
+
+  border-radius: 9px;
+
+  background: #10366d;
+
+  border: none;
+}
+
+
+/* Shield */
+
+.cdm-price-note-icon {
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(20, 139, 239, 0.12);
+
+  color: #168dec;
+
+  font-size: 20px;
+}
+
+
+/* SafeWork text */
+
+.cdm-price-note-text {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  line-height: 1.25;
+}
+
+
+.cdm-price-note-text strong {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.cdm-price-note-text span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #8ea7c7;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   NON VARIANT PRICE
+   ========================================================= */
+
+.cdm-price-main {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 14px;
+}
+
+
+.cdm-price-big {
+  color: #ffb51b;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+.cdm-price-save {
+  display: inline-block;
+
+  margin-bottom: 4px;
+
+  padding:
+    3px
+    8px;
+
+  border-radius: 12px;
+
+  background: #ffb51b;
+  color: #071f42;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+
+.cdm-price-note {
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   BOOK NOW
+   ========================================================= */
+
+.cdm-book-now-big {
+  width: 100%;
+
+  display: block;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 11px;
+
+  background: #ffb51b;
+  color: #071f42;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.cdm-book-now-big:active {
+  transform: scale(0.985);
+}
+
+
+/* =========================================================
+   MOBILE WIDTHS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .cdm-hero-img {
+    height: 280px;
+  }
+
+  .cdm-hero-content {
+    left: 20px;
+    bottom: 72px;
+  }
+
+  .cdm-hero-title {
+    font-size: 21px;
+  }
+
+  .cdm-hero-price {
+    right: 14px;
+  }
+
+  .cdm-quick-facts {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+  .cdm-price-section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .cdm-variant-btn {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    gap: 8px;
+  }
+
+  .cdm-variant-avatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .cdm-variant-title {
+    font-size: 12px;
+  }
+
+  .cdm-variant-sub {
+    font-size: 9px;
+  }
+
+  .cdm-variant-price {
+    font-size: 21px;
+  }
+
+  .cdm-variant-price-col {
+    min-width: 58px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP - HIDE MOBILE COMPONENT
+   ========================================================= */
+
+@media (min-width: 769px) {
+  .cdm-root {
+    display: none;
+  }
+}
+
 .cdm-root {
   box-sizing: border-box;
   width: 100%;
@@ -29,7 +969,7 @@
 .cdm-back-btn {
   background: none;
   border: none;
-  color: var(--color-brand-primary);
+  color: #fff;
   font-size: 24px;
   cursor: pointer;
   padding: 0;
@@ -42,6 +982,7 @@
   font-size: 13px;
   font-weight: 600;
   flex: 1;
+  text-align: center;
 }
 
 .cdm-topbar-phone {
@@ -78,7 +1019,6 @@
   background: linear-gradient(to top, rgba(13,34,64,0.96) 0%, rgba(13,34,64,0.5) 45%, rgba(13,34,64,0.1) 100%);
 }
 
-/* ── Hero content: code pill + title — BOTTOM LEFT (Option A style) ── */
 .cdm-hero-content {
   position: absolute;
   bottom: 15px;
@@ -92,7 +1032,7 @@
   color: var(--color-navy-deep);
   font-size: 10px;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 10px 10px;
   border-radius: 20px;
   display: inline-block;
   margin-bottom: 6px;
@@ -100,25 +1040,32 @@
 
 .cdm-hero-title {
   color: var(--color-surface);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.3;
+  margin: 20px 0px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.cdm-hero-btn {
-
+/* .cdm-hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 7px 12px;
     border-radius: 7px;
     background-color: var(--btn-bg);
     border: none;
     color: var(--btn-color);
     font-weight: 600;
+} */
 
-}
+/* .cdm-hero-btn-icon {
+  font-size: 12px;
+  line-height: 1;
+} */
 
 .cdm-hero-price {
   position: absolute;
@@ -145,12 +1092,13 @@
 .cdm-quick-facts {
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-sky-light);
-  padding: 10px 16px;
+  padding: 10px 10px;
   display: flex;
   overflow-x: auto;
   gap: 20px;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  margin-top: 20px;
 }
 .cdm-quick-facts::-webkit-scrollbar {
   display: none;
@@ -159,13 +1107,25 @@
 .cdm-fact {
   text-align: center;
   flex-shrink: 0;
-  min-width: 80px;
+  min-width: 62px;
 }
 
 .cdm-fact-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
-  margin-bottom: 2px;
+  margin: 0 auto 6px;
 }
+
+.cdm-fact-icon--blue { background: #e3f0ff; }
+.cdm-fact-icon--red { background: #ffe4e8; }
+.cdm-fact-icon--pink { background: #ffe1ec; }
+.cdm-fact-icon--purple { background: #ece1ff; }
+.cdm-fact-icon--orange { background: #ffedd9; }
 
 .cdm-fact-val {
   font-size: 11px;
@@ -234,7 +1194,7 @@
   margin-top: 1px;
 }
 
-/* ── Points swipe (What you learn / Entry req) ── */
+/* ── Points swipe ── */
 .cdm-points-swipe {
   display: flex;
   gap: 12px;
@@ -262,7 +1222,7 @@
 /* ── Price Section ── */
 .cdm-price-section {
   background: var(--color-navy-deep);
-  padding: 14px 16px;
+  padding: 16px 16px 14px;
   margin-bottom: 8px;
 }
 
@@ -296,69 +1256,182 @@
   line-height: 1.5;
 }
 
-/* ── Variant booking row (experience / SL+BL) ───────────────
-   Two side-by-side buttons inside the dark price section. Each
-   button is its own little card so the variant label, price,
-   and CTA are visually grouped. Stacks vertically on the
-   narrowest phones so the touch targets stay big. */
 .cdm-price-label {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-brand-primary);
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-/* Stack the two variant buttons vertically — one full-width row each.
-   Each row is a single line: price on the left, "Book <variant>" label
-   on the right. Compact, scannable, big tap target. */
+.cdm-price-label-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
 .cdm-variant-row {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .cdm-variant-btn {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  background: linear-gradient(180deg, var(--color-brand-primary) 0%, #1e9bca 100%);
-  color: var(--color-navy-deep);
-  border: none;
-  border-radius: 10px;
-  padding: 13px 16px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-sky-light);
+  border-radius: 12px;
+  padding: 12px 14px;
   font-family: inherit;
   cursor: pointer;
-  text-align: center;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+  text-align: left;
+  overflow: hidden;
   transition: transform 0.08s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 .cdm-variant-btn:active {
   transform: translateY(1px);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
   opacity: 0.95;
 }
 
-.cdm-variant-price {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+.cdm-variant-btn--best {
+  background: #fff8ec;
+  border-color: var(--color-brand-primary);
 }
 
-.cdm-variant-label {
+.cdm-variant-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cdm-variant-ribbon::before {
+  content: "★";
+  position: absolute;
+  top: 5px;
+  right: -14px;
+  width: 60px;
+  transform: rotate(45deg);
+  background: var(--color-brand-primary);
+  color: var(--color-navy-deep);
+  font-size: 10px;
+  text-align: center;
+  line-height: 16px;
+  padding: 1px 0;
+}
+
+.cdm-variant-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.cdm-variant-btn--best .cdm-variant-avatar { background: #ffe6bf; }
+.cdm-variant-btn--alt .cdm-variant-avatar { background: #e3f0ff; }
+
+.cdm-variant-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cdm-variant-title {
   font-size: 14px;
   font-weight: 700;
-  line-height: 1.2;
-  white-space: nowrap;
+  color: var(--color-navy-deep);
+  line-height: 1.25;
+}
+
+.cdm-variant-sub {
+  font-size: 11px;
+  color: var(--color-link-muted);
+  margin-top: 2px;
+}
+
+.cdm-variant-price-col {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.cdm-variant-price {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--color-navy-deep);
+}
+
+.cdm-variant-btn--best .cdm-variant-price { color: var(--color-brand-primary); }
+.cdm-variant-btn--alt .cdm-variant-price { color: #1a6fd1; }
+
+.cdm-variant-label { display: none; }
+
+.cdm-variant-best-tag {
+  display: inline-block;
+  margin-top: 4px;
+  background: var(--color-brand-primary);
+  color: var(--color-navy-deep);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  border-radius: 20px;
 }
 
 .cdm-price-note--centered {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
   margin-top: 4px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.cdm-price-note-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  color: var(--color-navy-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.cdm-price-note-text {
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.cdm-price-note-text strong {
+  display: block;
+  color: var(--color-surface);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cdm-price-note-text span {
+  color: rgba(255,255,255,0.6);
 }
 
 .cdm-book-now-big {
@@ -393,7 +1466,6 @@
    cursor: pointer;
     transition: background 0.15s;
 }
-
 
 .cdm-date-slot:hover {
     background: #e0f2fe;
@@ -568,7 +1640,6 @@
 }
 
 /* Large Handbook Card Section (Mobile) */
-/* Branded Handbook Section (Reference Style) - Mobile */
 .cdm-handbook-section {
     background-color: #f0f9ff;
     background-image: repeating-linear-gradient(
@@ -688,7 +1759,7 @@
   scroll-snap-align: start;
 }
 
-/* ── Page indicator (shared by sessions + points swipe) ── */
+/* ── Page indicator ── */
 .cdm-page-indicator {
   text-align: center;
   font-size: 11px;
@@ -791,13 +1862,18 @@
   background: var(--color-navy-deep);
   padding: 10px 16px;
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   border-top: 2px solid var(--color-brand-primary);
   z-index: 100;
 }
 
 .cdm-sticky-book {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: var(--btn-bg);
   color: var(--btn-color);
   border: none;
@@ -807,6 +1883,11 @@
   font-weight: 700;
   text-align: center;
   cursor: pointer;
+}
+
+.cdm-sticky-book-arrow {
+  font-size: 15px;
+  line-height: 1;
 }
 
 .cdm-sticky-call {
@@ -823,12 +1904,21 @@
   justify-content: center;
 }
 
-/* ── Section Slider ── */
+.cdm-sticky-wa {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  text-decoration: none;
+}
 
-/* Header row: title on the left, prev/next arrows on the right. This
-   keeps the arrows in a fixed-height strip above the slide content —
-   they no longer sit absolutely positioned over the list, so they
-   can't overlap text regardless of how tall a given slide is. */
+/* ── Section Slider ── */
 .cdm-section-header {
   display: flex;
   align-items: center;

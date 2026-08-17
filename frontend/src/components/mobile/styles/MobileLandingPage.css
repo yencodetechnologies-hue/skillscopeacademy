@@ -78,37 +78,25 @@
 }
 
 /* ── Hero Carousel ── */
+/* Container Card */
 .mlp-carousel {
   position: relative;
-  height: 180px;
+  width: 100%;
   overflow: hidden;
-  background: var(--color-navy-deep);
+  background-color: #031427;
+  padding-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .mlp-slide {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  /* Inactive slides are invisible (opacity:0) but still occupy the same
-     absolute box. Without this they intercepted taps on the image area
-     of the visible slide, making it look like only the title text was
-     clickable. Disabling pointer-events here forwards every tap to the
-     active slide underneath/above. */
-  pointer-events: none;
+  position: relative;
+  display: none;
+  padding: 15px 20px 45px 20px;
+  box-sizing: border-box;
 }
 
 .mlp-slide.active {
-  opacity: 1;
-  /* Re-enable interactions only on the slide the user can actually see. */
-  pointer-events: auto;
-}
-
-.mlp-slide.active[role="button"] {
-  cursor: pointer;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.06);
+  display: block;
 }
 
 .mlp-slide-bg {
@@ -117,124 +105,270 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  background: #0d1b2a;
+  z-index: 1;
 }
 
+/* Gradient Overlay for Readability */
 .mlp-slide-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(13,34,64,0.92) 0%, rgba(13,34,64,0.2) 60%);
+  background: linear-gradient(
+    180deg,
+    rgba(3, 20, 39, 0.4) 0%,
+    rgba(3, 20, 39, 0.85) 60%,
+    #031427 100%
+  );
+  z-index: 2;
 }
 
+/* Content Layout */
 .mlp-slide-content {
   position: relative;
-  z-index: 2;
-  padding: 14px 16px;
-  width: 100%;
-}
-
-.mlp-slide-badge {
-  background: var(--color-brand-primary);
-  color: var(--color-navy-deep);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 20px;
-  display: inline-block;
-  margin-bottom: 7px;
-}
-
-.mlp-slide-title {
-  color: var(--color-surface);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.25;
-  margin-bottom: 5px;
-  display: -webkit-box;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.mlp-slide-price {
-  color: var(--color-brand-primary);
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.mlp-slide-orig {
-  color: rgba(255,255,255,0.45);
-  font-size: 12px;
-  text-decoration: line-through;
-  margin-left: 5px;
-}
-
-.mlp-cbtn {
-  position: absolute;
-  top: 45%;
-  transform: translateY(-50%);
   z-index: 3;
-  background: rgba(41,182,232,0.2);
-  border: 1px solid rgba(41,182,232,0.4);
-  color: var(--color-surface);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Yellow Badge */
+.mlp-slide-badge {
+  background-color: #f1ab18;
+  color: #031427;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+/* Slide Typography */
+.mlp-slide-title {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
+}
+
+.mlp-slide-subtitle {
+  color: #e2e8f0;
+  font-size: 14px;
+  margin: 0 0 20px 0;
+}
+
+
+/* Container & Section */
+
+
+/* Meta Info Row */
+.mlp-card-meta-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.mlp-prev { left: 10px; }
-.mlp-next { right: 10px; }
+.mlp-card-meta-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.mlp-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mlp-meta-icon {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.mlp-meta-divider {
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+.mlp-card-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Bottom Row: Availability Status & Seats Badge */
+.mlp-card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mlp-availability-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.mlp-availability-text.low {
+  color: #d97706; /* Amber warning text for low availability */
+}
+
+/* Seats Badge (Green / Amber pill) */
+.mlp-seats-badge {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 12px;
+}
+
+.mlp-seats-badge.low {
+  background-color: #fffbebfb;
+  color: #d97706;
+  border-color: #fde68a;
+}
+
+/* Empty State */
+.mlp-no-sessions {
+  text-align: center;
+  padding: 24px;
+  color: #64748b;
+  font-size: 14px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+/* Feature List */
+.mlp-slide-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mlp-slide-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.mlp-feat-ico {
+  color: #f1ab18;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Controls Bar (Dots + Arrows) */
+.mlp-carousel-controls {
+  position: absolute;
+  bottom: 70px;
+  left: 20px;
+  right: 20px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .mlp-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  gap: 5px;
-  z-index: 3;
+  align-items: center;
+  gap: 8px;
 }
 
 .mlp-dot {
-  width: 6px;
-  height: 6px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.35);
+  background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s ease;
 }
 
 .mlp-dot.active {
-  background: var(--color-brand-primary);
-  width: 18px;
-  border-radius: 3px;
+  background-color: #ffffff;
+  transform: scale(1.25);
 }
 
-.mlp-slide-counter {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  background: rgba(13, 34, 64, 0.7);
-  color: var(--color-surface);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(41, 182, 232, 0.35);
+/* Carousel Buttons */
+.mlp-cbtn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.mlp-cbtn {
+  background-color: rgba(3, 20, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  user-select: none;
+}
+
+/* Bottom Action Buttons */
+.mlp-slide-actions {
+  position: relative;
+  z-index: 4;
+  padding: 0 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.mlp-btn-primary {
+  flex: 1;
+  background-color: #f1ab18;
+  color: #031427;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.mlp-btn-secondary {
+  flex: 1;
+  background-color: transparent;
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.mlp-btn-secondary i {
+  color: #f1ab18;
 }
 
 /* ── Trust Strip ── */
@@ -347,9 +481,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.mlp-sessions-section{
+/* .mlp-sessions-section{
   min-height: 351px;
-}
+} */
 /* ── Dates Card ── */
 .mlp-dates-card {
   background: var(--color-sky-panel);
@@ -597,7 +731,13 @@
   padding: 8px 10px;
   flex: 1;
 }
-
+.mlp-course-label{
+  color: #0b192c;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0;
+}
 .mlp-course-name {
   font-size: 12px;
   font-weight: 600;
@@ -812,6 +952,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 18px 10px;
   width: 100%;
+  margin-top: 10px;
 }
 
 .mlp-cat-tile {
@@ -833,7 +974,7 @@
   width: 70px;
   height: 70px;
   /* iOS-style continuous corner radius (~22% of tile size) */
-  border-radius: 22%;
+  border-radius: 50%;
   overflow: hidden;
   background-color: var(--color-navy-deep);
   background-size: cover;
@@ -985,7 +1126,7 @@
 /* Enquiry Section with Light Blue Background */
 .mlp-section-enquire {
   background-color: #0a1e3f !important; /* Exact light blue from screenshot */
-  padding: 40px 20px !important;
+  padding: 20px 20px !important;
   text-align: center;
   margin: 0 !important;
 }
@@ -996,10 +1137,10 @@
   color: var(--color-surface);
   border: none;
   width: 100%;
-  padding: 18px;
+  padding: 10px;
   border-radius: 12px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
@@ -1105,3 +1246,1368 @@
   align-items: center;
   justify-content: center;
 }
+/*category section*/
+
+/* Section Titles */
+.mlp-section-label {
+  color: #f1ab18; /* Gold accent color */
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.mlp-section-title {
+  color: #031427; /* Dark Navy */
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0 0 20px 0;
+}
+.mlp-course-title {
+  color: #f5a623; /* Dark Navy */
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 10px 0 10px 0;
+}
+
+/* 2-Column Grid Layout */
+/* .mlp-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+} */
+
+/* Category Card Container */
+.mlp-cat-card {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.mlp-cat-card:active {
+  transform: scale(0.97);
+}
+
+/* Top Cover Image Box */
+.mlp-cat-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  background-color: #031427;
+  overflow: hidden;
+}
+
+.mlp-cat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mlp-cat-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #031427 0%, #1e293b 100%);
+}
+
+/* Card Body (White Overlapping Box) */
+.mlp-cat-card-body {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 18px;
+  margin-top: -22px; /* Pulls up slightly over cover image */
+  padding: 12px 10px 14px 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 2;
+  flex: 1;
+}
+
+/* Navy Circular Icon Badge */
+.mlp-cat-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #031427;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(3, 20, 39, 0.2);
+}
+
+.mlp-cat-badge-ico {
+  color: #f1ab18; /* Gold icon */
+  font-size: 16px;
+}
+
+/* Category Information */
+.mlp-cat-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0; /* Prevents overflow */
+}
+
+.mlp-cat-title {
+  color: #031427;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 4px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mlp-cat-count {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+/*Abinaya*/
+
+/* Header Layout */
+.mlp-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mlp-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0d172a;
+  margin: 0;
+}
+
+.mlp-view-all-btn {
+  background: none;
+  border: none;
+  color: #1a56db;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mlp-view-all-btn:hover {
+  text-decoration: underline;
+}
+
+/* Card Container */
+.mlp-sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mlp-session-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 13px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Card Top Section */
+.mlp-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.mlp-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d172a;
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.mlp-book-btn {
+  background-color: #f7a600;
+  color: #0d172a;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.mlp-book-btn:hover {
+  background-color: #e59900;
+}
+
+/* Card Meta Section */
+.mlp-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top:10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.mlp-meta-items {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mlp-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.mlp-meta-item:not(:last-child)::after {
+  content: "|";
+  color: #cbd5e1;
+  margin-left: 12px;
+}
+
+.mlp-meta-icon {
+  font-size: 13px;
+}
+
+.mlp-card-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d172a;
+}
+
+/* Card Bottom Section */
+.mlp-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mlp-availability-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.mlp-seats-badge {
+  background-color: #f0fdf4;
+  color: #16803d;
+  border: 1px solid #dcfce7;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.mlp-seats-badge.low {
+  background-color: #fffbeb;
+  color: #b45309;
+  border-color: #fef3c7;
+}
+
+/*category section/*
+
+/* Section Header Styling */
+.mlp-section-header {
+  margin-bottom: 10px;
+}
+
+.mlp-section-label {
+  color: #e09200;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.mlp-section-title {
+  color: #0b192c;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* 2-Column Grid Layout */
+/* .mlp-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+} */
+
+/* Individual Category Card */
+.mlp-cat-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mlp-cat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Image Banner */
+.mlp-cat-image-container {
+  width: 100%;
+  height: 140px;
+  background-color: #e2e8f0;
+  overflow: hidden;
+  position: relative;
+}
+
+.mlp-cat-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mlp-cat-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0b192c, #1e293b);
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* Card Content Panel */
+.mlp-cat-content {
+  background-color: #ffffff;
+  padding: 5px 5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: -20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Circular Icon Badge */
+.mlp-cat-icon-badge {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  background-color: #0b192c;
+  color: #f5a623;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Category Details */
+.mlp-cat-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.mlp-cat-title {
+  color: #0b192c;
+  font-size: 10px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.mlp-cat-count {
+  color: #64748b;
+  font-size: 8px;
+  font-weight: 500;
+}
+/*Calender Section*/
+/* Container & Steps Layout */
+.mlp-stepped-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mlp-booking-wizard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.mlp-step-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mlp-step-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.mlp-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Step 1: Calendar Strip */
+.mlp-calendar-strip {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.mlp-date-chip {
+  flex: 0 0 85px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.65rem 0.5rem;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mlp-date-chip:hover {
+  border-color: #2563eb;
+}
+
+.mlp-date-chip.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.mlp-chip-month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.mlp-chip-day {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0.1rem 0;
+}
+
+.mlp-chip-weekday {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Step 2: Time Slot Selector Chips */
+.mlp-slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.mlp-slot-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mlp-slot-chip:hover {
+  border-color: #2563eb;
+  background: #f8fafc;
+}
+
+.mlp-slot-chip.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.mlp-slot-time {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.mlp-slot-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 600;
+}
+
+.mlp-slot-badge.low {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Step 3: Session Details Card */
+.mlp-selected-card {
+  background: #ffffff;
+  border: 2px solid #2563eb;
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.08);
+}
+
+.mlp-selected-slot-heading {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.mlp-book-btn-lg {
+  padding: 0.65rem 1.75rem;
+  font-size: 0.95rem;
+}
+
+
+/*calender section*/
+
+/* =========================================================
+   AVAILABLE SESSIONS - MOBILE PROFESSIONAL DESIGN
+   ========================================================= */
+
+.mlp-sessions-section {
+  width: 100%;
+}
+
+.mlp-availability-wrapper {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------
+   SECTION HEADER
+   --------------------------------------------------------- */
+
+.mlp-section-header {
+  margin-bottom: 22px;
+}
+
+.mlp-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f5a623;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
+}
+
+.mlp-section-title {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 750;
+  color: #0a1e3f;
+}
+
+/* ---------------------------------------------------------
+   COMMON FIELD
+   --------------------------------------------------------- */
+
+.mlp-course-selector,
+.mlp-date-selector,
+.mlp-time-section {
+  margin-bottom: 20px;
+}
+
+.mlp-field-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a1e3f;
+}
+
+/* ---------------------------------------------------------
+   COURSE SELECT
+   --------------------------------------------------------- */
+
+.mlp-course-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.mlp-course-select {
+  width: 100%;
+  height: 52px;
+  padding: 0 44px 0 15px;
+  border: 1px solid #dfe5ec;
+  border-radius: 12px;
+  background: #fff;
+  color: #172b4d;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: 0 2px 8px rgba(10, 30, 63, 0.04);
+  transition: all 0.2s ease;
+}
+
+.mlp-course-select:focus {
+  border-color: #f5a623;
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.12);
+}
+
+.mlp-course-chevron {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   DATE INPUT
+   --------------------------------------------------------- */
+
+.mlp-date-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.mlp-date-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 42px 0 45px;
+  border: 1px solid #dfe5ec;
+  border-radius: 12px;
+  background: #fff;
+  color: #172b4d;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(10, 30, 63, 0.04);
+  box-sizing: border-box;
+}
+
+.mlp-date-input::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.mlp-date-calendar-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 17px;
+  z-index: 2;
+}
+
+.mlp-date-chevron {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   CALENDAR
+   --------------------------------------------------------- */
+
+.mlp-session-calendar {
+  display: none;
+  margin-top: 10px;
+  padding: 16px;
+  border: 1px solid #e5eaf0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(10, 30, 63, 0.10);
+  animation: mlpCalendarOpen 0.2s ease;
+}
+
+.mlp-session-calendar.open {
+  display: block;
+}
+
+@keyframes mlpCalendarOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mlp-calendar-header {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.mlp-calendar-header strong {
+  text-align: center;
+  color: #0a1e3f;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.mlp-calendar-header button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5eaf0;
+  border-radius: 9px;
+  background: #f8fafc;
+  color: #0a1e3f;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.mlp-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 7px;
+}
+
+.mlp-calendar-weekdays span {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.mlp-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.mlp-calendar-empty {
+  min-height: 38px;
+}
+
+.mlp-calendar-day {
+  position: relative;
+  min-height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.mlp-calendar-day.has-session {
+  color: #0a1e3f;
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.mlp-calendar-day.has-session:hover {
+  background: rgba(245, 166, 35, 0.12);
+}
+
+.mlp-calendar-day.today {
+  box-shadow: inset 0 0 0 1px #f5a623;
+}
+
+.mlp-calendar-day.selected {
+  background: #0a1e3f;
+  color: #fff;
+}
+
+.mlp-calendar-dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #f5a623;
+}
+
+.mlp-calendar-day.selected .mlp-calendar-dot {
+  background: #fff;
+}
+
+.mlp-calendar-legend {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #edf1f5;
+}
+
+.mlp-calendar-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.mlp-calendar-legend i {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #f5a623;
+}
+
+/* ---------------------------------------------------------
+   TIME SECTION
+   --------------------------------------------------------- */
+
+.mlp-time-section {
+  padding-top: 2px;
+}
+
+.mlp-time-slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mlp-time-slot {
+  position: relative;
+  min-height: 48px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid #dfe5ec;
+  border-radius: 11px;
+  background: #fff;
+  color: #172b4d;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mlp-time-slot:hover {
+  border-color: #f5a623;
+  background: #fffaf2;
+}
+
+.mlp-time-slot.selected {
+  border-color: #0a1e3f;
+  background: #0a1e3f;
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(10, 30, 63, 0.15);
+}
+
+.mlp-time-icon {
+  font-size: 14px;
+}
+
+.mlp-time-check {
+  position: absolute;
+  right: 9px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ---------------------------------------------------------
+   MESSAGE
+   --------------------------------------------------------- */
+
+.mlp-select-date-message {
+  margin-top: 8px;
+  padding: 13px 14px;
+  border: 1px dashed #d9e0e8;
+  border-radius: 11px;
+  background: #f8fafc;
+  color: #64748b;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------
+   SESSION SECTION
+   --------------------------------------------------------- */
+
+.mlp-course-session-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #edf1f5;
+}
+
+.mlp-course-session-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.mlp-small-label {
+  display: block;
+  margin-bottom: 3px;
+  color: #f5a623;
+  font-size: 10px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mlp-course-session-heading h4 {
+  margin: 0;
+  color: #0a1e3f;
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.mlp-course-count {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  background: #f1f5f9;
+  color: #0a1e3f;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* ---------------------------------------------------------
+   SESSION CARD
+   --------------------------------------------------------- */
+
+.mlp-session-course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mlp-session-course-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid #e3e8ee;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(10, 30, 63, 0.05);
+}
+
+.mlp-session-course-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.mlp-session-course-code {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  margin-bottom: 7px;
+  border-radius: 5px;
+  background: rgba(245, 166, 35, 0.12);
+  color: #b86d00;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.mlp-session-course-main h4 {
+  margin: 0 0 8px;
+  color: #0a1e3f;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 750;
+}
+
+.mlp-session-course-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.mlp-session-course-action {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 9px;
+}
+
+.mlp-seats-ok,
+.mlp-seats-low {
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mlp-seats-ok {
+  color: #059669;
+}
+
+.mlp-seats-low {
+  color: #dc2626;
+}
+
+.mlp-book-btn {
+  min-width: 95px;
+  height: 38px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 9px;
+  background: #f5a623;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mlp-book-btn:hover {
+  background: #df9214;
+  transform: translateY(-1px);
+}
+
+/* ---------------------------------------------------------
+   LOADING / EMPTY
+   --------------------------------------------------------- */
+
+.mlp-session-loading,
+.mlp-no-sessions {
+  padding: 30px 15px;
+  border: 1px solid #e8edf2;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #64748b;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* ── Select Course section ── */
+.mlp-course-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mlp-field-label,
+.mlp-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1e293b;
+}
+
+.mlp-course-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0 16px;
+  height: 52px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mlp-course-select-wrapper:focus-within {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.mlp-course-select {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  padding: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Placeholder-style "Choose a course" option looks muted */
+.mlp-course-select:invalid,
+.mlp-course-select option[value=""] {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.mlp-course-chevron {
+  pointer-events: none;
+  font-size: 13px;
+  color: #64748b;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.mlp-card-header{display:flex}
+.mlp-book-now-btn{
+  
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+  
+}
+
+/* Tap/hover state */
+.mlp-course-select-wrapper:hover {
+  border-color: #cbd5e1;
+}
+
+/* Disabled / loading state, if you gray it out while loading */
+.mlp-course-select-wrapper.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .mlp-sessions-section {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .mlp-section-header {
+    margin-bottom: 18px;
+  }
+
+  .mlp-section-label {
+    font-size: 10px;
+  }
+
+  .mlp-section-title {
+    font-size: 22px;
+  }
+
+  .mlp-availability-wrapper {
+    width: 100%;
+  }
+
+  .mlp-course-selector,
+  .mlp-date-selector,
+  .mlp-time-section {
+    margin-bottom: 17px;
+  }
+
+  .mlp-field-label {
+    margin-bottom: 7px;
+    font-size: 12px;
+  }
+
+  .mlp-course-select,
+  .mlp-date-input {
+    height: 50px;
+    border-radius: 11px;
+    font-size: 13px;
+  }
+
+  .mlp-session-calendar {
+    padding: 13px;
+    border-radius: 14px;
+  }
+
+  .mlp-calendar-header {
+    margin-bottom: 13px;
+  }
+
+  .mlp-calendar-header strong {
+    font-size: 14px;
+  }
+
+  .mlp-calendar-grid {
+    gap: 3px;
+  }
+
+  .mlp-calendar-day {
+    min-height: 37px;
+    font-size: 12px;
+  }
+
+  .mlp-calendar-empty {
+    min-height: 37px;
+  }
+
+  .mlp-calendar-weekdays span {
+    font-size: 10px;
+  }
+
+  .mlp-time-slots {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .mlp-time-slot {
+    min-height: 46px;
+    padding: 9px 8px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+
+  .mlp-time-icon {
+    font-size: 12px;
+  }
+
+  .mlp-course-session-section {
+    margin-top: 20px;
+    padding-top: 17px;
+  }
+
+  .mlp-course-session-heading h4 {
+    font-size: 15px;
+  }
+
+  .mlp-session-course-card {
+    display: block;
+    padding: 14px;
+    border-radius: 13px;
+  }
+
+  .mlp-session-course-main h4 {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .mlp-session-course-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .mlp-session-course-action {
+    width: 100%;
+    margin-top: 13px;
+    padding-top: 11px;
+    border-top: 1px solid #edf1f5;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mlp-book-btn {
+    min-width: 105px;
+    height: 40px;
+    border-radius: 9px;
+    font-size: 12px;
+  }
+
+  .mlp-select-date-message {
+    font-size: 11px;
+    padding: 12px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .mlp-sessions-section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .mlp-section-title {
+    font-size: 20px;
+  }
+
+  /* .mlp-time-slots {
+    grid-template-columns: 1fr;
+  } */
+
+  .mlp-time-slot {
+    justify-content: flex-start;
+    padding-left: 14px;
+  }
+
+  .mlp-session-course-card {
+    padding: 13px;
+  }
+
+  .mlp-book-btn {
+    min-width: 95px;
+  }
+}
+

@@ -228,6 +228,7 @@
   font-weight: 700;
   padding: 6px 14px;
   border-radius: 12px;
+  float: inline-end;
 }
 
 .mlp-seats-badge.low {

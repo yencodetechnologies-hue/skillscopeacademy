@@ -45,40 +45,42 @@ function StudentAssessmentApp() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="sa-root min-h-screen flex items-center justify-center bg-gray-50">
         <Loader2 className="animate-spin text-[#1e3a8a]" size={48} />
       </div>
     )
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Routes>
-        {/* Public Assessment Routes */}
-        <Route path="assessment" element={<AssessmentForm />} />
-        <Route path="common-assessment" element={<CommonAssessment />} />
+    <div className="sa-root">
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          {/* Public Assessment Routes */}
+          <Route path="assessment" element={<AssessmentForm />} />
+          <Route path="common-assessment" element={<CommonAssessment />} />
 
-        {/* Auth Routes */}
-        <Route
-          path="login"
-          element={!user ? <Login /> : <Navigate to="dashboard" replace />}
-        />
+          {/* Auth Routes */}
+          <Route
+            path="login"
+            element={!user ? <Login /> : <Navigate to="dashboard" replace />}
+          />
 
-        {/* Protected Dashboard Routes */}
-        <Route
-          path="dashboard"
-          element={user ? <Dashboard /> : <Navigate to="login" replace />}
-        />
+          {/* Protected Dashboard Routes */}
+          <Route
+            path="dashboard"
+            element={user ? <Dashboard /> : <Navigate to="login" replace />}
+          />
 
-        <Route
-          path="grade/:id"
-          element={user ? <GradingPortal /> : <Navigate to="login" replace />}
-        />
+          <Route
+            path="grade/:id"
+            element={user ? <GradingPortal /> : <Navigate to="login" replace />}
+          />
 
-        {/* Catch-all */}
-        <Route path="*" element={<Navigate to="dashboard" replace />} />
-      </Routes>
-    </QueryClientProvider>
+          {/* Catch-all */}
+          <Route path="*" element={<Navigate to="dashboard" replace />} />
+        </Routes>
+      </QueryClientProvider>
+    </div>
   )
 }
 

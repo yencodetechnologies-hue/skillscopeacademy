@@ -131,6 +131,38 @@ const slugify = (text) => {
 };
 
 /* =========================================================
+   PRICE NUMBER HELPER
+   ========================================================= */
+
+const getPriceNumber = (value) => {
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+    return null;
+  }
+
+  const number = Number(
+    String(value).replace(/[$,\s]/g, "")
+  );
+
+  return Number.isFinite(number) ? number : null;
+};
+
+/* =========================================================
+   FORMAT PRICE
+   ========================================================= */
+
+const formatPrice = (value) => {
+  const number = getPriceNumber(value);
+
+  if (number === null) return "";
+
+  return `$${number}`;
+};
+
+/* =========================================================
    COMPONENT
    ========================================================= */
 
@@ -153,23 +185,37 @@ function SessionsBar() {
   const [currentCalDate, setCurrentCalDate] =
     useState(new Date());
 
-  // FIX: modal state now tracks the specific slot that was clicked,
-  // instead of a bare boolean that got duplicated once per card in the map().
-  const [showModal, setShowModal] = useState(false);
-  const [selectedOptionId, setSelectedOptionId] = useState(null);
-  const [selectedBookingSlot, setSelectedBookingSlot] = useState(null);
-  console.log(selectedBookingSlot,"selectedBookingSlot");
+  /* =========================================================
+     VIEW ALL STATE
+     ========================================================= */
 
-  // FIX: "fromPortal" was referenced in BookingModal's props but never
-  // declared anywhere — that was a ReferenceError waiting to crash the
-  // component the first time the modal opened. Derive it from the URL
-  // instead, which is how this flag is normally passed into the flow.
+  const [showAll, setShowAll] = useState(false);
+
+  /* =========================================================
+     BOOKING MODAL STATE
+     ========================================================= */
+
+  const [showModal, setShowModal] = useState(false);
+
+  const [selectedOptionId, setSelectedOptionId] =
+    useState(null);
+
+  const [selectedBookingSlot, setSelectedBookingSlot] =
+    useState(null);
+
+  /* =========================================================
+     FROM PORTAL
+     ========================================================= */
+
   const fromPortal = useMemo(() => {
-    if (typeof window === "undefined") return false;
+    if (typeof window === "undefined") {
+      return false;
+    }
+
     return (
-      new URLSearchParams(window.location.search).get(
-        "fromPortal"
-      ) === "true"
+      new URLSearchParams(
+        window.location.search
+      ).get("fromPortal") === "true"
     );
   }, []);
 
@@ -179,7 +225,9 @@ function SessionsBar() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/schedules/upcoming?limit=50`)
+      .get(
+        `${API_URL}/api/schedules/upcoming?limit=50`
+      )
       .then((res) => {
         const data = Array.isArray(res.data)
           ? res.data
@@ -187,8 +235,13 @@ function SessionsBar() {
 
         setSessions(data);
 
-        if (data.length > 0 && data[0]?.date) {
-          const parsed = parseIsoDate(data[0].date);
+        if (
+          data.length > 0 &&
+          data[0]?.date
+        ) {
+          const parsed = parseIsoDate(
+            data[0].date
+          );
 
           if (parsed) {
             setCurrentCalDate(
@@ -267,7 +320,9 @@ function SessionsBar() {
     filteredSessions.forEach((session) => {
       if (!session.date) return;
 
-      const parsed = parseIsoDate(session.date);
+      const parsed = parseIsoDate(
+        session.date
+      );
 
       if (!parsed) return;
 
@@ -290,7 +345,9 @@ function SessionsBar() {
         });
       }
 
-      map.get(matchKey).sessions.push(session);
+      map
+        .get(matchKey)
+        .sessions.push(session);
     });
 
     map.forEach((dateObj) => {
@@ -311,58 +368,124 @@ function SessionsBar() {
   const activeDateObj = useMemo(() => {
     if (!selectedDateKey) return null;
 
-    return datesMap.get(selectedDateKey) || null;
+    return (
+      datesMap.get(selectedDateKey) ||
+      null
+    );
   }, [datesMap, selectedDateKey]);
 
   /* =========================================================
-     VISIBLE SESSIONS
+     GROUP COURSES FOR SELECTED DATE
+
+     IMPORTANT:
+     Multiple sessions for the same course are
+     combined into ONE course card.
+     ========================================================= */
+
+  const groupedDateCourses = useMemo(() => {
+    if (!activeDateObj) {
+      return [];
+    }
+
+    const courseMap = new Map();
+
+    activeDateObj.sessions.forEach(
+      (session) => {
+        const course = session.course;
+
+        const courseId =
+          course?._id ||
+          course?.id ||
+          course?.title;
+
+        if (!courseId) return;
+
+        if (!courseMap.has(courseId)) {
+          courseMap.set(courseId, {
+            courseId,
+            courseName:
+              course?.title || "Course",
+            course,
+            sessions: [],
+          });
+        }
+
+        courseMap
+          .get(courseId)
+          .sessions.push(session);
+      }
+    );
+
+    return Array.from(courseMap.values());
+  }, [activeDateObj]);
+
+  /* =========================================================
+     RESET VIEW ALL WHEN DATE / COURSE CHANGES
+     ========================================================= */
+
+  useEffect(() => {
+    setShowAll(false);
+  }, [selectedDateKey, selectedCourse]);
+
+  /* =========================================================
+     VISIBLE COURSE LIST
+     ========================================================= */
+
+  const visibleCourses = useMemo(() => {
+    if (showAll) {
+      return groupedDateCourses;
+    }
+
+    return groupedDateCourses.slice(0, 2);
+  }, [groupedDateCourses, showAll]);
+
+  /* =========================================================
+     ALL AVAILABLE SESSIONS WHEN NO DATE SELECTED
      ========================================================= */
 
   const visibleSessions = useMemo(() => {
-    if (selectedDateKey) {
-      return activeDateObj?.sessions || [];
-    }
+    return [...filteredSessions].sort(
+      (a, b) => {
+        const dateA = parseIsoDate(a.date);
+        const dateB = parseIsoDate(b.date);
 
-    return [...filteredSessions].sort((a, b) => {
-      const dateA = parseIsoDate(a.date);
-      const dateB = parseIsoDate(b.date);
+        if (!dateA || !dateB) return 0;
 
-      if (!dateA || !dateB) return 0;
+        if (dateA.year !== dateB.year) {
+          return (
+            dateA.year - dateB.year
+          );
+        }
 
-      if (dateA.year !== dateB.year) {
-        return dateA.year - dateB.year;
-      }
-
-      if (
-        dateA.monthIndex !== dateB.monthIndex
-      ) {
-        return (
-          dateA.monthIndex -
+        if (
+          dateA.monthIndex !==
           dateB.monthIndex
+        ) {
+          return (
+            dateA.monthIndex -
+            dateB.monthIndex
+          );
+        }
+
+        if (dateA.day !== dateB.day) {
+          return dateA.day - dateB.day;
+        }
+
+        return (
+          getTimeMinutes(a.startTime) -
+          getTimeMinutes(b.startTime)
         );
       }
-
-      if (dateA.day !== dateB.day) {
-        return dateA.day - dateB.day;
-      }
-
-      return (
-        getTimeMinutes(a.startTime) -
-        getTimeMinutes(b.startTime)
-      );
-    });
-  }, [
-    filteredSessions,
-    selectedDateKey,
-    activeDateObj,
-  ]);
+    );
+  }, [filteredSessions]);
 
   /* =========================================================
      CALENDAR DAYS
      ========================================================= */
 
   const calendarDays = useMemo(() => {
-    const year = currentCalDate.getFullYear();
+    const year =
+      currentCalDate.getFullYear();
 
     const monthIndex =
       currentCalDate.getMonth();
@@ -381,7 +504,11 @@ function SessionsBar() {
 
     const days = [];
 
-    for (let i = 0; i < firstDayIndex; i++) {
+    for (
+      let i = 0;
+      i < firstDayIndex;
+      i++
+    ) {
       days.push(null);
     }
 
@@ -428,6 +555,7 @@ function SessionsBar() {
 
     setSelectedDateKey(null);
     setSelectedTimeId(null);
+    setShowAll(false);
   };
 
   /* =========================================================
@@ -445,46 +573,35 @@ function SessionsBar() {
 
     setSelectedDateKey(null);
     setSelectedTimeId(null);
+    setShowAll(false);
   };
 
   /* =========================================================
-     SLOT CLICK (navigates to full booking page)
+     BOOK NOW
+
+     We internally use the first session for this course.
+     The session/time itself is NOT displayed here.
      ========================================================= */
 
-  const handleSlotClick = (slot) => {
-    setSelectedTimeId(slot.sessionId);
-
-    const slug =
-      slot.course?.slug ||
-      slugify(slot.course?.title);
-
-    const queryParams = new URLSearchParams({
-      scheduleId: slot.scheduleId || "",
-      sessionId: slot.sessionId || "",
-      date: slot.date || "",
-      time: slot.startTime || "",
-      step: "2",
-    }).toString();
-
-    setTimeout(() => {
-      navigate(
-        `/book-now/course/${slug}?${queryParams}`
-      );
-    }, 150);
-  };
-
-  /* =========================================================
-     BOOK NOW CLICK (opens modal for this specific slot)
-     ========================================================= */
-
-  const handleBookNowClick = (e, slot) => {
-    // FIX: without stopPropagation, this click also bubbled up to the
-    // card's onClick={() => handleSlotClick(slot)}, so opening the modal
-    // ALSO queued a navigate() 150ms later, yanking the user off the page
-    // right after the modal appeared.
+  const handleBookNowClick = (
+    e,
+    courseGroup
+  ) => {
     e.stopPropagation();
-    setSelectedBookingSlot(slot);
+
+    const firstSession =
+      courseGroup?.sessions?.[0];
+
+    if (!firstSession) {
+      return;
+    }
+
+    setSelectedBookingSlot(
+      firstSession
+    );
+
     setSelectedOptionId(null);
+
     setShowModal(true);
   };
 
@@ -496,6 +613,7 @@ function SessionsBar() {
     return (
       <div className="sb-section">
         <div className="sb-container">
+
           <div className="sb-grid-layout">
 
             <div className="sb-sidebar">
@@ -507,6 +625,7 @@ function SessionsBar() {
             </div>
 
           </div>
+
         </div>
       </div>
     );
@@ -574,6 +693,7 @@ function SessionsBar() {
 
                     setSelectedDateKey(null);
                     setSelectedTimeId(null);
+                    setShowAll(false);
                   }}
                 >
 
@@ -725,6 +845,8 @@ function SessionsBar() {
                               null
                             );
 
+                            setShowAll(false);
+
                           }}
                         >
 
@@ -764,29 +886,32 @@ function SessionsBar() {
               <div>
 
                 <span className="sb-step-eyebrow">
-                  AVAILABLE SESSIONS
+                  AVAILABLE COURSES
                 </span>
 
                 <h3 className="sb-step-title">
 
                   {activeDateObj
-                    ? `${activeDateObj.day} ${activeDateObj.mon} · ${activeDateObj.sessions.length} ${
-                        activeDateObj.sessions.length === 1
-                          ? "session"
-                          : "sessions"
+                    ? `${activeDateObj.day} ${activeDateObj.mon} · ${groupedDateCourses.length} ${
+                        groupedDateCourses.length ===
+                        1
+                          ? "Course"
+                          : "Courses"
                       }`
-                    : selectedCourse === "ALL"
-                      ? `${visibleSessions.length} Available ${
-                          visibleSessions.length === 1
-                            ? "Session"
-                            : "Sessions"
-                        }`
-                      : `${selectedCourse} · ${visibleSessions.length} ${
-                          visibleSessions.length === 1
-                            ? "Session"
-                            : "Sessions"
-                        }`
-                  }
+                    : selectedCourse ===
+                      "ALL"
+                    ? `${visibleSessions.length} Available ${
+                        visibleSessions.length ===
+                        1
+                          ? "Session"
+                          : "Sessions"
+                      }`
+                    : `${selectedCourse} · ${visibleSessions.length} ${
+                        visibleSessions.length ===
+                        1
+                          ? "Session"
+                          : "Sessions"
+                      }`}
 
                 </h3>
 
@@ -795,199 +920,389 @@ function SessionsBar() {
             </div>
 
             {/* =================================================
-                SESSIONS
+                SELECTED DATE - COURSE CARDS ONLY
                 ================================================= */}
 
-            {visibleSessions.length > 0 ? (
+            {selectedDateKey ? (
 
-              <div className="sb-slots-list sb-fade-in">
+              groupedDateCourses.length > 0 ? (
 
-                {visibleSessions.map((slot) => {
+                <div className="sb-slots-list sb-fade-in">
 
-                  const isTimeSelected =
-                    selectedTimeId ===
-                    slot.sessionId;
+                  {visibleCourses.map(
+                    (group) => {
 
-                  const courseTitle =
-                    slot.course?.title ||
-                    "Course";
+                      /*
+                       * FIRST SESSION IS ONLY USED
+                       * INTERNALLY FOR BOOKING/LOCATION.
+                       *
+                       * SESSION/TIME IS NOT DISPLAYED.
+                       */
 
-                  const courseCode =
-                    slot.course?.courseCode ||
-                    slot.course?.code ||
-                    slot.course?.course_code ||
-                    "";
+                      const firstSession =
+                        group.sessions?.[0];
 
-                  return (
+                      const course =
+                        group.course || {};
 
-                    <div
-                      key={
-                        slot.sessionId
-                      }
-                      className={`
-                        sb-slot-card
-                        ${
-                          isTimeSelected
-                            ? "sb-slot-card--active"
-                            : ""
-                        }
-                      `}
-                      onClick={() =>
-                        handleSlotClick(slot)
-                      }
-                    >
+                      const location =
+                        firstSession?.location ||
+                        course?.location ||
+                        "Sefton";
 
-                      {/* =================================================
-                          DATE
-                          ================================================= */}
+                      const pricingType =
+                        course?.pricingType ||
+                        (
+                          course?.experienceBasedBooking
+                            ? "experience"
+                            : "standard"
+                        );
 
-                      <div className="sb-slot-date-col">
+                      const isExperience =
+                        pricingType ===
+                          "experience" ||
+                        [
+                          "excavator",
+                          "haul truck",
+                          "skid steer",
+                        ].some(
+                          (keyword) =>
+                            course?.title
+                              ?.toLowerCase()
+                              .includes(
+                                keyword
+                              )
+                        );
 
-                        <span className="sb-slot-date">
-                          {formatSessionDate(
-                            slot.date
-                          )}
-                        </span>
+                      const isSlbl =
+                        pricingType ===
+                          "slbl" ||
+                        !!course?.slblPrice;
 
-                      </div>
+                      return (
 
-                      {/* =================================================
-                          COURSE + TIME
-                          ================================================= */}
-
-                      <div className="sb-slot-main-col">
-
-                        <div className="sb-slot-course-row">
-
-                          <span className="sb-slot-course-title-main">
-                            {courseTitle}
-                          </span>
-
-                          {courseCode && (
-                            <span className="sb-slot-course-code">
-                              {courseCode}
-                            </span>
-                          )}
-
-                        </div>
-
-                        <div className="sb-slot-time-row">
-
-                          <span className="sb-time-icon">
-                            ◷
-                          </span>
-
-                          <span className="sb-slot-time">
-                            {slot.startTime ||
-                              "--"}
-                          </span>
-
-                        </div>
-
-                      </div>
-
-                      {/* =================================================
-                          LOCATION + PRICE
-                          ================================================= */}
-
-                      <div className="sb-slot-info-col">
-
-                        {slot.location && (
-                          <span className="sb-slot-tag">
-
-                            <span className="sb-location-icon">
-                              ⌖
-                            </span>
-
-                            {slot.location}
-
-                          </span>
-                        )}
-
-                        {slot.course?.price !=
-                          null && (
-                          <span className="sb-slot-price">
-                            $
-                            {
-                              slot.course
-                                .price
-                            }{" "}
-                            AUD
-                          </span>
-                        )}
-
-                      </div>
-
-                      {/* =================================================
-                          REFERRAL
-                          ================================================= */}
-
-                      {slot.referralCode && (
-                        <div className="sb-referral-col">
-
-                          <span className="sb-referral-label">
-                            Referral
-                          </span>
-
-                          <span className="sb-referral-code">
-                            {
-                              slot.referralCode
-                            }
-                          </span>
-
-                        </div>
-                      )}
-
-                      {/* =================================================
-                          STATUS + BOOK
-                          ================================================= */}
-
-                      <div className="sb-slot-cta-col">
-
-                        {slot.spotsLabel && (
-                          <span
-                            className={`
-                              sb-status-pill
-                              sb-status--${
-                                slot.spotsType ||
-                                "available"
-                              }
-                            `}
-                          >
-                            {
-                              slot.spotsLabel
-                            }
-                          </span>
-                        )}
-
-                        <button
-                          type="button"
-                          className="sb-book-btn"
-                          onClick={(e) =>
-                            handleBookNowClick(e, slot)
+                        <div
+                          key={
+                            group.courseId
                           }
+                          className="sb-slot-card"
                         >
-                          Book Now
 
-                          <span className="sb-book-arrow">
-                            →
-                          </span>
+                          {/* =================================================
+                              DATE
+                              ================================================= */}
 
-                        </button>
+                          <div className="sb-slot-date-col">
 
-                      </div>
+                            <span className="sb-slot-date">
+                              {formatSessionDate(
+                                firstSession?.date
+                              )}
+                            </span>
 
-                    </div>
+                          </div>
 
-                  );
-                })}
+                          {/* =================================================
+                              COURSE
+                              ================================================= */}
 
-              </div>
+                          <div className="sb-slot-main-col">
+
+                            <div className="sb-slot-course-row">
+
+                              <span className="sb-slot-course-title-main">
+                                {
+                                  group.courseName
+                                }
+                              </span>
+
+                              {(
+                                course?.courseCode ||
+                                course?.code ||
+                                course?.course_code
+                              ) && (
+                                <span className="sb-slot-course-code">
+                                  {
+                                    course?.courseCode ||
+                                    course?.code ||
+                                    course?.course_code
+                                  }
+                                </span>
+                              )}
+
+                            </div>
+
+                            {/* LOCATION */}
+
+                            <div className="sb-slot-time-row">
+
+                              <span className="sb-time-icon">
+                                ⌖
+                              </span>
+
+                              <span className="sb-slot-time">
+                                {location}
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                          {/* =================================================
+                              PRICE
+
+                              Display pricing according to course type.
+                              ================================================= */}
+
+                          <div className="sb-slot-info-col">
+
+                            {/* EXPERIENCE */}
+
+                            {isExperience ? (
+                              <>
+
+                                {(
+                                  course?.withExperiencePrice ??
+                                  course?.sellingPrice
+                                ) !==
+                                  null &&
+                                (
+                                  course?.withExperiencePrice ??
+                                  course?.sellingPrice
+                                ) !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    With Experience{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course?.withExperiencePrice ??
+                                        course?.sellingPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                                {(
+                                  course?.withoutExperiencePrice ??
+                                  course?.sellingPrice
+                                ) !==
+                                  null &&
+                                (
+                                  course?.withoutExperiencePrice ??
+                                  course?.sellingPrice
+                                ) !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    Without Experience{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course?.withoutExperiencePrice ??
+                                        course?.sellingPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                                {course?.vocPrice !==
+                                  null &&
+                                course?.vocPrice !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    VOC{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course.vocPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                              </>
+                            ) : isSlbl ? (
+
+                              /* =================================================
+                                 SLBL
+                                 ================================================= */
+
+                              <>
+
+                                {course?.slblPrice !==
+                                  null &&
+                                course?.slblPrice !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    SL + BL{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course.slblPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                                {(
+                                  course?.slSinglePrice ??
+                                  course?.sellingPrice
+                                ) !==
+                                  null &&
+                                (
+                                  course?.slSinglePrice ??
+                                  course?.sellingPrice
+                                ) !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    SL or BL{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course?.slSinglePrice ??
+                                        course?.sellingPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                                {course?.vocPrice !==
+                                  null &&
+                                course?.vocPrice !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    VOC{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course.vocPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                              </>
+
+                            ) : (
+
+                              /* =================================================
+                                 STANDARD
+                                 ================================================= */
+
+                              <>
+
+                                {course?.sellingPrice !==
+                                  null &&
+                                course?.sellingPrice !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    Standard{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course.sellingPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                                {course?.vocPrice !==
+                                  null &&
+                                course?.vocPrice !==
+                                  undefined && (
+                                  <span className="sb-slot-price">
+                                    VOC{" "}
+                                    <strong>
+                                      {formatPrice(
+                                        course.vocPrice
+                                      )}
+                                    </strong>
+                                  </span>
+                                )}
+
+                              </>
+
+                            )}
+
+                          </div>
+
+                          {/* =================================================
+                              REFERRAL
+                              ================================================= */}
+
+                          {firstSession?.referralCode && (
+                            <div className="sb-referral-col">
+
+                              <span className="sb-referral-label">
+                                Referral
+                              </span>
+
+                              <span className="sb-referral-code">
+                                {
+                                  firstSession.referralCode
+                                }
+                              </span>
+
+                            </div>
+                          )}
+
+                          {/* =================================================
+                              BOOK NOW
+                              ================================================= */}
+
+                          <div className="sb-slot-cta-col">
+
+                            <button
+                              type="button"
+                              className="sb-book-btn"
+                              onClick={(e) =>
+                                handleBookNowClick(
+                                  e,
+                                  group
+                                )
+                              }
+                            >
+                              Book Now
+
+                              <span className="sb-book-arrow">
+                                →
+                              </span>
+
+                            </button>
+
+                          </div>
+
+                        </div>
+
+                      );
+                    }
+                  )}
+
+                </div>
+
+              ) : (
+
+                /* =================================================
+                   NO COURSE FOR SELECTED DATE
+                   ================================================= */
+
+                <div className="sb-prompt-card">
+
+                  <div className="sb-prompt-icon">
+                    ◷
+                  </div>
+
+                  <h3>
+                    No Available Courses
+                  </h3>
+
+                  <p>
+                    There are currently no
+                    available courses for
+                    this date.
+                  </p>
+
+                </div>
+
+              )
 
             ) : (
 
               /* =================================================
-                 NO SLOTS
+                 NO DATE SELECTED
                  ================================================= */
 
               <div className="sb-prompt-card">
@@ -997,19 +1312,55 @@ function SessionsBar() {
                 </div>
 
                 <h3>
-                  No Available Slots
+                  Select a Date
                 </h3>
 
                 <p>
-                  {selectedCourse !==
-                  "ALL"
-                    ? `There are currently no available sessions for ${selectedCourse}.`
-                    : "There are currently no available sessions."}
+                  Select an available date
+                  from the calendar to view
+                  the courses available on
+                  that day.
                 </p>
 
               </div>
 
             )}
+
+            {/* =================================================
+                VIEW ALL
+
+                IMPORTANT:
+                Button is outside the cards so it does not
+                change position when courses are rendered.
+                ================================================= */}
+
+            {selectedDateKey &&
+              groupedDateCourses.length > 2 && (
+
+                <button
+                  type="button"
+                  className="sb-book-btn"
+                  onClick={() =>
+                    setShowAll(
+                      (prev) => !prev
+                    )
+                  }
+                  style={{
+                    alignSelf: "center",
+                    marginTop: "4px",
+                  }}
+                >
+                  {showAll
+                    ? "Show Less"
+                    : `View All (${groupedDateCourses.length})`}
+
+                  <span className="sb-book-arrow">
+                    {showAll ? "⌃" : "⌄"}
+                  </span>
+
+                </button>
+
+              )}
 
           </main>
 
@@ -1018,23 +1369,37 @@ function SessionsBar() {
       </div>
 
       {/* =================================================
-          BOOKING MODAL — rendered once, outside the list,
-          bound to whichever slot was actually clicked.
+          BOOKING MODAL
+
+          Rendered only once.
           ================================================= */}
 
-      {showModal && selectedBookingSlot && (
-        
-        <BookingModal
-          course={selectedBookingSlot.course}
-          onClose={() => {
-            setShowModal(false);
-            setSelectedOptionId(null);
-            setSelectedBookingSlot(null);
-          }}
-          initialSelection={selectedOptionId}
-          extraQueryParams={fromPortal ? "fromPortal=true" : ""}
-        />
-      )}
+      {showModal &&
+        selectedBookingSlot && (
+
+          <BookingModal
+            course={
+              selectedBookingSlot.course
+            }
+
+            onClose={() => {
+              setShowModal(false);
+              setSelectedOptionId(null);
+              setSelectedBookingSlot(null);
+            }}
+
+            initialSelection={
+              selectedOptionId
+            }
+
+            extraQueryParams={
+              fromPortal
+                ? "fromPortal=true"
+                : ""
+            }
+          />
+
+        )}
 
     </section>
   );

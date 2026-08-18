@@ -1406,3 +1406,567 @@
     }
 
 }
+
+/* =========================================================
+   LOCATION + PRICE COLUMN
+   ========================================================= */
+
+.sb-slot-info-col {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 7px;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   LOCATION
+   ========================================================= */
+
+.sb-slot-tag {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    max-width: 180px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+}
+
+
+.sb-location-icon {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 18px;
+
+    height: 18px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #fff7ed;
+
+    color: #f5a623;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PRICE
+   ========================================================= */
+
+.sb-slot-price {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    width: 100%;
+
+    min-width: 145px;
+
+    padding: 6px 9px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 7px;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.sb-slot-price:hover {
+    background: #fffaf2;
+
+    border-color: rgba(245, 166, 35, 0.45);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PRICE AMOUNT
+   ========================================================= */
+
+.sb-slot-price strong {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    min-width: 48px;
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    background: #fff7ed;
+
+    color: #d97706;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.01em;
+}
+
+
+/* =========================================================
+   PRICE TYPE COLORS
+   ========================================================= */
+
+.sb-slot-price:nth-child(1) strong {
+    background: #fff7ed;
+
+    color: #d97706;
+}
+
+
+.sb-slot-price:nth-child(2) strong {
+    background: #f0fdf4;
+
+    color: #059669;
+}
+
+
+.sb-slot-price:nth-child(3) strong {
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   COURSE MAIN COLUMN
+   ========================================================= */
+
+.sb-slot-main-col {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+/* =========================================================
+   COURSE TITLE
+   ========================================================= */
+
+.sb-slot-course-title-main {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: normal;
+
+    color: #172f14;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    letter-spacing: -0.015em;
+}
+
+
+/* =========================================================
+   COURSE CODE
+   ========================================================= */
+
+.sb-slot-course-code {
+    flex-shrink: 0;
+
+    padding: 3px 7px;
+
+    border-radius: 5px;
+
+    background: #f1f5f9;
+
+    border: 1px solid #e2e8f0;
+
+    color: #64748b;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   LOCATION ROW
+   ========================================================= */
+
+.sb-slot-time-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #64748b;
+}
+
+
+.sb-time-icon {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #f8fafc;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+}
+
+
+.sb-slot-time {
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   BOOK BUTTON
+   ========================================================= */
+
+.sb-book-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    min-width: 92px;
+
+    padding: 9px 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5a623,
+            #f59e0b
+        );
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 4px 10px
+        rgba(245, 166, 35, 0.20);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.sb-book-btn:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #d97706
+        );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 14px
+        rgba(245, 166, 35, 0.28);
+}
+
+
+.sb-book-arrow {
+    font-size: 12px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.sb-book-btn:hover .sb-book-arrow {
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   DATE BADGE
+   ========================================================= */
+
+.sb-slot-date {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 62px;
+
+    padding: 8px 9px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #fffbeb
+        );
+
+    border: 1px solid #fed7aa;
+
+    color: #172f14;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.sb-slot-card {
+    display: grid;
+
+    grid-template-columns:
+        72px
+        minmax(220px, 1fr)
+        minmax(170px, 0.75fr)
+        minmax(90px, 0.45fr)
+        auto;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    cursor: default;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.sb-slot-card:hover {
+    border-color:
+        rgba(245, 166, 35, 0.45);
+
+    background: #fffefa;
+
+    box-shadow:
+        0 8px 22px
+        rgba(15, 23, 42, 0.07);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MOBILE PRICE
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .sb-slot-info-col {
+        display: flex;
+
+        grid-column: 2;
+
+        width: 100%;
+
+        flex-direction: row;
+
+        flex-wrap: wrap;
+
+        align-items: center;
+    }
+
+
+    .sb-slot-price {
+        width: auto;
+
+        min-width: 135px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .sb-slot-info-col {
+        grid-column: 2;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 5px;
+    }
+
+
+    .sb-slot-price {
+        width: 100%;
+
+        min-width: 0;
+
+        padding: 6px 8px;
+    }
+
+
+    .sb-slot-card {
+        grid-template-columns:
+            58px minmax(0, 1fr);
+
+        gap: 10px;
+
+        padding: 12px;
+    }
+
+
+    .sb-slot-date-col {
+        grid-row: span 3;
+
+        align-self: start;
+    }
+
+
+    .sb-slot-course-title-main {
+        font-size: 13px;
+    }
+
+
+    .sb-slot-cta-col {
+        grid-column: 2;
+
+        justify-content: flex-start;
+
+        width: 100%;
+    }
+
+
+    .sb-book-btn {
+        min-width: 100px;
+
+        padding: 8px 12px;
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .sb-slot-price {
+        font-size: 8px;
+    }
+
+
+    .sb-slot-price strong {
+        font-size: 10px;
+
+        min-width: 45px;
+    }
+
+}

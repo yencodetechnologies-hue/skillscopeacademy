@@ -2666,3 +2666,280 @@
   }
 }
 
+/* =========================================
+   SMALL COURSE CARD
+========================================= */
+
+.mlp-session-course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mlp-scard {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e7ebf0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(10, 30, 63, 0.05);
+      flex-shrink: 0;
+}
+
+.mlp-scard-body {
+  padding: 12px 13px;
+}
+
+/* Course title */
+
+.mlp-scard-title {
+  margin: 0 0 8px;
+
+  color: #0a1e3f;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =========================================
+   LOCATION + SEATS
+========================================= */
+
+.mlp-scard-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  margin-bottom: 9px;
+}
+
+.mlp-scard-location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 500;
+
+  min-width: 0;
+}
+
+.mlp-scard-location svg {
+  color: #f5a623;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.mlp-scard-seats {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #059669;
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.mlp-scard-seats.low {
+  color: #ea580c;
+}
+
+.mlp-seat-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.mlp-scard-seats.low .mlp-seat-dot {
+  background: #f5a623;
+}
+
+/* =========================================
+   PRICE SECTION
+========================================= */
+
+.mlp-scard-pricing {
+  padding-top: 8px;
+  border-top: 1px solid #eef1f4;
+}
+
+.mlp-scard-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 23px;
+}
+
+.mlp-scard-price-label {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.mlp-scard-price-values {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mlp-scard-price-original {
+  color: #94a3b8;
+  font-size: 10px;
+  text-decoration: line-through;
+}
+
+.mlp-scard-price-amount {
+  color: #0a1e3f;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* VOC */
+
+.mlp-voc-row {
+  margin-top: 2px;
+}
+
+.mlp-voc-row .mlp-scard-price-label {
+  color: #f5a623;
+  font-weight: 700;
+}
+
+.mlp-voc-row .mlp-scard-price-amount {
+  color: #f5a623;
+  font-weight: 800;
+}
+
+/* =========================================
+   BOOK BUTTON
+========================================= */
+
+.mlp-scard-book-btn {
+  width: 70%;
+
+  border: 0;
+  border-radius: 8px;
+  float: inline-end;
+
+  /* background: #0a1e3f; */
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.mlp-scard-book-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+  .mlp-scard-body {
+    padding: 10px 11px;
+  }
+
+  .mlp-scard-title {
+    font-size: 13px;
+  }
+
+  /* .mlp-scard-book-btn {
+    height: 34px;
+  } */
+
+
+}
+
+.mlp-scard-meta-item{
+font-size: 10px;
+}
+.mlp-scard-meta{display: flex;width:100%;}
+.book-now-sec{width: 30%;}
+.inline{width:70%;}
+.mlp-session-section-header{display: flex;gap:60px;}
+.mlp-view-all-btn{float:inline-end}
+/* =========================================
+   COURSE SESSION LIST
+========================================= */
+
+.mlp-session-course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /*
+   * IMPORTANT:
+   * Normal state has NO fixed height.
+   * Only 2 courses are rendered by JSX.
+   */
+  width: 100%;
+  overflow: hidden;
+}
+
+
+/* =========================================
+   EXPANDED / VIEW ALL STATE
+========================================= */
+
+.mlp-session-course-list.mlp-course-list-expanded {
+  height: 300px;
+
+  max-height: 300px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 5px;
+
+  box-sizing: border-box;
+
+  /*
+   * Prevent browser from changing
+   * the container size.
+   */
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+.mlp-session-course-list.mlp-course-list-expanded::-webkit-scrollbar {
+  width: 0px;
+}
+
+.mlp-session-course-list.mlp-course-list-expanded::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.mlp-session-course-list.mlp-course-list-expanded::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+}
+
+.mlp-session-course-list.mlp-course-list-expanded::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+
+/* =========================================
+   COURSE CARD
+========================================= */
+

@@ -89,7 +89,7 @@
 }
 
 /* ── Filter Strip ── */
-.vac-filter-strip {
+/* .vac-filter-strip {
   padding: 6px 16px 12px;
   display: flex;
   gap: 10px;
@@ -141,7 +141,7 @@
 
 .vac-filter-btn:active {
   transform: scale(0.97);
-}
+} */
 
 /* ── Count & Sort Bar ── */
 .vac-meta-bar {
@@ -485,5 +485,251 @@
 @media (min-width: 769px) {
   .vac-root {
     display: none;
+  }
+}
+
+/* =========================================
+   CATEGORY SECTION
+========================================= */
+
+.vac-category-section {
+  width: 100%;
+  margin: 12px 0 20px;
+}
+
+.vac-category-title {
+  margin-bottom: 8px;
+  padding-left: 4px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #0a1e3f;
+}
+
+
+/* =========================================
+   VERTICAL CATEGORY LIST
+========================================= */
+
+.vac-filter-strip {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  width: 100%;
+
+  max-height: 190px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 2px 4px 6px;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: #d5dce6 transparent;
+}
+
+.vac-filter-strip::-webkit-scrollbar {
+  width: 4px;
+}
+
+.vac-filter-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.vac-filter-strip::-webkit-scrollbar-thumb {
+  background: #d5dce6;
+  border-radius: 10px;
+}
+
+
+/* =========================================
+   CATEGORY BUTTON
+========================================= */
+
+.vac-filter-btn {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 38px;
+
+  padding: 5px 10px;
+
+  border: 1px solid #e5e9ef;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #31445f;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.vac-filter-icon {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  margin-right: 9px;
+
+  border-radius: 7px;
+
+  background: #f5f7fa;
+
+  color: #637894;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+
+.vac-filter-text {
+  flex: 1;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   ACTIVE
+========================================= */
+
+.vac-filter-btn.active {
+  background: #0a1e3f;
+
+  border-color: #0a1e3f;
+
+  color: #ffffff;
+
+  box-shadow: 0 3px 10px rgba(10, 30, 63, 0.16);
+}
+
+.vac-filter-btn.active .vac-filter-icon {
+  background: rgba(245, 166, 35, 0.16);
+
+  color: #f5a623;
+}
+
+
+/* =========================================
+   CHECK
+========================================= */
+
+.vac-filter-check {
+  width: 21px;
+  height: 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #f5a623;
+
+  color: #0a1e3f;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+
+/* =========================================
+   CLICK
+========================================= */
+
+.vac-filter-btn:active {
+  transform: scale(0.985);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .vac-category-section {
+    margin: 10px 0 18px;
+  }
+
+  .vac-category-title {
+    font-size: 12px;
+    margin-bottom: 7px;
+  }
+
+  .vac-filter-strip {
+    max-height: 180px;
+
+    gap: 4px;
+
+    padding: 2px 3px 5px;
+  }
+
+  .vac-filter-btn {
+    min-height: 35px;
+
+    padding: 4px 8px;
+
+    border-radius: 8px;
+
+    font-size: 11.5px;
+  }
+
+  .vac-filter-icon {
+    width: 25px;
+    height: 25px;
+
+    margin-right: 8px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+  }
+
+  .vac-filter-check {
+    width: 19px;
+    height: 19px;
+
+    font-size: 10px;
   }
 }

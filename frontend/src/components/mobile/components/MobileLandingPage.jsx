@@ -125,7 +125,8 @@ export default function MobileLandingPage({ courses = [] }) {
   const [selectedBookingSlot, setSelectedBookingSlot] = useState(null);
 
   // course-first selection flow
-  const [selectedCourseId, setSelectedCourseId] = useState("");
+  // Defaults to "all" so the calendar is populated across every course as soon as the page loads.
+  const [selectedCourseId, setSelectedCourseId] = useState("all");
   const [selectedDateKey, setSelectedDateKey] = useState("");
   const [selectedSessionId, setSelectedSessionId] = useState("");
   const [calendarMonth, setCalendarMonth] = useState(new Date());
@@ -313,6 +314,7 @@ export default function MobileLandingPage({ courses = [] }) {
   const currentSlide = filteredHeroSlides[slide] ?? filteredHeroSlides[0];
   const currentCourseId = currentSlide?.id;
 
+  // Courses that actually have at least one session — used to populate the dropdown.
   const coursesWithSessions = useMemo(() => {
     return heroSlides
       .filter((hs) => (sessionMap[hs.id] || []).length > 0)
@@ -323,10 +325,30 @@ export default function MobileLandingPage({ courses = [] }) {
       }));
   }, [heroSlides, sessionMap]);
 
+  // Declared after coursesWithSessions so it isn't read before initialization.
+  const courseOptions = useMemo(() => {
+    return [
+      {
+        value: "all",
+        label: "All Courses",
+      },
+      ...coursesWithSessions.map((c) => ({
+        value: c.id,
+        label: c.courseCode ? `${c.courseCode} — ${c.title}` : c.title,
+      })),
+    ];
+  }, [coursesWithSessions]);
+
+  // Sessions for the currently selected course — or every course's sessions
+  // flattened together when "All Courses" is selected, so the calendar has
+  // dates highlighted as soon as the page loads.
   const allAvailableSessions = useMemo(() => {
-    if (!selectedCourseId) return [];
-    const courseSessions = sessionMap[selectedCourseId] || [];
-    return courseSessions
+    const list =
+      !selectedCourseId || selectedCourseId === "all"
+        ? Object.values(sessionMap).flat()
+        : sessionMap[selectedCourseId] || [];
+
+    return list
       .filter((session) => session?.dateKey)
       .sort((a, b) => {
         const dateCompare = a.dateKey.localeCompare(b.dateKey);
@@ -383,10 +405,36 @@ export default function MobileLandingPage({ courses = [] }) {
   }, [availableTimeSlots, selectedSessionId]);
 
   const handleCourseSelect = (courseId) => {
-    setSelectedCourseId(courseId);
+    const newCourseId = courseId || "all";
+
+    setSelectedCourseId(newCourseId);
+
+    // Important:
+    // Do NOT select a date automatically.
     setSelectedDateKey("");
+
+    // Reset time/session
     setSelectedSessionId("");
-    setCalendarMonth(new Date());
+
+    // Get sessions for selected course (or all courses) straight from sessionMap.
+    const courseSessions =
+      newCourseId === "all"
+        ? Object.values(sessionMap).flat()
+        : sessionMap[newCourseId] || [];
+
+    // Find first available date ONLY to move the calendar to the correct month.
+    const dates = [
+      ...new Set(
+        courseSessions
+          .filter((session) => session.dateKey)
+          .map((session) => session.dateKey),
+      ),
+    ].sort();
+
+    if (dates.length > 0) {
+      const [year, month] = dates[0].split("-").map(Number);
+      setCalendarMonth(new Date(year, month - 1, 1));
+    }
   };
 
   const handleDateSelect = (dateKey) => {
@@ -485,10 +533,8 @@ export default function MobileLandingPage({ courses = [] }) {
             .filter(Boolean)
             .join(" ")}
           onClick={() => {
+            // Calendar stays open per the intended flow — no DOM class toggling here.
             handleDateSelect(dateKey);
-            document
-              .getElementById("mlp-session-calendar")
-              ?.classList.remove("open");
           }}
         >
           <span>{day}</span>
@@ -578,15 +624,6 @@ export default function MobileLandingPage({ courses = [] }) {
         ))}
 
         <div className="mlp-carousel-controls">
-          {/* <div className="mlp-dots">
-            {filteredHeroSlides.map((_, i) => (
-              <div
-                key={i}
-                className={`mlp-dot ${i === slide? "active" : ""}`}
-                onClick={(e) => { e.stopPropagation(); goSlide(i); }}
-              />
-            ))}
-          </div> */}
           <div className="mlp-cbtn-group">
             <button
               type="button"
@@ -614,10 +651,6 @@ export default function MobileLandingPage({ courses = [] }) {
         </div>
 
         <div className="mlp-slide-actions">
-          {/* <button type="button" className="mlp-btn-primary" onClick={(e) => { e.stopPropagation(); const currentSlug = filteredHeroSlides[slide]?.slug; navigate(currentSlug? `/book-now/course/${currentSlug}` : "/book-now"); }}>
-            <i className="fa-regular fa-calendar-days"></i> Book Now
-          </button> */}
-
           <button
             type="button"
             className="mlp-btn-primary"
@@ -659,7 +692,9 @@ export default function MobileLandingPage({ courses = [] }) {
 
       {/* Available Sessions */}
       <div className="mlp-divider" />
+
       <div className="mlp-section mlp-sessions-section">
+        {/* SECTION HEADER */}
         <div className="mlp-section-header">
           <div>
             <div className="mlp-section-label">Don't miss out</div>
@@ -667,14 +702,18 @@ export default function MobileLandingPage({ courses = [] }) {
           </div>
         </div>
 
+        {/* LOADING */}
         {loadingSessions ? (
           <div className="mlp-session-loading">
             Loading available sessions...
           </div>
         ) : coursesWithSessions.length === 0 ? (
-          <div className="mlp-no-sessions">No upcoming sessions available.</div>
+          <div className="mlp-no-sessions">
+            No upcoming sessions available.
+          </div>
         ) : (
           <div className="mlp-availability-wrapper">
+            {/* COURSE SELECTOR */}
             <div className="mlp-course-selector">
               <label className="mlp-field-label">Select Course</label>
 
@@ -683,28 +722,17 @@ export default function MobileLandingPage({ courses = [] }) {
                   className="mlp-course-select"
                   classNamePrefix="mlp"
                   value={
-                    coursesWithSessions
-                      .map((c) => ({
-                        value: c.id,
-                        label: c.courseCode
-                          ? `${c.courseCode} — ${c.title}`
-                          : c.title,
-                      }))
-                      .find((option) => option.value === selectedCourseId) ||
-                    null
+                    courseOptions.find(
+                      (option) => option.value === selectedCourseId,
+                    ) || courseOptions[0]
                   }
                   onChange={(selectedOption) => {
-                    handleCourseSelect(selectedOption?.value || "");
+                    handleCourseSelect(selectedOption?.value || "all");
                   }}
-                  options={coursesWithSessions.map((c) => ({
-                    value: c.id,
-                    label: c.courseCode
-                      ? `${c.courseCode} — ${c.title}`
-                      : c.title,
-                  }))}
-                  placeholder="Choose a course"
+                  options={courseOptions}
+                  placeholder="Select Course"
                   isSearchable
-                  isClearable
+                  isClearable={false}
                   styles={{
                     control: (base) => ({
                       ...base,
@@ -714,239 +742,251 @@ export default function MobileLandingPage({ courses = [] }) {
                       backgroundColor: "transparent",
                       minHeight: "48px",
                       borderRadius: "10px",
-                      fontSize: "16px",
                     }),
-
                     valueContainer: (base) => ({
                       ...base,
                       paddingLeft: "12px",
-                      fontSize: "16px",
                     }),
-
-                    singleValue: (base) => ({
-                      ...base,
-                      fontSize: "16px",
-                    }),
-
-                    placeholder: (base) => ({
-                      ...base,
-                      fontSize: "16px",
-                    }),
-
-                    input: (base) => ({
-                      ...base,
-                      fontSize: "16px",
-                    }),
-
-                    option: (base) => ({
-                      ...base,
-                      fontSize: "16px",
-                    }),
-
                     indicatorSeparator: () => ({
                       display: "none",
                     }),
-
                     dropdownIndicator: (base) => ({
                       ...base,
                       color: "#999",
                     }),
-
                     menu: (base) => ({
                       ...base,
                       border: "none",
                       boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                      zIndex: 9999,
+                    }),
+                    option: (base, state) => ({
+                      ...base,
+                      backgroundColor: state.isSelected
+                        ? "#0a1e3f"
+                        : state.isFocused
+                        ? "#f5f7fa"
+                        : "#fff",
+                      color: state.isSelected ? "#fff" : "#1f2937",
+                      cursor: "pointer",
+                      padding: "11px 14px",
                     }),
                   }}
                 />
               </div>
             </div>
 
-            {selectedCourseId && (
-              <>
-                <div className="mlp-date-selector">
-                  <label className="mlp-field-label">Select Date</label>
-                  <div className="mlp-date-input-wrapper">
-                    <span className="mlp-date-calendar-icon">📅</span>
-                    <input
-                      type="text"
-                      readOnly
-                      value={
-                        selectedDateKey
-                          ? formatSelectedDate(selectedDateKey)
-                          : ""
-                      }
-                      placeholder="Choose a date"
-                      className="mlp-date-input"
-                      onClick={() =>
-                        document
-                          .getElementById("mlp-session-calendar")
-                          ?.classList.toggle("open")
-                      }
-                    />
-                    <span className="mlp-date-chevron">▾</span>
-                  </div>
+            {/* DATE SELECTOR — always displayed */}
+            <div className="mlp-date-selector">
+              <label className="mlp-field-label">Select Date</label>
 
-                  <div
-                    id="mlp-session-calendar"
-                    className="mlp-session-calendar"
+              <div className="mlp-date-input-wrapper">
+                <span className="mlp-date-calendar-icon">📅</span>
+                <input
+                  type="text"
+                  readOnly
+                  value={
+                    selectedDateKey ? formatSelectedDate(selectedDateKey) : ""
+                  }
+                  placeholder="Choose a date"
+                  className="mlp-date-input"
+                />
+                <span className="mlp-date-chevron">▾</span>
+              </div>
+
+              {/* CALENDAR — always open */}
+              <div
+                id="mlp-session-calendar"
+                className="mlp-session-calendar open"
+              >
+                <div className="mlp-calendar-header">
+                  <button
+                    type="button"
+                    onClick={() => changeCalendarMonth(-1)}
+                    aria-label="Previous month"
                   >
-                    <div className="mlp-calendar-header">
-                      <button
-                        type="button"
-                        onClick={() => changeCalendarMonth(-1)}
-                      >
-                        ‹
-                      </button>
-                      <strong>
-                        {calendarMonth.toLocaleDateString("en-AU", {
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </strong>
-                      <button
-                        type="button"
-                        onClick={() => changeCalendarMonth(1)}
-                      >
-                        ›
-                      </button>
-                    </div>
-                    <div className="mlp-calendar-weekdays">
-                      {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-                        (d) => (
-                          <span key={d}>{d}</span>
-                        ),
-                      )}
-                    </div>
-                    <div id="mlp-calendar-grid" className="mlp-calendar-grid">
-                      {renderCalendar()}
-                    </div>
-                    <div className="mlp-calendar-legend">
-                      <span>
-                        <i />
-                        Available dates
-                      </span>
-                    </div>
-                  </div>
+                    ‹
+                  </button>
+
+                  <strong>
+                    {calendarMonth.toLocaleDateString("en-AU", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </strong>
+
+                  <button
+                    type="button"
+                    onClick={() => changeCalendarMonth(1)}
+                    aria-label="Next month"
+                  >
+                    ›
+                  </button>
                 </div>
 
-                {selectedDateKey && availableTimeSlots.length > 0 && (
-                  <div className="mlp-time-section">
-                    <div className="mlp-field-label">Choose Time</div>
-                    <div className="mlp-time-slots">
-                      {availableTimeSlots.map((slot) => {
-                        const isSelected = selectedSessionId === slot.key;
-                        return (
-                          <button
-                            type="button"
-                            key={slot.key}
-                            className={[
-                              "mlp-time-slot",
-                              isSelected ? "selected" : "",
-                            ]
-                              .filter(Boolean)
-                              .join(" ")}
-                            onClick={() => setSelectedSessionId(slot.key)}
-                          >
-                            <span className="mlp-time-icon">🕐</span>
-                            <span>{slot.time || "Time available"}</span>
-                            {isSelected && (
-                              <span className="mlp-time-check">✓</span>
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
+                <div className="mlp-calendar-weekdays">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                    (day) => (
+                      <span key={day}>{day}</span>
+                    ),
+                  )}
+                </div>
 
-                {selectedSessionId && (
-                  <div className="mlp-course-session-section">
-                    <div className="mlp-session-course-list">
-                      {selectedTimeCourses.map((session) => {
-                        const low = isLow(session.availableSlots);
-                        return (
-                          <div key={session.id} className="mlp-session-card">
-                            <div className="mlp-card-header">
-                              <h4 className="mlp-card-title">
-                                {session.courseName}
-                              </h4>
-                              <button
-                                type="button"
-                                className="mlp-book-now-btn"
-                                onClick={() => handleBookNowClick(session)}
-                              >
-                                Book Now
-                              </button>
-                            </div>
-                            <div className="mlp-card-meta">
-                              <div className="mlp-meta-items">
-                                {session.date && (
-                                  <span className="mlp-meta-item">
-                                    <span className="mlp-icon">📅</span>
-                                    {new Date(session.date).toLocaleDateString(
-                                      "en-AU",
-                                      {
-                                        day: "2-digit",
-                                        month: "short",
-                                        year: "numeric",
-                                      },
-                                    )}
-                                  </span>
-                                )}
-                                <span className="mlp-meta-divider">|</span>
-                                {session.location && (
+                <div id="mlp-calendar-grid" className="mlp-calendar-grid">
+                  {renderCalendar()}
+                </div>
+
+                <div className="mlp-calendar-legend">
+                  <span>
+                    <i />
+                    Available dates
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* TIME SLOTS — only after a date is selected */}
+            {selectedDateKey && availableTimeSlots.length > 0 && (
+              <div className="mlp-time-section">
+                <div className="mlp-field-label">Choose Time</div>
+
+                <div className="mlp-time-slots">
+                  {availableTimeSlots.map((slot) => {
+                    const isSelected = selectedSessionId === slot.key;
+
+                    return (
+                      <button
+                        type="button"
+                        key={slot.key}
+                        className={[
+                          "mlp-time-slot",
+                          isSelected ? "selected" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                        onClick={() => {
+                          setSelectedSessionId(slot.key);
+                        }}
+                      >
+                        <span className="mlp-time-icon">🕐</span>
+                        <span>{slot.time || "Time available"}</span>
+                        {isSelected && (
+                          <span className="mlp-time-check">✓</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* NO TIME SLOTS — only after a date is picked and none exist */}
+            {selectedDateKey && availableTimeSlots.length === 0 && (
+              <div className="mlp-select-date-message">
+                No time slots are available for this date.
+              </div>
+            )}
+
+            {/* SESSION CARDS — only after a time is selected */}
+            {selectedSessionId && (
+              <div className="mlp-course-session-section">
+                <div className="mlp-session-course-list">
+                  {selectedTimeCourses.length === 0 ? (
+                    <div className="mlp-no-sessions">
+                      No sessions available.
+                    </div>
+                  ) : (
+                    selectedTimeCourses.map((session) => {
+                      const low = isLow(session.availableSlots);
+
+                      return (
+                        <div key={session.id} className="mlp-session-card">
+                          <div className="mlp-card-header">
+                            <h4 className="mlp-card-title">
+                              {session.courseName}
+                            </h4>
+
+                            <button
+                              type="button"
+                              className="mlp-book-now-btn"
+                              onClick={() => handleBookNowClick(session)}
+                            >
+                              Book Now
+                            </button>
+                          </div>
+
+                          <div className="mlp-card-meta">
+                            <div className="mlp-meta-items">
+                              {session.date && (
+                                <span className="mlp-meta-item">
+                                  <span className="mlp-icon">📅</span>
+                                  {new Date(session.date).toLocaleDateString(
+                                    "en-AU",
+                                    {
+                                      day: "2-digit",
+                                      month: "short",
+                                      year: "numeric",
+                                    },
+                                  )}
+                                </span>
+                              )}
+
+                              {session.location && (
+                                <>
+                                  <span className="mlp-meta-divider">|</span>
                                   <span className="mlp-meta-item">
                                     <span className="mlp-icon">📍</span>
                                     {session.location}
                                   </span>
-                                )}
-                                {session.duration && (
-                                  <>
-                                    <span className="mlp-meta-divider">|</span>
-                                    <span className="mlp-meta-item">
-                                      <span className="mlp-icon">⏳</span>
-                                      {session.duration}
-                                    </span>
-                                  </>
-                                )}
-                              </div>
-                              {session.priceDisplay &&
-                                session.priceDisplay !== "Enquire" && (
-                                  <div className="mlp-card-price">
-                                    {session.priceDisplay}
-                                  </div>
-                                )}
-                            </div>
-                            <div className="mlp-card-footer">
-                              <span className="mlp-availability-text">
-                                {low ? "Filling Fast" : "Seats Available"}
-                              </span>
-                              {session.availableSlots !== undefined && (
-                                <span
-                                  className={`mlp-seats-badge ${low ? "low" : ""}`}
-                                >
-                                  {session.availableSlots} Seats Left
-                                </span>
+                                </>
+                              )}
+
+                              {session.duration && (
+                                <>
+                                  <span className="mlp-meta-divider">|</span>
+                                  <span className="mlp-meta-item">
+                                    <span className="mlp-icon">⏳</span>
+                                    {session.duration}
+                                  </span>
+                                </>
                               )}
                             </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
 
-                {!selectedDateKey && (
-                  <div className="mlp-select-date-message">
-                    Select a highlighted date to view available time slots.
-                  </div>
-                )}
-              </>
+                            {session.priceDisplay &&
+                              session.priceDisplay !== "Enquire" && (
+                                <div className="mlp-card-price">
+                                  {session.priceDisplay}
+                                </div>
+                              )}
+                          </div>
+
+                          <div className="mlp-card-footer">
+                            <span className="mlp-availability-text">
+                              {low ? "Filling Fast" : "Seats Available"}
+                            </span>
+
+                            {session.availableSlots !== undefined && (
+                              <span
+                                className={`mlp-seats-badge ${
+                                  low ? "low" : ""
+                                }`}
+                              >
+                                {session.availableSlots} Seats Left
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
             )}
-            {!selectedCourseId && (
+
+            {/* INITIAL MESSAGE — calendar open, no date selected yet */}
+            {!selectedDateKey && (
               <div className="mlp-select-date-message">
-                Select a course above to see its available dates.
+                Select a highlighted date to view available time slots.
               </div>
             )}
           </div>

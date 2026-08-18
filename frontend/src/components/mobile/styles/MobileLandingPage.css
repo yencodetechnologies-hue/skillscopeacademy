@@ -2061,9 +2061,9 @@
   cursor: pointer;
 }
 
-.mlp-calendar-day.has-session:hover {
+/* .mlp-calendar-day.has-session:hover {
   background: rgba(245, 166, 35, 0.12);
-}
+} */
 
 .mlp-calendar-day.today {
   box-shadow: inset 0 0 0 1px #10b981;
@@ -2622,29 +2622,29 @@
 
 /* Native input */
 .mlp-date-input {
-  font-size: 16px !important;
+  font-size: 11px !important;
   line-height: 1.4;
 }
 
 /* React Select */
 .mlp-course-select {
-  font-size: 16px !important;
+  font-size: 11px !important;
 }
 
 .mlp-course-select .mlp__control {
-  font-size: 16px !important;
+  font-size: 11px !important;
 }
 
 .mlp-course-select .mlp__single-value,
 .mlp-course-select .mlp__placeholder,
 .mlp-course-select .mlp__input-container,
 .mlp-course-select .mlp__option {
-  font-size: 16px !important;
+  font-size: 11px !important;
 }
 
 /* React-select actual input */
 .mlp-course-select input {
-  font-size: 16px !important;
+  font-size: 11px !important;
 }
 
 /* iPhone/iPad specifically */
@@ -2652,16 +2652,16 @@
   input,
   select,
   textarea {
-    font-size: 16px !important;
+    font-size: 11px !important;
   }
 
   .mlp-date-input {
-    font-size: 16px !important;
+    font-size: 11px !important;
   }
 
   .mlp-course-select,
   .mlp-course-select * {
-    font-size: 16px !important;
+    font-size: 11px !important;
   }
 }
 

@@ -1,15 +1,32 @@
-import React, { useState, useMemo } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+} from "react";
+
 import { colors } from "../../../constants/theme";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+
 import MobileNavbar from "../../MobileNavbar";
 import "../styles/ViewAllCoursesMobile.css";
+
 import {
   getCoursePriceDisplay,
   getCourseOriginalDisplay,
   getCourseSavingDisplay,
 } from "../../../utils/coursePrice";
+
 import BookingModal from "../../course/BookingModal";
 import { ORG_PHONE_1300 } from "../../../utils/organizationPhones";
+
+
+// ============================================================================
+// PREFERRED CATEGORY ORDER
+// ============================================================================
 
 const PREFERRED_ORDER = [
   "Combo Courses",
@@ -23,9 +40,17 @@ const PREFERRED_ORDER = [
   "High Risk Work",
 ];
 
-// ── Fallback Category Icon Generator ─────────────────────────────────────────
+
+// ============================================================================
+// CATEGORY ICON
+// ============================================================================
+
 function CategoryIcon({ category }) {
   const catLower = (category || "").toLowerCase();
+
+  // --------------------------------------------------------------------------
+  // Combo
+  // --------------------------------------------------------------------------
 
   if (catLower.includes("combo")) {
     return (
@@ -44,6 +69,10 @@ function CategoryIcon({ category }) {
     );
   }
 
+  // --------------------------------------------------------------------------
+  // Short Courses
+  // --------------------------------------------------------------------------
+
   if (catLower.includes("short")) {
     return (
       <svg
@@ -59,6 +88,10 @@ function CategoryIcon({ category }) {
       </svg>
     );
   }
+
+  // --------------------------------------------------------------------------
+  // Confined / Height / First Aid
+  // --------------------------------------------------------------------------
 
   if (
     catLower.includes("confined") ||
@@ -80,6 +113,10 @@ function CategoryIcon({ category }) {
     );
   }
 
+  // --------------------------------------------------------------------------
+  // Traffic
+  // --------------------------------------------------------------------------
+
   if (catLower.includes("traffic")) {
     return (
       <svg
@@ -97,7 +134,10 @@ function CategoryIcon({ category }) {
     );
   }
 
-  // Grid Default Icon
+  // --------------------------------------------------------------------------
+  // Default Grid Icon
+  // --------------------------------------------------------------------------
+
   return (
     <svg
       viewBox="0 0 24 24"
@@ -107,13 +147,45 @@ function CategoryIcon({ category }) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect
+        x="3"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.5"
+      />
+
+      <rect
+        x="14"
+        y="3"
+        width="7"
+        height="7"
+        rx="1.5"
+      />
+
+      <rect
+        x="14"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.5"
+      />
+
+      <rect
+        x="3"
+        y="14"
+        width="7"
+        height="7"
+        rx="1.5"
+      />
     </svg>
   );
 }
+
+
+// ============================================================================
+// CATEGORY COLORS
+// ============================================================================
 
 const CATEGORY_COLORS = {
   "Short Courses": colors.navyDeep,
@@ -122,9 +194,18 @@ const CATEGORY_COLORS = {
   Combo: colors.navyMid,
 };
 
+
+// ============================================================================
+// GET CATEGORY COLOR
+// ============================================================================
+
 function getCategoryColor(category = "") {
   for (const [key, val] of Object.entries(CATEGORY_COLORS)) {
-    if (category.toLowerCase().includes(key.toLowerCase())) {
+    if (
+      category
+        .toLowerCase()
+        .includes(key.toLowerCase())
+    ) {
       return val;
     }
   }
@@ -145,36 +226,81 @@ function getCategoryColor(category = "") {
   return palette[hash % palette.length];
 }
 
+
+// ============================================================================
+// PRICE HELPERS
+// ============================================================================
+
 const getPriceDisplay = getCoursePriceDisplay;
 const getOrigPrice = getCourseOriginalDisplay;
 const getSaving = getCourseSavingDisplay;
 
-// ─────────────────────────────────────────────────────────────────────────────
 
-export default function ViewAllCoursesMobile({ courses = [] }) {
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+export default function ViewAllCoursesMobile({
+  courses = [],
+}) {
   const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // Search
-  // ─────────────────────────────────────────────────────────────────────────
+  // ==========================================================================
+  // CATEGORY REFERENCES
+  // ==========================================================================
 
-  const urlSearch = searchParams.get("search") || "";
+  // Stores each category button DOM element.
+  const categoryRefs = useRef({});
 
-  // IMPORTANT:
-  // All is selected by default
-  const [activeFilter, setActiveFilter] = useState("All");
+  // Stores the scrollable category container.
+  const categoryStripRef = useRef(null);
 
-  const [search, setSearch] = useState(urlSearch);
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [sortBy, setSortBy] = useState("Popular");
 
-  // ── Active courses only ───────────────────────────────────────────────────
-  const activeCourses = courses.filter(
-    (c) => c.status === "Active"
-  );
+  // ==========================================================================
+  // URL PARAMETERS
+  // ==========================================================================
 
-  // ── Unique categories for filter pills ────────────────────────────────────
+  const urlSearch =
+    searchParams.get("search") || "";
+
+  const urlCategory =
+    searchParams.get("category") || "";
+
+
+  // ==========================================================================
+  // STATE
+  // ==========================================================================
+
+  const [activeFilter, setActiveFilter] =
+    useState("All");
+
+  const [search, setSearch] =
+    useState(urlSearch);
+
+  const [selectedCourse, setSelectedCourse] =
+    useState(null);
+
+  const [sortBy, setSortBy] =
+    useState("Popular");
+
+
+  // ==========================================================================
+  // ACTIVE COURSES
+  // ==========================================================================
+
+  const activeCourses = useMemo(() => {
+    return courses.filter(
+      (c) => c.status === "Active"
+    );
+  }, [courses]);
+
+
+  // ==========================================================================
+  // UNIQUE CATEGORIES
+  // ==========================================================================
+
   const categories = useMemo(() => {
     const cats = [
       ...new Set(
@@ -185,10 +311,16 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
     ];
 
     const sorted = cats.sort((a, b) => {
-      const idxA = PREFERRED_ORDER.indexOf(a);
-      const idxB = PREFERRED_ORDER.indexOf(b);
+      const idxA =
+        PREFERRED_ORDER.indexOf(a);
 
-      if (idxA !== -1 && idxB !== -1) {
+      const idxB =
+        PREFERRED_ORDER.indexOf(b);
+
+      if (
+        idxA !== -1 &&
+        idxB !== -1
+      ) {
         return idxA - idxB;
       }
 
@@ -203,36 +335,261 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
       return a.localeCompare(b);
     });
 
-    // All is always the first filter
+    // Always show All first.
     return ["All", ...sorted];
   }, [activeCourses]);
 
-  // ── Filtered & Sorted courses ─────────────────────────────────────────────
-  const filtered = useMemo(() => {
-    const list = activeCourses.filter((c) => {
-      // When All is selected, show every active course
-      const matchCat =
-        activeFilter === "All" ||
-        c.category === activeFilter;
 
-      const searchText = search.toLowerCase();
+  // ==========================================================================
+  // URL CATEGORY -> ACTIVE CATEGORY
+  // ==========================================================================
 
-      const matchSearch =
-        c.title?.toLowerCase().includes(searchText) ||
-        c.courseCode?.toLowerCase().includes(searchText);
+  useEffect(() => {
+    const categoryFromUrl =
+      searchParams.get("category");
 
-      return matchCat && matchSearch;
-    });
+    // No category in URL.
+    if (!categoryFromUrl) {
+      setActiveFilter("All");
+      return;
+    }
 
-    return list.sort((a, b) => {
-      if (sortBy === "Title") {
-        return (a.title || "").localeCompare(b.title || "");
+    // Check whether the category actually exists.
+    const categoryExists =
+      categories.some(
+        (category) =>
+          category === categoryFromUrl
+      );
+
+    if (categoryExists) {
+      setActiveFilter(categoryFromUrl);
+    } else {
+      // Invalid category -> All
+      setActiveFilter("All");
+    }
+  }, [searchParams, categories]);
+
+
+  // ==========================================================================
+  // UPDATE SEARCH FROM URL
+  // ==========================================================================
+
+  useEffect(() => {
+    const currentSearch =
+      searchParams.get("search") || "";
+
+    setSearch(currentSearch);
+  }, [searchParams]);
+
+
+  // ==========================================================================
+  // SCROLL SELECTED CATEGORY INTO VIEW
+  // ==========================================================================
+
+  useEffect(() => {
+    const container =
+      categoryStripRef.current;
+
+    const activeButton =
+      categoryRefs.current[activeFilter];
+
+    if (!container || !activeButton) {
+      return;
+    }
+
+    // Wait until the DOM has completed rendering.
+    const frame = requestAnimationFrame(() => {
+      const containerRect =
+        container.getBoundingClientRect();
+
+      const buttonRect =
+        activeButton.getBoundingClientRect();
+
+      const currentScrollTop =
+        container.scrollTop;
+
+      const buttonTop =
+        buttonRect.top -
+        containerRect.top;
+
+      const buttonBottom =
+        buttonRect.bottom -
+        containerRect.top;
+
+      const visibleTop = 0;
+
+      const visibleBottom =
+        container.clientHeight;
+
+      // --------------------------------------------------------------
+      // Button is above visible area
+      // --------------------------------------------------------------
+
+      if (buttonTop < visibleTop) {
+        container.scrollTo({
+          top:
+            currentScrollTop +
+            buttonTop -
+            8,
+          behavior: "smooth",
+        });
+
+        return;
       }
 
-      const idxA = PREFERRED_ORDER.indexOf(a.category);
-      const idxB = PREFERRED_ORDER.indexOf(b.category);
+      // --------------------------------------------------------------
+      // Button is below visible area
+      // --------------------------------------------------------------
 
-      if (idxA !== -1 && idxB !== -1) {
+      if (
+        buttonBottom >
+        visibleBottom
+      ) {
+        container.scrollTo({
+          top:
+            currentScrollTop +
+            buttonBottom -
+            visibleBottom +
+            8,
+          behavior: "smooth",
+        });
+      }
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [activeFilter, categories]);
+
+
+  // ==========================================================================
+  // CATEGORY CLICK
+  // ==========================================================================
+
+  const handleCategoryChange = (category) => {
+    setActiveFilter(category);
+
+    const params =
+      new URLSearchParams(searchParams);
+
+    if (category === "All") {
+      params.delete("category");
+    } else {
+      params.set(
+        "category",
+        category
+      );
+    }
+
+    const queryString =
+      params.toString();
+
+    navigate(
+      queryString
+        ? `/all-courses?${queryString}`
+        : "/all-courses",
+      {
+        replace: true,
+      }
+    );
+  };
+
+
+  // ==========================================================================
+  // SEARCH CHANGE
+  // ==========================================================================
+
+  const handleSearchChange = (value) => {
+    setSearch(value);
+
+    const params =
+      new URLSearchParams(searchParams);
+
+    if (value.trim()) {
+      params.set(
+        "search",
+        value
+      );
+    } else {
+      params.delete("search");
+    }
+
+    const queryString =
+      params.toString();
+
+    navigate(
+      queryString
+        ? `/all-courses?${queryString}`
+        : "/all-courses",
+      {
+        replace: true,
+      }
+    );
+  };
+
+
+  // ==========================================================================
+  // FILTERED & SORTED COURSES
+  // ==========================================================================
+
+  const filtered = useMemo(() => {
+    const searchText =
+      search.toLowerCase().trim();
+
+    const list =
+      activeCourses.filter((c) => {
+        // Category filter
+        const matchCat =
+          activeFilter === "All" ||
+          c.category === activeFilter;
+
+        // Search filter
+        const matchSearch =
+          !searchText ||
+          c.title
+            ?.toLowerCase()
+            .includes(searchText) ||
+          c.courseCode
+            ?.toLowerCase()
+            .includes(searchText);
+
+        return (
+          matchCat &&
+          matchSearch
+        );
+      });
+
+    return list.sort((a, b) => {
+      // --------------------------------------------------------------
+      // Title sorting
+      // --------------------------------------------------------------
+
+      if (sortBy === "Title") {
+        return (
+          a.title || ""
+        ).localeCompare(
+          b.title || ""
+        );
+      }
+
+      // --------------------------------------------------------------
+      // Popular/category sorting
+      // --------------------------------------------------------------
+
+      const idxA =
+        PREFERRED_ORDER.indexOf(
+          a.category
+        );
+
+      const idxB =
+        PREFERRED_ORDER.indexOf(
+          b.category
+        );
+
+      if (
+        idxA !== -1 &&
+        idxB !== -1
+      ) {
         return idxA - idxB;
       }
 
@@ -244,23 +601,40 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
         return 1;
       }
 
-      return (a.category || "").localeCompare(
+      return (
+        a.category || ""
+      ).localeCompare(
         b.category || ""
       );
     });
-  }, [activeCourses, activeFilter, search, sortBy]);
+  }, [
+    activeCourses,
+    activeFilter,
+    search,
+    sortBy,
+  ]);
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // JSX
-  // ─────────────────────────────────────────────────────────────────────────
+
+  // ==========================================================================
+  // RENDER
+  // ==========================================================================
 
   return (
     <div className="vac-root">
 
-      {/* ── Mobile Navbar ── */}
-      <MobileNavbar courses={courses} />
+      {/* ================================================================
+          MOBILE NAVBAR
+      ================================================================ */}
 
-      {/* ── Search Bar ── */}
+      <MobileNavbar
+        courses={courses}
+      />
+
+
+      {/* ================================================================
+          SEARCH BAR
+      ================================================================ */}
+
       <div className="vac-search-wrapper">
         <div className="vac-search-bar">
 
@@ -285,46 +659,120 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
             />
           </svg>
 
+
           <input
             className="vac-search-input"
             placeholder="Search courses..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>
+              handleSearchChange(
+                e.target.value
+              )
+            }
           />
+
 
           {search && (
             <button
+              type="button"
               className="vac-search-clear"
-              onClick={() => setSearch("")}
+              onClick={() =>
+                handleSearchChange("")
+              }
+              aria-label="Clear search"
             >
               ✕
             </button>
           )}
+
         </div>
       </div>
 
-      {/* ── Filter Pills Strip ── */}
-      <div className="vac-filter-strip">
 
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`vac-filter-btn ${
-              activeFilter === cat ? "active" : ""
-            }`}
-            onClick={() => setActiveFilter(cat)}
-          >
-            <span className="vac-filter-icon">
-              <CategoryIcon category={cat} />
-            </span>
+      {/* ================================================================
+          CATEGORY SECTION
+      ================================================================ */}
 
-            {cat}
-          </button>
-        ))}
+      <div className="vac-category-section">
 
+        <div className="vac-category-title">
+          Categories
+        </div>
+
+
+        <div
+          ref={categoryStripRef}
+          className="vac-filter-strip"
+        >
+
+          {categories.map((cat) => {
+            const isActive =
+              activeFilter === cat;
+
+            return (
+              <button
+                key={cat}
+
+                ref={(element) => {
+                  if (element) {
+                    categoryRefs.current[cat] =
+                      element;
+                  } else {
+                    delete categoryRefs.current[cat];
+                  }
+                }}
+
+                type="button"
+
+                className={`vac-filter-btn ${
+                  isActive
+                    ? "active"
+                    : ""
+                }`}
+
+                onClick={() =>
+                  handleCategoryChange(cat)
+                }
+
+                aria-pressed={isActive}
+              >
+
+                {/* Category Icon */}
+
+                <span className="vac-filter-icon">
+                  <CategoryIcon
+                    category={cat}
+                  />
+                </span>
+
+
+                {/* Category Name */}
+
+                <span className="vac-filter-text">
+                  {cat}
+                </span>
+
+
+                {/* Active Check */}
+
+                {isActive && (
+                  <span className="vac-filter-check">
+                    ✓
+                  </span>
+                )}
+
+              </button>
+            );
+          })}
+
+        </div>
       </div>
 
-      {/* ── Header Bar: Count & Sort Dropdown ── */}
+
+      {/* ================================================================
+          COUNT + SORT
+      ================================================================ */}
+
       <div className="vac-meta-bar">
 
         <div className="vac-count-label">
@@ -334,6 +782,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
           </span>{" "}
           courses
         </div>
+
 
         <div className="vac-sort-wrapper">
 
@@ -347,10 +796,15 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
             <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16" />
           </svg>
 
+
           <select
             className="vac-sort-select"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
+            onChange={(e) =>
+              setSortBy(
+                e.target.value
+              )
+            }
           >
             <option value="Popular">
               Sort by: Popular
@@ -364,63 +818,131 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
         </div>
       </div>
 
-      {/* ── Course List ── */}
+
+      {/* ================================================================
+          COURSE LIST
+      ================================================================ */}
+
       <div className="vac-course-list">
 
         {filtered.length === 0 ? (
+
           <div className="vac-empty">
-            No courses found. Try a different search or filter.
+            No courses found.
+            Try a different search
+            or filter.
           </div>
+
         ) : (
+
           filtered.map((c) => {
 
-            const price = getPriceDisplay(c);
-            const orig = getOrigPrice(c);
-            const saving = getSaving(c);
+            const price =
+              getPriceDisplay(c);
 
-            // Dynamic Backend Category Image/Icon
+            const orig =
+              getOrigPrice(c);
+
+            const saving =
+              getSaving(c);
+
+
+            // Dynamic backend image/icon
+
             const categoryImgSrc =
               c.categoryImage ||
               c.categoryIcon ||
               c.image ||
               c.icon;
 
+
+            const categoryColor =
+              getCategoryColor(
+                c.category
+              );
+
+
             return (
+
               <div
                 key={c._id}
                 className="vac-course-card vac-course-item-clickable"
                 onClick={() =>
-                  navigate(`/course/${c.slug}`)
+                  navigate(
+                    `/course/${c.slug}`
+                  )
                 }
                 role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (
+                    e.key === "Enter" ||
+                    e.key === " "
+                  ) {
+                    navigate(
+                      `/course/${c.slug}`
+                    );
+                  }
+                }}
               >
 
-                {/* Accent Strip */}
-                <div className="vac-card-accent-bar" />
+                {/* ======================================================
+                    ACCENT STRIP
+                ====================================================== */}
+
+                <div
+                  className="vac-card-accent-bar"
+                  style={{
+                    backgroundColor:
+                      categoryColor,
+                  }}
+                />
+
 
                 <div className="vac-card-main">
 
-                  {/* Avatar / Category Graphic Circle */}
+
+                  {/* ====================================================
+                      CATEGORY AVATAR
+                  ==================================================== */}
+
                   <div className="vac-card-avatar">
 
                     {categoryImgSrc ? (
+
                       <img
                         src={categoryImgSrc}
-                        alt={c.category || c.title}
+                        alt={
+                          c.category ||
+                          c.title
+                        }
                         className="vac-card-backend-img"
                       />
+
                     ) : (
+
                       <CategoryIcon
-                        category={c.category}
+                        category={
+                          c.category
+                        }
                       />
+
                     )}
 
                   </div>
 
-                  {/* Body Content */}
+
+                  {/* ====================================================
+                      BODY
+                  ==================================================== */}
+
                   <div className="vac-card-content">
 
-                    {/* Title + Price Row */}
+
+                    {/* ==================================================
+                        TITLE + PRICE
+                    ================================================== */}
+
                     <div className="vac-card-header">
 
                       <div className="vac-title-block">
@@ -428,6 +950,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                         <h3 className="vac-course-title">
                           {c.title}
                         </h3>
+
 
                         {c.courseCode && (
                           <div className="vac-course-code">
@@ -437,11 +960,13 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
 
                       </div>
 
+
                       <div className="vac-price-block">
 
                         <div className="vac-course-price">
                           {price}
                         </div>
+
 
                         {orig && (
                           <div className="vac-course-orig">
@@ -453,8 +978,15 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
 
                     </div>
 
-                    {/* Meta Tags Row */}
+
+                    {/* ==================================================
+                        META TAGS
+                    ================================================== */}
+
                     <div className="vac-course-meta">
+
+
+                      {/* Duration */}
 
                       {c.duration && (
                         <span className="vac-meta-tag">
@@ -468,6 +1000,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           >
+
                             <rect
                               x="3"
                               y="4"
@@ -497,12 +1030,16 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                               x2="21"
                               y2="10"
                             />
+
                           </svg>
 
                           {c.duration}
 
                         </span>
                       )}
+
+
+                      {/* Delivery Method */}
 
                       {c.deliveryMethod && (
                         <span className="vac-meta-tag">
@@ -516,7 +1053,9 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           >
+
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+
                             <circle
                               cx="9"
                               cy="7"
@@ -526,12 +1065,16 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
 
                             <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+
                           </svg>
 
                           {c.deliveryMethod}
 
                         </span>
                       )}
+
+
+                      {/* Location */}
 
                       {c.location && (
                         <span className="vac-meta-tag">
@@ -545,6 +1088,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           >
+
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
 
                             <circle
@@ -552,12 +1096,16 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                               cy="10"
                               r="3"
                             />
+
                           </svg>
 
                           {c.location}
 
                         </span>
                       )}
+
+
+                      {/* Saving */}
 
                       {saving && (
                         <span className="vac-meta-tag vac-save-tag">
@@ -567,19 +1115,32 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
 
                     </div>
 
-                    {/* Action Buttons */}
+
+                    {/* ==================================================
+                        ACTION BUTTONS
+                    ================================================== */}
+
                     <div className="vac-course-actions">
 
+
+                      {/* Book Now */}
+
                       <button
+                        type="button"
                         className="vac-btn-book"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectedCourse(c);
+
+                          setSelectedCourse(
+                            c
+                          );
                         }}
                       >
+
                         Book Now
 
                         <span className="vac-btn-arrow">
+
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
@@ -588,17 +1149,26 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                           >
                             <path d="M9 18l6-6-6-6" />
                           </svg>
+
                         </span>
 
                       </button>
 
+
+                      {/* Details */}
+
                       <button
+                        type="button"
                         className="vac-btn-details"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/course/${c.slug}`);
+
+                          navigate(
+                            `/course/${c.slug}`
+                          );
                         }}
                       >
+
                         Details
 
                         <svg
@@ -608,6 +1178,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                           stroke="currentColor"
                           strokeWidth="2"
                         >
+
                           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
 
                           <circle
@@ -615,6 +1186,7 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                             cy="12"
                             r="3"
                           />
+
                         </svg>
 
                       </button>
@@ -622,63 +1194,72 @@ export default function ViewAllCoursesMobile({ courses = [] }) {
                     </div>
 
                   </div>
+
                 </div>
+
               </div>
+
             );
           })
+
         )}
 
       </div>
 
-      {/* ── Sticky Bottom Navigation ── */}
+
+      {/* ================================================================
+          STICKY BOTTOM NAVIGATION
+      ================================================================ */}
+
       <div className="vac-sticky-wrapper">
 
         <div className="vac-sticky">
 
+
+          {/* Enroll */}
+
           <button
+            type="button"
             className="vac-sticky-call"
-            onClick={() => navigate(`/book-now`)}
+            onClick={() =>
+              navigate("/book-now")
+            }
           >
             Enroll Now
-
-            {/* <span className="vac-sticky-arrow">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </span> */}
-
           </button>
 
-          {/* <a
-            href={ORG_PHONE_1300.wa}
+
+          {/* WhatsApp */}
+
+          <a
+            href="https://wa.me/611300976097"
+            className="vac-sticky-wa"
             target="_blank"
             rel="noopener noreferrer"
-            className="vac-sticky-wa"
             aria-label="WhatsApp Us"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
-            </svg>
-          </a> */}
 
-          <a href="https://wa.me/611300976097" class="vac-sticky-wa"><span><i class="fa-brands fa-whatsapp"></i></span></a>x``
+            <span>
+              <i className="fa-brands fa-whatsapp"></i>
+            </span>
+
+          </a>
 
         </div>
+
       </div>
 
-      {/* ── Booking Modal ── */}
+
+      {/* ================================================================
+          BOOKING MODAL
+      ================================================================ */}
+
       {selectedCourse && (
         <BookingModal
           course={selectedCourse}
-          onClose={() => setSelectedCourse(null)}
+          onClose={() =>
+            setSelectedCourse(null)
+          }
         />
       )}
 

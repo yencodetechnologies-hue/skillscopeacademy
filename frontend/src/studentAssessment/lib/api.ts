@@ -1,4 +1,9 @@
-const API_URL = import.meta.env.VITE_STUDENT_ASSESSMENT_API_URL || '/api/student-assessment';
+import { API_URL as BASE_API_URL } from '../../data/service';
+
+// Same pattern the rest of the site uses for its backend calls
+// (${API_URL}/api/... in LoginForm.jsx) — https://skillscopeacademy.yencodetechnologies.in
+// in production, http://localhost:7001 in dev.
+const API_URL = `${BASE_API_URL}/api/student-assessment`;
 
 const getHeaders = () => {
   const token = localStorage.getItem('auth_token');

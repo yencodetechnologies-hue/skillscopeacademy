@@ -8,11 +8,13 @@ import AssessmentForm from './pages/AssessmentForm'
 import CommonAssessment from './pages/CommonAssessment'
 import GradingPortal from './pages/GradingPortal'
 import { Loader2 } from 'lucide-react'
+import { API_URL as BASE_API_URL } from '../data/service'
 
 import './tailwind-entry.css'
 import './assessment-custom.css'
 
 const queryClient = new QueryClient()
+const API_URL = `${BASE_API_URL}/api/student-assessment`
 
 // Mounted at /studentassement/* in the main app's router, so every path
 // below is relative to that prefix (no leading slash).
@@ -22,7 +24,6 @@ function StudentAssessmentApp() {
   useEffect(() => {
     const token = localStorage.getItem('auth_token')
     if (token) {
-      const API_URL = import.meta.env.VITE_STUDENT_ASSESSMENT_API_URL || '/api/student-assessment'
       fetch(`${API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       })

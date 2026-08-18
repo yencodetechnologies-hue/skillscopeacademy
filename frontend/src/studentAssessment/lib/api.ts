@@ -13,8 +13,16 @@ const getHeaders = () => {
   };
 };
 
+const getStudentHeaders = () => {
+  const token = localStorage.getItem('student_auth_token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+};
+
 export const api = {
-  // Auth
+  // Assessor Auth
   login: async (email: string, password: string) => {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
@@ -28,6 +36,27 @@ export const api = {
 
   logout: () => {
     localStorage.removeItem('auth_token');
+  },
+
+  // Student Auth
+  studentLogin: async (email: string, password: string) => {
+    const res = await fetch(`${API_URL}/auth/student/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.token) localStorage.setItem('student_auth_token', data.token);
+    return data;
+  },
+
+  studentLogout: () => {
+    localStorage.removeItem('student_auth_token');
+  },
+
+  studentMe: async () => {
+    const res = await fetch(`${API_URL}/auth/student/me`, { headers: getStudentHeaders() });
+    return res.json();
   },
 
   // Assessments

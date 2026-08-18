@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
 const AssessmentUser = require("../models/AssessmentUser");
+const AssessmentStudent = require("../models/AssessmentStudent");
 const Assessment = require("../models/Assessment");
 const CommonAssessment = require("../models/CommonAssessment");
 const AssessmentSubmission = require("../models/AssessmentSubmission");
@@ -17,7 +18,25 @@ const authenticate = (req, res, next) => {
   if (!token) return res.status(401).json({ error: "Unauthorized" });
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role && decoded.role !== "assessor") {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
     req.userId = decoded.userId;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: "Invalid or expired token" });
+  }
+};
+
+const authenticateStudent = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ error: "Unauthorized" });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role !== "student") {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    req.studentId = decoded.userId;
     next();
   } catch (err) {
     res.status(401).json({ error: "Invalid or expired token" });
@@ -51,8 +70,8 @@ router.post("/auth/login", async (req, res) => {
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "7d" });
-    res.json({ token, user: { email: user.email, id: user._id } });
+    const token = jwt.sign({ userId: user._id, role: "assessor" }, JWT_SECRET, { expiresIn: "7d" });
+    res.json({ token, user: { email: user.email, id: user._id, role: "assessor" } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -61,7 +80,44 @@ router.post("/auth/login", async (req, res) => {
 router.get("/auth/me", authenticate, async (req, res) => {
   try {
     const user = await AssessmentUser.findById(req.userId).select("-password");
-    res.json(user);
+    res.json({ ...user.toObject(), role: "assessor" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Student Auth Routes ---
+
+router.post("/auth/student/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const student = await AssessmentStudent.findOne({ email });
+    if (!student || !(await student.comparePassword(password))) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+    const token = jwt.sign({ userId: student._id, role: "student" }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    res.json({
+      token,
+      user: {
+        id: student._id,
+        email: student.email,
+        name: student.name,
+        student_id: student.student_id,
+        role: "student",
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/auth/student/me", authenticateStudent, async (req, res) => {
+  try {
+    const student = await AssessmentStudent.findById(req.studentId).select("-password");
+    if (!student) return res.status(404).json({ error: "Student not found" });
+    res.json({ ...student.toObject(), role: "student" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

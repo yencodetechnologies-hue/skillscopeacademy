@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleLogout = () => {
     api.logout()
-    window.location.href = '/login'
+    window.location.href = '/studentassement/login'
   }
 
   return (

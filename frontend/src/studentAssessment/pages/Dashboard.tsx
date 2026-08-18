@@ -250,7 +250,7 @@ const Dashboard: React.FC = () => {
                         return indexA - indexB;
                       })
                       .map((a: any) => {
-                        const assessLink = `${window.location.origin}/common-assessment?token=${a.token}`
+                        const assessLink = `${window.location.origin}/studentassement/common-assessment?token=${a.token}`
                         const isSelected = selectedQuestions.includes(a.token)
                         const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
                         const isExpanded = expandedAssessment === a.token
@@ -333,7 +333,7 @@ const Dashboard: React.FC = () => {
                       return indexA - indexB;
                     })
                     .map((a: any) => {
-                      const assessLink = `${window.location.origin}/common-assessment?token=${a.token}`
+                      const assessLink = `${window.location.origin}/studentassement/common-assessment?token=${a.token}`
                       const isSelected = selectedQuestions.includes(a.token)
                       const assessmentSubmissions = submissions?.filter((sub: any) => sub.assessment_id?.token === a.token) || []
                       const isExpanded = expandedAssessment === a.token
@@ -419,7 +419,7 @@ const Dashboard: React.FC = () => {
                   </tr>
                 ) : (
                   commonAssessments.map((ca: any) => {
-                    const commonLink = `${window.location.origin}/common-assessment?token=${ca.token}`
+                    const commonLink = `${window.location.origin}/studentassement/common-assessment?token=${ca.token}`
                     return (
                       <tr key={ca._id} className="hover:bg-gray-50/50">
                         <td className="px-6 py-4">
@@ -470,7 +470,7 @@ const Dashboard: React.FC = () => {
             {/* Mobile View */}
             <div className="sm:hidden divide-y">
               {commonAssessments?.map((ca: any) => {
-                const commonLink = `${window.location.origin}/common-assessment?token=${ca.token}`
+                const commonLink = `${window.location.origin}/studentassement/common-assessment?token=${ca.token}`
                 return (
                   <div key={ca._id} className="p-4 space-y-4 hover:bg-gray-50/50 transition-colors">
                     <div className="space-y-2">
@@ -765,7 +765,7 @@ const Dashboard: React.FC = () => {
                                 )}
                                 <button
                                   onClick={() => {
-                                    window.location.href = `/grade/${sub._id}`;
+                                    window.location.href = `/studentassement/grade/${sub._id}`;
                                   }}
                                   className="inline-flex items-center gap-1.5 text-xs font-black uppercase bg-[#1e3a8a] hover:bg-blue-800 text-white px-3.5 py-2 rounded-xl shadow-sm transition-colors"
                                 >

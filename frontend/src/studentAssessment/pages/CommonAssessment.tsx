@@ -184,7 +184,7 @@ const CommonAssessment: React.FC = () => {
           {assessment.question_ids.map((qid: string, index: number) => {
             const questionData = availableQuestions.find(q => q.id === qid)
             const isCompleted = statusData?.completedTokens?.includes(qid)
-            const assessmentLink = `/assessment?token=${qid}&st-name=${encodeURIComponent(studentInfo.name)}&st-id=${encodeURIComponent(studentInfo.id)}`
+            const assessmentLink = `/studentassement/assessment?token=${qid}&st-name=${encodeURIComponent(studentInfo.name)}&st-id=${encodeURIComponent(studentInfo.id)}`
 
             return (
               <div

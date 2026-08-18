@@ -20,7 +20,7 @@ const Login: React.FC = () => {
       setLoading(false)
     } else {
       // Refresh to update auth state
-      window.location.href = '/dashboard'
+      window.location.href = '/studentassement/dashboard'
     }
   }
 

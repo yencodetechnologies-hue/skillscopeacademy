@@ -1,93 +1,13 @@
 /* Custom styles for the assessment portal (ported from the standalone
    student-assessment app's index.css — Tailwind directives removed,
-   handled instead by tailwind-entry.css). */
-
-/* Tailwind's "preflight" reset, scoped to .sa-root only. Global preflight
-   would reset box-sizing/margins/button styling site-wide and break the
-   rest of the (non-Tailwind) site, so it's confined to this subtree. */
-.sa-root,
-.sa-root *,
-.sa-root *::before,
-.sa-root *::after {
-  box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-  border-color: #e5e7eb;
-  margin: 0;
-  padding: 0;
-}
-
-.sa-root {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  tab-size: 4;
-}
-
-.sa-root h1,
-.sa-root h2,
-.sa-root h3,
-.sa-root h4,
-.sa-root h5,
-.sa-root h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-.sa-root button,
-.sa-root input,
-.sa-root optgroup,
-.sa-root select,
-.sa-root textarea {
-  font-family: inherit;
-  font-size: 100%;
-  font-weight: inherit;
-  line-height: inherit;
-  color: inherit;
-  background-color: transparent;
-}
-
-.sa-root button,
-.sa-root select {
-  text-transform: none;
-}
-
-.sa-root button,
-.sa-root [type='button'],
-.sa-root [type='reset'],
-.sa-root [type='submit'] {
-  -webkit-appearance: button;
-  cursor: pointer;
-}
-
-.sa-root :disabled {
-  cursor: default;
-}
-
-.sa-root img,
-.sa-root svg,
-.sa-root video,
-.sa-root canvas {
-  display: block;
-  vertical-align: middle;
-}
-
-.sa-root img,
-.sa-root video {
-  max-width: 100%;
-  height: auto;
-}
-
-.sa-root a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-.sa-root ol,
-.sa-root ul {
-  list-style: none;
-}
+   handled instead by tailwind-entry.css, which now does a full
+   `@import "tailwindcss"` and so already ships its own preflight reset
+   inside Tailwind's `base` layer. A hand-rolled `.sa-root` reset used to
+   live here too, but being plain unlayered CSS it always outranks any
+   `@layer`-based rule under the Cascade Layers spec — regardless of
+   selector specificity — which silently overrode utilities like
+   `bg-[#1e3a8a]` and `h-16`. Removed; Tailwind's own preflight already
+   covers this correctly. */
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }

@@ -191,11 +191,31 @@
 // export default App
 
 
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useContext, Suspense, lazy } from "react"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+import { useContext, useEffect, useRef, Suspense, lazy } from "react"
 import { AuthContext } from "./context/AuthContext"
 
 const StudentAssessmentApp = lazy(() => import("./studentAssessment/StudentAssessmentApp"))
+
+// The assessment sub-app pulls in Tailwind's global preflight reset, which
+// is real CSS once its chunk has loaded — it would keep affecting the rest
+// of the (non-Tailwind) site's pages if the user left /studentassement via
+// client-side navigation (e.g. the browser back button) instead of a full
+// page load. Force a hard reload on that one transition so it can't leak.
+function StudentAssessmentBoundaryGuard() {
+    const location = useLocation()
+    const wasInside = useRef(location.pathname.startsWith("/studentassement"))
+
+    useEffect(() => {
+        const isInside = location.pathname.startsWith("/studentassement")
+        if (wasInside.current && !isInside) {
+            window.location.href = location.pathname + location.search + location.hash
+        }
+        wasInside.current = isInside
+    }, [location])
+
+    return null
+}
 
 import Login from "./pages/Login"
 import Register from "./pages/Register"
@@ -269,6 +289,7 @@ function App() {
 
         <BrowserRouter>
             <ScrollToTop />
+            <StudentAssessmentBoundaryGuard />
 
             <Routes>
 

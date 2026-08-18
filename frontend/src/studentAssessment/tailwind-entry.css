@@ -1,5 +1,9 @@
-/* Tailwind utilities scoped to the Student Assessment section only.
-   Preflight/base is intentionally NOT imported here so the rest of the
-   site (which uses hand-written CSS, not Tailwind) is unaffected. */
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+/* Tailwind, scoped in effect to the Student Assessment section.
+   NOTE: a full `@import "tailwindcss";` is required here — Tailwind v4's
+   arbitrary-value/variant utilities (bg-[#1e3a8a], hover:*, active:scale-[...])
+   rely on @property registrations that only ship with the full import; a
+   manual theme.css + utilities.css split (tried first) silently drops them.
+   The preflight reset this pulls in is global CSS once loaded, so App.jsx
+   forces a hard navigation when leaving /studentassement so it can never
+   bleed into the rest of the (non-Tailwind) site during an SPA transition. */
+@import "tailwindcss";

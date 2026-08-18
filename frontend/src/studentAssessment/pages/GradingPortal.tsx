@@ -1412,7 +1412,7 @@ const GradingPortal: React.FC = () => {
         {/* Floating Top Action Bar */}
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -3777,7 +3777,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans overflow-x-hidden w-full max-w-full">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3 w-full">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -3833,7 +3833,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -3895,7 +3895,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -3951,7 +3951,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4007,7 +4007,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4062,7 +4062,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4117,7 +4117,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4172,7 +4172,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4227,7 +4227,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4282,7 +4282,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4337,7 +4337,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4392,7 +4392,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4447,7 +4447,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4510,7 +4510,7 @@ const GradingPortal: React.FC = () => {
       <div className="bg-[#eff6ff] print:bg-white min-h-screen pb-20 font-sans">
         <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-            <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+            <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
               <ArrowLeft size={18} />
             </button>
             <div className="min-w-0 flex-1">
@@ -4588,7 +4588,7 @@ const GradingPortal: React.FC = () => {
         <p className="text-gray-600 text-sm mb-2">There was an error loading this submission. This may be a database permissions issue.</p>
         {queryError && <p className="text-red-500 text-xs font-mono bg-blue-50 p-2 rounded mb-4">{(queryError as any)?.message}</p>}
         <div className="flex gap-3 justify-center">
-          <button onClick={() => navigate('/dashboard')} className="px-4 py-2 bg-gray-100 text-gray-700 font-bold rounded-lg hover:bg-gray-200">
+          <button onClick={() => navigate('/studentassement/dashboard')} className="px-4 py-2 bg-gray-100 text-gray-700 font-bold rounded-lg hover:bg-gray-200">
             ← Back to Dashboard
           </button>
           <button onClick={() => window.location.reload()} className="px-4 py-2 bg-[#1e3a8a] text-white font-bold rounded-lg hover:bg-[#1e40af]">
@@ -4640,7 +4640,7 @@ const GradingPortal: React.FC = () => {
 
       <div className="sticky top-0 z-50 bg-[#1e3a8a] text-white px-3 sm:px-4 py-2 sm:py-3 flex flex-col md:flex-row items-center justify-between shadow-xl no-print gap-2 md:gap-3">
         <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto min-w-0">
-          <button onClick={() => navigate('/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
+          <button onClick={() => navigate('/studentassement/dashboard')} className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0">
             <ArrowLeft size={18} />
           </button>
           <div className="min-w-0 flex-1">

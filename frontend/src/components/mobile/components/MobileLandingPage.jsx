@@ -705,41 +705,59 @@ export default function MobileLandingPage({ courses = [] }) {
                   placeholder="Choose a course"
                   isSearchable
                   isClearable
-
                   styles={{
-    control: (base, state) => ({
-      ...base,
-      border: "none",
-      boxShadow: "none",
-      outline: "none",
-      backgroundColor: "transparent",
-      minHeight: "48px",
-      borderRadius: "10px",
-      "&:hover": {
-        border: "none",
-      },
-    }),
+                    control: (base) => ({
+                      ...base,
+                      border: "none",
+                      boxShadow: "none",
+                      outline: "none",
+                      backgroundColor: "transparent",
+                      minHeight: "48px",
+                      borderRadius: "10px",
+                      fontSize: "16px",
+                    }),
 
-    valueContainer: (base) => ({
-      ...base,
-      paddingLeft: "12px",
-    }),
+                    valueContainer: (base) => ({
+                      ...base,
+                      paddingLeft: "12px",
+                      fontSize: "16px",
+                    }),
 
-    indicatorSeparator: () => ({
-      display: "none",
-    }),
+                    singleValue: (base) => ({
+                      ...base,
+                      fontSize: "16px",
+                    }),
 
-    dropdownIndicator: (base) => ({
-      ...base,
-      color: "#999",
-    }),
+                    placeholder: (base) => ({
+                      ...base,
+                      fontSize: "16px",
+                    }),
 
-    menu: (base) => ({
-      ...base,
-      border: "none",
-      boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-    }),
-  }}
+                    input: (base) => ({
+                      ...base,
+                      fontSize: "16px",
+                    }),
+
+                    option: (base) => ({
+                      ...base,
+                      fontSize: "16px",
+                    }),
+
+                    indicatorSeparator: () => ({
+                      display: "none",
+                    }),
+
+                    dropdownIndicator: (base) => ({
+                      ...base,
+                      color: "#999",
+                    }),
+
+                    menu: (base) => ({
+                      ...base,
+                      border: "none",
+                      boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+                    }),
+                  }}
                 />
               </div>
             </div>

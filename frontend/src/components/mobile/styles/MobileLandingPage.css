@@ -2611,3 +2611,57 @@
   }
 }
 
+/* =========================================================
+   iOS Safari - Prevent automatic zoom on form controls
+   ========================================================= */
+
+.mlp-course-select-wrapper,
+.mlp-date-input-wrapper {
+  width: 100%;
+}
+
+/* Native input */
+.mlp-date-input {
+  font-size: 16px !important;
+  line-height: 1.4;
+}
+
+/* React Select */
+.mlp-course-select {
+  font-size: 16px !important;
+}
+
+.mlp-course-select .mlp__control {
+  font-size: 16px !important;
+}
+
+.mlp-course-select .mlp__single-value,
+.mlp-course-select .mlp__placeholder,
+.mlp-course-select .mlp__input-container,
+.mlp-course-select .mlp__option {
+  font-size: 16px !important;
+}
+
+/* React-select actual input */
+.mlp-course-select input {
+  font-size: 16px !important;
+}
+
+/* iPhone/iPad specifically */
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .mlp-date-input {
+    font-size: 16px !important;
+  }
+
+  .mlp-course-select,
+  .mlp-course-select * {
+    font-size: 16px !important;
+  }
+}
+

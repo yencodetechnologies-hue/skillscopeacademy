@@ -192,8 +192,10 @@
 
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, Suspense, lazy } from "react"
 import { AuthContext } from "./context/AuthContext"
+
+const StudentAssessmentApp = lazy(() => import("./studentAssessment/StudentAssessmentApp"))
 
 import Login from "./pages/Login"
 import Register from "./pages/Register"
@@ -298,7 +300,16 @@ function App() {
                 <Route path="/code-of-practice" element={<CodeOfPractice />} />
                 <Route path="/usi" element={<UniqueStudentIdentifier />} />
                 <Route path="/enrollment-success" element={<EnrollmentSuccess />} />
-               
+
+                {/* STUDENT ASSESSMENT (self-contained sub-app, own auth) */}
+                <Route
+                    path="/studentassement/*"
+                    element={
+                        <Suspense fallback={null}>
+                            <StudentAssessmentApp />
+                        </Suspense>
+                    }
+                />
 
 
 

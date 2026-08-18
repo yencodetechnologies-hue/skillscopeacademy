@@ -1,0 +1,123 @@
+[
+  {
+    "_id": "69f847758b659c00b68446dc",
+    "name": "Earthmoving Courses",
+    "courseCount": 4,
+    "active": true,
+    "order": 0,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778238362/categories/lpl1dryj13mfbwe04d72.png",
+    "createdAt": "2026-05-04T07:15:01.737Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f844e28b659c00b68446db",
+    "name": "Short Courses",
+    "courseCount": 8,
+    "active": true,
+    "order": 1,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778508488/categories/tcepglhhalwcwtn3eeyj.png",
+    "createdAt": "2026-05-04T07:04:02.561Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f848998b659c00b68446dd",
+    "name": "Working in Confined Space Courses",
+    "courseCount": 3,
+    "active": true,
+    "order": 2,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778305576/categories/jrpxcc20cuku65ge4sno.png",
+    "createdAt": "2026-05-04T07:19:53.283Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69fd8ceb704dcdf3f388f985",
+    "name": "Combo Courses",
+    "courseCount": 7,
+    "active": true,
+    "order": 3,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778508545/categories/m7cjcfqsgiqxoqo4nfuy.png",
+    "createdAt": "2026-05-08T07:12:43.440Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f848b88b659c00b68446de",
+    "name": "Demolition Courses",
+    "courseCount": 1,
+    "active": true,
+    "order": 4,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778228630/categories/jszytfgylzgdwwizpuve.png",
+    "createdAt": "2026-05-04T07:20:24.815Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f848d88b659c00b68446df",
+    "name": "First Aid Courses",
+    "courseCount": 3,
+    "active": true,
+    "order": 5,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778305596/categories/cmetxhlllkvixgukbljm.png",
+    "createdAt": "2026-05-04T07:20:56.772Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f849278b659c00b68446e1",
+    "name": "Traffic Control Courses",
+    "courseCount": 2,
+    "active": true,
+    "order": 6,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778305024/categories/hxocps5ne9yudt8u3v8p.png",
+    "createdAt": "2026-05-04T07:22:15.723Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f8493c8b659c00b68446e2",
+    "name": "Asbestos Removal Courses",
+    "courseCount": 2,
+    "active": true,
+    "order": 7,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778508615/categories/hmt7wdlcqkrusdmxmmfl.png",
+    "createdAt": "2026-05-04T07:22:36.784Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f849038b659c00b68446e0",
+    "name": "Certificate Courses",
+    "courseCount": 3,
+    "active": true,
+    "order": 8,
+    "image": "https://res.cloudinary.com/dguhh1amx/image/upload/v1778508631/categories/eroj2mdokeomr5ifvcyd.png",
+    "createdAt": "2026-05-04T07:21:39.145Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a32457a00d0d62083abf884",
+    "name": "High Risk Courses",
+    "courseCount": 2,
+    "active": true,
+    "order": 9,
+    "image": "",
+    "createdAt": "2026-06-17T06:58:02.060Z",
+    "updatedAt": "2026-07-13T04:17:51.236Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a6c2cca09eb00046cc637d9",
+    "name": "Telecome Courses",
+    "courseCount": 18,
+    "active": true,
+    "order": 10,
+    "image": "",
+    "createdAt": "2026-07-31T05:04:10.333Z",
+    "updatedAt": "2026-07-31T05:04:10.333Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,5 @@
+/* Tailwind utilities scoped to the Student Assessment section only.
+   Preflight/base is intentionally NOT imported here so the rest of the
+   site (which uses hand-written CSS, not Tailwind) is unaffected. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);

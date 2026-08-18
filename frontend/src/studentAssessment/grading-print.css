@@ -1,0 +1,1034 @@
+/* =============================================================
+   GRADING PORTAL — PRINT-ONLY STYLES
+   These rules ONLY apply when printing (PDF download).
+   ============================================================= */
+
+/* Hide the PDF grade column on screen — only visible in print */
+.pdf-grade-col {
+  display: none;
+}
+
+.print-symbol {
+  display: none;
+}
+
+/* Hide symbols on screen */
+
+@media print {
+
+  @page {
+    margin: 8mm 10mm;
+    size: A4;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-sizing: border-box !important;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: #1e293b !important;
+    width: 210mm !important;
+    overflow: visible !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Compact baseline sizing for standard elements */
+  p,
+  span,
+  li,
+  td,
+  th,
+  label,
+  div {
+    font-size: 8pt !important;
+    line-height: 1.25 !important;
+  }
+
+  /* ── Unified & Correct Header Sizing ── */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #1e3a8a !important;
+    font-weight: 800 !important;
+    margin-top: 6px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.2 !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  h1 {
+    font-size: 13pt !important;
+  }
+
+  h2 {
+    font-size: 11.5pt !important;
+  }
+
+  h3 {
+    font-size: 10pt !important;
+  }
+
+  h4 {
+    font-size: 9pt !important;
+  }
+
+  /* ── Main Container ── */
+  .paper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  /* ── Hide all screen-only UI ── */
+  .no-print,
+  .sticky.top-0,
+  .sticky.top-0.z-50 {
+    display: none !important;
+  }
+
+  /* ── Force Desktop Layout in Print ── */
+  .hidden.md\:block {
+    display: block !important;
+  }
+
+  .md\:hidden {
+    display: none !important;
+  }
+
+  .flex-col.md\:flex-row {
+    flex-direction: row !important;
+    display: flex !important;
+  }
+
+  /* ── Cover page (Constrained to exactly one page) ── */
+  #pg-cover {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 275mm !important;
+    max-height: 275mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    background: #fff !important;
+    position: relative !important;
+  }
+
+  #pg-cover .cover-border-outer {
+    position: absolute;
+    top: 2mm;
+    left: 2mm;
+    right: 2mm;
+    bottom: 2mm;
+    border: 2px solid #1e3a8a;
+  }
+
+  #pg-cover .cover-border-middle {
+    position: absolute;
+    top: 6mm;
+    left: 6mm;
+    right: 6mm;
+    bottom: 6mm;
+    border: 4px solid #1e3a8a;
+  }
+
+  #pg-cover .cover-border-inner {
+    position: absolute;
+    top: 11mm;
+    left: 11mm;
+    right: 11mm;
+    bottom: 11mm;
+    border: 2px solid #1e3a8a;
+  }
+
+  .q3-cover-page .cover-border-outer {
+    border-color: #4b90e2 !important;
+  }
+  .q3-cover-page .cover-border-middle {
+    border-color: #4b90e2 !important;
+  }
+  .q3-cover-page .cover-border-inner {
+    border-color: #4b90e2 !important;
+  }
+
+  #pg-cover .cover {
+    position: absolute;
+    top: 11mm;
+    left: 11mm;
+    right: 11mm;
+    bottom: 11mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15mm 20mm;
+  }
+
+  #pg-cover img {
+    width: 80px !important;
+    height: 80px !important;
+    margin-bottom: 15px !important;
+  }
+
+  #pg-cover .cover-title {
+    font-size: 24pt !important;
+    font-weight: 900 !important;
+    color: #1e3a8a !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 0 !important;
+    width: 100% !important;
+  }
+
+  #pg-cover .cover-unit {
+    font-size: 14pt !important;
+    font-weight: 800 !important;
+    color: #1e3a8a !important;
+    margin-bottom: 15px !important;
+  }
+
+  #pg-cover .cover-course {
+    font-size: 10.5pt !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    line-height: 1.4 !important;
+    max-width: 90% !important;
+  }
+
+  #pg-cover .cover-student {
+    font-size: 11pt !important;
+    font-weight: bold !important;
+    margin-top: 30px !important;
+    color: #1e3a8a !important;
+  }
+
+  #pg-cover .cover-student span {
+    border-bottom: 1px solid #1e3a8a !important;
+    padding: 0 10px !important;
+  }
+
+  /* ── PREMIUM TASK BANNER ── */
+  .task-banner-ribbon {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;
+    color: white !important;
+    padding: 6px 12px !important;
+    font-weight: 900 !important;
+    font-size: 11pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin: 15px 0 10px 0 !important;
+    width: 100% !important;
+    display: block !important;
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+    border-left: 6px solid #fbbf24 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* ── Assessment Competency Record (Page 2) ── */
+  .comp-record-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .comp-record-section .md\:hidden {
+    display: none !important;
+  }
+
+  .comp-record-section .hidden.md\:block {
+    display: block !important;
+  }
+
+  .comp-record-section img {
+    height: 35px !important;
+    width: auto !important;
+  }
+
+  /* Force top logo and text to be row layout in print */
+  .comp-record-section>.flex-col-reverse {
+    flex-direction: row !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    margin-bottom: 8px !important;
+  }
+
+  .comp-record-section>.flex-col-reverse>div {
+    text-align: left !important;
+  }
+
+  .comp-record-section h2 {
+    font-size: 13pt !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+  }
+
+  .comp-record-section .bg-blue-50\/50 {
+    padding: 6px 10px !important;
+    margin-bottom: 8px !important;
+    font-size: 7.5pt !important;
+    border-radius: 8px !important;
+  }
+
+  /* Basic Info Table - Force horizontal matching desktop layout */
+  .comp-record-section .overflow-hidden.border {
+    margin-bottom: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .comp-record-section .overflow-hidden.border .flex-col>.flex-col {
+    flex-direction: row !important;
+    display: flex !important;
+  }
+
+  .comp-record-section .overflow-hidden.border .flex-col>.flex-col>div {
+    padding: 4px 8px !important;
+    font-size: 8pt !important;
+  }
+
+  .comp-record-section .overflow-hidden.border .flex-col>.flex-col>div:first-child {
+    width: 180px !important;
+    flex-shrink: 0 !important;
+    border-bottom: none !important;
+    border-right: 1px solid #cbd5e1 !important;
+    font-weight: 700 !important;
+  }
+
+  .comp-record-section .overflow-hidden.border .flex-col>.flex-col>div:last-child {
+    flex-grow: 1 !important;
+  }
+
+  .comp-record-section .border-slate-300 {
+    margin-bottom: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .comp-record-section .border-slate-300 .bg-gradient-to-r {
+    padding: 4px 8px !important;
+    font-size: 8.5pt !important;
+  }
+
+  .comp-record-section .border-slate-300 .bg-slate-50\/50 {
+    padding: 4px 8px !important;
+    font-size: 7.5pt !important;
+  }
+
+  /* Force Assessor Evidence rows to be horizontal like desktop grid */
+  .comp-record-section .border-slate-300>.flex-col {
+    display: grid !important;
+    grid-template-columns: 180px 1fr !important;
+  }
+
+  .comp-record-section .border-slate-300>.flex-col>div:first-child {
+    border-bottom: none !important;
+    border-right: 1px solid #cbd5e1 !important;
+  }
+
+  .comp-record-section .border-slate-300>.flex-col .flex-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .comp-record-section .border-slate-300>.flex-col .flex-wrap>div {
+    border-bottom: none !important;
+    border-right: 1px solid #e2e8f0 !important;
+    flex: 1 !important;
+  }
+
+  .comp-record-section .border-slate-300>.flex-col .flex-wrap>div:last-child {
+    border-right: none !important;
+  }
+
+  .comp-record-section .grid-cols-\[200px_1fr\],
+  .comp-record-section .md\:grid-cols-\[200px_1fr\] {
+    display: grid !important;
+    grid-template-columns: 150px 1fr !important;
+  }
+
+  .comp-record-section .grid-cols-\[200px_1fr\]>div,
+  .comp-record-section .md\:grid-cols-\[200px_1fr\]>div {
+    padding: 4px 8px !important;
+    font-size: 8pt !important;
+  }
+
+  .comp-record-section .grid-cols-\[200px_1fr\] .flex-wrap>div,
+  .comp-record-section .md\:grid-cols-\[200px_1fr\] .flex-wrap>div {
+    padding: 3px 6px !important;
+  }
+
+  .comp-record-section .grid-cols-\[200px_1fr\] .flex-wrap input[type="checkbox"],
+  .comp-record-section .md\:grid-cols-\[200px_1fr\] .flex-wrap input[type="checkbox"] {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .comp-record-section table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 6px !important;
+  }
+
+  .comp-record-section th,
+  .comp-record-section td {
+    padding: 4px 6px !important;
+    font-size: 8pt !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  .comp-record-section td h3,
+  .comp-record-section td span {
+    font-size: 8pt !important;
+  }
+
+  .comp-record-section td input[type="checkbox"] {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .comp-record-section .group.hover\:bg-slate-50\/50 {
+    height: auto !important;
+  }
+
+  .comp-record-section .group.hover\:bg-slate-50\/50 td {
+    height: auto !important;
+  }
+
+  .comp-record-section .w-8.h-8 {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 7.5pt !important;
+  }
+
+  .comp-record-section td.bg-slate-200 {
+    padding: 8px !important;
+  }
+
+  .comp-record-section td.bg-slate-200 .w-7.h-7 {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .comp-record-section td.bg-slate-200 span {
+    font-size: 8pt !important;
+  }
+
+  .comp-record-section .min-h-\[44px\] {
+    min-height: 24px !important;
+  }
+
+  .comp-record-section .min-h-\[80px\] {
+    min-height: 40px !important;
+  }
+
+  .comp-record-section textarea {
+    font-size: 8pt !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Force Declaration row columns horizontally */
+  .comp-record-section .mt-12 {
+    margin-top: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .comp-record-section .mt-12 .bg-\[\#1e3a8a\] {
+    padding: 4px 8px !important;
+    font-size: 8.5pt !important;
+  }
+
+  .comp-record-section .mt-12 .divide-y>.flex-col {
+    flex-direction: row !important;
+    display: flex !important;
+  }
+
+  .comp-record-section .mt-12 .divide-y>.flex-col>div:first-child {
+    width: 65% !important;
+    border-bottom: none !important;
+    border-right: 1px solid #cbd5e1 !important;
+    padding: 6px 8px !important;
+  }
+
+  .comp-record-section .mt-12 .divide-y>.flex-col>div:last-child {
+    width: 35% !important;
+    padding: 6px 8px !important;
+  }
+
+  .comp-record-section .mt-12 .h-16,
+  .comp-record-section .mt-12 .h-20 {
+    height: 35px !important;
+  }
+
+  .comp-record-section .mt-12 .space-y-4 {
+    margin-top: 0 !important;
+  }
+
+  /* ── Administrative Use Only ── */
+  .no-print-section {
+    margin-bottom: 8px !important;
+    border-width: 1px !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  .no-print-section .bg-gradient-to-r,
+  .no-print-section .bg-\[\#1e3a8a\] {
+    padding: 4px 8px !important;
+    font-size: 8.5pt !important;
+  }
+
+  .no-print-section .p-4 {
+    padding: 6px 8px !important;
+  }
+
+  .no-print-section .grid-cols-\[250px_1fr\],
+  .no-print-section .md\:grid-cols-\[250px_1fr\] {
+    display: grid !important;
+    grid-template-columns: 150px 1fr !important;
+  }
+
+  .no-print-section .grid-cols-\[250px_1fr\]>div,
+  .no-print-section .md\:grid-cols-\[250px_1fr\]>div {
+    padding: 4px 8px !important;
+    font-size: 8pt !important;
+  }
+
+  .no-print-section .grid-cols-\[250px_1fr\]>div:first-child,
+  .no-print-section .md\:grid-cols-\[250px_1fr\]>div:first-child {
+    border-right: 1px solid #cbd5e1 !important;
+  }
+
+  .no-print-section textarea,
+  .no-print-section select,
+  .no-print-section table {
+    font-size: 8pt !important;
+  }
+
+  .no-print-section td {
+    padding: 4px 8px !important;
+  }
+
+  .no-print-section h2 {
+    font-size: 11pt !important;
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* ── CLEAN COMPACT TABLES (Tasks 1-3) ── */
+  .legacy-review-tbl {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    font-size: 8pt !important;
+    margin-bottom: 12px !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  .legacy-review-tbl thead tr {
+    background-color: #f8fafc !important;
+  }
+
+  .legacy-review-tbl th {
+    padding: 6px 8px !important;
+    color: #475569 !important;
+    font-size: 8pt !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    border-bottom: 2px solid #cbd5e1 !important;
+    border-right: 1px solid #cbd5e1 !important;
+  }
+
+  .legacy-review-tbl td {
+    padding: 6px 8px !important;
+    background-color: #fff !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    border-right: 1px solid #cbd5e1 !important;
+    vertical-align: middle !important;
+  }
+
+  .legacy-review-tbl tbody tr {
+    page-break-inside: avoid !important;
+  }
+
+  /* YES/NO Column boxes */
+  .legacy-chk-col {
+    width: 50px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .legacy-chk-col>div {
+    display: none !important;
+  }
+
+  /* Comments input styling */
+  .legacy-cmt-input {
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+    width: 100% !important;
+    font-size: 8pt !important;
+    background-color: #f8fafc !important;
+    min-height: 24px !important;
+  }
+
+  /* ── Symbols (✔/✘) as Premium Markers ── */
+  .correct-box,
+  .incorrect-box {
+    display: none !important;
+  }
+
+  .print-symbol {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100% !important;
+    height: 100% !important;
+    font-weight: 800 !important;
+    font-size: 16pt !important;
+    line-height: 1 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .print-symbol.correct {
+    color: #dc2626 !important;
+  }
+
+  .print-symbol.incorrect {
+    color: #dc2626 !important;
+  }
+
+  .print-symbol.not-corrected {
+    display: inline-flex !important;
+    color: #854d0e !important;
+    background-color: #fef9c3 !important;
+    border: 1px solid #ca8a04 !important;
+    font-size: 7.5pt !important;
+    width: auto !important;
+    padding: 1px 3px !important;
+    white-space: nowrap !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+  }
+
+  /* ── QUESTION BLOCKS (Tasks 4-6) ── */
+  .legacy-q-block {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 8px !important;
+    padding: 10px 12px !important;
+    background-color: #fff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+  }
+
+  .legacy-q-num {
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .legacy-q-num span.inline-flex {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 8pt !important;
+  }
+
+  /* ── PDF GRADE BADGES (Tasks 4-6) ── */
+  .pdf-grade-col {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    align-items: flex-end !important;
+  }
+
+  .pdf-correct-selected,
+  .pdf-incorrect-selected,
+  .pdf-not-attempted,
+  .pdf-not-corrected {
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    text-align: center !important;
+    width: 105px !important;
+  }
+
+  .pdf-correct-selected {
+    background-color: #059669 !important;
+    color: #fff !important;
+    border: 1.5px solid #059669 !important;
+  }
+
+  .pdf-incorrect-selected {
+    background-color: #dc2626 !important;
+    color: #fff !important;
+    border: 1.5px solid #dc2626 !important;
+  }
+
+  .pdf-not-attempted {
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+    border: 1.5px solid #cbd5e1 !important;
+    font-style: italic !important;
+    width: 105px !important;
+  }
+
+  .pdf-not-corrected {
+    background-color: #fef9c3 !important;
+    color: #854d0e !important;
+    border: 1.5px solid #ca8a04 !important;
+  }
+
+  .pdf-icon {
+    font-weight: 800 !important;
+    margin-right: 4px !important;
+    font-size: 9pt !important;
+  }
+
+  .pdf-correct-outline,
+  .pdf-incorrect-outline {
+    display: none !important;
+  }
+
+  /* Student response box compact overrides */
+  .legacy-q-block .print\:col-span-3>div {
+    padding: 8px 12px !important;
+    margin-bottom: 4px !important;
+    border-radius: 8px !important;
+    border-width: 1px !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  .legacy-q-block .print\:col-span-3>div>p:first-child {
+    font-size: 7.5pt !important;
+    margin-bottom: 4px !important;
+  }
+
+  .legacy-q-block .print\:col-span-3>div p.text-slate-800 {
+    font-size: 8.5pt !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+  }
+
+  /* Multiple choice options/checkbox grids */
+  .legacy-q-block .grid-cols-1>div.flex {
+    padding: 4px 8px !important;
+    margin-bottom: 2px !important;
+    font-size: 8pt !important;
+  }
+
+  .legacy-q-block .print\:col-span-3>div .flex-row {
+    padding: 4px 8px !important;
+    gap: 8px !important;
+  }
+
+  /* ── GRID ── */
+  .print\:grid-cols-4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .print\:grid-cols-3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .print\:col-span-3 {
+    grid-column: span 3 !important;
+  }
+
+  .print\:col-span-1 {
+    grid-column: span 1 !important;
+  }
+
+  /* ── HIDE SCREEN-ONLY CARDS ── */
+  .comp-record-card {
+    display: none !important;
+  }
+
+  /* ── PAGE BREAKS (Tasks are allowed to break across pages cleanly) ── */
+  section {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+    margin-bottom: 20px !important;
+  }
+
+  .page-break-before {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  /* ── FINAL RESULT BLOCK FIX ── */
+  .final-result-block {
+    page-break-inside: avoid !important;
+    border: 1px solid black !important;
+    background-color: #fff !important;
+    padding: 6px 12px !important;
+  }
+
+  .final-result-block-container {
+    page-break-inside: avoid !important;
+    margin-top: 10px !important;
+  }
+
+  /* ── Custom Radio Marker for PDF ── */
+  .pdf-radio-custom {
+    display: none !important;
+  }
+
+  .pdf-radio-custom {
+    display: inline-flex !important;
+    width: 14px !important;
+    height: 14px !important;
+    border: 1px solid black !important;
+    border-radius: 50% !important;
+    margin-right: 4px !important;
+    position: relative !important;
+    background: white !important;
+    flex-shrink: 0 !important;
+    vertical-align: middle !important;
+  }
+
+  .pdf-radio-custom.checked::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 6px !important;
+    height: 6px !important;
+    background: black !important;
+    border-radius: 50% !important;
+    border: none !important;
+  }
+
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .comp-record-section {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  /* Constrain signature images */
+  img[alt="Sig"],
+  img[alt="Signature"] {
+    max-height: 35px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* ── Question 2 (ICTCBL330) booklet — avoid global rules breaking multi-page PDF ── */
+  html.q2-grading,
+  html.q2-grading body {
+    width: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+  }
+
+  html.q2-grading p,
+  html.q2-grading span,
+  html.q2-grading li,
+  html.q2-grading td,
+  html.q2-grading th,
+  html.q2-grading label,
+  html.q2-grading div {
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  html.q2-grading h1,
+  html.q2-grading h2,
+  html.q2-grading h3,
+  html.q2-grading h4,
+  html.q2-grading h5,
+  html.q2-grading h6 {
+    color: #000 !important;
+    margin-top: inherit !important;
+    margin-bottom: inherit !important;
+  }
+
+  html.q2-grading section {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  html.q2-grading .q2-booklet-view {
+    display: block !important;
+    visibility: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  html.q2-grading .q2-booklet-view .page {
+    display: flex !important;
+    flex-direction: column !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 !important;
+    padding: 8mm 10mm 6mm 10mm !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  html.q2-grading .q2-booklet-view .page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  html.q2-grading .q2-booklet-view .page * {
+    font-size: 8.2pt !important;
+    line-height: 1.2 !important;
+  }
+
+  html.q2-grading .q2-booklet-view h1.section-title {
+    font-size: 11pt !important;
+    margin: 3mm 0 2mm !important;
+  }
+
+  html.q2-grading .q2-booklet-view h2.sub-title {
+    font-size: 10pt !important;
+    margin: 1mm 0 !important;
+  }
+
+  html.q2-grading .q2-booklet-view h3.task-label {
+    font-size: 9.5pt !important;
+    margin: 1mm 0 2mm !important;
+  }
+
+  html.q2-grading .q2-booklet-view p {
+    margin-top: 0 !important;
+    margin-bottom: 3px !important;
+  }
+
+  html.q2-grading .q2-booklet-view table {
+    margin-bottom: 4px !important;
+    font-size: 8pt !important;
+  }
+
+  html.q2-grading .q2-booklet-view table td,
+  html.q2-grading .q2-booklet-view table th {
+    padding: 2.5px 5px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .obs-grid {
+    margin: 8px auto !important;
+    gap: 5px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .obs-row { padding: 3px 0 !important; }
+
+  html.q2-grading .q2-booklet-view .chk-table td {
+    padding: 4px 6px !important;
+    font-size: 7.8pt !important;
+    line-height: 1.15 !important;
+  }
+
+  html.q2-grading .q2-booklet-view .chk-table thead td {
+    padding: 4px 6px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .chk-table tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  html.q2-grading .q2-booklet-view .spacer-sm { height: 1mm !important; }
+
+  html.q2-grading .q2-booklet-view .page-footer {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    padding-bottom: 1mm !important;
+  }
+
+  html.q2-grading .q2-booklet-view .no-print { display: none !important; }
+
+  html.q2-grading .q2-booklet-view input[type="text"],
+  html.q2-grading .q2-booklet-view textarea {
+    border: none !important;
+    border-bottom: 1px dotted #999 !important;
+    font-size: 7.8pt !important;
+    padding: 1px 3px !important;
+  }
+
+  html.q2-grading .q2-booklet-view .sig-visual {
+    min-width: 60px !important;
+    height: 18px !important;
+    line-height: 1 !important;
+  }
+
+  html.q2-grading .q2-booklet-view .sig-visual img {
+    max-height: 16px !important;
+    display: inline-block !important;
+  }
+
+  html.q2-grading .q2-booklet-view .result-line {
+    margin: 2px 0 3px !important;
+    font-size: 8.5pt !important;
+    text-align: center !important;
+  }
+
+  html.q2-grading .q2-booklet-view .result-circle {
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 7.5pt !important;
+  }
+
+  html.q2-grading .q2-booklet-view .result-circle-red {
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 7.5pt !important;
+  }
+
+  html.q2-grading .hidden.print\:inline,
+  html.q2-grading .hidden.print\:flex {
+    display: inline !important;
+  }
+
+  html.q2-grading .hidden.print\:flex {
+    display: flex !important;
+  }
+}

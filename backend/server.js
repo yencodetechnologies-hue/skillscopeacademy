@@ -113,6 +113,7 @@ app.use("/api/voc", require("./routes/vocRoutes"));
 app.use("/api/files", require("./routes/filesRoutes"));
 
 app.use("/api/admin-logs", require("./routes/adminActivityLogRoutes"));
+app.use("/api/student-assessment", require("./routes/studentAssessmentRoutes"));
 
 app.get("/api/health", async (req, res) => {
   const mongoose = require("mongoose");

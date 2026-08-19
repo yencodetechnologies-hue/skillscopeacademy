@@ -324,20 +324,10 @@ const getCourseSchedules = async (req, res) => {
     const now = nowSydney;
     const today = new Date(nowSydney.getFullYear(), nowSydney.getMonth(), nowSydney.getDate());
 
-    console.log("courseId:", req.params.courseId);
-    console.log("includeInactive:", includeInactive);
-    console.log("today (Sydney):", today);
-
     const schedules = await Schedule.find({
       course: req.params.courseId,
       date: { $gte: today }
-    })
-      .populate("course") // pulls in the full Course document (pricing, image, etc.)
-      .sort({ date: 1 })
-
-    console.log("schedules found:", schedules.length);
-    console.log("first schedule (raw):", JSON.stringify(schedules[0], null, 2));
-    console.log("first schedule's course:", schedules[0]?.course);
+    }).sort({ date: 1 })
 
     // Admin manage-dates view: return every session; Active/Inactive is hide/show only.
     if (includeInactive) {
@@ -356,17 +346,9 @@ const getCourseSchedules = async (req, res) => {
       }
     }).filter(schedule => schedule.sessions.length > 0)
 
-    console.log("filteredSchedules count:", filteredSchedules.length);
-    console.log("filteredSchedules course pricing sample:", {
-      vocPrice: filteredSchedules[0]?.course?.vocPrice,
-      withExperiencePrice: filteredSchedules[0]?.course?.withExperiencePrice,
-      withoutExperiencePrice: filteredSchedules[0]?.course?.withoutExperiencePrice,
-    });
-
     res.json(filteredSchedules)
 
   } catch (err) {
-    console.error("getCourseSchedules error:", err);
     res.status(500).json({
       message: err.message
     })

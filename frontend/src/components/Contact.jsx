@@ -1,4 +1,6 @@
 import "../styles/Contact.css"
+import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 import TopNav from "../components/landingPage/TopNav"
 import TrustBar from "../components/landingPage/TrustBar"
 import PublicNavbar from "../components/PublicNavbar"
@@ -25,16 +27,53 @@ function ContactPage() {
 
     const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" })
     const [submitted, setSubmitted] = useState(false)
-
+const [submitting, setSubmitting] = useState(false);
     const set = (k, v) => setForm(p => ({ ...p, [k]: v }))
 
-    const handleSubmit = () => {
-        if (!form.name || !form.email || !form.phone || !form.message) {
-            alert("Please fill in all required fields.")
-            return
-        }
-        setSubmitted(true)
+    const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.phone || !form.message) {
+        alert("Please fill in all required fields.");
+        return;
     }
+
+    try {
+        setSubmitting(true);
+
+        const response = await axios.post(
+            `${API_URL}/api/contact`,
+            {
+                name: form.name.trim(),
+                email: form.email.trim(),
+                phone: form.phone.trim(),
+                message: form.message.trim(),
+            }
+        );
+
+        if (response.data.success) {
+            setSubmitted(true);
+
+            setForm({
+                name: "",
+                email: "",
+                phone: "",
+                message: "",
+            });
+        }
+
+    } catch (error) {
+        console.error(
+            "Contact form error:",
+            error.response?.data || error
+        );
+
+        alert(
+            error.response?.data?.message ||
+            "Unable to submit your enquiry. Please try again."
+        );
+    } finally {
+        setSubmitting(false);
+    }
+};
 
     return (
         <div className="cp-page">
@@ -167,9 +206,22 @@ function ContactPage() {
                                     <textarea className="cp-textarea" rows={5} placeholder="Your message or enquiry..." value={form.message} onChange={e => set("message", e.target.value)} />
                                 </div>
 
-                                <button className="cp-submit-btn" onClick={handleSubmit}>
-                                    Submit &nbsp; ➤
-                                </button>
+                                <button
+    type="button"
+    className="cp-submit-btn"
+    onClick={handleSubmit}
+    disabled={submitting}
+>
+    {submitting ? (
+        <>
+            Sending...
+        </>
+    ) : (
+        <>
+            Submit &nbsp; ➤
+        </>
+    )}
+</button>
                             </>
                         )}
                     </div>

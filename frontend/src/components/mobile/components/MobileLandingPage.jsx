@@ -12,7 +12,7 @@ import "../styles/MobileLandingPage.css";
 import PublicNavbar from "../../PublicNavbar";
 import MobileNavbar from "../../MobileNavbar";
 import PromoBar from "../../landingPage/PromoBar";
-import Footer from "../../landingPage/Footer";
+import FooterMobile from "./FooterMobile";
 import BookingModal from "../../course/BookingModal";
 
 import { useNavigate } from "react-router-dom";
@@ -2636,7 +2636,7 @@ export default function MobileLandingPage({
           FOOTER
       ===================================================== */}
 
-      <Footer />
+      <FooterMobile />
 
       {/* =====================================================
           BOOKING MODAL

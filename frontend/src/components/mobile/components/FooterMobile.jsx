@@ -1,133 +1,162 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/FooterMobile.css";
-import logo from "../../../assets/staLogo.png"
+import React from "react"
+import { useNavigate } from "react-router-dom"
 import { ORG_PHONE_1300, ORG_PHONE_MOBILE } from "../../../utils/organizationPhones"
+import "../styles/FooterMobile.css"
 
-// Each label maps to an existing route in App.jsx so taps from mobile
-// always land on a real page. "Blog" was removed because no route exists.
-const navItems = [
-  { label: "Home",     path: "/" },
+// Social media links
+const socialLinks = [
+  { label: "Facebook", icon: "fa-brands fa-facebook-f", url: "https://facebook.com" },
+  { label: "LinkedIn", icon: "fa-brands fa-linkedin-in", url: "https://linkedin.com" },
+  { label: "Instagram", icon: "fa-brands fa-instagram", url: "https://instagram.com" },
+]
+
+// Quick links split into 2 columns
+const quickLinksCol1 = [
+  { label: "Home", path: "/" },
+  { label: "Courses", path: "/all-courses" },
   { label: "Book Now", path: "/book-now" },
-  { label: "Courses",  path: "/all-courses" },
+]
+
+const quickLinksCol2 = [
   { label: "About Us", path: "/about" },
-  { label: "Contact",  path: "/contact" },
-];
+  { label: "Contact Us", path: "/contact" },
+  { label: "Privacy Policy", path: "/privacy-policy" },
+]
 
-function FooterMobile() {
-  const navigate = useNavigate();
+// Top trust feature badges
+const trustBadges = [
+  {
+    icon: "fa-solid fa-graduation-cap",
+    title: "10,000+",
+    subtitle: "Workers Trained",
+  },
+  {
+    icon: "fa-solid fa-shield-halved",
+    title: "SafeWork NSW",
+    subtitle: "Approved",
+  },
+  {
+    icon: "fa-solid fa-location-dot",
+    title: "Sefton NSW",
+    subtitle: "Based",
+  },
+]
+
+function Footer() {
+  const navigate = useNavigate()
+
   return (
-    <footer className="footer">
-      <div className="footer-top-bar"></div>
-
-      {/* <div className="footer-brand">
-        <div className="footer-brand-left">
-          <div className="footer-logo">SAFETY TRAINING ACADEMY</div>
-        </div>
-      </div> */}
-
-      <p className="footer-tagline">
-        Professional certification programs engineered for career advancement.
-      </p>
-
-      <div className="footer-socials">
-        <div className="footer-logo-img">
-          <img src={logo} alt="Logo" />
-        </div>
-        <div className="footer-social-icons">
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noreferrer"
-            className="social-btn"
-            aria-label="Facebook"
-          >
-            <i className="fa-brands fa-facebook-f"></i>
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noreferrer"
-            className="social-btn"
-            aria-label="LinkedIn"
-          >
-            <i className="fa-brands fa-linkedin-in"></i>
-          </a>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noreferrer"
-            className="social-btn"
-            aria-label="Instagram"
-          >
-            <i className="fa-brands fa-instagram"></i>
-          </a>
-        </div>
+    <footer className="st-footer">
+      {/* ── 1. TOP TRUST BADGES ── */}
+      <div className="st-footer-badges">
+        {trustBadges.map((badge, idx) => (
+          <div key={idx} className="st-badge-item">
+            <div className="st-badge-icon">
+              <i className={badge.icon} />
+            </div>
+            <div className="st-badge-text">
+              <span className="st-badge-title">{badge.title}</span>
+              <span className="st-badge-sub">{badge.subtitle}</span>
+            </div>
+          </div>
+        ))}
       </div>
-<div className="footer-logo">Safeticks</div>
-      <div className="footer-divider"></div>
 
-      <div className="footer-middle">
-        <div className="footer-col footer-location">
-          <div className="sec-label">Head Office</div>
-          <div className="row-info">
-            <i className="fa-solid fa-location-dot info-icon"></i>
-            <p>
-              SafeTicks Sydney<br />
-              15/3 Lancaster Street,<br />
+      {/* ── 2. MAIN FOOTER CARD ── */}
+      <div className="st-footer-card">
+        {/* HEAD OFFICE */}
+        <div className="st-footer-section">
+          <div className="st-section-label">HEAD OFFICE</div>
+          <div className="st-office-row">
+            <i className="fa-solid fa-location-dot st-info-icon" />
+            <div className="st-office-address">
+              <strong>SafeTicks Sydney</strong>
+              <br />
+              15/3 Lancaster Street,
+              <br />
               Ingleburn NSW 2565
-            </p>
+            </div>
           </div>
         </div>
 
-        <div className="footer-col footer-contact">
-          <div className="sec-label">Contact</div>
-          <a href="mailto:info@safeticks.com" className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
-            <i className="fa-solid fa-envelope info-icon"></i>
-            <p>info@safeticks.com</p>
-          </a>
-          <a href={ORG_PHONE_MOBILE.tel} className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
-            <i className="fa-solid fa-phone info-icon"></i>
-            <p>{ORG_PHONE_MOBILE.display}</p>
-          </a>
-          <a href={ORG_PHONE_1300.tel} className="row-info" style={{ color: "inherit", textDecoration: "none" }}>
-            <i className="fa-solid fa-phone info-icon"></i>
-            <p>{ORG_PHONE_1300.display}</p>
-          </a>
+        {/* CONTACT */}
+        <div className="st-footer-section">
+          <div className="st-section-label">CONTACT</div>
+          <div className="st-contact-list">
+            <a href="mailto:info@safeticks.com" className="st-contact-item">
+              <i className="fa-solid fa-envelope st-info-icon" />
+              <span>info@safeticks.com</span>
+            </a>
+            <a href={ORG_PHONE_MOBILE.tel} className="st-contact-item">
+              <i className="fa-solid fa-phone st-info-icon" />
+              <span>{ORG_PHONE_MOBILE.display}</span>
+            </a>
+            <a href={ORG_PHONE_1300.tel} className="st-contact-item">
+              <i className="fa-solid fa-phone st-info-icon" />
+              <span>{ORG_PHONE_1300.display}</span>
+            </a>
+          </div>
+        </div>
+
+        {/* QUICK LINKS */}
+        <div className="st-footer-section">
+          <div className="st-section-label">QUICK LINKS</div>
+          <div className="st-quick-links-grid">
+            <div className="st-links-col">
+              {quickLinksCol1.map((link, idx) => (
+                <div
+                  key={idx}
+                  className="st-quick-link"
+                  onClick={() => navigate(link.path)}
+                >
+                  <span className="st-link-arrow">›</span>
+                  <span>{link.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="st-links-col">
+              {quickLinksCol2.map((link, idx) => (
+                <div
+                  key={idx}
+                  className="st-quick-link"
+                  onClick={() => navigate(link.path)}
+                >
+                  <span className="st-link-arrow">›</span>
+                  <span>{link.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <hr className="st-card-divider" />
+
+        {/* FOLLOW US */}
+        <div className="st-footer-section st-follow-section">
+          <div className="st-section-label st-center-label">FOLLOW US</div>
+          <div className="st-socials-row">
+            {socialLinks.map((s, i) => (
+              <a
+                key={i}
+                href={s.url}
+                target="_blank"
+                rel="noreferrer"
+                className="st-social-btn"
+                aria-label={s.label}
+              >
+                <i className={s.icon} />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* COPYRIGHT */}
+        <div className="st-copyright">
+          © 2024 SafeTicks. All Rights Reserved.
         </div>
       </div>
-
-      <div className="footer-divider"></div>
-
-      <div className="footer-nav">
-        <div className="sec-label">Navigation</div>
-        <ul className="footer-links">
-          {navItems.map((item) => (
-            <li
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  navigate(item.path);
-                }
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              {item.label}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="footer-bottom">
-        <span>© 2024 SafeTicks</span>
-        <span className="footer-rights">ALL RIGHTS RESERVED</span>
-      </div>
     </footer>
-  );
+  )
 }
 
-export default FooterMobile;
+export default Footer

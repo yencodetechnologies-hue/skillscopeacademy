@@ -31,6 +31,7 @@ const promotionMailRoutes = require("./routes/promotionMailRoutes");
 const customMailRoutes =
 require("./routes/customMailRoutes");
 const marqueeRoutes = require("./routes/marqueeRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 
 
@@ -82,6 +83,7 @@ app.use(
 "/api/send-custom-mail",
 customMailRoutes
 );
+app.use("/api/contact", contactRoutes);
 
 // ROUTES
 app.use("/api/auth", require("./routes/authRoutes"));

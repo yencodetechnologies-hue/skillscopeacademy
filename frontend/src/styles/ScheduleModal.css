@@ -757,3 +757,61 @@
     font-size: 0.75rem;
   }
 }
+.csm-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.csm-checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.csm-checkbox-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.csm-city-checkboxes {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.csm-city-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.csm-city-checkbox input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.csm-city-checkbox span {
+  cursor: pointer;
+}
+
+.csm-session-cities {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}

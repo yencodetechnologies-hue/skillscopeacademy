@@ -177,83 +177,364 @@ const getUpcomingSessions = async (req, res) => {
 };
 const editSession = async (req, res) => {
   try {
-    const { startTime, endTime, availableSlots } = req.body
- 
-    const schedule = await Schedule.findOne({ "sessions._id": req.params.id })
- 
+    const {
+      startTime,
+      endTime,
+      availableSlots,
+      preferredCity,
+    } = req.body;
+
+    console.log(
+      "========== EDIT SESSION =========="
+    );
+
+    console.log("Session ID:", req.params.id);
+    console.log("Request body:", req.body);
+    console.log(
+      "preferredCity from request:",
+      preferredCity
+    );
+
+    // ─────────────────────────────────────────────
+    // FIND SCHEDULE
+    // ─────────────────────────────────────────────
+
+    const schedule = await Schedule.findOne({
+      "sessions._id": req.params.id,
+    });
+
     if (!schedule) {
-      return res.status(404).json({ message: "Schedule not found" })
+      return res.status(404).json({
+        message: "Schedule not found",
+      });
     }
- 
-    const session = schedule.sessions.id(req.params.id)
+
+    // ─────────────────────────────────────────────
+    // FIND SESSION
+    // ─────────────────────────────────────────────
+
+    const session = schedule.sessions.id(
+      req.params.id
+    );
+
+    if (!session) {
+      return res.status(404).json({
+        message: "Session not found",
+      });
+    }
+
+    // ─────────────────────────────────────────────
+    // OLD VALUES
+    // ─────────────────────────────────────────────
+
     const before = {
       startTime: session.startTime,
       endTime: session.endTime,
-      availableSlots: session.availableSlots,
-    }
-    const changes = []
+      availableSlots:
+        session.availableSlots,
 
-    if (startTime && startTime !== before.startTime) {
-      session.startTime = startTime
-      changes.push({ field: "startTime", from: before.startTime, to: startTime })
+      preferredCity: Array.isArray(
+        session.preferredCity
+      )
+        ? [...session.preferredCity]
+        : [],
+    };
+
+    const changes = [];
+
+    // ─────────────────────────────────────────────
+    // UPDATE START TIME
+    // ─────────────────────────────────────────────
+
+    if (
+      startTime !== undefined &&
+      startTime !== before.startTime
+    ) {
+      session.startTime = startTime;
+
+      changes.push({
+        field: "startTime",
+        from: before.startTime,
+        to: startTime,
+      });
     }
-    if (endTime && endTime !== before.endTime) {
-      session.endTime = endTime
-      changes.push({ field: "endTime", from: before.endTime, to: endTime })
+
+    // ─────────────────────────────────────────────
+    // UPDATE END TIME
+    // ─────────────────────────────────────────────
+
+    if (
+      endTime !== undefined &&
+      endTime !== before.endTime
+    ) {
+      session.endTime = endTime;
+
+      changes.push({
+        field: "endTime",
+        from: before.endTime,
+        to: endTime,
+      });
     }
+
+    // ─────────────────────────────────────────────
+    // UPDATE AVAILABLE SLOTS
+    // ─────────────────────────────────────────────
+
     if (availableSlots !== undefined) {
-      const next = Number(availableSlots)
-      if (next !== before.availableSlots) {
-        session.availableSlots = next
-        changes.push({ field: "availableSlots", from: before.availableSlots, to: next })
+      const next = Number(
+        availableSlots
+      );
+
+      if (
+        Number.isNaN(next) ||
+        next < 1
+      ) {
+        return res.status(400).json({
+          message:
+            "Available slots must be a valid number greater than 0.",
+        });
+      }
+
+      if (
+        next !== before.availableSlots
+      ) {
+        session.availableSlots = next;
+
+        changes.push({
+          field: "availableSlots",
+          from: before.availableSlots,
+          to: next,
+        });
       }
     }
- 
-    await schedule.save()
 
-    const ctx = await buildSessionContext(schedule, req.params.id)
+    // ─────────────────────────────────────────────
+    // UPDATE PREFERRED CITY
+    // ─────────────────────────────────────────────
+    //
+    // Database field:
+    // preferredCity
+    //
+    // Expected value:
+    // ["Sydney"]
+    // ["Adelaide"]
+    // ["Sydney", "Adelaide"]
+    //
+    // ─────────────────────────────────────────────
+
+    if (
+      preferredCity !== undefined
+    ) {
+      let nextPreferredCity = [];
+
+      if (
+        Array.isArray(preferredCity)
+      ) {
+        nextPreferredCity =
+          preferredCity
+            .filter(
+              (city) =>
+                typeof city === "string"
+            )
+            .map((city) =>
+              city.trim()
+            )
+            .filter(Boolean);
+      } else if (
+        typeof preferredCity ===
+        "string"
+      ) {
+        nextPreferredCity =
+          preferredCity
+            .split(",")
+            .map((city) =>
+              city.trim()
+            )
+            .filter(Boolean);
+      }
+
+      // Remove duplicate cities
+      nextPreferredCity = [
+        ...new Set(
+          nextPreferredCity
+        ),
+      ];
+
+      const oldCities =
+        before.preferredCity;
+
+      const citiesChanged =
+        JSON.stringify(
+          oldCities
+        ) !==
+        JSON.stringify(
+          nextPreferredCity
+        );
+
+      if (citiesChanged) {
+        session.preferredCity =
+          nextPreferredCity;
+
+        changes.push({
+          field: "preferredCity",
+          from: oldCities,
+          to: nextPreferredCity,
+        });
+      }
+    }
+
+    // ─────────────────────────────────────────────
+    // SAVE
+    // ─────────────────────────────────────────────
+
+    await schedule.save();
+
+    // ─────────────────────────────────────────────
+    // BUILD CONTEXT
+    // ─────────────────────────────────────────────
+
+    const ctx =
+      await buildSessionContext(
+        schedule,
+        req.params.id
+      );
+
+    // ─────────────────────────────────────────────
+    // ADMIN ACTIVITY LOG
+    // ─────────────────────────────────────────────
+
     logAdminActivity(req, {
       action: "update",
       module: "schedule",
-      summary: buildUpdateSummary(ctx, changes),
-      targetId: req.params.id,
-      metadata: contextToMetadata(ctx, { changes }),
-    })
-    res.json(schedule)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-}
 
+      summary:
+        buildUpdateSummary(
+          ctx,
+          changes
+        ),
+
+      targetId: req.params.id,
+
+      metadata:
+        contextToMetadata(ctx, {
+          changes,
+        }),
+    });
+
+    console.log(
+      "Updated session:",
+      session
+    );
+
+    console.log(
+      "Updated preferredCity:",
+      session.preferredCity
+    );
+
+    console.log(
+      "Changes:",
+      changes
+    );
+
+    console.log(
+      "=================================="
+    );
+
+    // ─────────────────────────────────────────────
+    // RESPONSE
+    // ─────────────────────────────────────────────
+
+    return res.json({
+      message:
+        "Session updated successfully",
+
+      session,
+
+      schedule,
+
+      changes,
+    });
+  } catch (err) {
+    console.error(
+      "Edit session error:",
+      err
+    );
+
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 const addSession = async (req, res) => {
   try {
     const { course, date, session } = req.body;
 
-    let schedule = await Schedule.findOne({ course, date });
+    console.log("Received session:", session);
+
+    // Validate available slots
+    if (
+      session?.availableSlots === undefined ||
+      session?.availableSlots === null ||
+      session?.availableSlots === ""
+    ) {
+      return res.status(400).json({
+        message: "Available slots is required.",
+      });
+    }
+
+    const sessionData = {
+      ...session,
+
+      availableSlots: Number(session.availableSlots),
+
+      preferredCity:
+        Array.isArray(session.preferredCity) &&
+        session.preferredCity.length > 0
+          ? session.preferredCity
+          : ["Sydney"],
+    };
+
+    let schedule = await Schedule.findOne({
+      course,
+      date,
+    });
 
     if (!schedule) {
       schedule = new Schedule({
         course,
         date,
-        sessions: [session],
+        sessions: [sessionData],
       });
     } else {
-      schedule.sessions.push(session);
+      schedule.sessions.push(sessionData);
     }
 
     await schedule.save();
 
-    const addedSession = schedule.sessions[schedule.sessions.length - 1];
-    const ctx = await buildSessionContext(schedule, addedSession._id);
+    const addedSession =
+      schedule.sessions[schedule.sessions.length - 1];
+
+    const ctx = await buildSessionContext(
+      schedule,
+      addedSession._id
+    );
+
     logAdminActivity(req, {
       action: "create",
       module: "schedule",
-      summary: buildCreateSummary(ctx, session?.availableSlots ?? addedSession.availableSlots),
+      summary: buildCreateSummary(
+        ctx,
+        sessionData.availableSlots
+      ),
       targetId: addedSession._id,
       metadata: contextToMetadata(ctx),
-    })
+    });
+
     res.json(schedule);
+
   } catch (err) {
+    console.error("Add Session Error:", err);
+
     res.status(500).json({
       message: err.message,
     });

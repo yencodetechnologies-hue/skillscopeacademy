@@ -29,7 +29,13 @@ enrolledStudents: [{
   type:String,
   enum:["Active","Inactive"],
   default:"Active"
- }
+ },
+
+ preferredCity: {
+    type: [String],
+    enum: ["Sydney", "Adelaide"],
+    default: ["Sydney"],
+  },
 
 })
 

@@ -70,3 +70,368 @@
   color: var(--color-text-subtle);
   font-size: 18px;
 }
+
+/* =========================================================
+   ALL COURSES PAGE
+========================================================= */
+
+.all-courses-page {
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+========================================================= */
+
+.all-courses-wrapper {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 20px 30px 50px;
+}
+
+
+/* =========================================================
+   CATEGORY SECTION
+========================================================= */
+
+.course-category-section {
+  width: 100%;
+
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   CATEGORY LIST
+========================================================= */
+
+.course-category-list {
+  display: grid;
+
+  /* 6 items in each row */
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+
+  gap: 12px;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   CATEGORY ITEM
+========================================================= */
+
+.course-category-item {
+  min-height: 78px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 12px 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7e7e7;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* =========================================================
+   CATEGORY ICON
+========================================================= */
+
+.category-icon {
+  width: 38px;
+
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 21px;
+
+  background: #fff7e8;
+
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   CATEGORY NAME
+========================================================= */
+
+.category-name {
+  color: #1f2937;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  line-height: 1.3;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.course-category-item:hover {
+  transform: translateY(-2px);
+
+  border-color: #f5a623;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.course-category-item.active {
+  background: #f5a623;
+
+  border-color: #f5a623;
+
+  box-shadow:
+    0 5px 15px rgba(245, 166, 35, 0.2);
+}
+
+
+.course-category-item.active
+.category-name {
+  color: #ffffff;
+}
+
+
+.course-category-item.active
+.category-icon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.all-courses-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+
+.all-courses-header h2 {
+  margin: 0 0 5px;
+
+  color: #0a1e3f;
+
+  font-size: 26px;
+
+  font-weight: 700;
+}
+
+
+.all-courses-header p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   COURSE GRID
+========================================================= */
+
+.all-courses-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+
+/* =========================================================
+   SKELETON
+========================================================= */
+
+.course-card-skeleton {
+  height: 300px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    90deg,
+    #f1f1f1 25%,
+    #e8e8e8 50%,
+    #f1f1f1 75%
+  );
+
+  background-size: 200% 100%;
+
+  animation:
+    skeletonLoading 1.5s infinite;
+}
+
+
+@keyframes skeletonLoading {
+
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+
+}
+
+
+/* =========================================================
+   NO COURSES
+========================================================= */
+
+.no-courses {
+  width: 100%;
+
+  padding: 60px 20px;
+
+  text-align: center;
+
+  color: #777;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .course-category-list {
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+  }
+
+  .all-courses-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   992px
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .course-category-list {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+  .all-courses-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .all-courses-wrapper {
+    padding: 15px 16px 35px;
+  }
+
+  .course-category-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .all-courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .course-category-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .course-category-item {
+    min-height: 65px;
+
+    padding: 8px;
+  }
+
+  .category-icon {
+    width: 30px;
+
+    height: 30px;
+
+    font-size: 18px;
+  }
+
+  .category-name {
+    font-size: 12px;
+  }
+
+}

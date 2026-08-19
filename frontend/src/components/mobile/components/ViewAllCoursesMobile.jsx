@@ -871,12 +871,12 @@ export default function ViewAllCoursesMobile({
                   </span>
 
                   {/* COUNT */}
-                  <span className="vac-filter-count">
+                  {/* <span className="vac-filter-count">
                     {count}{" "}
                     {count === 1
                       ? "Course"
                       : "Courses"}
-                  </span>
+                  </span> */}
 
                 </button>
               );

@@ -23,6 +23,7 @@ import pbGoogleCloud from "../../../assets/pb-ggogleCloud.jpeg";
 
 import { API_URL } from "../../../data/service";
 import { cdnImage } from "../../../utils/cdnImage";
+import CourseSessionCard from "../../course/CourseSessionCard";
 
 import Select from "react-select";
 
@@ -1904,492 +1905,74 @@ export default function MobileLandingPage({
               </div>
             </div>
 
-            {/* =================================================
-                COURSE CARDS
-            ================================================= */}
+{/* =================================================
+    COURSE CARDS
+================================================= */}
 
-        {selectedDateKey && (
+{selectedDateKey && (
   <div className="mlp-course-session-section">
 
-    {/* ================================
-        HEADER
-    ================================= */}
+    {/* DATE HEADER */}
     <div className="mlp-session-section-header">
-
       <span className="mlp-field-label">
         Courses on{" "}
         {formatSelectedDate(selectedDateKey)}
       </span>
-
-      {groupedDateCourses.length > 2 && (
-        <button
-          type="button"
-          className="mlp-view-all-btn"
-          onClick={() => {
-            setShowAll((prev) => !prev);
-          }}
-        >
-          {showAll ? (
-            <>
-              Show Less <span className="mlp-view-arrow">↑</span>
-            </>
-          ) : (
-            <>
-              View All ({groupedDateCourses.length}){" "}
-              <span className="mlp-view-arrow">↓</span>
-            </>
-          )}
-        </button>
-      )}
     </div>
 
-    {/* ================================
-        COURSE LIST
-    ================================= */}
-    <div
-      className={
-        groupedDateCourses.length > 2 && showAll
-          ? "mlp-session-course-list mlp-course-list-expanded"
-          : "mlp-session-course-list"
-      }
-    >
+    {/* COURSE LIST */}
+    <div className="mlp-session-course-list">
+
       {groupedDateCourses.length === 0 ? (
         <div className="mlp-no-sessions">
           No sessions available on this date.
         </div>
       ) : (
-        /*
-         * IMPORTANT:
-         *
-         * When showAll = false:
-         *   Only first 2 courses are rendered.
-         *
-         * When showAll = true:
-         *   All courses are rendered inside
-         *   the fixed 300px scroll container.
-         */
-        (showAll
-          ? groupedDateCourses
-          : groupedDateCourses.slice(0, 2)
-        ).map((group) => {
-          /*
-           * We don't display sessions/time here.
-           * Session selection is handled by another component.
-           */
-          const firstSession = group.sessions?.[0];
-
-          const fullCourse = courses.find(
-            (course) =>
-              course._id === group.courseId
-          );
-
-          /* ================================
-             LOCATION
-          ================================= */
-          const location =
-            firstSession?.location ||
-            fullCourse?.location ||
-            "Sefton";
-
-          /* ================================
-             LOW SEAT CHECK
-          ================================= */
-          const low = isLow(
-            firstSession?.availableSlots
-          );
-
-          /* ================================
-             FALLBACK PRICE
-          ================================= */
-          const fallbackPrice =
-            firstSession?.priceDisplay ||
-            (fullCourse
-              ? getCoursePriceDisplay(fullCourse)
-              : "");
-
-          return (
-            <div
+        <>
+          {/* FIRST 2 COURSES */}
+          {(showAll
+            ? groupedDateCourses
+            : groupedDateCourses.slice(0, 2)
+          ).map((group) => (
+            <CourseSessionCard
               key={group.courseId}
-              className="mlp-scard"
-            >
-              <div className="mlp-scard-body">
+              group={group}
+              courses={courses}
+              onBookNow={handleBookNowClick}
+            />
+          ))}
 
-                {/* ================================
-                    COURSE NAME
-                ================================= */}
-                <h4 className="mlp-scard-title">
-                  {group.courseName}
-                </h4>
-
-                {/* ================================
-                    LOCATION + BOOK NOW
-                ================================= */}
-                <div className="mlp-scard-meta">
-
-                  <div className="inline">
-
-                    <span className="mlp-scard-meta-item">
-                      <span className="mlp-icon">
-                        📍
-                      </span>
-
-                      {location}
+          {/* VIEW ALL / SHOW LESS */}
+          {groupedDateCourses.length > 2 && (
+            <div className="mlp-view-all-wrapper">
+              <button
+                type="button"
+                className="mlp-view-all-btn"
+                onClick={() => {
+                  setShowAll((prev) => !prev);
+                }}
+              >
+                {showAll ? (
+                  <>
+                    Show Less
+                    <span className="mlp-view-arrow">
+                      ↑
                     </span>
-
-                  </div>
-
-                  <div className="book-now-sec">
-
-                    <button
-                      type="button"
-                      className="mlp-book-now-btn mlp-scard-book-btn"
-                      onClick={() =>
-                        handleBookNowClick(group)
-                      }
-                    >
-                      Book Now
-                    </button>
-
-                  </div>
-
-                </div>
-
-                {/* ================================
-                    PRICING
-                ================================= */}
-                <div className="mlp-scard-footer">
-
-                  <div className="mlp-scard-pricing">
-
-                    {fullCourse ? (
-                      (() => {
-
-                        const pricingType =
-                          fullCourse?.pricingType ||
-                          (
-                            fullCourse?.experienceBasedBooking
-                              ? "experience"
-                              : "standard"
-                          );
-
-                        /* =================================
-                           EXPERIENCE BASED
-                        ================================= */
-                        if (
-                          pricingType === "experience" ||
-                          [
-                            "excavator",
-                            "haul truck",
-                            "skid steer",
-                          ].some((keyword) =>
-                            fullCourse?.title
-                              ?.toLowerCase()
-                              .includes(keyword)
-                          )
-                        ) {
-                          return (
-                            <>
-                              {/* WITH EXPERIENCE */}
-                              {(
-                                fullCourse?.withExperiencePrice ||
-                                fullCourse?.sellingPrice
-                              ) && (
-                                <div className="mlp-scard-price-row">
-
-                                  <span className="mlp-scard-price-label">
-                                    With Experience
-                                  </span>
-
-                                  <span className="mlp-scard-price-values">
-
-                                    {fullCourse?.withExperienceOriginal && (
-                                      <span className="mlp-scard-price-original">
-                                        $
-                                        {
-                                          fullCourse.withExperienceOriginal
-                                        }
-                                      </span>
-                                    )}
-
-                                    <span className="mlp-scard-price-amount">
-                                      $
-                                      {
-                                        fullCourse?.withExperiencePrice ||
-                                        fullCourse?.sellingPrice
-                                      }
-                                    </span>
-
-                                  </span>
-
-                                </div>
-                              )}
-
-                              {/* WITHOUT EXPERIENCE */}
-                              {(
-                                fullCourse?.withoutExperiencePrice ||
-                                fullCourse?.sellingPrice
-                              ) && (
-                                <div className="mlp-scard-price-row">
-
-                                  <span className="mlp-scard-price-label">
-                                    Without Experience
-                                  </span>
-
-                                  <span className="mlp-scard-price-values">
-
-                                    {fullCourse?.withoutExperienceOriginal && (
-                                      <span className="mlp-scard-price-original">
-                                        $
-                                        {
-                                          fullCourse.withoutExperienceOriginal
-                                        }
-                                      </span>
-                                    )}
-
-                                    <span className="mlp-scard-price-amount">
-                                      $
-                                      {
-                                        fullCourse?.withoutExperiencePrice ||
-                                        fullCourse?.sellingPrice
-                                      }
-                                    </span>
-
-                                  </span>
-
-                                </div>
-                              )}
-
-                              {/* VOC */}
-                              {(
-                                fullCourse?.vocPrice ||
-                                fullCourse?.sellingPrice
-                              ) && (
-                                <div className="mlp-scard-price-row">
-
-                                  <span className="mlp-scard-price-label">
-                                    VOC
-                                  </span>
-
-                                  <span className="mlp-scard-price-values">
-
-                                    <span className="mlp-scard-price-amount">
-                                      $
-                                      {
-                                        fullCourse?.vocPrice ||
-                                        fullCourse?.sellingPrice
-                                      }
-                                    </span>
-
-                                  </span>
-
-                                </div>
-                              )}
-                            </>
-                          );
-                        }
-
-                        /* =================================
-                           SLBL
-                        ================================= */
-                        if (
-                          pricingType === "slbl" ||
-                          fullCourse?.slblPrice
-                        ) {
-                          return (
-                            <>
-                              {/* SL + BL */}
-                              {fullCourse?.slblPrice && (
-                                <div className="mlp-scard-price-row">
-
-                                  <span className="mlp-scard-price-label">
-                                    SL + BL
-                                  </span>
-
-                                  <span className="mlp-scard-price-values">
-
-                                    {fullCourse?.slblStrikePrice && (
-                                      <span className="mlp-scard-price-original">
-                                        $
-                                        {
-                                          fullCourse.slblStrikePrice
-                                        }
-                                      </span>
-                                    )}
-
-                                    <span className="mlp-scard-price-amount">
-                                      $
-                                      {fullCourse.slblPrice}
-                                    </span>
-
-                                  </span>
-
-                                </div>
-                              )}
-
-                              {/* SL OR BL */}
-                              {(
-                                fullCourse?.slSinglePrice ||
-                                fullCourse?.sellingPrice
-                              ) && (
-                                <div className="mlp-scard-price-row">
-
-                                  <span className="mlp-scard-price-label">
-                                    SL or BL
-                                  </span>
-
-                                  <span className="mlp-scard-price-values">
-
-                                    {(
-                                      fullCourse?.slSingleStrikePrice ||
-                                      fullCourse?.originalPrice
-                                    ) && (
-                                      <span className="mlp-scard-price-original">
-                                        $
-                                        {
-                                          fullCourse?.slSingleStrikePrice ||
-                                          fullCourse?.originalPrice
-                                        }
-                                      </span>
-                                    )}
-
-                                    <span className="mlp-scard-price-amount">
-                                      $
-                                      {
-                                        fullCourse?.slSinglePrice ||
-                                        fullCourse?.sellingPrice
-                                      }
-                                    </span>
-
-                                  </span>
-
-                                </div>
-                              )}
-
-                              {/* VOC */}
-                              {(
-                                fullCourse?.vocPrice ||
-                                fullCourse?.sellingPrice
-                              ) && (
-                                <div className="mlp-scard-price-row">
-
-                                  <span className="mlp-scard-price-label">
-                                    VOC
-                                  </span>
-
-                                  <span className="mlp-scard-price-values">
-
-                                    <span className="mlp-scard-price-amount">
-                                      $
-                                      {
-                                        fullCourse?.vocPrice ||
-                                        fullCourse?.sellingPrice
-                                      }
-                                    </span>
-
-                                  </span>
-
-                                </div>
-                              )}
-                            </>
-                          );
-                        }
-
-                        /* =================================
-                           STANDARD
-                        ================================= */
-                        return (
-                          <>
-                            {fullCourse?.sellingPrice && (
-                              <div className="mlp-scard-price-row">
-
-                                <span className="mlp-scard-price-label">
-                                  Standard
-                                </span>
-
-                                <span className="mlp-scard-price-values">
-
-                                  {fullCourse?.originalPrice && (
-                                    <span className="mlp-scard-price-original">
-                                      $
-                                      {
-                                        fullCourse.originalPrice
-                                      }
-                                    </span>
-                                  )}
-
-                                  <span className="mlp-scard-price-amount">
-                                    $
-                                    {
-                                      fullCourse.sellingPrice
-                                    }
-                                  </span>
-
-                                </span>
-
-                              </div>
-                            )}
-
-                            {(
-                              fullCourse?.vocPrice ||
-                              fullCourse?.sellingPrice
-                            ) && (
-                              <div className="mlp-scard-price-row">
-
-                                <span className="mlp-scard-price-label">
-                                  VOC
-                                </span>
-
-                                <span className="mlp-scard-price-values">
-
-                                  <span className="mlp-scard-price-amount">
-                                    $
-                                    {
-                                      fullCourse?.vocPrice ||
-                                      fullCourse?.sellingPrice
-                                    }
-                                  </span>
-
-                                </span>
-
-                              </div>
-                            )}
-                          </>
-                        );
-
-                      })()
-                    ) : (
-                      fallbackPrice &&
-                      fallbackPrice !== "Enquire" && (
-                        <span className="mlp-scard-price">
-                          {fallbackPrice}
-                        </span>
-                      )
-                    )}
-
-                  </div>
-
-                  {/* ================================
-                      SEATS
-                  ================================= */}
-                  {!fullCourse?.image &&
-                    firstSession?.availableSlots !==
-                      undefined && (
-                      <span
-                        className={`mlp-seats-badge ${
-                          low ? "low" : ""
-                        }`}
-                      >
-                        {firstSession.availableSlots} Seats Left
-                      </span>
-                    )}
-
-                </div>
-
-              </div>
+                  </>
+                ) : (
+                  <>
+                    View All
+                    <span className="mlp-view-arrow">
+                      ↓
+                    </span>
+                  </>
+                )}
+              </button>
             </div>
-          );
-        })
+          )}
+        </>
       )}
+
     </div>
   </div>
 )}
@@ -2397,6 +1980,7 @@ export default function MobileLandingPage({
 {/* =========================================
     NO DATE SELECTED
 ========================================= */}
+
 {!selectedDateKey && (
   <div className="mlp-select-date-message">
     Select a highlighted date to view available courses.

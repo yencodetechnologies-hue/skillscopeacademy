@@ -1,0 +1,213 @@
+/* Card Container */
+.mlp-card-container {
+  background: #ffffff;
+  border-radius: 12px;
+  border-left: 5px solid #f59e0b;
+  padding: 12px 14px;
+  max-width: 520px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+/* Header Area */
+.mlp-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.mlp-card-left-group {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.mlp-card-avatar,
+.mlp-card-avatar-placeholder {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.mlp-card-avatar-placeholder {
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.mlp-card-title-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
+
+.mlp-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* CODE & PRICE FLEX ROW */
+.mlp-code-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mlp-card-code {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mlp-card-main-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.mlp-horizontal-prices {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  /* border: 1px solid #e2e8f0; */
+  border-radius: 6px;
+  padding: 2px 0px;
+  flex-shrink: 0;
+}
+
+.mlp-hprice-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 9px;
+}
+
+.mlp-hp-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.mlp-hp-strike {
+  text-decoration: line-through;
+  color: #94a3b8;
+  font-size: 8.5px;
+}
+
+.mlp-hp-val {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.mlp-hp-divider {
+  color: #cbd5e1;
+  font-size: 9px;
+}
+
+/* DURATION BANNER + TAGS IN ONE FLEX ROW */
+.mlp-info-flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.mlp-duration-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  min-width: 0;
+}
+
+.mlp-banner-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+}
+
+.mlp-banner-item.location-item {
+  border-left: 1px solid #bfdbfe;
+  padding-left: 8px;
+}
+
+.mlp-icon {
+  font-size: 10px;
+}
+
+.mlp-banner-text {
+  color: #1e40af;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mlp-card-tags {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.mlp-card-tag {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* Actions */
+.mlp-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.mlp-btn-book {
+  flex: 2;
+  background: #f59e0b;
+  color: #ffffff;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.mlp-btn-book:hover {
+  background: #d97706;
+}
+
+.mlp-btn-details {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  padding: 7px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}

@@ -73,6 +73,7 @@
   font-size: 14px;
   color: #0f172a;
   outline: none;
+  margin-bottom: 0px !important;
 }
 
 .vac-search-input::placeholder {
@@ -230,7 +231,7 @@
 
 .vac-filter-card {
   min-width: 0;
-  min-height: 70px;
+  /* min-height: 70px; */
 
   background: #ffffff;
   border: 1px solid #e8edf3;
@@ -301,8 +302,6 @@
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 6px;
-
   color: var(--category-color);
 
   background:
@@ -316,8 +315,8 @@
 }
 
 .vac-category-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 13px;
+  height: 13px;
   display: block;
 }
 
@@ -343,7 +342,7 @@
 
   color: #1e293b;
 
-  font-size: 9.5px;
+  font-size: 8.5px;
   line-height: 1.2;
 
   font-weight: 700;

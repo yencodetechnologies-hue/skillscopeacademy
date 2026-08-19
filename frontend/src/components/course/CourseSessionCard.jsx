@@ -109,10 +109,8 @@ export default function CourseSessionCard({ group, courses = [], onBookNow, onDe
       ? `${fullCourse.durationWithExp} / ${fullCourse.durationWithoutExp || "2 Days"}`
       : "1 Day");
 
-  // Get dynamic pricing options based on pricingType
+  // Dynamic booking options
   const options = getBookingOptions(fullCourse);
-
-  // Set top right price based on default/first option price
   const mainPrice = options[0]?.price || fullCourse?.sellingPrice || 0;
 
   const handleBookNow = () => {
@@ -125,7 +123,7 @@ export default function CourseSessionCard({ group, courses = [], onBookNow, onDe
 
   return (
     <div className="mlp-card-container">
-      {/* HEADER: TITLE, CODE, AND DYNAMIC MAIN PRICE */}
+      {/* HEADER: TITLE, AVATAR, CODE & PRICING BREAKDOWN */}
       <div className="mlp-card-header">
         <div className="mlp-card-left-group">
           {fullCourse?.image ? (
@@ -136,16 +134,34 @@ export default function CourseSessionCard({ group, courses = [], onBookNow, onDe
 
           <div className="mlp-card-title-group">
             <h4 className="mlp-card-title">{courseTitle}</h4>
-            {courseCode && <span className="mlp-card-code">({courseCode})</span>}
+
+            {/* CODE + PRICES FLEX ROW */}
+            <div className="mlp-code-price-row">
+              {courseCode && <span className="mlp-card-code">({courseCode})</span>}
+
+              <div className="mlp-horizontal-prices">
+                {options.map((opt, index) => (
+                  <React.Fragment key={opt.id}>
+                    <div className="mlp-hprice-item">
+                      <span className="mlp-hp-label">{opt.label}:</span>
+                      {opt.originalPrice && opt.originalPrice > opt.price && (
+                        <span className="mlp-hp-strike">${opt.originalPrice}</span>
+                      )}
+                      <span className="mlp-hp-val">${opt.price || 0}</span>
+                    </div>
+                    {index < options.length - 1 && <span className="mlp-hp-divider">|</span>}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="mlp-card-main-price">${mainPrice}</div>
       </div>
 
-      {/* DURATION & LOCATION BANNER + DYNAMIC BREAKDOWN BAR */}
+      {/* FLEX ROW: DURATION/LOCATION BANNER + TAGS */}
       <div className="mlp-info-flex-row">
-        {/* Banner with Duration and Location */}
         <div className="mlp-duration-banner">
           <div className="mlp-banner-item">
             <span className="mlp-icon">⏱</span>
@@ -155,29 +171,18 @@ export default function CourseSessionCard({ group, courses = [], onBookNow, onDe
           <div className="mlp-banner-item location-item">
             <span className="mlp-icon">📍</span>
             <span className="mlp-banner-text">{location}</span>
+            
+          </div>
+          <div className="mlp-banner-item location-item">
+            <span className="mlp-icon">🔄</span>
+            <span className="mlp-banner-text">{deliveryMode}</span>
+            
           </div>
         </div>
-
-        {/* Dynamic Pricing options mapped directly from getBookingOptions */}
-        <div className="mlp-horizontal-prices">
-          {options.map((opt, index) => (
-            <React.Fragment key={opt.id}>
-              <div className="mlp-hprice-item">
-                <span className="mlp-hp-label">{opt.label}:</span>
-                {opt.originalPrice && opt.originalPrice > opt.price && (
-                  <span className="mlp-hp-strike">${opt.originalPrice}</span>
-                )}
-                <span className="mlp-hp-val">${opt.price || 0}</span>
-              </div>
-              {index < options.length - 1 && <span className="mlp-hp-divider">|</span>}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-
-      {/* TAGS */}
-      <div className="mlp-card-tags">
-        <span className="mlp-card-tag">{deliveryMode}</span>
+{/* 
+        <div className="mlp-card-tags">
+          <span className="mlp-card-tag">{deliveryMode}</span>
+        </div> */}
       </div>
 
       {/* ACTIONS */}

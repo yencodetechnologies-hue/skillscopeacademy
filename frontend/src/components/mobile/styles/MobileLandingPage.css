@@ -2975,3 +2975,35 @@ font-size: 10px;
    COURSE CARD
 ========================================= */
 
+/* Default state - only first 2 course cards are displayed */
+.mlp-session-course-list {
+  width: 100%;
+}
+
+/* After clicking View All */
+.mlp-session-course-list-expanded {
+  max-height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar */
+.mlp-session-course-list-expanded::-webkit-scrollbar {
+  width: 5px;
+}
+
+.mlp-session-course-list-expanded::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mlp-session-course-list-expanded::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.mlp-session-course-list-expanded::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+

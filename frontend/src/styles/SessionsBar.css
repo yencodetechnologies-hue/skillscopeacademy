@@ -605,40 +605,32 @@
 
 
 /* =========================================================
-   SESSION CARD
+   SESSION CARD (final/authoritative version)
    ========================================================= */
 
 .sb-slot-card {
     display: grid;
 
-    /*
-       DATE
-       COURSE
-       LOCATION / PRICE
-       REFERRAL
-       ACTION
-    */
-
     grid-template-columns:
-        82px
-        minmax(250px, 1fr)
-        minmax(125px, 0.65fr)
+        72px
+        minmax(220px, 1fr)
+        minmax(170px, 0.75fr)
         minmax(90px, 0.45fr)
         auto;
 
     align-items: center;
 
-    gap: 17px;
+    gap: 15px;
 
-    padding: 14px 16px;
+    padding: 15px 16px;
 
     background: #ffffff;
 
     border: 1px solid #e2e8f0;
 
-    border-radius: 11px;
+    border-radius: 12px;
 
-    cursor: pointer;
+    cursor: default;
 
     transition:
         border-color 0.2s ease,
@@ -648,17 +640,14 @@
 }
 
 
-/* =========================================================
-   CARD HOVER
-   ========================================================= */
-
 .sb-slot-card:hover {
-    border-color: #10b981;
+    border-color:
+        rgba(245, 166, 35, 0.45);
 
-    background: #fbfffd;
+    background: #fffefa;
 
     box-shadow:
-        0 6px 18px
+        0 8px 22px
         rgba(15, 23, 42, 0.07);
 
     transform: translateY(-1px);
@@ -700,13 +689,18 @@
 
     justify-content: center;
 
-    min-width: 60px;
+    min-width: 62px;
 
-    padding: 7px 9px;
+    padding: 8px 9px;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
-    background: #fff7ed;
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #fffbeb
+        );
 
     border: 1px solid #fed7aa;
 
@@ -714,7 +708,7 @@
 
     font-size: 11px;
 
-    font-weight: 750;
+    font-weight: 800;
 
     white-space: nowrap;
 }
@@ -731,7 +725,7 @@
 
     flex-direction: column;
 
-    gap: 5px;
+    gap: 7px;
 }
 
 
@@ -759,17 +753,17 @@
 
     text-overflow: ellipsis;
 
-    white-space: nowrap;
+    white-space: normal;
 
     color: #172f14;
 
-    font-size: 15px;
+    font-size: 14px;
 
-    font-weight: 750;
+    font-weight: 800;
 
-    line-height: 1.3;
+    line-height: 1.35;
 
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
 }
 
 
@@ -788,9 +782,9 @@
 
     color: #64748b;
 
-    font-size: 9px;
+    font-size: 8px;
 
-    font-weight: 750;
+    font-weight: 800;
 
     letter-spacing: 0.04em;
 
@@ -799,7 +793,7 @@
 
 
 /* =========================================================
-   TIME
+   TIME / LOCATION ROW (single icon inline, e.g. next to date)
    ========================================================= */
 
 .sb-slot-time-row {
@@ -820,41 +814,46 @@
 
     justify-content: center;
 
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #f8fafc;
+
     color: #94a3b8;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 
 .sb-slot-time {
-    /*
-       SMALLER THAN COURSE
-    */
-
     font-size: 10px;
 
     font-weight: 600;
 
-    line-height: 1;
+    line-height: 1.2;
 
     color: #64748b;
 }
 
 
 /* =========================================================
-   LOCATION + PRICE
+   PRICE ROW
    ========================================================= */
 
 .sb-slot-info-col {
     min-width: 0;
 
     display: flex;
-
     flex-direction: column;
 
-    align-items: flex-start;
+    align-items: stretch;
 
-    gap: 4px;
+    gap: 7px;
+
+    width: 100%;
 }
 
 
@@ -863,9 +862,9 @@
 
     align-items: center;
 
-    gap: 4px;
+    gap: 5px;
 
-    max-width: 150px;
+    max-width: 180px;
 
     overflow: hidden;
 
@@ -877,23 +876,226 @@
 
     font-size: 10px;
 
-    font-weight: 500;
+    font-weight: 600;
+
+    line-height: 1.2;
 }
 
 
 .sb-location-icon {
-    color: #94a3b8;
+    display: inline-flex;
 
-    font-size: 11px;
+    align-items: center;
+
+    justify-content: center;
+
+    width: 18px;
+
+    height: 18px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #fff7ed;
+
+    color: #f5a623;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PRICE SECTION — plain inline row, pipe-separated
+   (label in blue, value bold/dark), no boxes/badges.
+   ========================================================= */
+
+.sb-slot-card-pricing {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    row-gap: 4px;
 }
 
 
 .sb-slot-price {
-    color: #172f14;
+    display: inline-flex;
 
-    font-size: 11px;
+    align-items: center;
 
-    font-weight: 750;
+    gap: 4px;
+
+    width: auto;
+
+    min-width: 0;
+
+    padding: 0;
+
+    background: none;
+
+    border: none;
+
+    font-size: 12px;
+
+    line-height: 1.3;
+
+    white-space: nowrap;
+}
+
+
+.sb-slot-price:not(:last-child)::after {
+    content: "|";
+
+    margin: 0 8px;
+
+    color: #cbd5e1;
+
+    font-weight: 400;
+}
+
+
+.sb-slot-price:hover {
+    background: none;
+
+    border-color: transparent;
+
+    transform: none;
+}
+
+
+.sb-slot-price strong {
+    display: inline;
+
+    flex-shrink: 0;
+
+    min-width: 0;
+
+    padding: 0;
+
+    border-radius: 0;
+
+    background: none;
+
+    color: #0f172a;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.01em;
+}
+
+
+/* =========================================================
+   COURSE META ROW (location / duration / delivery)
+   THIS WAS MISSING A BASE DEFINITION — ONLY MOBILE OVERRIDES
+   EXISTED, WHICH IS WHY THE SYMBOLS LOOKED UNSTYLED.
+   ========================================================= */
+
+.sb-slot-meta {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 8px 14px;
+
+    margin-top: 2px;
+}
+
+
+.sb-slot-meta-item {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #64748b;
+
+    font-size: 10.5px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+/* SYMBOL / ICON DESIGN
+   Circular badge, consistent with .sb-location-icon,
+   with per-position accent colors so location / duration /
+   delivery read as distinct at a glance. */
+
+.sb-meta-icon {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 20px;
+
+    height: 20px;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+
+    line-height: 1;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    color: #94a3b8;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.sb-slot-meta-item:hover .sb-meta-icon {
+    transform: translateY(-1px);
+}
+
+
+/* location pin */
+.sb-slot-meta-item:nth-child(1) .sb-meta-icon {
+    background: #fff7ed;
+
+    border-color: #fed7aa;
+
+    color: #f5a623;
+}
+
+
+/* duration / clock */
+.sb-slot-meta-item:nth-child(2) .sb-meta-icon {
+    background: #f0fdf4;
+
+    border-color: #bbf7d0;
+
+    color: #059669;
+}
+
+
+/* delivery method / graduation cap */
+.sb-slot-meta-item:nth-child(3) .sb-meta-icon {
+    background: #eff6ff;
+
+    border-color: #bfdbfe;
+
+    color: #2563eb;
 }
 
 
@@ -1010,29 +1212,36 @@
 
     justify-content: center;
 
-    gap: 5px;
+    gap: 6px;
 
-    padding: 8px 12px;
+    min-width: 92px;
+
+    padding: 9px 13px;
 
     border: none;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
-    background: #10b981;
+    background:
+        linear-gradient(
+            135deg,
+            #f5a623,
+            #f59e0b
+        );
 
     color: #ffffff;
 
     font-size: 10px;
 
-    font-weight: 700;
+    font-weight: 800;
 
     cursor: pointer;
 
     white-space: nowrap;
 
     box-shadow:
-        0 3px 8px
-        rgba(16, 185, 129, 0.18);
+        0 4px 10px
+        rgba(245, 166, 35, 0.20);
 
     transition:
         background 0.2s ease,
@@ -1042,13 +1251,18 @@
 
 
 .sb-book-btn:hover {
-    background: #059669;
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #d97706
+        );
 
     transform: translateY(-1px);
 
     box-shadow:
-        0 5px 12px
-        rgba(16, 185, 129, 0.25);
+        0 6px 14px
+        rgba(245, 166, 35, 0.28);
 }
 
 
@@ -1060,9 +1274,47 @@
 }
 
 
-.sb-book-btn:hover
-.sb-book-arrow {
-    transform: translateX(2px);
+.sb-book-btn:hover .sb-book-arrow {
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   PRICING (old / current price variant)
+   ========================================================= */
+
+.sb-slot-card-pricing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1px;
+}
+
+
+.sb-old-price {
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+
+.sb-current-price {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+
+    color: #172f14;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+
+.sb-price-symbol {
+    font-size: 11px;
+    font-weight: 800;
 }
 
 
@@ -1218,10 +1470,11 @@
 
     .sb-slot-card {
         grid-template-columns:
-            72px
-            minmax(210px, 1fr)
-            minmax(110px, 0.6fr)
+            65px
+            minmax(0, 1fr)
             auto;
+
+        gap: 14px;
     }
 
 
@@ -1253,16 +1506,25 @@
     }
 
 
-    .sb-slot-card {
-        grid-template-columns:
-            72px
-            minmax(220px, 1fr)
-            auto;
+    .sb-slot-info-col {
+        display: flex;
+
+        grid-column: 2;
+
+        width: 100%;
+
+        flex-direction: row;
+
+        flex-wrap: wrap;
+
+        align-items: center;
     }
 
 
-    .sb-slot-info-col {
-        display: none;
+    .sb-slot-price {
+        width: auto;
+
+        min-width: 0;
     }
 
 }
@@ -1301,16 +1563,16 @@
 
     .sb-slot-card {
         grid-template-columns:
-            62px minmax(0, 1fr);
+            58px minmax(0, 1fr);
 
         gap: 10px;
 
-        padding: 12px;
+        padding: 13px;
     }
 
 
     .sb-slot-date-col {
-        grid-row: span 2;
+        grid-row: 1 / span 3;
 
         align-self: start;
     }
@@ -1335,15 +1597,7 @@
     .sb-slot-course-title-main {
         font-size: 13px;
 
-        white-space: normal;
-
-        display: -webkit-box;
-
-        -webkit-line-clamp: 2;
-
-        -webkit-box-orient: vertical;
-
-        overflow: hidden;
+        line-height: 1.35;
     }
 
 
@@ -1357,12 +1611,61 @@
     }
 
 
-    .sb-slot-cta-col {
+    .sb-slot-info-col {
         grid-column: 2;
 
-        justify-content: flex-start;
+        display: flex;
 
-        width: 100%;
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 5px;
+    }
+
+
+    .sb-slot-card-pricing {
+        row-gap: 3px;
+    }
+
+
+    .sb-slot-price {
+        width: auto;
+
+        min-width: 0;
+
+        font-size: 10px;
+    }
+
+
+    .sb-slot-price:not(:last-child)::after {
+        margin: 0 6px;
+    }
+
+
+    .sb-slot-price strong {
+        font-size: 10px;
+    }
+
+
+    .sb-slot-meta {
+        gap: 6px 10px;
+
+        align-items: flex-start;
+    }
+
+
+    .sb-slot-meta-item {
+        font-size: 9px;
+    }
+
+
+    .sb-meta-icon {
+        width: 16px;
+
+        height: 16px;
+
+        font-size: 9px;
     }
 
 
@@ -1372,9 +1675,22 @@
 
 
     .sb-book-btn {
-        padding: 7px 11px;
+        min-width: 100px;
+
+        padding: 8px 12px;
 
         font-size: 10px;
+    }
+
+
+    .sb-slot-cta-col {
+        grid-column: 2;
+
+        justify-content: flex-start;
+
+        width: 100%;
+
+        margin-top: 2px;
     }
 
 }
@@ -1397,7 +1713,11 @@
 
     .sb-slot-card {
         grid-template-columns:
-            58px minmax(0, 1fr);
+            52px minmax(0, 1fr);
+
+        padding: 11px;
+
+        gap: 8px;
     }
 
 
@@ -1405,568 +1725,19 @@
         font-size: 12px;
     }
 
-}
 
-/* =========================================================
-   LOCATION + PRICE COLUMN
-   ========================================================= */
-
-.sb-slot-info-col {
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 7px;
-
-    width: 100%;
-}
-
-
-/* =========================================================
-   LOCATION
-   ========================================================= */
-
-.sb-slot-tag {
-    display: flex;
-
-    align-items: center;
-
-    gap: 5px;
-
-    max-width: 180px;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-    color: #64748b;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-    line-height: 1.2;
-}
-
-
-.sb-location-icon {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 18px;
-
-    height: 18px;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    background: #fff7ed;
-
-    color: #f5a623;
-
-    font-size: 10px;
-}
-
-
-/* =========================================================
-   PRICE
-   ========================================================= */
-
-.sb-slot-price {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 10px;
-
-    width: 100%;
-
-    min-width: 145px;
-
-    padding: 6px 9px;
-
-    background: #f8fafc;
-
-    border: 1px solid #e2e8f0;
-
-    border-radius: 7px;
-
-    color: #64748b;
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    line-height: 1.2;
-
-    white-space: nowrap;
-
-    transition:
-        border-color 0.2s ease,
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.sb-slot-price:hover {
-    background: #fffaf2;
-
-    border-color: rgba(245, 166, 35, 0.45);
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================================================
-   PRICE AMOUNT
-   ========================================================= */
-
-.sb-slot-price strong {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    min-width: 48px;
-
-    padding: 4px 7px;
-
-    border-radius: 5px;
-
-    background: #fff7ed;
-
-    color: #d97706;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: -0.01em;
-}
-
-
-/* =========================================================
-   PRICE TYPE COLORS
-   ========================================================= */
-
-.sb-slot-price:nth-child(1) strong {
-    background: #fff7ed;
-
-    color: #d97706;
-}
-
-
-.sb-slot-price:nth-child(2) strong {
-    background: #f0fdf4;
-
-    color: #059669;
-}
-
-
-.sb-slot-price:nth-child(3) strong {
-    background: #eff6ff;
-
-    color: #2563eb;
-}
-
-
-/* =========================================================
-   COURSE MAIN COLUMN
-   ========================================================= */
-
-.sb-slot-main-col {
-    min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-
-/* =========================================================
-   COURSE TITLE
-   ========================================================= */
-
-.sb-slot-course-title-main {
-    min-width: 0;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: normal;
-
-    color: #172f14;
-
-    font-size: 14px;
-
-    font-weight: 800;
-
-    line-height: 1.35;
-
-    letter-spacing: -0.015em;
-}
-
-
-/* =========================================================
-   COURSE CODE
-   ========================================================= */
-
-.sb-slot-course-code {
-    flex-shrink: 0;
-
-    padding: 3px 7px;
-
-    border-radius: 5px;
-
-    background: #f1f5f9;
-
-    border: 1px solid #e2e8f0;
-
-    color: #64748b;
-
-    font-size: 8px;
-
-    font-weight: 800;
-
-    letter-spacing: 0.04em;
-
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   LOCATION ROW
-   ========================================================= */
-
-.sb-slot-time-row {
-    display: flex;
-
-    align-items: center;
-
-    gap: 5px;
-
-    color: #64748b;
-}
-
-
-.sb-time-icon {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 18px;
-
-    height: 18px;
-
-    border-radius: 50%;
-
-    background: #f8fafc;
-
-    color: #94a3b8;
-
-    font-size: 10px;
-}
-
-
-.sb-slot-time {
-    font-size: 10px;
-
-    font-weight: 600;
-
-    line-height: 1.2;
-
-    color: #64748b;
-}
-
-
-/* =========================================================
-   BOOK BUTTON
-   ========================================================= */
-
-.sb-book-btn {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 6px;
-
-    min-width: 92px;
-
-    padding: 9px 13px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f5a623,
-            #f59e0b
-        );
-
-    color: #ffffff;
-
-    font-size: 10px;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    white-space: nowrap;
-
-    box-shadow:
-        0 4px 10px
-        rgba(245, 166, 35, 0.20);
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-.sb-book-btn:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #f59e0b,
-            #d97706
-        );
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 6px 14px
-        rgba(245, 166, 35, 0.28);
-}
-
-
-.sb-book-arrow {
-    font-size: 12px;
-
-    transition:
-        transform 0.2s ease;
-}
-
-
-.sb-book-btn:hover .sb-book-arrow {
-    transform: translateX(3px);
-}
-
-
-/* =========================================================
-   DATE BADGE
-   ========================================================= */
-
-.sb-slot-date {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-width: 62px;
-
-    padding: 8px 9px;
-
-    border-radius: 8px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff7ed,
-            #fffbeb
-        );
-
-    border: 1px solid #fed7aa;
-
-    color: #172f14;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   CARD
-   ========================================================= */
-
-.sb-slot-card {
-    display: grid;
-
-    grid-template-columns:
-        72px
-        minmax(220px, 1fr)
-        minmax(170px, 0.75fr)
-        minmax(90px, 0.45fr)
-        auto;
-
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 15px 16px;
-
-    background: #ffffff;
-
-    border: 1px solid #e2e8f0;
-
-    border-radius: 12px;
-
-    cursor: default;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-
-.sb-slot-card:hover {
-    border-color:
-        rgba(245, 166, 35, 0.45);
-
-    background: #fffefa;
-
-    box-shadow:
-        0 8px 22px
-        rgba(15, 23, 42, 0.07);
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================================================
-   MOBILE PRICE
-   ========================================================= */
-
-@media (max-width: 950px) {
-
-    .sb-slot-info-col {
-        display: flex;
-
-        grid-column: 2;
-
-        width: 100%;
-
-        flex-direction: row;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-    }
-
-
-    .sb-slot-price {
-        width: auto;
-
-        min-width: 135px;
-    }
-
-}
-
-
-@media (max-width: 650px) {
-
-    .sb-slot-info-col {
-        grid-column: 2;
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 5px;
-    }
-
-
-    .sb-slot-price {
-        width: 100%;
-
-        min-width: 0;
-
-        padding: 6px 8px;
-    }
-
-
-    .sb-slot-card {
-        grid-template-columns:
-            58px minmax(0, 1fr);
-
-        gap: 10px;
-
-        padding: 12px;
-    }
-
-
-    .sb-slot-date-col {
-        grid-row: span 3;
-
-        align-self: start;
-    }
-
-
-    .sb-slot-course-title-main {
-        font-size: 13px;
-    }
-
-
-    .sb-slot-cta-col {
-        grid-column: 2;
-
-        justify-content: flex-start;
-
-        width: 100%;
-    }
-
-
-    .sb-book-btn {
-        min-width: 100px;
-
-        padding: 8px 12px;
-    }
-
-}
-
-
-@media (max-width: 400px) {
-
-    .sb-slot-price {
+    .sb-slot-meta-item {
         font-size: 8px;
     }
 
 
-    .sb-slot-price strong {
-        font-size: 10px;
+    .sb-slot-price {
+        font-size: 9px;
+    }
 
-        min-width: 45px;
+
+    .sb-slot-price strong {
+        font-size: 9px;
     }
 
 }

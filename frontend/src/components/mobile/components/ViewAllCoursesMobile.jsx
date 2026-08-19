@@ -13,13 +13,8 @@ import {
 import MobileNavbar from "../../MobileNavbar";
 import "../styles/ViewAllCoursesMobile.css";
 
-import {
-  getCoursePriceDisplay,
-  getCourseOriginalDisplay,
-  getCourseSavingDisplay,
-} from "../../../utils/coursePrice";
-
 import BookingModal from "../../course/BookingModal";
+import CourseSessionCard from "../../course/CourseSessionCard";
 
 /* =========================================================
    CATEGORY ORDER
@@ -416,19 +411,6 @@ function getCategoryColor(category = "") {
 
   return palette[hash % palette.length];
 }
-
-/* =========================================================
-   PRICE HELPERS
-========================================================= */
-
-const getPriceDisplay =
-  getCoursePriceDisplay;
-
-const getOrigPrice =
-  getCourseOriginalDisplay;
-
-const getSaving =
-  getCourseSavingDisplay;
 
 /* =========================================================
    COMPONENT
@@ -937,6 +919,12 @@ export default function ViewAllCoursesMobile({
 
       {/* ===================================================
           COURSE LIST
+
+          Each item renders the shared CourseSessionCard
+          component (unchanged — also used elsewhere) by
+          wrapping the flat course into the lightweight
+          "group" shape it expects, instead of duplicating
+          the card markup/price logic here.
       =================================================== */}
 
       <div className="vac-course-list">
@@ -951,196 +939,33 @@ export default function ViewAllCoursesMobile({
         ) : (
           filtered.map(
             (course) => {
-              const price =
-                getPriceDisplay(
-                  course
-                );
 
-              const orig =
-                getOrigPrice(
-                  course
-                );
+              /* Minimal group wrapper — CourseSessionCard
+                 looks up the full course via
+                 courses.find(c => c._id === group.courseId),
+                 so passing just this course is enough. */
 
-              const saving =
-                getSaving(
-                  course
-                );
-
-              const categoryImgSrc =
-                course.categoryImage ||
-                course.categoryIcon ||
-                course.image ||
-                course.icon;
+              const group = {
+                courseId: course._id,
+                courseName: course.title,
+                courseCode: course.courseCode,
+                sessions: [],
+              };
 
               return (
-                <div
-                  key={
-                    course._id
+                <CourseSessionCard
+                  key={course._id}
+                  group={group}
+                  courses={[course]}
+                  onBookNow={() =>
+                    setSelectedCourse(course)
                   }
-                  className="vac-course-card vac-course-item-clickable"
-                  onClick={() =>
+                  onDetails={() =>
                     navigate(
                       `/course/${course.slug}`
                     )
                   }
-                  role="button"
-                  tabIndex={0}
-                >
-
-                  <div className="vac-card-accent-bar" />
-
-                  <div className="vac-card-main">
-
-                    {/* CATEGORY IMAGE */}
-                    <div className="vac-card-avatar">
-
-                      {categoryImgSrc ? (
-                        <img
-                          src={
-                            categoryImgSrc
-                          }
-                          alt={
-                            course.category ||
-                            course.title
-                          }
-                          className="vac-card-backend-img"
-                        />
-                      ) : (
-                        <CategoryIcon
-                          category={
-                            course.category
-                          }
-                        />
-                      )}
-
-                    </div>
-
-                    <div className="vac-card-content">
-
-                      {/* TITLE + PRICE */}
-                      <div className="vac-card-header">
-
-                        <div className="vac-title-block">
-
-                          <h3 className="vac-course-title">
-                            {
-                              course.title
-                            }
-                          </h3>
-
-                          {course.courseCode && (
-                            <div className="vac-course-code">
-                              (
-                              {
-                                course.courseCode
-                              }
-                              )
-                            </div>
-                          )}
-
-                        </div>
-
-                        <div className="vac-price-block">
-
-                          <div className="vac-course-price">
-                            {
-                              price
-                            }
-                          </div>
-
-                          {orig && (
-                            <div className="vac-course-orig">
-                              {
-                                orig
-                              }
-                            </div>
-                          )}
-
-                        </div>
-
-                      </div>
-
-                      {/* META */}
-                      <div className="vac-course-meta">
-
-                        {course.duration && (
-                          <span className="vac-meta-tag">
-                            {course.duration}
-                          </span>
-                        )}
-
-                        {course.deliveryMethod && (
-                          <span className="vac-meta-tag">
-                            {
-                              course.deliveryMethod
-                            }
-                          </span>
-                        )}
-
-                        {course.location && (
-                          <span className="vac-meta-tag">
-                            {
-                              course.location
-                            }
-                          </span>
-                        )}
-
-                        {saving && (
-                          <span className="vac-meta-tag vac-save-tag">
-                            {
-                              saving
-                            }
-                          </span>
-                        )}
-
-                      </div>
-
-                      {/* ACTIONS */}
-                      <div className="vac-course-actions">
-
-                        <button
-                          type="button"
-                          className="vac-btn-book"
-                          onClick={(
-                            e
-                          ) => {
-                            e.stopPropagation();
-
-                            setSelectedCourse(
-                              course
-                            );
-                          }}
-                        >
-                          Book Now
-
-                          <span className="vac-btn-arrow">
-                            →
-                          </span>
-                        </button>
-
-                        <button
-                          type="button"
-                          className="vac-btn-details"
-                          onClick={(
-                            e
-                          ) => {
-                            e.stopPropagation();
-
-                            navigate(
-                              `/course/${course.slug}`
-                            );
-                          }}
-                        >
-                          Details
-                        </button>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
+                />
               );
             }
           )

@@ -1921,7 +1921,11 @@ export default function MobileLandingPage({
     </div>
 
     {/* COURSE LIST */}
-    <div className="mlp-session-course-list">
+    <div
+  className={`mlp-session-course-list ${
+    showAll ? "mlp-session-course-list-expanded" : ""
+  }`}
+>
 
       {groupedDateCourses.length === 0 ? (
         <div className="mlp-no-sessions">

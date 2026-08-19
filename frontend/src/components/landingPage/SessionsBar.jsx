@@ -256,7 +256,7 @@ function SessionsBar() {
       })
       .catch((err) => {
         console.error(
-          "❌ Error fetching sessions:",
+          "Error fetching sessions:",
           err
         );
 
@@ -817,19 +817,15 @@ function SessionsBar() {
                           disabled={
                             !item.hasSlots
                           }
-                          className={`
-                            sb-cal-day
-                            ${
-                              item.hasSlots
-                                ? "sb-cal-day--available"
-                                : "sb-cal-day--disabled"
-                            }
-                            ${
-                              isSelected
-                                ? "sb-cal-day--selected"
-                                : ""
-                            }
-                          `}
+                          className={`sb-cal-day ${
+                            item.hasSlots
+                              ? "sb-cal-day--available"
+                              : "sb-cal-day--disabled"
+                          } ${
+                            isSelected
+                              ? "sb-cal-day--selected"
+                              : ""
+                          }`}
                           onClick={() => {
 
                             const nextKey =
@@ -980,249 +976,173 @@ function SessionsBar() {
                         !!course?.slblPrice;
 
                       return (
-
                         <div
-                          key={
-                            group.courseId
-                          }
+                          key={group.courseId}
                           className="sb-slot-card"
                         >
-
-                          {/* =================================================
-                              DATE
-                              ================================================= */}
-
+                          {/* DATE */}
                           <div className="sb-slot-date-col">
-
                             <span className="sb-slot-date">
-                              {formatSessionDate(
-                                firstSession?.date
-                              )}
+                              {formatSessionDate(firstSession?.date)}
                             </span>
-
                           </div>
 
-                          {/* =================================================
-                              COURSE
-                              ================================================= */}
-
+                          {/* COURSE DETAILS */}
                           <div className="sb-slot-main-col">
 
+                            {/* COURSE TITLE + CODE */}
                             <div className="sb-slot-course-row">
-
                               <span className="sb-slot-course-title-main">
-                                {
-                                  group.courseName
-                                }
+                                {group.courseName}
                               </span>
 
-                              {(
-                                course?.courseCode ||
+                              {(course?.courseCode ||
                                 course?.code ||
-                                course?.course_code
-                              ) && (
+                                course?.course_code) && (
                                 <span className="sb-slot-course-code">
-                                  {
-                                    course?.courseCode ||
+                                  {course?.courseCode ||
                                     course?.code ||
-                                    course?.course_code
-                                  }
+                                    course?.course_code}
                                 </span>
+                              )}
+                            </div>
+
+                            {/* PRICE - DIRECTLY UNDER COURSE TITLE */}
+                            <div className="sb-slot-card-pricing">
+
+                              {isExperience ? (
+                                <>
+                                  {(course?.withExperiencePrice ??
+                                    course?.sellingPrice) != null && (
+                                    <span className="sb-slot-price">
+                                      With Experience
+                                      <strong>
+                                        {formatPrice(
+                                          course?.withExperiencePrice ??
+                                            course?.sellingPrice
+                                        )}
+                                      </strong>
+                                    </span>
+                                  )}
+
+                                  {(course?.withoutExperiencePrice ??
+                                    course?.sellingPrice) != null && (
+                                    <span className="sb-slot-price">
+                                      Without Experience
+                                      <strong>
+                                        {formatPrice(
+                                          course?.withoutExperiencePrice ??
+                                            course?.sellingPrice
+                                        )}
+                                      </strong>
+                                    </span>
+                                  )}
+
+                                  {course?.vocPrice != null && (
+                                    <span className="sb-slot-price">
+                                      VOC
+                                      <strong>
+                                        {formatPrice(course.vocPrice)}
+                                      </strong>
+                                    </span>
+                                  )}
+                                </>
+                              ) : isSlbl ? (
+                                <>
+                                  {course?.slblPrice != null && (
+                                    <span className="sb-slot-price">
+                                      SL + BL
+                                      <strong>
+                                        {formatPrice(course.slblPrice)}
+                                      </strong>
+                                    </span>
+                                  )}
+
+                                  {(course?.slSinglePrice ??
+                                    course?.sellingPrice) != null && (
+                                    <span className="sb-slot-price">
+                                      SL or BL
+                                      <strong>
+                                        {formatPrice(
+                                          course?.slSinglePrice ??
+                                            course?.sellingPrice
+                                        )}
+                                      </strong>
+                                    </span>
+                                  )}
+
+                                  {course?.vocPrice != null && (
+                                    <span className="sb-slot-price">
+                                      VOC
+                                      <strong>
+                                        {formatPrice(course.vocPrice)}
+                                      </strong>
+                                    </span>
+                                  )}
+                                </>
+                              ) : (
+                                <>
+                                  {course?.sellingPrice != null && (
+                                    <span className="sb-slot-price">
+                                      Standard
+                                      <strong>
+                                        {formatPrice(course.sellingPrice)}
+                                      </strong>
+                                    </span>
+                                  )}
+
+                                  {course?.vocPrice != null && (
+                                    <span className="sb-slot-price">
+                                      VOC
+                                      <strong>
+                                        {formatPrice(course.vocPrice)}
+                                      </strong>
+                                    </span>
+                                  )}
+                                </>
                               )}
 
                             </div>
 
-                            {/* LOCATION */}
+                            {/* COURSE META */}
+                            <div className="sb-slot-meta">
 
-                            <div className="sb-slot-time-row">
+                              {/* LOCATION */}
+                              <div className="sb-slot-meta-item">
+                                <span className="sb-meta-icon">📍</span>
+                                <span>
+                                  {location || "Location not specified"}
+                                </span>
+                              </div>
 
-                              <span className="sb-time-icon">
-                                ⌖
-                              </span>
+                              {/* DURATION */}
+                              <div className="sb-slot-meta-item">
+                                <span className="sb-meta-icon">⏱</span>
+                                <span>
+                                  {course?.duration ||
+                                    course?.courseDuration ||
+                                    firstSession?.duration ||
+                                    "Duration not specified"}
+                                </span>
+                              </div>
 
-                              <span className="sb-slot-time">
-                                {location}
-                              </span>
+                              {/* DELIVERY METHOD */}
+                              <div className="sb-slot-meta-item">
+                                <span className="sb-meta-icon">🎓</span>
+                                <span>
+                                  {course?.deliveryMethod ||
+                                    course?.delivery ||
+                                    course?.deliveryMode ||
+                                    course?.mode ||
+                                    "Delivery method not specified"}
+                                </span>
+                              </div>
 
                             </div>
 
                           </div>
 
-                          {/* =================================================
-                              PRICE
-
-                              Display pricing according to course type.
-                              ================================================= */}
-
-                          <div className="sb-slot-info-col">
-
-                            {/* EXPERIENCE */}
-
-                            {isExperience ? (
-                              <>
-
-                                {(
-                                  course?.withExperiencePrice ??
-                                  course?.sellingPrice
-                                ) !==
-                                  null &&
-                                (
-                                  course?.withExperiencePrice ??
-                                  course?.sellingPrice
-                                ) !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    With Experience{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course?.withExperiencePrice ??
-                                        course?.sellingPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                                {(
-                                  course?.withoutExperiencePrice ??
-                                  course?.sellingPrice
-                                ) !==
-                                  null &&
-                                (
-                                  course?.withoutExperiencePrice ??
-                                  course?.sellingPrice
-                                ) !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    Without Experience{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course?.withoutExperiencePrice ??
-                                        course?.sellingPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                                {course?.vocPrice !==
-                                  null &&
-                                course?.vocPrice !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    VOC{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course.vocPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                              </>
-                            ) : isSlbl ? (
-
-                              /* =================================================
-                                 SLBL
-                                 ================================================= */
-
-                              <>
-
-                                {course?.slblPrice !==
-                                  null &&
-                                course?.slblPrice !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    SL + BL{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course.slblPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                                {(
-                                  course?.slSinglePrice ??
-                                  course?.sellingPrice
-                                ) !==
-                                  null &&
-                                (
-                                  course?.slSinglePrice ??
-                                  course?.sellingPrice
-                                ) !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    SL or BL{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course?.slSinglePrice ??
-                                        course?.sellingPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                                {course?.vocPrice !==
-                                  null &&
-                                course?.vocPrice !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    VOC{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course.vocPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                              </>
-
-                            ) : (
-
-                              /* =================================================
-                                 STANDARD
-                                 ================================================= */
-
-                              <>
-
-                                {course?.sellingPrice !==
-                                  null &&
-                                course?.sellingPrice !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    Standard{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course.sellingPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                                {course?.vocPrice !==
-                                  null &&
-                                course?.vocPrice !==
-                                  undefined && (
-                                  <span className="sb-slot-price">
-                                    VOC{" "}
-                                    <strong>
-                                      {formatPrice(
-                                        course.vocPrice
-                                      )}
-                                    </strong>
-                                  </span>
-                                )}
-
-                              </>
-
-                            )}
-
-                          </div>
-
-                          {/* =================================================
-                              REFERRAL
-                              ================================================= */}
-
+                          {/* REFERRAL */}
                           {firstSession?.referralCode && (
                             <div className="sb-referral-col">
 
@@ -1231,28 +1151,20 @@ function SessionsBar() {
                               </span>
 
                               <span className="sb-referral-code">
-                                {
-                                  firstSession.referralCode
-                                }
+                                {firstSession.referralCode}
                               </span>
 
                             </div>
                           )}
 
-                          {/* =================================================
-                              BOOK NOW
-                              ================================================= */}
-
+                          {/* BOOK NOW */}
                           <div className="sb-slot-cta-col">
 
                             <button
                               type="button"
                               className="sb-book-btn"
                               onClick={(e) =>
-                                handleBookNowClick(
-                                  e,
-                                  group
-                                )
+                                handleBookNowClick(e, group)
                               }
                             >
                               Book Now
@@ -1260,13 +1172,11 @@ function SessionsBar() {
                               <span className="sb-book-arrow">
                                 →
                               </span>
-
                             </button>
 
                           </div>
 
                         </div>
-
                       );
                     }
                   )}

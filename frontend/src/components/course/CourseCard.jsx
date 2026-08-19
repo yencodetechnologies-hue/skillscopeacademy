@@ -1,194 +1,184 @@
-import React from "react";
-import "../../styles/CourseSessionCard.css";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import "../../styles/CourseCard.css"
+import { cdnImage } from "../../utils/cdnImage"
 
-/* Exact booking type identifier from BookingModal */
-export function getBookingType(course) {
-  if (!course) return "standard";
-  const pt = course?.pricingType || (course?.experienceBasedBooking ? "experience" : "standard");
-  if (pt === "experience") return "experience";
-  if (pt === "slbl" || course?.slblPrice) return "slbl";
+import BookingModal, { getBookingOptions } from "./BookingModal"
 
-  const bypassKeywords = ["excavator", "haul truck", "skid steer"];
-  const isBypass = bypassKeywords.some((kw) =>
-    course?.title?.toLowerCase()?.includes(kw)
-  );
-  if (isBypass) return "experience";
+// ── Course Card ───────────────────────────────────────────────────────────────
+function CourseCard({ course, fromPortal }) {
+    console.log(course,"course");
+    const navigate    = useNavigate()
+    const [showModal, setShowModal] = useState(false)
+    const [selectedOptionId, setSelectedOptionId] = useState(null)
 
-  return "standard";
-}
+    const options = getBookingOptions(course)
+    const sellingPrice = course?.sellingPrice || null
+    const originalPrice = course?.originalPrice || null
 
-/* Exact option generator from BookingModal */
-export function getBookingOptions(course) {
-  if (!course) return [];
-  const type = getBookingType(course);
+    // Prioritize comboPrice if comboEnabled
+    let displayPrice = course?.comboEnabled && course?.comboPrice 
+        ? course.comboPrice 
+        : (course?.pricingType === "slbl" || course?.slblPrice 
+            ? (course.slSinglePrice || course.slblPrice || sellingPrice)
+            : (course?.withExperiencePrice || sellingPrice))
 
-  if (type === "experience") {
-    return [
-      {
-        id: "with-experience",
-        label: "With Exp",
-        price: course.withExperiencePrice || course.comboPrice || course.sellingPrice,
-        originalPrice: course.withExperienceOriginal || course.originalPrice,
-      },
-      {
-        id: "without-experience",
-        label: "Without Exp",
-        price: course.withoutExperiencePrice || course.comboPrice || course.sellingPrice,
-        originalPrice: course.withoutExperienceOriginal || course.originalPrice,
-      },
-      {
-        id: "voc",
-        label: "VOC",
-        price: course.vocPrice || course.sellingPrice,
-        originalPrice: course.withoutExperienceOriginal || course.originalPrice,
-      },
-    ];
-  }
+    let displayOriginal = (course?.pricingType === "slbl" || course?.slblPrice)
+        ? (course.slSingleStrikePrice || course.slblStrikePrice || originalPrice)
+        : (course?.withExperienceOriginal || originalPrice)
 
-  if (type === "slbl") {
-    return [
-      {
-        id: "slbl",
-        label: "SL + BL",
-        price: course.slblPrice,
-        originalPrice: course.slblStrikePrice,
-      },
-      {
-        id: "sl",
-        label: "SL / BL",
-        price: course.slSinglePrice || course.sellingPrice,
-        originalPrice: course.slSingleStrikePrice || course.originalPrice,
-      },
-      {
-        id: "voc",
-        label: "VOC",
-        price: course.vocPrice || course.sellingPrice,
-        originalPrice: course.slSingleStrikePrice || course.originalPrice,
-      },
-    ];
-  }
+    const savings = displayOriginal > displayPrice ? displayOriginal - displayPrice : null
 
-  return [
-    {
-      id: "standard",
-      label: "Standard",
-      price: course.sellingPrice,
-      originalPrice: course.originalPrice,
-    },
-    {
-      id: "voc",
-      label: "VOC",
-      price: course.vocPrice || course.sellingPrice,
-      originalPrice: course.originalPrice,
-    },
-  ];
-}
+    return (
+        <>
+            <div className="course-card">
 
-export default function CourseSessionCard({ group, courses = [], onBookNow, onDetails }) {
-  if (!group) return null;
+                {/* THUMB */}
+                <div
+                    className="course-thumb"
+                    onClick={() => navigate(`/course/${course.slug}${fromPortal ? "?fromPortal=true" : ""}`)}
+                >
+                    {course.image ? (
+                        <img
+                            src={cdnImage(course.image, { w: 480 })}
+                            alt={course.title}
+                            className="course-thumb-img"
+                            loading="lazy"
+                            decoding="async"
+                            width="480"
+                            height="320"
+                        />
+                    ) : (
+                        <div className="course-thumb-placeholder">📋</div>
+                    )}
+                    <div className="course-thumb-overlay">View Details</div>
+              
+                    <span className="course-cat-badge">{course.category}</span>
+                </div>
 
-  const firstSession = group.sessions?.[0];
-  const fullCourse = courses.find((course) => course._id === group.courseId) || {};
+                {/* BODY */}
+                <div className="course-body">
 
-  const courseTitle =
-    group.courseName ||
-    fullCourse?.title ||
-    fullCourse?.courseName ||
-    fullCourse?.name ||
-    "Course Name";
+                    {/* Title */}
+                    <h3
+                        className="course-title"
+                        onClick={() => navigate(`/course/${course.slug}${fromPortal ? "?fromPortal=true" : ""}`)}
+                    >
+                        <div className="course-card-code">{course.courseCode}</div>
+                        {course.title}
+                    </h3>
 
-  const courseCode = group.code || fullCourse?.code || fullCourse?.courseCode;
-  const location = firstSession?.location || fullCourse?.location || "Sefton";
-  const deliveryMode = fullCourse?.deliveryMode || "Face to Face Training";
+                    {/* Info */}
+                    <div className="course-info-row">
+                        <span className="course-info-item">
+                            <i className="fa-regular fa-calendar-days" />
+                        </span>
+                        <span className="course-info-item">
+                            <i className="fa-solid fa-location-dot" />
+                            {course.location}
+                        </span>
+                        <span className="course-info-item">
+                            <i className="fa-solid fa-chalkboard-user" />
+                            {course.deliveryMethod}
+                        </span>
+                    </div>
 
-  // Dynamic Duration Display
-  const durationVal =
-    fullCourse?.duration ||
-    group?.duration ||
-    (fullCourse?.durationWithExp
-      ? `${fullCourse.durationWithExp} / ${fullCourse.durationWithoutExp || "2 Days"}`
-      : "1 Day");
-
-  // Get dynamic pricing options based on pricingType
-  const options = getBookingOptions(fullCourse);
-
-  // Set top right price based on default/first option price
-  const mainPrice = options[0]?.price || fullCourse?.sellingPrice || 0;
-
-  const handleBookNow = () => {
-    if (onBookNow) onBookNow(group);
-  };
-
-  const handleDetails = () => {
-    if (onDetails) onDetails(group);
-  };
+               {/* Price Toggle Banner */}
+{(() => {
+  const activeDisplayPrice = displayPrice || 0;
+  const effectiveOriginal = displayOriginal || course?.originalPrice || 1000;
+  const effectiveSavings = effectiveOriginal > activeDisplayPrice ? effectiveOriginal - activeDisplayPrice : 0;
 
   return (
-    <div className="mlp-card-container">
-      {/* HEADER: TITLE, CODE, AND DYNAMIC MAIN PRICE */}
-      <div className="mlp-card-header">
-        <div className="mlp-card-left-group">
-          {fullCourse?.image ? (
-            <img src={fullCourse.image} alt={courseTitle} className="mlp-card-avatar" />
-          ) : (
-            <div className="mlp-card-avatar-placeholder">📷</div>
-          )}
-
-          <div className="mlp-card-title-group">
-            <h4 className="mlp-card-title">{courseTitle}</h4>
-            {courseCode && <span className="mlp-card-code">({courseCode})</span>}
-          </div>
-        </div>
-
-        <div className="mlp-card-main-price">${mainPrice}</div>
-      </div>
-
-      {/* DURATION & LOCATION BANNER + DYNAMIC BREAKDOWN BAR */}
-      <div className="mlp-info-flex-row">
-        {/* Banner with Duration and Location */}
-        <div className="mlp-duration-banner">
-          <div className="mlp-banner-item">
-            <span className="mlp-icon">⏱</span>
-            <span className="mlp-banner-text">{durationVal}</span>
-          </div>
-
-          <div className="mlp-banner-item location-item">
-            <span className="mlp-icon">📍</span>
-            <span className="mlp-banner-text">{location}</span>
-          </div>
-        </div>
-
-        {/* Dynamic Pricing options mapped directly from getBookingOptions */}
-        <div className="mlp-horizontal-prices">
-          {options.map((opt, index) => (
-            <React.Fragment key={opt.id}>
-              <div className="mlp-hprice-item">
-                <span className="mlp-hp-label">{opt.label}:</span>
-                {opt.originalPrice && opt.originalPrice > opt.price && (
-                  <span className="mlp-hp-strike">${opt.originalPrice}</span>
-                )}
-                <span className="mlp-hp-val">${opt.price || 0}</span>
-              </div>
-              {index < options.length - 1 && <span className="mlp-hp-divider">|</span>}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-
-      {/* TAGS */}
-      <div className="mlp-card-tags">
-        <span className="mlp-card-tag">{deliveryMode}</span>
-      </div>
-
-      {/* ACTIONS */}
-      <div className="mlp-card-actions">
-        <button type="button" className="mlp-btn-book" onClick={handleBookNow}>
-          Book Now &rarr;
-        </button>
-        <button type="button" className="mlp-btn-details" onClick={handleDetails}>
-          Details
-        </button>
+    <div className="course-price-toggle-wrapper">
+      <span className="price-toggle-original">
+        ${effectiveOriginal}
+      </span>
+      
+      <div className="price-toggle-green-pill">
+        <span className="price-toggle-main-price">${activeDisplayPrice}</span>
+        {effectiveSavings > 0 && (
+          <span className="price-toggle-save-badge">SAVE ${effectiveSavings}</span>
+        )}
       </div>
     </div>
   );
+})()}
+
+               {/* ── DISPLAY OPTIONS (With Temporary $1000 Strike Price Fallback) ── */}
+<div className="cc-card-opts">
+  <div className="cc-card-opts-lbl">Select option</div>
+  <div className="cc-card-opt-boxes">
+    {options.map((opt, i) => {
+      const activePrice = opt.price || 0;
+      // Temporary fallback set to 1000 if strike price is empty/missing
+      const strikePrice = opt.originalPrice || displayOriginal || course?.originalPrice || 1000;
+      
+      const hasDiscount = Number(strikePrice) > Number(activePrice);
+
+      return (
+       <div
+  key={i}
+  className={`cc-card-opt-box ${opt.isVoc ? "cc-card-opt-box--voc" : "cc-card-opt-box--display"}`}
+  onClick={() => {
+    setSelectedOptionId(opt.id);
+    setShowModal(true);
+  }}
+  title={`Click to book ${opt.label}`}
+>
+  <div className="cc-cob-label">{opt.label}</div>
+
+  {/* Mini Price Toggle Pill */}
+  <div className="cc-cob-mini-toggle">
+    {hasDiscount && (
+      <span className="cc-cob-toggle-old">${strikePrice}</span>
+    )}
+    <div className="cc-cob-toggle-active">
+      <span>${activePrice}</span>
+    </div>
+  </div>
+</div>
+      );
+    })}
+  </div>
+</div>
+                    {/* Book Now */}
+                    <button
+                        className="course-btn course-btn--primary"
+                        onClick={() => {
+                            setShowModal(true)
+                        }}
+                    >
+                        Book Now
+                        <i className="fa-regular fa-circle-right" />
+                    </button>
+
+                    {/* View Details */}
+                    <button
+                        className="course-btn course-btn--outline"
+                        onClick={() => navigate(`/course/${course.slug}${fromPortal ? "?fromPortal=true" : ""}`)}
+                    >
+                        View Details
+                        <i className="fa-solid fa-circle-info" />
+                    </button>
+
+                </div>
+            </div>
+
+            {/* MODAL */}
+            {showModal && (
+                <BookingModal
+                    course={course}
+                    onClose={() => {
+                        setShowModal(false)
+                        setSelectedOptionId(null)
+                    }}
+                    initialSelection={selectedOptionId}
+                    extraQueryParams={fromPortal ? "fromPortal=true" : ""}
+                />
+            )}
+        </>
+    )
 }
+
+export default CourseCard

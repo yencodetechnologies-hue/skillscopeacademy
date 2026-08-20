@@ -24,8 +24,10 @@ function TopNav() {
                 </div>
 
                 <div className="top-item">
-                    <i className="fa-solid fa-location-dot"></i> 15/3 Lancaster Street Ingleburn NSW 2565
+                    <i className="fa-solid fa-location-dot"></i> 15/3 Lancaster Street Ingleburn NSW 2565<br/>
+                     <i className="fa-solid fa-location-dot"></i> 8 Cord Street, Dudley Park, Adelide SA 5008, Australia.
                 </div>
+                
 
             </div>
 

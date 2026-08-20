@@ -102,7 +102,7 @@ const studentBookingTemplate = (data) => {
         <table class="eb-table">
           <tr><td class="lbl">Course</td><td class="val"><strong style="color:#0d2240;">${data.courseName}</strong></td></tr>
           <tr><td class="lbl">Date & Time</td><td class="val">${data.courseDate} @ ${data.courseTime}</td></tr>
-          <tr><td class="lbl">Location</td><td class="val">3/14-16 Marjorie Street, Sefton NSW 2162</td></tr>
+          <tr><td class="lbl">Location</td><td class="val">15/3 Lancaster Street Ingleburn NSW 2565</td></tr>
         </table>
       </div>
 

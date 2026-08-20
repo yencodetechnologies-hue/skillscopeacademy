@@ -125,7 +125,12 @@ function Footer({ courses }) {
                     <div className="footer-contact-list">
                         <div className="footer-contact-item">
                             <i className="fa-solid fa-location-dot" />
-                            <span>3/14-16 Marjorie Street, Sefton NSW 2162</span>
+                            <span>15/3 Lancaster Street Ingleburn NSW 2565</span>
+
+                            <br></br><i className="fa-solid fa-location-dot" />
+                            <span>8 Cord Street,
+Dudley Park, Adelide SA 5008,
+Australia.</span>
                         </div>
                         <div className="footer-contact-item">
                             <a href="mailto:info@safeticks.com.au" style={{ color: "inherit", textDecoration: "none", display: "flex", alignItems: "center", gap: "8px" }}>

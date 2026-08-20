@@ -292,10 +292,10 @@ function VocStep3({ details = {}, courses, onBack, onComplete }) {
                                 <span>Account Name:</span><strong>AIET College</strong>
                             </div>
                             <div className="v3-bank-row">
-                                <span>BSB:</span><strong>062 141</strong>
+                                <span>BSB:</span><strong>062268</strong>
                             </div>
                             <div className="v3-bank-row">
-                                <span>Account Number:</span><strong>10490235</strong>
+                                <span>Account Number:</span><strong>10530830</strong>
                             </div>
                         </div>
 

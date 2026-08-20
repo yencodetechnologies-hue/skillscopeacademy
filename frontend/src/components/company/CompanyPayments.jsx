@@ -281,8 +281,8 @@ function PayModal({ selected, payments, grouped = [], company, onClose, onSucces
               <div className="pm-bank-title">Details for deposit</div>
               <div className="pm-bank-row"><span>Bank:</span><span>Commonwealth Bank</span></div>
               <div className="pm-bank-row"><span>Account name:</span><span>AIET College</span></div>
-              <div className="pm-bank-row"><span>BSB:</span><span>062  141</span></div>
-              <div className="pm-bank-row"><span>Account no.:</span><span>10490235</span></div>
+              <div className="pm-bank-row"><span>BSB:</span><span>062268</span></div>
+              <div className="pm-bank-row"><span>Account no.:</span><span>10530830</span></div>
             </div>
             <div className="pm-bank-ref-note">
               ⓘ Use <strong>{company?.companyName} {company?.email} {company?.mobileNumber}</strong> as part of your payment reference so we can match your transfer.

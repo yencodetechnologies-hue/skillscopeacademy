@@ -373,7 +373,8 @@ function renderQualificationCertificates(qual) {
 
             <div class="footerCompany">
                 Australian International Education and Training Pty Ltd Trading as SafeTicks<br/>
-                15/3 Lancaster Street Ingleburn NSW 2565 &nbsp;--&nbsp; Ph: 1300 415 252
+                15/3 Lancaster Street Ingleburn NSW 2565 &nbsp;--&nbsp; Ph: 1300 415 252 <br/>
+                8 Cord Street, Dudley Park, Adelide SA 5008, Australia.
             </div>
             <div class="footerHr"></div>
             <div class="footerLine">

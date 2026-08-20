@@ -1,6 +1,44 @@
 .payment-wrapper{
 margin-top:20px;
 }
+.preferred-city-section {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.preferred-city-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 7px;
+}
+
+.preferred-city-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.preferred-city-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #047857;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.preferred-city-loading {
+    margin-top: 7px;
+    font-size: 12px;
+    color: #64748b;
+}
 
 .payment-header>.payment-header{
 background:linear-gradient(90deg,var(--color-brand-primary),#ec4899);

@@ -751,8 +751,8 @@ function Payment({
                     <h4>Bank Details</h4>
                     <div className="bank-row"><span>Bank:</span><span>Commonwealth Bank</span></div>
                     <div className="bank-row"><span>Account Name:</span><span>AIET College</span></div>
-                    <div className="bank-row"><span>BSB:</span><span>062 141</span></div>
-                    <div className="bank-row"><span>Account No:</span><span>10490235</span></div>
+                    <div className="bank-row"><span>BSB:</span><span>062268</span></div>
+                    <div className="bank-row"><span>Account No:</span><span> 10530830</span></div>
 
                     <div className="form-group">
                         <label>Transaction ID / Reference *</label>

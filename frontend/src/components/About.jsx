@@ -103,7 +103,8 @@ function AboutPage() {
                         <div className="ab-building-wrap">
                             <img src={buildingImg} alt="SafeTicks building" className="ab-building-img" />
                             <div className="ab-building-caption">
-                                📍 SafeTicks | Sydney – 15/3 Lancaster Street Ingleburn NSW 2565
+                                📍 SafeTicks | Sydney – 15/3 Lancaster Street Ingleburn NSW 2565<br/>
+                               📍 8 Cord Street, Dudley Park, Adelide SA 5008, Australia.
                             </div>
                         </div>
                     </div>

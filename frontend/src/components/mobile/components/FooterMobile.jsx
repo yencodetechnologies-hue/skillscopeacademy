@@ -65,19 +65,34 @@ function Footer() {
       {/* ── 2. MAIN FOOTER CARD ── */}
       <div className="st-footer-card">
         {/* HEAD OFFICE */}
-        <div className="st-footer-section">
-          <div className="st-section-label">HEAD OFFICE</div>
-          <div className="st-office-row">
-            <i className="fa-solid fa-location-dot st-info-icon" />
-            <div className="st-office-address">
-              <strong>SafeTicks Sydney</strong>
-              <br />
-              15/3 Lancaster Street,
-              <br />
-              Ingleburn NSW 2565
-            </div>
-          </div>
-        </div>
+       <div className="st-footer-section">
+  <div className="st-section-label">HEAD OFFICE</div>
+
+  <div className="st-office-row">
+    <i className="fa-solid fa-location-dot st-info-icon" />
+
+    <div className="st-office-address">
+      <strong>SafeTicks Sydney</strong>
+      <br />
+      15/3 Lancaster Street,
+      <br />
+      Ingleburn NSW 2565
+      <br />
+      Australia.
+      
+      <br />
+      <br />
+
+      <strong>SafeTicks Adelaide</strong>
+      <br />
+      8 Cord Street,
+      <br />
+      Dudley Park SA 5008,
+      <br />
+      Australia.
+    </div>
+  </div>
+</div>
 
         {/* CONTACT */}
         <div className="st-footer-section">

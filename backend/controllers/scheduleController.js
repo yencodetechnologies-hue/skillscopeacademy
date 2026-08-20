@@ -55,9 +55,13 @@ const createSchedule = async (req,res) => {
 
 const getUpcomingSessions = async (req, res) => {
     try {
+        console.log("\n========================================");
+        console.log("GET UPCOMING SESSIONS API CALLED");
+        console.log("========================================");
+
         const nowSydney = new Date(
             new Date().toLocaleString("en-US", {
-                timeZone: "Australia/Sydney"
+                timeZone: "Australia/Sydney",
             })
         );
 
@@ -67,111 +71,355 @@ const getUpcomingSessions = async (req, res) => {
             nowSydney.getDate()
         );
 
+        console.log("Sydney Current Date:", nowSydney);
+        console.log("Today:", today);
+
         const limit = parseInt(req.query.limit) || 20;
 
+        console.log("Limit:", limit);
+
+        // ========================================
+        // GET SCHEDULES FROM DATABASE
+        // ========================================
+
         const schedules = await Schedule.find({
-            date: { $gte: today }
+            date: { $gte: today },
         })
             .populate({
                 path: "course",
-                select: "+courseCode"
+                select: "+courseCode",
             })
             .sort({ date: 1 })
             .lean();
 
+        console.log("\n========================================");
+        console.log("SCHEDULES FROM DATABASE");
+        console.log("========================================");
+
+        console.log("Total schedules:", schedules.length);
+
+        // Check complete MongoDB response
+        console.log(
+            JSON.stringify(schedules, null, 2)
+        );
+
         const upcoming = [];
 
-        schedules.forEach((schedule) => {
-            if (!schedule.course) return;
+        // ========================================
+        // LOOP THROUGH SCHEDULES
+        // ========================================
+
+        schedules.forEach((schedule, scheduleIndex) => {
+            console.log("\n========================================");
+            console.log(
+                `SCHEDULE ${scheduleIndex + 1}`
+            );
+            console.log("========================================");
+
+            if (!schedule.course) {
+                console.log(
+                    "❌ No course found for schedule:",
+                    schedule._id
+                );
+                return;
+            }
+
+            console.log(
+                "Schedule ID:",
+                schedule._id
+            );
+
+            console.log(
+                "Course ID:",
+                schedule.course?._id
+            );
+
+            console.log(
+                "Course Name:",
+                schedule.course?.title
+            );
+
+            console.log(
+                "Schedule Date:",
+                schedule.date
+            );
+
+            console.log(
+                "Total Sessions:",
+                schedule.sessions?.length || 0
+            );
 
             const dateObj = new Date(schedule.date);
 
-            const isSunday = dateObj.getDay() === 0;
+            const isSunday =
+                dateObj.getDay() === 0;
 
-            const day = dateObj.getDate().toString();
+            const day =
+                dateObj.getDate().toString();
 
-            const mon = dateObj.toLocaleString("en-AU", {
-                month: "short",
-                timeZone: "Australia/Sydney"
-            });
+            const mon =
+                dateObj.toLocaleString("en-AU", {
+                    month: "short",
+                    timeZone: "Australia/Sydney",
+                });
 
-            // Get ALL active sessions
+            // ========================================
+            // GET ACTIVE SESSIONS
+            // ========================================
+
             const activeSessions =
                 schedule.sessions?.filter(
                     (s) => s.status === "Active"
                 ) || [];
 
-            if (activeSessions.length === 0) return;
+            console.log(
+                "Active sessions:",
+                activeSessions.length
+            );
 
-            console.log("COURSE:", schedule.course);
+            if (activeSessions.length === 0) {
+                console.log(
+                    "❌ No active sessions"
+                );
+                return;
+            }
 
-            // Loop through every active session
-            activeSessions.forEach((activeSession) => {
-                const slots = activeSession.availableSlots ?? 0;
+            // ========================================
+            // LOOP THROUGH ACTIVE SESSIONS
+            // ========================================
 
-                let spotsType = "ok";
+            activeSessions.forEach(
+                (activeSession, sessionIndex) => {
+                    console.log(
+                        "\n----------------------------------------"
+                    );
 
-                if (slots === 0) {
-                    spotsType = "full";
-                } else if (slots <= 3) {
-                    spotsType = "low";
+                    console.log(
+                        `SESSION ${sessionIndex + 1}`
+                    );
+
+                    console.log(
+                        "----------------------------------------"
+                    );
+
+                    console.log(
+                        "Session ID:",
+                        activeSession._id
+                    );
+
+                    console.log(
+                        "Session Type:",
+                        activeSession.sessionType
+                    );
+
+                    console.log(
+                        "Location:",
+                        activeSession.location
+                    );
+
+                    console.log(
+                        "Available Slots:",
+                        activeSession.availableSlots
+                    );
+
+                    // ========================================
+                    // ⭐ PREFERRED CITY DEBUG
+                    // ========================================
+
+                    console.log(
+                        "PREFERRED CITY FROM DATABASE:"
+                    );
+
+                    console.log(
+                        activeSession.preferredCity
+                    );
+
+                    console.log(
+                        "PREFERRED CITY JSON:"
+                    );
+
+                    console.log(
+                        JSON.stringify(
+                            activeSession.preferredCity,
+                            null,
+                            2
+                        )
+                    );
+
+                    // ========================================
+                    // AVAILABLE SLOTS
+                    // ========================================
+
+                    const slots =
+                        activeSession.availableSlots ??
+                        0;
+
+                    let spotsType = "ok";
+
+                    if (slots === 0) {
+                        spotsType = "full";
+                    } else if (slots <= 3) {
+                        spotsType = "low";
+                    }
+
+                    // ========================================
+                    // PREFERRED CITY VALUE
+                    // ========================================
+
+                    const preferredCity =
+                        activeSession.preferredCity || [];
+
+                    console.log(
+                        "PREFERRED CITY TO SEND IN API:"
+                    );
+
+                    console.log(
+                        preferredCity
+                    );
+
+                    // ========================================
+                    // ADD TO UPCOMING RESPONSE
+                    // ========================================
+
+                    upcoming.push({
+                        scheduleId:
+                            schedule._id,
+
+                        sessionId:
+                            activeSession._id,
+
+                        date:
+                            schedule.date,
+
+                        day,
+
+                        mon,
+
+                        isSunday,
+
+                        startTime:
+                            activeSession.startTime ||
+                            "8:30am",
+
+                        endTime:
+                            activeSession.endTime ||
+                            "4:30pm",
+
+                        location:
+                            activeSession.location ||
+                            schedule.course.location ||
+                            "Sefton",
+
+                        availableSlots:
+                            slots,
+
+                        spotsLabel:
+                            slots === 0
+                                ? "Full"
+                                : `${slots} spots`,
+
+                        spotsType,
+
+                        sessionType:
+                            activeSession.sessionType,
+
+                        // ⭐ ADD PREFERRED CITY
+                        preferredCity,
+
+                        // COMPLETE COURSE OBJECT
+                        course:
+                            schedule.course,
+                    });
                 }
-
-                upcoming.push({
-                    scheduleId: schedule._id,
-
-                    sessionId: activeSession._id,
-
-                    date: schedule.date,
-
-                    day,
-
-                    mon,
-
-                    isSunday,
-
-                    startTime:
-                        activeSession.startTime || "8:30am",
-
-                    endTime:
-                        activeSession.endTime || "4:30pm",
-
-                    location:
-                        activeSession.location ||
-                        schedule.course.location ||
-                        "Sefton",
-
-                    availableSlots: slots,
-
-                    spotsLabel:
-                        slots === 0
-                            ? "Full"
-                            : `${slots} spots`,
-
-                    spotsType,
-
-                    sessionType:
-                        activeSession.sessionType,
-
-                    // 🔥 COMPLETE COURSE OBJECT
-                    course: schedule.course
-                });
-            });
+            );
         });
 
-        res.json(
-            upcoming.slice(0, limit)
+        // ========================================
+        // FINAL RESPONSE
+        // ========================================
+
+        const finalResponse =
+            upcoming.slice(0, limit);
+
+        console.log("\n========================================");
+        console.log(
+            "FINAL UPCOMING RESPONSE"
         );
+        console.log("========================================");
+
+        console.log(
+            "Total upcoming sessions:",
+            finalResponse.length
+        );
+
+        // Show only preferred cities
+        console.log(
+            "ALL PREFERRED CITIES:"
+        );
+
+        finalResponse.forEach(
+            (item, index) => {
+                console.log(
+                    `Session ${index + 1}:`,
+                    {
+                        scheduleId:
+                            item.scheduleId,
+
+                        sessionId:
+                            item.sessionId,
+
+                        courseId:
+                            item.course?._id,
+
+                        courseName:
+                            item.course?.title,
+
+                        preferredCity:
+                            item.preferredCity,
+                    }
+                );
+            }
+        );
+
+        // Complete final response
+        console.log(
+            "\nCOMPLETE API RESPONSE:"
+        );
+
+        console.log(
+            JSON.stringify(
+                finalResponse,
+                null,
+                2
+            )
+        );
+
+        // ========================================
+        // SEND RESPONSE
+        // ========================================
+
+        res.json(finalResponse);
 
     } catch (err) {
         console.error(
-            "getUpcomingSessions error:",
-            err
+            "\n❌ getUpcomingSessions ERROR:"
+        );
+
+        console.error(err);
+
+        console.error(
+            "Error message:",
+            err.message
+        );
+
+        console.error(
+            "Error stack:",
+            err.stack
         );
 
         res.status(500).json({
             message: "Server error",
-            error: err.message
+            error: err.message,
         });
     }
 };
@@ -184,20 +432,7 @@ const editSession = async (req, res) => {
       preferredCity,
     } = req.body;
 
-    console.log(
-      "========== EDIT SESSION =========="
-    );
-
-    console.log("Session ID:", req.params.id);
-    console.log("Request body:", req.body);
-    console.log(
-      "preferredCity from request:",
-      preferredCity
-    );
-
-    // ─────────────────────────────────────────────
-    // FIND SCHEDULE
-    // ─────────────────────────────────────────────
+  
 
     const schedule = await Schedule.findOne({
       "sessions._id": req.params.id,

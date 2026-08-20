@@ -100,11 +100,11 @@ const buildAdminBookingHtml = (data) => {
             <tr><td class="lbl">Course Name</td><td class="val-bold">${courseName}</td></tr>
             <tr><td class="lbl">Course Code</td><td class="val">${courseCode}</td></tr>
             <tr><td class="lbl">Date & Time</td><td class="val">${courseDate} @ ${courseTime}</td></tr>
-            <tr><td class="lbl">Location</td><td class="val">3/14-16 Marjorie Street, Sefton NSW 2162</td></tr>
+            <tr><td class="lbl">Location</td><td class="val">15/3 Lancaster Street Ingleburn NSW 2565</td></tr>
         </table></div>
         <div class="eb-important-box" style="background:#fffbeb; border-color:#fef3c7;"><span class="eb-important-title" style="color:#92400e;">⚠ ACTION REQUIRED</span><p class="eb-important-text" style="color:#b45309;">Please confirm payment before scheduling this student into the course.</p></div>
     </div>
-    <div class="eb-footer">This is an automated admin notification from <strong>Safety Training Academy</strong> ().<br/>2 Marjorie St, Sefton NSW 2162 &nbsp;·&nbsp; 1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au</div>
+    <div class="eb-footer">This is an automated admin notification from <strong>Safety Training Academy</strong> ().<br/>15/3 Lancaster Street Ingleburn NSW 2565 &nbsp;·&nbsp; 1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au</div>
 </div></body></html>`;
 };
 
@@ -133,7 +133,7 @@ const buildStudentBookingHtml = (data) => {
             <tr><td class="lbl">Delivery Mode</td><td class="val">Face-to-Face</td></tr>
             <tr><td class="lbl">Date</td><td class="val">${courseDate}</td></tr>
             <tr><td class="lbl">Time</td><td class="val">${courseTime}</td></tr>
-            <tr><td class="lbl">Location</td><td class="val">3/14-16 Marjorie Street, Sefton NSW 2162</td></tr>
+            <tr><td class="lbl">Location</td><td class="val">15/3 Lancaster Street Ingleburn NSW 2565</td></tr>
             <tr><td class="lbl">Trainer</td><td class="val">To be assigned</td></tr>
         </table></div>
 
@@ -200,7 +200,7 @@ const sendBookingConfirmation = async (req, res) => {
         submittedAt: submittedDate,
         gatewayId: gatewayTransactionId,
         bankTransferId: bankTransferId,
-        venue: "3/14-16 Marjorie Street, Sefton NSW 2162"
+        venue: "15/3 Lancaster Street Ingleburn NSW 2565"
     });
     
     const studentHtml = studentBookingTemplate({ 
@@ -314,7 +314,7 @@ const sendEnrollmentLinkConfirmation = async (req, res) => {
         submittedAt: submittedDate,
         gatewayId: "-",
         bankTransferId: "-",
-        venue: "3/14-16 Marjorie Street, Sefton NSW 2162",
+        venue: "15/3 Lancaster Street Ingleburn NSW 2565",
         isAgent: isAgent ? true : false
     });
 

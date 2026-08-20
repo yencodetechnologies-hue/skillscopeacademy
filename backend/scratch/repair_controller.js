@@ -15,12 +15,12 @@ if (start > -1 && end > -1) {
 
     const studentHtml = buildStudentHtml({
         orderId, student: { firstName: name.split(" ")[0] },
-        course: { name: courseName, code: courseCode, deliveryMode: "Face to Face", date: new Date(courseDate).toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" }), time: \`\${startTime} - \${endTime}\`, venue: "3/14-16 Marjorie Street, Sefton NSW 2162" },
+        course: { name: courseName, code: courseCode, deliveryMode: "Face to Face", date: new Date(courseDate).toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" }), time: \`\${startTime} - \${endTime}\`, venue: "15/3 Lancaster Street Ingleburn NSW 2565" },
         payment: { items: [{ label: courseName, amount: Number(coursePrice).toFixed(2) }], total: Number(coursePrice).toFixed(2), method: paymentMethod },
         portal: { url: "https://www.safetytrainingacademy.edu.au/login" }
     });
 
-    const adminMailData = { bookingId: orderId, paymentMethod, bankTransferId: bankTransferId || "—", gatewayId: gatewayTransactionId || null, contactName: name, contactEmail: email, contactPhone: finalPhone || "—", totalAmount: Number(coursePrice).toFixed(2), submittedAt: orderDateStr, courseName, courseCode, deliveryMode: "Face to Face", courseDate: courseDate ? new Date(courseDate).toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" }) : "To be confirmed", courseTime: \`\${startTime} - \${endTime}\`, venue: "3/14-16 Marjorie Street, Sefton NSW 2162", notes: null, studentPortalUrl: "https://www.safetytrainingacademy.edu.au/login", adminUrl: "https://admin.safetytrainingacademy.edu.au" };
+    const adminMailData = { bookingId: orderId, paymentMethod, bankTransferId: bankTransferId || "—", gatewayId: gatewayTransactionId || null, contactName: name, contactEmail: email, contactPhone: finalPhone || "—", totalAmount: Number(coursePrice).toFixed(2), submittedAt: orderDateStr, courseName, courseCode, deliveryMode: "Face to Face", courseDate: courseDate ? new Date(courseDate).toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" }) : "To be confirmed", courseTime: \`\${startTime} - \${endTime}\`, venue: "15/3 Lancaster Street Ingleburn NSW 2565", notes: null, studentPortalUrl: "https://www.safetytrainingacademy.edu.au/login", adminUrl: "https://admin.safetytrainingacademy.edu.au" };
 
     try {
         try { 

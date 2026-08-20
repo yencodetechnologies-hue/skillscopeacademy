@@ -245,7 +245,7 @@ exports.createStudent = async (req, res) => {
           courseCode: course?.courseCode || "—",
           courseDate: sessionData.sessionDate ? new Date(sessionData.sessionDate).toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" }) : "—",
           courseTime: (sessionData.startTime && sessionData.endTime) ? `${sessionData.startTime} - ${sessionData.endTime}` : "—",
-          venue: "3/14-16 Marjorie Street, Sefton NSW 2162",
+          venue: "15/3 Lancaster Street Ingleburn NSW 2565",
           bookingId: formatBookingId(newFlow._id),
           submittedAt: new Date().toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Sydney" }),
           paymentMethod: data.paymentMethod || "Manual",

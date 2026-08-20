@@ -2113,7 +2113,7 @@ exports.updatePaymentStatus = async (req, res) => {
         <tr><td style="font-size:13px;color:#64748b;width:130px;">Course</td><td style="font-size:14px;font-weight:600;color:#334155;">${courseName}</td></tr>
         <tr><td style="font-size:13px;color:#64748b;">Date</td><td style="font-size:14px;font-weight:600;color:#334155;">${sessionDate}</td></tr>
         <tr><td style="font-size:13px;color:#64748b;">Time</td><td style="font-size:14px;font-weight:600;color:#334155;">${timeStr}</td></tr>
-        <tr><td style="font-size:13px;color:#64748b;">Location</td><td style="font-size:14px;font-weight:600;color:#334155;">3/14-16 Marjorie Street, Sefton NSW 2162</td></tr>
+        <tr><td style="font-size:13px;color:#64748b;">Location</td><td style="font-size:14px;font-weight:600;color:#334155;">15/3 Lancaster Street Ingleburn NSW 2565</td></tr>
     </table>
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;background-color:#fffbeb;border-radius:8px;border:1px solid #fcd34d;">
     <tr><td style="padding:20px;">

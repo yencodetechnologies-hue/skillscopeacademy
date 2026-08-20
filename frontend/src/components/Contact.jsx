@@ -156,7 +156,8 @@ const [submitting, setSubmitting] = useState(false);
 
                         <div className="cp-address-block">
                             <p className="cp-address-name">SafeTicks | Sydney</p>
-                            <p className="cp-address-line">15/3 Lancaster Street Ingleburn NSW 2565</p>
+                            <p className="cp-address-line">15/3 Lancaster Street Ingleburn NSW 2565</p><br/>
+                            <p className="cp-address-line">8 Cord Street, Dudley Park, Adelide SA 5008, Australia.</p>
                             <a
                                 href="https://maps.google.com/?q=3/14-16+Marjorie+Street+Sefton+NSW+2162"
                                 target="_blank"
@@ -237,7 +238,8 @@ const [submitting, setSubmitting] = useState(false);
                 <h2 className="cp-map-title">
                     Visit Our <span className="cp-cyan">Training Center</span>
                 </h2>
-                <p className="cp-map-sub">15/3 Lancaster Street Ingleburn NSW 2565</p>
+                <p className="cp-map-sub">15/3 Lancaster Street Ingleburn NSW 2565</p><br/>
+                <p className="cp-map-sub">8 Cord Street, Dudley Park, Adelide SA 5008, Australia.</p>
 
                 <div className="cp-map-wrap">
                     <iframe
@@ -255,7 +257,8 @@ const [submitting, setSubmitting] = useState(false);
                     <div className="cp-info-card">
                         <div className="cp-info-icon cp-icon-cyan">📍</div>
                         <h4 className="cp-info-title">Address</h4>
-                        <p className="cp-info-text">15/3 Lancaster Street Ingleburn NSW 2565</p>
+                        <p className="cp-info-text">15/3 Lancaster Street Ingleburn NSW 2565</p><br/>
+                         <p className="cp-info-text">8 Cord Street, Dudley Park, Adelide SA 5008, Australia.</p>
                         <p className="cp-info-text">Sefton NSW 2162</p>
                     </div>
                     <div className="cp-info-card">

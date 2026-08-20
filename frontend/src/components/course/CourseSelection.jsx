@@ -1127,6 +1127,12 @@ const getCourseVariants = (course) => {
     ];
 };
 
+const normalizeDateKey = (dateInput) => {
+    if (!dateInput) return null;
+    const str = typeof dateInput === "string" ? dateInput : new Date(dateInput).toISOString();
+    return str.split("T")[0];
+};
+
 const variantKey = (courseId, variant) =>
     variant ? `${courseId}|${variant}` : String(courseId);
 
@@ -1755,15 +1761,11 @@ function CalendarDatePicker({
         calDays.push(d);
     }
 
-    const formatKey = (d) => {
-        const date = new Date(
-            currentYear,
-            currentMonth,
-            d
-        );
-
-        return date.toISOString().split("T")[0];
-    };
+ const formatKey = (d) => {
+    const mm = String(currentMonth + 1).padStart(2, "0");
+    const dd = String(d).padStart(2, "0");
+    return `${currentYear}-${mm}-${dd}`;
+};
 
     const pickDate = (key) => {
         setSelectedDate(key);
@@ -1786,6 +1788,7 @@ function CalendarDatePicker({
                     slotDate: slot.date,
                 }))
     );
+    console.log(allSessions,"allSessions");
 
     return (
         <div>
@@ -2181,6 +2184,7 @@ function CourseSelection({
     isCompanyEnroll,
     bookingLinkData = null,
 }) {
+    console.log(selectedCourse,"selectedCourse");
     const [searchParams] = useSearchParams();
 
     const [courses, setCourses] = useState([]);
@@ -2529,20 +2533,13 @@ function CourseSelection({
     // Group slots by date
     // ─────────────────────────────────────────────
 
-    const groupedSlots = slots.reduce(
-        (acc, slot) => {
-            const date = slot.date;
-
-            if (!acc[date]) {
-                acc[date] = [];
-            }
-
-            acc[date].push(slot);
-
-            return acc;
-        },
-        {}
-    );
+   const groupedSlots = slots.reduce((acc, slot) => {
+    const date = normalizeDateKey(slot.date);
+    if (!date) return acc;
+    if (!acc[date]) acc[date] = [];
+    acc[date].push(slot);
+    return acc;
+}, {});
 
     // ─────────────────────────────────────────────
     // Company add course
@@ -2715,27 +2712,16 @@ function CourseSelection({
     // Company grouped slots
     // ─────────────────────────────────────────────
 
-    const getCompanyGroupedSlots = (
-        courseId
-    ) => {
-        const raw =
-            courseSlots[courseId] || [];
-
-        return raw.reduce(
-            (acc, slot) => {
-                const date = slot.date;
-
-                if (!acc[date]) {
-                    acc[date] = [];
-                }
-
-                acc[date].push(slot);
-
-                return acc;
-            },
-            {}
-        );
-    };
+const getCompanyGroupedSlots = (courseId) => {
+    const raw = courseSlots[courseId] || [];
+    return raw.reduce((acc, slot) => {
+        const date = normalizeDateKey(slot.date);
+        if (!date) return acc;
+        if (!acc[date]) acc[date] = [];
+        acc[date].push(slot);
+        return acc;
+    }, {});
+};
 
     // ─────────────────────────────────────────────
     // Group courses
@@ -3033,7 +3019,7 @@ function CourseSelection({
                                     >
                                         {loadingSlots
                                             ? "Loading available dates..."
-                                            : `Select date for ${titleWithVariant(
+                                            : `Select date for1 ${titleWithVariant(
                                                   selectedCourse
                                               )}`}
                                     </p>

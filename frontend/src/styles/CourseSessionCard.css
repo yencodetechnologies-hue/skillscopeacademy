@@ -160,7 +160,7 @@
 .mlp-banner-text {
   color: #1e40af;
   font-weight: 600;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .mlp-card-tags {

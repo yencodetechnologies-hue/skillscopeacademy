@@ -2479,7 +2479,7 @@
   .mlp-date-input {
     height: 50px;
     border-radius: 11px;
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .mlp-session-calendar {
@@ -2623,29 +2623,29 @@
 
 /* Native input */
 .mlp-date-input {
-  font-size: 11px !important;
+  font-size: 16px !important;
   line-height: 1.4;
 }
 
 /* React Select */
 .mlp-course-select {
-  font-size: 11px !important;
+  font-size: 16px !important;
 }
 
 .mlp-course-select .mlp__control {
-  font-size: 11px !important;
+  font-size: 16px !important;
 }
 
 .mlp-course-select .mlp__single-value,
 .mlp-course-select .mlp__placeholder,
 .mlp-course-select .mlp__input-container,
 .mlp-course-select .mlp__option {
-  font-size: 11px !important;
+  font-size: 16px !important;
 }
 
 /* React-select actual input */
 .mlp-course-select input {
-  font-size: 11px !important;
+  font-size: 16px !important;
 }
 
 /* iPhone/iPad specifically */
@@ -2653,16 +2653,16 @@
   input,
   select,
   textarea {
-    font-size: 11px !important;
+    font-size: 16px !important;
   }
 
   .mlp-date-input {
-    font-size: 11px !important;
+    font-size: 16px !important;
   }
 
   .mlp-course-select,
   .mlp-course-select * {
-    font-size: 11px !important;
+    font-size: 16px !important;
   }
 }
 

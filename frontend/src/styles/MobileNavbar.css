@@ -155,3 +155,109 @@
   border: 1px solid #cccccc;
   color: #333333;
 }
+/* =========================================
+   HOME ICON
+========================================= */
+
+.mnb-home-btn {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f5a623;
+  color: #0a1e3f;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  padding: 0;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.mnb-home-btn:hover {
+  background: #0a1e3f;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.mnb-home-btn:active {
+  transform: scale(0.95);
+}
+
+
+/* =========================================
+   ACTION GROUP
+========================================= */
+
+.mnb-action-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* =========================================
+   PHONE BUTTON
+========================================= */
+
+.mnb-phone-circle {
+
+  border-radius: 50%;
+
+  background: #f5a623;
+  color: #0a1e3f;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+
+  font-size: 16px;
+
+  transition: all 0.25s ease;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.mnb-phone-circle:hover {
+  background: #0a1e3f;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .mnb-action-group {
+    gap: 7px;
+  }
+
+  .mnb-home-btn,
+  .mnb-phone-circle {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+
+    font-size: 12px;
+  }
+
+}

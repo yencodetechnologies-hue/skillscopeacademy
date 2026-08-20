@@ -246,13 +246,12 @@
 
   text-align: center;
 
-  cursor: pointer;
 
-  transition:
+  /* transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
     border-color 0.18s ease,
-    background 0.18s ease;
+    background 0.18s ease; */
 
   box-shadow:
     0 2px 7px rgba(
@@ -264,7 +263,7 @@
 }
 
 /* Hover */
-.vac-filter-card:hover {
+/* .vac-filter-card:hover {
   transform: translateY(-1px);
   box-shadow:
     0 4px 12px rgba(
@@ -273,7 +272,7 @@
       42,
       0.08
     );
-}
+} */
 
 /* Active category */
 .vac-filter-card.active {
@@ -321,7 +320,7 @@
 }
 
 /* Active icon */
-.vac-filter-card.active
+/* .vac-filter-card.active
   .vac-category-icon {
   color: #ffffff;
   background:
@@ -331,11 +330,21 @@
       255,
       0.12
     );
-}
+} */
 
 /* =========================================================
    CATEGORY NAME
 ========================================================= */
+
+
+.vac-filter-card:focus-visible
+ {
+  background-color: inherit !important;
+  border-color: inherit !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
 
 .vac-filter-name {
   width: 100%;

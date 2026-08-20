@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/staLogo.png";
 import "../styles/MobileNavbar.css";
 
@@ -17,12 +17,29 @@ const defaultMenuItems = [
   { label: "Sign In", path: "/login" },
 ];
 
-export default function MobileNavbar({ menuItems = defaultMenuItems, phoneNumber = "1300 415 252", telLink = "tel:1300415252" }) {
+export default function MobileNavbar({
+  menuItems = defaultMenuItems,
+  phoneNumber = "1300 415 252",
+  telLink = "tel:1300415252",
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  /* 
+    Home icon should NOT display on home page.
+    It will display on every other page.
+  */
+  const isHomePage = location.pathname === "/";
+
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
 
   const handleNavClick = (path) => {
     if (path.startsWith("http")) {
@@ -30,40 +47,79 @@ export default function MobileNavbar({ menuItems = defaultMenuItems, phoneNumber
     } else {
       navigate(path);
     }
+
     closeMenu();
   };
 
   return (
     <>
       {/* OUTSIDE CLICK OVERLAY */}
-      {isOpen && <div className="mnb-overlay" onClick={closeMenu} />}
+      {isOpen && (
+        <div
+          className="mnb-overlay"
+          onClick={closeMenu}
+        />
+      )}
 
       {/* TOP HEADER BAR */}
       <header className="mnb-header-bar">
         <div className="mnb-container">
-          
+
           {/* LOGO */}
-          <div className="mnb-logo-wrapper" onClick={() => handleNavClick("/")}>
-            <img src={logo} alt="SafeTicks Logo" className="mnb-logo-img" />
+          <div
+            className="mnb-logo-wrapper"
+            onClick={() => handleNavClick("/")}
+          >
+            <img
+              src={logo}
+              alt="SafeTicks Logo"
+              className="mnb-logo-img"
+            />
           </div>
 
           {/* RIGHT ACTION BUTTONS */}
           <div className="mnb-action-group">
-            {/* ROUND YELLOW PHONE BUTTON */}
-            <a href={telLink} className="mnb-phone-circle" aria-label="Call Us">
+
+            {/* HOME ICON */}
+            {!isHomePage && (
+              <button
+                type="button"
+                className="mnb-home-btn"
+                onClick={() => handleNavClick("/")}
+                aria-label="Home"
+                title="Home"
+              >
+                <i className="fa-solid fa-house"></i>
+              </button>
+            )}
+
+            {/* PHONE BUTTON */}
+            <a
+              href={telLink}
+              className="mnb-phone-circle"
+              aria-label="Call Us"
+            >
               <i className="fa-solid fa-phone"></i>
             </a>
 
             {/* HAMBURGER TOGGLE */}
-            <button className="mnb-toggle-btn" onClick={toggleMenu} aria-label="Toggle Navigation">
+            <button
+              type="button"
+              className="mnb-toggle-btn"
+              onClick={toggleMenu}
+              aria-label="Toggle Navigation"
+            >
               {isOpen ? "✕" : "☰"}
             </button>
+
           </div>
         </div>
 
         {/* SLIDE / DROPDOWN DRAWER */}
         {isOpen && (
           <nav className="mnb-drawer">
+
+            {/* MENU LIST */}
             <div className="mnb-menu-list">
               {menuItems.map((item, index) => (
                 <div
@@ -78,27 +134,44 @@ export default function MobileNavbar({ menuItems = defaultMenuItems, phoneNumber
 
             {/* BOTTOM BUTTONS */}
             <div className="mnb-drawer-footer">
-              <a href={telLink} className="mnb-footer-btn mnb-phone-btn" onClick={closeMenu}>
-                <i className="fa-solid fa-phone"></i> {phoneNumber}
+
+              {/* PHONE */}
+              <a
+                href={telLink}
+                className="mnb-footer-btn mnb-phone-btn"
+                onClick={closeMenu}
+              >
+                <i className="fa-solid fa-phone"></i>
+                {phoneNumber}
               </a>
-              
-              <button 
-                className="mnb-footer-btn mnb-combo-btn" 
+
+              {/* COMBO COURSES */}
+              <button
+                type="button"
+                className="mnb-footer-btn mnb-combo-btn"
                 onClick={() => handleNavClick("/combo-courses")}
               >
                 Combo Courses
               </button>
-              
-              <button 
-                className="mnb-footer-btn mnb-book-btn" 
+
+              {/* BOOK NOW */}
+              <button
+                type="button"
+                className="mnb-footer-btn mnb-book-btn"
                 onClick={() => handleNavClick("/book-now")}
               >
                 Book Now
               </button>
-              
-              <Link to="/login" className="mnb-footer-btn mnb-login-btn" onClick={closeMenu}>
+
+              {/* LOGIN */}
+              <Link
+                to="/login"
+                className="mnb-footer-btn mnb-login-btn"
+                onClick={closeMenu}
+              >
                 Login
               </Link>
+
             </div>
           </nav>
         )}

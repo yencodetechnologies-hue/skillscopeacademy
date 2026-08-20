@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import PublicNavbar from "../PublicNavbar";
 import Footer from "./Footer";
@@ -14,6 +15,20 @@ import {
 } from "../../utils/courseStatus";
 
 import ViewAllCoursesMobile from "../mobile/components/ViewAllCoursesMobile";
+
+// ============================================================
+// React Icon
+// Only All Courses uses this icon
+// ============================================================
+
+import { FaBook } from "react-icons/fa";
+
+// ============================================================
+// CDN IMAGE
+// Same utility used in your HomePage
+// ============================================================
+
+import { cdnImage } from "../../utils/cdnImage";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Mobile Detection Hook
@@ -40,274 +55,18 @@ function useIsMobile(breakpoint = 768) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Get Icon Based On Category Title
-// ─────────────────────────────────────────────────────────────────────────────
-
-function getCategoryIcon(category) {
-  if (!category) {
-    return "📚";
-  }
-
-  const title = category.toLowerCase().trim();
-
-  // ─────────────────────────────────────────────────────────────
-  // Web / Software / Programming
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("development") ||
-    title.includes("programming") ||
-    title.includes("coding") ||
-    title.includes("software") ||
-    title.includes("web")
-  ) {
-    return "💻";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Data Science / Analytics
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("data science") ||
-    title.includes("data analytics") ||
-    title.includes("analytics") ||
-    title.includes("data")
-  ) {
-    return "📊";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // AI / Machine Learning
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("artificial intelligence") ||
-    title.includes("machine learning") ||
-    title.includes("deep learning") ||
-    title.includes(" ai") ||
-    title.startsWith("ai")
-  ) {
-    return "🤖";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Business
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("business") ||
-    title.includes("entrepreneur") ||
-    title.includes("entrepreneurship") ||
-    title.includes("startup")
-  ) {
-    return "💼";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Management
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("management") ||
-    title.includes("manager") ||
-    title.includes("project management")
-  ) {
-    return "📋";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Marketing
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("marketing") ||
-    title.includes("digital marketing") ||
-    title.includes("seo") ||
-    title.includes("social media") ||
-    title.includes("advertising")
-  ) {
-    return "📢";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Finance
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("finance") ||
-    title.includes("financial") ||
-    title.includes("banking") ||
-    title.includes("investment")
-  ) {
-    return "💰";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Accounting
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("accounting") ||
-    title.includes("accountant") ||
-    title.includes("bookkeeping")
-  ) {
-    return "🧾";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // HR
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("human resource") ||
-    title.includes("hr ") ||
-    title === "hr" ||
-    title.startsWith("hr/")
-  ) {
-    return "👥";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Design
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("design") ||
-    title.includes("ui/ux") ||
-    title.includes("ux") ||
-    title.includes("graphic") ||
-    title.includes("creative")
-  ) {
-    return "🎨";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Cyber Security
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("cyber") ||
-    title.includes("security") ||
-    title.includes("ethical hacking") ||
-    title.includes("penetration testing")
-  ) {
-    return "🔐";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Networking
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("network") ||
-    title.includes("networking")
-  ) {
-    return "🌐";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Cloud / DevOps
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("cloud") ||
-    title.includes("aws") ||
-    title.includes("azure") ||
-    title.includes("devops")
-  ) {
-    return "☁️";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Database
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("database") ||
-    title.includes("sql") ||
-    title.includes("mongodb") ||
-    title.includes("mysql")
-  ) {
-    return "🗄️";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Mobile
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("mobile") ||
-    title.includes("android") ||
-    title.includes("ios") ||
-    title.includes("flutter") ||
-    title.includes("react native")
-  ) {
-    return "📱";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Testing / QA
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("testing") ||
-    title.includes("quality assurance") ||
-    title.includes("qa")
-  ) {
-    return "🧪";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Education / Training
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("education") ||
-    title.includes("training") ||
-    title.includes("teaching") ||
-    title.includes("learning")
-  ) {
-    return "🎓";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Communication / Language
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("communication") ||
-    title.includes("english") ||
-    title.includes("language")
-  ) {
-    return "💬";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Leadership
-  // ─────────────────────────────────────────────────────────────
-
-  if (
-    title.includes("leadership") ||
-    title.includes("leader")
-  ) {
-    return "🏆";
-  }
-
-  // ─────────────────────────────────────────────────────────────
-  // Default
-  // ─────────────────────────────────────────────────────────────
-
-  return "📚";
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // All Courses
 // ─────────────────────────────────────────────────────────────────────────────
 
 function AllCourses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // ============================================================
+  // CATEGORY DATA
+  // ============================================================
+
+  const [dbCategories, setDbCategories] = useState(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -362,21 +121,141 @@ function AllCourses() {
   }, []);
 
   // ───────────────────────────────────────────────────────────────────────────
-  // Get Unique Categories
+  // Fetch Categories
+  //
+  // Same API used by your HomePage
   // ───────────────────────────────────────────────────────────────────────────
 
-  const categories = [
-    ...new Set(
-      courses
-        .map((course) => course.category)
+  useEffect(() => {
+    let alive = true;
+
+    axios
+      .get(`${API_URL}/api/categories`)
+      .then((res) => {
+        if (!alive) return;
+
+        setDbCategories(
+          Array.isArray(res.data)
+            ? res.data
+            : []
+        );
+      })
+      .catch((error) => {
+        console.error(
+          "Error fetching categories:",
+          error
+        );
+
+        if (alive) {
+          setDbCategories([]);
+        }
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // Course Image By Category
+  //
+  // Fallback if category does not have an image
+  // ───────────────────────────────────────────────────────────────────────────
+
+  const courseImgByCat = useMemo(() => {
+    return courses.reduce((acc, course) => {
+      if (!course?.category) {
+        return acc;
+      }
+
+      const key =
+        typeof course.category === "string"
+          ? course.category
+          : course.category?.name || "";
+
+      if (
+        key &&
+        !acc[key] &&
+        course.image
+      ) {
+        acc[key] = course.image;
+      }
+
+      return acc;
+    }, {});
+  }, [courses]);
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // Get Categories
+  //
+  // Prefer database categories.
+  // Fallback to course categories if API has no data.
+  // ───────────────────────────────────────────────────────────────────────────
+
+  const categories = useMemo(() => {
+    // ==========================================================
+    // Database Categories
+    // ==========================================================
+
+    if (
+      Array.isArray(dbCategories) &&
+      dbCategories.length > 0
+    ) {
+      return dbCategories
         .filter(
           (category) =>
             category &&
-            typeof category === "string" &&
-            category.trim() !== ""
+            category.active !== false &&
+            category.name
         )
-    ),
-  ];
+        .sort(
+          (a, b) =>
+            (a.order || 0) -
+            (b.order || 0)
+        )
+        .map((category) => ({
+          name: category.name,
+
+          image:
+            category.image ||
+            courseImgByCat[category.name] ||
+            "",
+        }));
+    }
+
+    // ==========================================================
+    // Fallback - Categories From Courses
+    // ==========================================================
+
+    return [
+      ...new Map(
+        courses
+          .filter((course) => course?.category)
+          .map((course) => {
+            const key =
+              typeof course.category === "string"
+                ? course.category
+                : course.category?.name || "";
+
+            return [
+              key,
+              {
+                name: key,
+                image: course.image || "",
+              },
+            ];
+          })
+      ).values(),
+    ]
+      .filter((category) => category.name)
+      .sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+  }, [
+    dbCategories,
+    courses,
+    courseImgByCat,
+  ]);
 
   // ───────────────────────────────────────────────────────────────────────────
   // Category Click
@@ -390,10 +269,14 @@ function AllCourses() {
     if (category === "All") {
       searchParams.delete("category");
     } else {
-      searchParams.set("category", category);
+      searchParams.set(
+        "category",
+        category
+      );
     }
 
-    const queryString = searchParams.toString();
+    const queryString =
+      searchParams.toString();
 
     navigate(
       queryString
@@ -425,7 +308,8 @@ function AllCourses() {
       course.category === selectedCategory;
 
     // Search filter
-    const search = searchQuery.toLowerCase();
+    const search =
+      searchQuery.toLowerCase();
 
     const matchSearch =
       !searchQuery ||
@@ -436,7 +320,10 @@ function AllCourses() {
         ?.toLowerCase()
         .includes(search);
 
-    return matchCategory && matchSearch;
+    return (
+      matchCategory &&
+      matchSearch
+    );
   });
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -464,6 +351,8 @@ function AllCourses() {
 
             {/* ============================================================
                 ALL COURSES
+
+                Only All Courses uses React Icon
             ============================================================ */}
 
             <button
@@ -479,7 +368,7 @@ function AllCourses() {
             >
 
               <span className="category-icon">
-                📚
+                <FaBook />
               </span>
 
               <span className="category-name">
@@ -489,35 +378,86 @@ function AllCourses() {
             </button>
 
             {/* ============================================================
-                CATEGORIES
+                DATABASE CATEGORIES
+
+                Images come from /api/categories
             ============================================================ */}
 
-            {categories.map((category) => (
+            {categories.map(
+              (category, index) => {
 
-              <button
-                type="button"
-                key={category}
-                className={`course-category-item ${
-                  selectedCategory === category
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleCategoryClick(category)
-                }
-              >
+                const imageUrl =
+                  category.image
+                    ? cdnImage(
+                        category.image,
+                        { w: 320 }
+                      )
+                    : "";
 
-                <span className="category-icon">
-                  {getCategoryIcon(category)}
-                </span>
+                return (
+                  <button
+                    type="button"
+                    key={`${category.name}-${index}`}
+                    className={`course-category-item ${
+                      selectedCategory ===
+                      category.name
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      handleCategoryClick(
+                        category.name
+                      )
+                    }
+                  >
 
-                <span className="category-name">
-                  {category}
-                </span>
+                    {/* ==================================================
+                        CATEGORY IMAGE
+                    ================================================== */}
 
-              </button>
+                    {imageUrl ? (
 
-            ))}
+                      <span className="category-image-wrapper">
+
+                        <img
+                          src={imageUrl}
+                          alt={category.name}
+                          className="category-image"
+                          loading="lazy"
+                          decoding="async"
+                          width="320"
+                          height="200"
+                        />
+
+                      </span>
+
+                    ) : (
+
+                      /*
+                       * If category has no image,
+                       * use the same simple icon as fallback.
+                       */
+
+                      <span className="category-image-wrapper category-image-placeholder">
+
+                        <FaBook />
+
+                      </span>
+
+                    )}
+
+                    {/* ==================================================
+                        CATEGORY NAME
+                    ================================================== */}
+
+                    <span className="category-name">
+                      {category.name}
+                    </span>
+
+                  </button>
+                );
+              }
+            )}
 
           </div>
 

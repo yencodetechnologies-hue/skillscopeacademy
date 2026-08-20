@@ -1,76 +1,3 @@
-.all-courses-wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 40px 24px;
-}
-
-.all-courses-header {
-  margin-bottom: 32px;
-}
-
-.all-courses-header h2 {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--color-navy-hero);
-}
-
-.all-courses-header p {
-  color: var(--color-slate-500);
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-/* ✅ Responsive Grid */
-.all-courses-grid {
-  display: grid;
-  gap: 24px;
-
-  /* Mobile — 1 column */
-  grid-template-columns: 1fr;
-}
-
-/* Tablet — 2 columns */
-@media (min-width: 640px) {
-  .all-courses-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Laptop medium — 3 columns */
-@media (min-width: 1024px) {
-  .all-courses-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Laptop XL — 4 columns */
-@media (min-width: 1280px) {
-  .all-courses-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Skeleton loader */
-.course-card-skeleton {
-  height: 380px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, var(--color-bg-panel) 25%, #e0e0e0 50%, var(--color-bg-panel) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.no-courses {
-  text-align: center;
-  padding: 80px;
-  color: var(--color-text-subtle);
-  font-size: 18px;
-}
-
 /* =========================================================
    ALL COURSES PAGE
 ========================================================= */
@@ -108,17 +35,18 @@
 
 /* =========================================================
    CATEGORY LIST
+   DESKTOP = 5 ITEMS PER ROW
 ========================================================= */
 
 .course-category-list {
+  width: 100%;
+
   display: grid;
 
-  /* 6 items in each row */
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
 
   gap: 12px;
-
-  width: 100%;
 }
 
 
@@ -127,9 +55,8 @@
 ========================================================= */
 
 .course-category-item {
-  min-height: 78px;
-
-  display: flex;
+  min-width: 0;
+ display: flex;
 
   align-items: center;
 
@@ -137,7 +64,7 @@
 
   gap: 10px;
 
-  padding: 12px 10px;
+  padding: 7px 7px;
 
   background: #ffffff;
 
@@ -166,6 +93,8 @@
 
   height: 38px;
 
+  min-width: 38px;
+
   display: flex;
 
   align-items: center;
@@ -174,11 +103,22 @@
 
   flex-shrink: 0;
 
-  font-size: 21px;
-
   background: #fff7e8;
 
   border-radius: 8px;
+
+  color: #111827;
+
+  font-size: 21px;
+}
+
+
+/* React Icon */
+
+.category-icon svg {
+  width: 20px;
+
+  height: 20px;
 }
 
 
@@ -187,6 +127,8 @@
 ========================================================= */
 
 .category-name {
+  min-width: 0;
+
   color: #1f2937;
 
   font-size: 13px;
@@ -196,6 +138,8 @@
   line-height: 1.3;
 
   text-align: center;
+
+  word-break: normal;
 }
 
 
@@ -214,7 +158,7 @@
 
 
 /* =========================================================
-   ACTIVE
+   ACTIVE CATEGORY
 ========================================================= */
 
 .course-category-item.active {
@@ -227,20 +171,24 @@
 }
 
 
-.course-category-item.active
-.category-name {
+/* Active text */
+
+.course-category-item.active .category-name {
   color: #ffffff;
 }
 
 
-.course-category-item.active
-.category-icon {
+/* Active icon */
+
+.course-category-item.active .category-icon {
   background: rgba(255, 255, 255, 0.2);
+
+  color: #ffffff;
 }
 
 
 /* =========================================================
-   HEADER
+   COURSE HEADER
 ========================================================= */
 
 .all-courses-header {
@@ -312,7 +260,6 @@
 
 
 @keyframes skeletonLoading {
-
   0% {
     background-position: 200% 0;
   }
@@ -320,7 +267,6 @@
   100% {
     background-position: -200% 0;
   }
-
 }
 
 
@@ -344,17 +290,249 @@
 /* =========================================================
    1200px
 ========================================================= */
+/* =========================================================
+   CATEGORY SECTION
+========================================================= */
+
+.course-category-section {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   CATEGORY LIST
+   5 ITEMS PER ROW
+========================================================= */
+
+.course-category-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
+
+  gap: 14px;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   CATEGORY ITEM
+========================================================= */
+
+.course-category-item {
+  min-width: 0;
+
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 14px;
+
+
+  background: #ffffff;
+
+  border: 1px solid #e5e5e5;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* =========================================================
+   CATEGORY IMAGE
+========================================================= */
+
+.category-image-wrapper {
+  width: 58px;
+
+  height: 58px;
+
+  min-width: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  background: #f5f5f5;
+
+  border: 3px solid #e5e5e5;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CATEGORY IMAGE
+========================================================= */
+
+.category-image {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+/* =========================================================
+   ALL COURSES ICON
+========================================================= */
+
+.category-icon {
+  width: 58px;
+
+  height: 58px;
+
+  min-width: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff7e8;
+
+  color: #0a1e3f;
+
+  font-size: 24px;
+
+  flex-shrink: 0;
+}
+
+
+.category-icon svg {
+  width: 24px;
+
+  height: 24px;
+}
+
+
+/* =========================================================
+   IMAGE FALLBACK
+========================================================= */
+
+.category-image-placeholder {
+  background: #fff7e8;
+
+  color: #0a1e3f;
+
+  font-size: 22px;
+}
+
+
+/* =========================================================
+   CATEGORY NAME
+========================================================= */
+
+.category-name {
+  min-width: 0;
+
+  color: #111827;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  line-height: 1.35;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.course-category-item:hover {
+  transform: translateY(-2px);
+
+  border-color: #f5a623;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.course-category-item.active {
+  background: #f5a623;
+
+  border-color: #f5a623;
+
+  box-shadow:
+    0 5px 15px rgba(245, 166, 35, 0.2);
+}
+
+
+/* =========================================================
+   ACTIVE CATEGORY NAME
+========================================================= */
+
+.course-category-item.active
+.category-name {
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   ACTIVE CATEGORY IMAGE
+========================================================= */
+
+.course-category-item.active
+.category-image-wrapper {
+  border-color: #ffffff;
+}
+
+
+/* =========================================================
+   ACTIVE ALL COURSES ICON
+========================================================= */
+
+.course-category-item.active
+.category-icon {
+  background: rgba(255, 255, 255, 0.25);
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   1200px
+========================================================= */
 
 @media (max-width: 1200px) {
 
   .course-category-list {
     grid-template-columns:
-      repeat(5, minmax(0, 1fr));
-  }
-
-  .all-courses-grid {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
+      repeat(4, minmax(0, 1fr));
   }
 
 }
@@ -368,12 +546,7 @@
 
   .course-category-list {
     grid-template-columns:
-      repeat(4, minmax(0, 1fr));
-  }
-
-  .all-courses-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+      repeat(3, minmax(0, 1fr));
   }
 
 }
@@ -385,10 +558,6 @@
 
 @media (max-width: 768px) {
 
-  .all-courses-wrapper {
-    padding: 15px 16px 35px;
-  }
-
   .course-category-list {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
@@ -396,8 +565,31 @@
     gap: 8px;
   }
 
-  .all-courses-grid {
-    grid-template-columns: 1fr;
+  .course-category-item {
+    min-height: 72px;
+
+    padding: 10px;
+
+    gap: 10px;
+  }
+
+  .category-image-wrapper,
+  .category-icon {
+    width: 48px;
+
+    height: 48px;
+
+    min-width: 48px;
+  }
+
+  .category-icon svg {
+    width: 20px;
+
+    height: 20px;
+  }
+
+  .category-name {
+    font-size: 12px;
   }
 
 }
@@ -410,28 +602,7 @@
 @media (max-width: 480px) {
 
   .course-category-list {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 8px;
-  }
-
-  .course-category-item {
-    min-height: 65px;
-
-    padding: 8px;
-  }
-
-  .category-icon {
-    width: 30px;
-
-    height: 30px;
-
-    font-size: 18px;
-  }
-
-  .category-name {
-    font-size: 12px;
+    grid-template-columns: 1fr;
   }
 
 }

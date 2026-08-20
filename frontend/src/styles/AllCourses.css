@@ -304,7 +304,7 @@
 
   max-width: 1400px;
 
-  margin: -300px auto 32px;
+  margin: -360px auto 32px;
 
   z-index: 20;
 }
@@ -739,8 +739,9 @@
  .hero-buttons{display: none;}
  .hero-slider-card{display: none;}
  .hero-trustbar-wrap{display: none;}
- .hero-container{margin-top:-190px}
-  .hero-bg-wrapper{height:500px !important}
-  .hero-left h1{margin-bottom: 10px;font-size: 40px;}
+ .hero-container{margin-top:-250px}
+  .hero-bg-wrapper{height:430px !important}
+  .hero-left h1{margin-bottom: 10px;font-size: 40px;display: flex;}
+  .hero-left h1 span{color: #fff;margin-left: 10px;}
  }
 

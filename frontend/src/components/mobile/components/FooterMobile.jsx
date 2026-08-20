@@ -63,36 +63,49 @@ function Footer() {
       </div>
 
       {/* ── 2. MAIN FOOTER CARD ── */}
-      <div className="st-footer-card">
-        {/* HEAD OFFICE */}
-       <div className="st-footer-section">
-  <div className="st-section-label">HEAD OFFICE</div>
-
-  <div className="st-office-row">
-    <i className="fa-solid fa-location-dot st-info-icon" />
-
-    <div className="st-office-address">
-      <strong>SafeTicks Sydney</strong>
-      <br />
-      15/3 Lancaster Street,
-      <br />
-      Ingleburn NSW 2565
-      <br />
-      Australia.
+    <div className="st-footer-card">
       
-      <br />
-      <br />
+    <div className="st-section-label">SafeTicks</div>
+  <div className="st-footer-section1">
+    {/* <div className="st-section-label">Location</div> */}
 
-      <strong>SafeTicks Adelaide</strong>
-      <br />
-      8 Cord Street,
-      <br />
-      Dudley Park SA 5008,
-      <br />
-      Australia.
+    <div className="st-office-row">
+      <i className="fa-solid fa-location-dot st-info-icon" />
+
+      <div className="st-office-list">
+
+        {/* Sydney */}
+        <div className="st-office">
+          <strong>Sydney</strong>
+          {/* <span>SafeTicks</span> */}
+          <div className="st-office-address">
+            15/3 Lancaster Street,
+            <br />
+            Ingleburn,
+            <br />NSW 2565
+            {/* <br />
+            Australia. */}
+          </div>
+        </div>
+
+        {/* Adelaide */}
+        <div className="st-office">
+          <strong>Adelaide</strong>
+          {/* <span>SafeTicks</span> */}
+          <div className="st-office-address">
+            8 Cord Street,
+            <br />
+            Dudley Park,
+            <br/>SA 5008
+            {/* <br />
+            Australia. */}
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
+
 
         {/* CONTACT */}
         <div className="st-footer-section">

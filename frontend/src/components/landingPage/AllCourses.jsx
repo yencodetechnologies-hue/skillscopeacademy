@@ -5,6 +5,7 @@ import axios from "axios";
 import PublicNavbar from "../PublicNavbar";
 import Footer from "./Footer";
 import CourseCard from "../course/CourseCard";
+import Hero from "./Hero"
 
 import "../../styles/AllCourses.css";
 
@@ -21,7 +22,7 @@ import ViewAllCoursesMobile from "../mobile/components/ViewAllCoursesMobile";
 // Only All Courses uses this icon
 // ============================================================
 
-import { FaBook } from "react-icons/fa";
+import { FaThLarge } from "react-icons/fa";
 
 // ============================================================
 // CDN IMAGE
@@ -337,7 +338,16 @@ function AllCourses() {
           NAVBAR
       ================================================================ */}
 
-      <PublicNavbar courses={courses} />
+      <div className="site-header">
+            {/* <TopNav /> */}
+            <PublicNavbar courses={courses} />
+             {/* {marqueeContent && (
+              <div className="announcement-bar">
+                <p>{marqueeContent}</p>
+              </div>
+            )} */}
+          </div>
+          <Hero />
 
       <div className="all-courses-wrapper">
 
@@ -345,124 +355,95 @@ function AllCourses() {
             CATEGORY SECTION
         ================================================================ */}
 
-        <div className="course-category-section">
+       {/* ================================================================
+    CATEGORY SECTION
+================================================================ */}
 
-          <div className="course-category-list">
+<div className="course-category-section">
 
-            {/* ============================================================
-                ALL COURSES
+  <div className="course-category-list">
 
-                Only All Courses uses React Icon
-            ============================================================ */}
+    {/* ============================================================
+        ALL COURSES
+    ============================================================ */}
 
-            <button
-              type="button"
-              className={`course-category-item ${
-                !selectedCategory
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                handleCategoryClick("All")
-              }
-            >
+    <button
+      type="button"
+      className={`course-category-item ${
+        !selectedCategory ? "active" : ""
+      }`}
+      onClick={() => handleCategoryClick("All")}
+    >
+      <span className="category-icon">
+        <FaThLarge />
+      </span>
 
-              <span className="category-icon">
-                <FaBook />
-              </span>
+      <span className="category-name">
+        All Courses
+      </span>
+    </button>
 
-              <span className="category-name">
-                All Courses
-              </span>
 
-            </button>
+    {/* ============================================================
+        DATABASE CATEGORIES
+    ============================================================ */}
 
-            {/* ============================================================
-                DATABASE CATEGORIES
+    {categories.map((category, index) => {
 
-                Images come from /api/categories
-            ============================================================ */}
+      const imageUrl = category.image
+        ? cdnImage(category.image, { w: 160 })
+        : "";
 
-            {categories.map(
-              (category, index) => {
+      return (
+        <button
+          type="button"
+          key={`${category.name}-${index}`}
+          className={`course-category-item ${
+            selectedCategory === category.name
+              ? "active"
+              : ""
+          }`}
+          onClick={() =>
+            handleCategoryClick(category.name)
+          }
+        >
 
-                const imageUrl =
-                  category.image
-                    ? cdnImage(
-                        category.image,
-                        { w: 320 }
-                      )
-                    : "";
+          {/* ======================================================
+              CATEGORY IMAGE
+          ====================================================== */}
 
-                return (
-                  <button
-                    type="button"
-                    key={`${category.name}-${index}`}
-                    className={`course-category-item ${
-                      selectedCategory ===
-                      category.name
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      handleCategoryClick(
-                        category.name
-                      )
-                    }
-                  >
+          {imageUrl ? (
+            <span className="category-image-wrapper">
+              <img
+                src={imageUrl}
+                alt={category.name}
+                className="category-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          ) : (
+            <span className="category-image-wrapper category-image-placeholder">
+              <FaThLarge />
+            </span>
+          )}
 
-                    {/* ==================================================
-                        CATEGORY IMAGE
-                    ================================================== */}
 
-                    {imageUrl ? (
+          {/* ======================================================
+              CATEGORY NAME
+          ====================================================== */}
 
-                      <span className="category-image-wrapper">
+          <span className="category-name">
+            {category.name}
+          </span>
 
-                        <img
-                          src={imageUrl}
-                          alt={category.name}
-                          className="category-image"
-                          loading="lazy"
-                          decoding="async"
-                          width="320"
-                          height="200"
-                        />
+        </button>
+      );
+    })}
 
-                      </span>
+  </div>
 
-                    ) : (
-
-                      /*
-                       * If category has no image,
-                       * use the same simple icon as fallback.
-                       */
-
-                      <span className="category-image-wrapper category-image-placeholder">
-
-                        <FaBook />
-
-                      </span>
-
-                    )}
-
-                    {/* ==================================================
-                        CATEGORY NAME
-                    ================================================== */}
-
-                    <span className="category-name">
-                      {category.name}
-                    </span>
-
-                  </button>
-                );
-              }
-            )}
-
-          </div>
-
-        </div>
-
+</div>
         {/* ================================================================
             COURSE HEADER
         ================================================================ */}

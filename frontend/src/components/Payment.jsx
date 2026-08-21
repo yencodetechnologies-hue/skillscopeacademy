@@ -85,6 +85,7 @@ function Payment({
     tokenData = null,          // ✅ NEW
     enrollmentLinkData = null, // ✅ NEW
 }) {
+    console.log(selectedCourses,"selectedCoursessssssss")
 
     const [paymentMethod, setPaymentMethod] = useState(() => {
         // We initialize with a safe default, but useEffect below will adjust it

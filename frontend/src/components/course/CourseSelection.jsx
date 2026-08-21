@@ -2578,19 +2578,20 @@ function CourseSelection({
             variant || "default"
         }_${Date.now()}`;
 
-        setSelectedCourses((prev) => [
-            ...(prev || []),
-            {
-                course: {
-                    ...selected,
-                    __variant:
-                        variant,
-                },
-                session: null,
-                quantity: 1,
-                uid,
-            },
-        ]);
+       setSelectedCourses((prev) =>
+    prev.map((sc) =>
+        sc.uid === uid
+            ? {
+                  ...sc,
+                  session,
+                  course: {
+                      ...sc.course,
+                      preferredCity: session?.preferredCity,
+                  },
+              }
+            : sc
+    )
+);
     };
 
     // ─────────────────────────────────────────────

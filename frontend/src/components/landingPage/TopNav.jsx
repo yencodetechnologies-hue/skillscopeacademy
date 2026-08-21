@@ -23,11 +23,17 @@ function TopNav() {
                     <a href="mailto:info@safeticks.com" style={{ color: "inherit", textDecoration: "none" }}>info@safeticks.com</a>
                 </div>
 
-                <div className="top-item">
-                    <i className="fa-solid fa-location-dot"></i> 15/3 Lancaster Street Ingleburn NSW 2565<br/>
-                     <i className="fa-solid fa-location-dot"></i> 8 Cord Street, Dudley Park, Adelide SA 5008, Australia.
-                </div>
-                
+               <div className="top-item">
+  <div className="address-item">
+    <i className="fa-solid fa-location-dot"></i>
+    <span>15/3 Lancaster Street, Ingleburn NSW 2565</span>
+  </div>
+
+  <div className="address-item1">
+    <i className="fa-solid fa-location-dot"></i>
+    <span>8 Cord Street, Dudley Park, Adelaide SA 5008, Australia.</span>
+  </div>
+</div>
 
             </div>
 

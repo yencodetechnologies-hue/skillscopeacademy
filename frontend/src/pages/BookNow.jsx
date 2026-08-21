@@ -3,6 +3,20 @@ import { colors } from '../constants/theme';
 // BookNow.jsx — COMPLETE FILE WITH STRICT UPDATES
 // ============================================================================
 
+import {
+    FiHome,
+    FiBookOpen,
+    FiCreditCard,
+    FiUser,
+    FiChevronRight,
+    FiChevronLeft,
+    FiShield,
+    FiClock,
+    FiAward,
+    FiHeadphones,
+    FiCheckCircle,
+} from "react-icons/fi";
+
 import { useState, useEffect, useRef, useMemo } from "react";
 import CourseSelection from "../components/course/CourseSelection";
 import "../styles/BookNow.css";
@@ -1224,158 +1238,385 @@ const [step, setStep] = useState(() => {
 
     if (isLoading) return <div>Loading...</div>;
 
-    return (
-        <section className="enroll-page">
+   return (
+    <section className="enroll-page">
 
+        {/* ============================================================
+            PAGE HEADER
+        ============================================================ */}
+        {step !== 3 && (
+            <div className="book-page-header">
+
+                <div className="book-header-content">
+                    <h4 className="book-main-title">
+                        Book Your <span>Course</span>
+                        <span className="title-sparkle">✦</span>
+                    </h4>
+
+                    <p className="book-main-subtitle">
+                        Complete all steps to book your course and start your learning journey
+                    </p>
+                </div>
+            </div>
+        )}
+
+        {/* ============================================================
+            MAIN CONTENT
+        ============================================================ */}
+        <div className="book-content-wrapper">
+
+            {/* BACK HOME BUTTON */}
             {step !== 3 && (
-                <>
-                    <h1 className="title">Book Your Course !</h1>
-                    <p className="subtitle">Complete all steps to book your course</p>
-                </>
+                <button
+                    type="button"
+                    className="book-home-button"
+                    onClick={() => navigate("/")}
+                >
+                    <FiHome size={17} />
+                    <span>Back to Home</span>
+                </button>
             )}
 
-            <div className="enroll-card">
+            {/* ========================================================
+                BOOKING CARD
+            ======================================================== */}
+            <div className={`enroll-card ${step === 3 ? "success-card" : ""}`}>
 
-                <p className="home-pg-btn" style={{ width: "fit-content", padding: "10px 20px" }} onClick={() => navigate("/")}>
-                    Back to Home
-                </p>
-
+                {/* ====================================================
+                    STEPPER
+                ==================================================== */}
                 {step !== 3 && (
-                    <div className="stepper">
-                        <div className="stepper-wo-pbar">
-                            <div className={`step ${step >= 1 ? "active" : ""}`}>📖</div>
-                            {(enrollmentType === "individual" || enrollmentType === "agent") && (
-                                <>
-                                    <div className={`step ${step >= 2 ? "active" : ""}`}>{isEnrollmentLink ? "👤" : "💳"}</div>
-                                    {/* <div className={`step ${step >= 3 ? "active" : ""}`}>📋</div>
-                                    <div className={`step ${step >= 4 ? "active" : ""}`}>📄</div> */}
-                                </>
-                            )}
-                            {enrollmentType === "company" && (
-                                <div className={`step ${step >= 2 ? "active" : ""}`}>💳</div>
-                            )}
+                    <div className="booking-stepper">
+
+                        {/* STEP 1 */}
+                        <div className="booking-step-item">
+
+                            <div
+                                className={`booking-step-circle ${
+                                    step >= 1 ? "active" : ""
+                                }`}
+                            >
+                                <FiBookOpen size={20} />
+                            </div>
+
+                            <div className="booking-step-info">
+                                <div className="booking-step-title">
+                                    <span className="step-number">1</span>
+                                    <span>Course Selection</span>
+                                </div>
+
+                                <div className="booking-step-description">
+                                    Choose your course
+                                </div>
+                            </div>
                         </div>
-                        <div className="progress-bar">
-                            <div className="progress-fill" style={{ width: `${progress}%` }} />
+
+                        {/* PROGRESS LINE */}
+                        <div className="booking-progress-container">
+                            <div className="booking-progress-background">
+                                <div
+                                    className="booking-progress-fill"
+                                    style={{
+                                        width: `${Math.min(progress, 100)}%`,
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        {/* STEP 2 */}
+                        <div className="booking-step-item">
+
+                            <div
+                                className={`booking-step-circle ${
+                                    step >= 2 ? "active" : ""
+                                }`}
+                            >
+                                <FiCreditCard size={20} />
+                            </div>
+
+                            <div className="booking-step-info">
+                                <div className="booking-step-title">
+                                    <span className="step-number">2</span>
+                                    <span>Payment & Confirmation</span>
+                                </div>
+
+                                <div className="booking-step-description">
+                                    Secure your seat
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
 
-                {step === 1 && (
-                    <CourseSelection
-                        enrollmentType={enrollmentType}
-                        setEnrollmentType={setEnrollmentType}
-                        selectedSession={selectedSession}
-                        setSelectedSession={setSelectedSession}
-                        selectedCourse={selectedCourse}
-                        setSelectedCourse={setSelectedCourse}
-                        hideEnrollmentType={hideEnrollmentType}
-                        selectedCourses={selectedCourses}
-                        setSelectedCourses={setSelectedCourses}
-                        isCompanyEnroll={isCompanyEnroll}
-                        bookingLinkData={searchParams.get("token") ? tokenData : null}
-                    />
-                )}
+                {/* ====================================================
+                    CONTENT
+                ==================================================== */}
 
-                {step === 2 && (
-                    <Payment
-                        selectedCourse={selectedCourse}
-                        selectedCourses={selectedCourses}
-                        isCompany={isCompany}
-                        coursePrice={coursePrice}
-                        setUserDetails={setUserDetails}
-                        enrollmentType={enrollmentType}
-                        setEnrollmentType={setEnrollmentType}
-                        selectedSession={selectedSession}
-                        setSelectedSession={setSelectedSession}
-                        setIsValid={setIsPaymentValid}
-                        triggerValidation={triggerValidation}
-                        isCompanyEnroll={isCompanyEnroll}
-                        setPaymentData={setPaymentData}
-                        onEmailStatusChange={setIsEmailTaken}
-                        onExistingStudentId={handleExistingStudentId}
-                        onCardPayment={(ref) => {
-                            cardPaymentRef.current = ref
-                            setActivePaymentMethod(ref.paymentMethod)
-                        }}
-                        isExistingCompany={isDashboardCompany}
-                        initialPaymentData={isStudentPortalAutofill ? loggedInUser : (isDashboardCompany ? companyUser : {})}
-                        isEnrollmentLink={isEnrollmentLink}
-                        shouldAutofill={isStudentPortalAutofill}
-                        tokenData={tokenData}
-                        enrollmentLinkData={enrollmentLinkData}
-                    />
-                )}
+                <div className="booking-content">
 
-                {step === 3 && (
-                    <CourseSelectionSuccess
-                        enrollmentData={{
-                            selectedCourse,
-                            courseDate: selectedSession?.date,
-                            courseTime: `${selectedSession?.startTime} - ${selectedSession?.endTime}`,
-                            coursePrice,
-                            paymentMethod: paymentData.paymentMethod,
-                            email: paymentData.email,
-                            name: paymentData.name,
-                        }}
-                    />
-                )}
-
-                {step === 4 && (
-                    <EnrollmentRegister
-                        ref={enrollRef}
-                        userDetails={userDetails}
-                        section={enrollSection}
-                        setSection={setEnrollSection}
-                    />
-                )}
-
-                <div className={`next-wrapper ${step > 1 ? "has-prev" : ""}`}>
-
-                    {step > 1 && step !== 3 && step !== 4 && (
-                        <button
-                            className="prev-btn"
-                            disabled={step === 4 && enrollSection === 1}
-                            onClick={() => {
-                                if (step === 4) {
-                                    if (enrollSection > 1) setEnrollSection(prev => prev - 1);
-                                    return;
-                                }
-                                setStep(prev => prev - 1);
-                            }}
-                        >
-                            Previous
-                        </button>
-                    )}
-
-                    {step !== 3 && step !== 4 && (
-                        <button
-                            className="next-btn"
-                            disabled={
-                                isProcessing ||
-                                (step === 1 && !isMultiCompanyBooking && (!selectedCourse?._id || !selectedSession?._id)) ||
-                                (step === 1 && isMultiCompanyBooking && (selectedCourses.length === 0 || selectedCourses.some(sc => !sc.session?._id))) ||
-                                (step === 2 && isEmailTaken && isCompany && !enrollId)
+                    {/* STEP 1 */}
+                    {step === 1 && (
+                        <CourseSelection
+                            enrollmentType={enrollmentType}
+                            setEnrollmentType={setEnrollmentType}
+                            selectedSession={selectedSession}
+                            setSelectedSession={setSelectedSession}
+                            selectedCourse={selectedCourse}
+                            setSelectedCourse={setSelectedCourse}
+                            hideEnrollmentType={hideEnrollmentType}
+                            selectedCourses={selectedCourses}
+                            setSelectedCourses={setSelectedCourses}
+                            isCompanyEnroll={isCompanyEnroll}
+                            bookingLinkData={
+                                searchParams.get("token")
+                                    ? tokenData
+                                    : null
                             }
-                            onClick={handleNext}
-                        >
-                            {getNextLabel()}
-                        </button>
+                        />
                     )}
 
-                </div>
+                    {/* STEP 2 */}
+                    {step === 2 && (
+                        <Payment
+                            selectedCourse={selectedCourse}
+                            selectedCourses={selectedCourses}
+                            isCompany={isCompany}
+                            coursePrice={coursePrice}
+                            setUserDetails={setUserDetails}
+                            enrollmentType={enrollmentType}
+                            setEnrollmentType={setEnrollmentType}
+                            selectedSession={selectedSession}
+                            setSelectedSession={setSelectedSession}
+                            setIsValid={setIsPaymentValid}
+                            triggerValidation={triggerValidation}
+                            isCompanyEnroll={isCompanyEnroll}
+                            setPaymentData={setPaymentData}
+                            onEmailStatusChange={setIsEmailTaken}
+                            onExistingStudentId={handleExistingStudentId}
+                            onCardPayment={(ref) => {
+                                cardPaymentRef.current = ref;
+                                setActivePaymentMethod(ref.paymentMethod);
+                            }}
+                            isExistingCompany={isDashboardCompany}
+                            initialPaymentData={
+                                isStudentPortalAutofill
+                                    ? loggedInUser
+                                    : isDashboardCompany
+                                    ? companyUser
+                                    : {}
+                            }
+                            isEnrollmentLink={isEnrollmentLink}
+                            shouldAutofill={isStudentPortalAutofill}
+                            tokenData={tokenData}
+                            enrollmentLinkData={enrollmentLinkData}
+                        />
+                    )}
 
+                    {/* STEP 3 */}
+                    {step === 3 && (
+                        <CourseSelectionSuccess
+                            enrollmentData={{
+                                selectedCourse,
+                                courseDate: selectedSession?.date,
+                                courseTime: `${selectedSession?.startTime || ""} - ${
+                                    selectedSession?.endTime || ""
+                                }`,
+                                coursePrice,
+                                paymentMethod: paymentData.paymentMethod,
+                                email: paymentData.email,
+                                name: paymentData.name,
+                            }}
+                        />
+                    )}
+
+                    {/* STEP 4 */}
+                    {step === 4 && (
+                        <EnrollmentRegister
+                            ref={enrollRef}
+                            userDetails={userDetails}
+                            section={enrollSection}
+                            setSection={setEnrollSection}
+                        />
+                    )}
+
+                    {/* =================================================
+                        ACTION BUTTONS
+                    ================================================= */}
+                    {step !== 3 && step !== 4 && (
+                        <div
+                            className={`booking-actions ${
+                                step > 1 ? "with-previous" : ""
+                            }`}
+                        >
+
+                            {step > 1 && (
+                                <button
+                                    type="button"
+                                    className="booking-previous-btn"
+                                    disabled={
+                                        step === 4 &&
+                                        enrollSection === 1
+                                    }
+                                    onClick={() => {
+                                        if (step === 4) {
+                                            if (enrollSection > 1) {
+                                                setEnrollSection(
+                                                    (prev) => prev - 1
+                                                );
+                                            }
+                                            return;
+                                        }
+
+                                        setStep((prev) => prev - 1);
+                                    }}
+                                >
+                                    <FiChevronLeft size={18} />
+                                    Previous
+                                </button>
+                            )}
+
+                            <button
+                                type="button"
+                                className="booking-next-btn"
+                                disabled={
+                                    isProcessing ||
+                                    (
+                                        step === 1 &&
+                                        !isMultiCompanyBooking &&
+                                        (
+                                            !selectedCourse?._id ||
+                                            !selectedSession?._id
+                                        )
+                                    ) ||
+                                    (
+                                        step === 1 &&
+                                        isMultiCompanyBooking &&
+                                        (
+                                            selectedCourses.length === 0 ||
+                                            selectedCourses.some(
+                                                (sc) => !sc.session?._id
+                                            )
+                                        )
+                                    ) ||
+                                    (
+                                        step === 2 &&
+                                        isEmailTaken &&
+                                        isCompany &&
+                                        !enrollId
+                                    )
+                                }
+                                onClick={handleNext}
+                            >
+                                <span>{getNextLabel()}</span>
+                                <FiChevronRight size={20} />
+                            </button>
+                        </div>
+                    )}
+
+                    {/* STEP 4 SUBMIT */}
+                    {step === 4 && (
+                        <div className="booking-actions">
+                            {enrollSection > 1 && (
+                                <button
+                                    type="button"
+                                    className="booking-previous-btn"
+                                    onClick={() =>
+                                        setEnrollSection(
+                                            (prev) => prev - 1
+                                        )
+                                    }
+                                >
+                                    <FiChevronLeft size={18} />
+                                    Previous
+                                </button>
+                            )}
+
+                            <button
+                                type="button"
+                                className="booking-next-btn"
+                                onClick={handleNext}
+                            >
+                                <span>
+                                    {enrollSection === 5
+                                        ? "Submit"
+                                        : "Next"}
+                                </span>
+                                <FiChevronRight size={20} />
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
 
-            {isProcessing && (
-                <Loading
-                    message="Processing your payment"
-                    sub="Please wait, do not close this page"
-                />
-            )}
+            {/* ========================================================
+                TRUST FEATURES
+            ======================================================== */}
+            {step !== 3 && (
+                <div className="booking-trust-section">
 
-        </section>
-    );
+                    <div className="trust-item">
+                        <div className="trust-icon trust-green">
+                            <FiShield size={23} />
+                        </div>
+
+                        <div className="trust-text">
+                            <strong>Secure & Safe</strong>
+                            <span>Your data is protected</span>
+                        </div>
+                    </div>
+
+                    <div className="trust-divider" />
+
+                    <div className="trust-item">
+                        <div className="trust-icon trust-blue">
+                            <FiClock size={23} />
+                        </div>
+
+                        <div className="trust-text">
+                            <strong>Instant Access</strong>
+                            <span>Start learning right away</span>
+                        </div>
+                    </div>
+
+                    <div className="trust-divider" />
+
+                    <div className="trust-item">
+                        <div className="trust-icon trust-purple">
+                            <FiAward size={23} />
+                        </div>
+
+                        <div className="trust-text">
+                            <strong>Certified</strong>
+                            <span>Get recognized</span>
+                        </div>
+                    </div>
+
+                    <div className="trust-divider" />
+
+                    <div className="trust-item">
+                        <div className="trust-icon trust-orange">
+                            <FiHeadphones size={23} />
+                        </div>
+
+                        <div className="trust-text">
+                            <strong>24/7 Support</strong>
+                            <span>We're here to help</span>
+                        </div>
+                    </div>
+
+                </div>
+            )}
+        </div>
+
+        {/* PROCESSING */}
+        {isProcessing && (
+            <Loading
+                message="Processing your payment"
+                sub="Please wait, do not close this page"
+            />
+        )}
+    </section>
+);
 }
 
 export default BookNow;

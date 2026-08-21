@@ -971,6 +971,7 @@ const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All Status");
+  const [cityFilter, setCityFilter] = useState("All Cities");
   
   
   // Get page from URL or default to 1
@@ -998,6 +999,7 @@ const [totalPages, setTotalPages] = useState(1);
   const [showEmailModal, setShowEmailModal] = useState(false);
 const [courseLink, setCourseLink] = useState("");
 const [showWhatsappModal, setShowWhatsappModal] = useState(false);
+
 const [whatsappLink, setWhatsappLink] = useState("");
   const navigate = useNavigate();
 
@@ -1058,18 +1060,24 @@ useEffect(() => {
 useEffect(() => {
   setSearchParams((prev) => {
     if ((prev.get("page") || "1") === "1") return prev;
+
     const next = new URLSearchParams(prev);
     next.set("page", "1");
     return next;
   });
-}, [debouncedSearch, statusFilter, setSearchParams]);
+}, [
+  debouncedSearch,
+  cityFilter,
+  statusFilter,
+  setSearchParams
+]);
 
 const applySearchNow = () => {
   setDebouncedSearch(search.trim());
   setCurrentPage(1);
 };
 
- const fetchStudents = async () => {
+const fetchStudents = async () => {
   try {
     setLoading(true);
     setError(null);
@@ -1078,14 +1086,26 @@ const applySearchNow = () => {
       page: String(currentPage),
       limit: String(ITEMS_PER_PAGE),
     });
-    if (debouncedSearch) params.set("search", debouncedSearch);
-    if (statusFilter !== "All Status") params.set("status", statusFilter);
+
+    if (debouncedSearch) {
+      params.set("search", debouncedSearch);
+    }
+
+    if (cityFilter !== "All Cities") {
+      params.set("preferredCity", cityFilter);
+    }
+
+    if (statusFilter !== "All Status") {
+      params.set("status", statusFilter);
+    }
 
     const res = await fetch(
       `${API_URL}/api/students?${params.toString()}`
     );
 
-    if (!res.ok) throw new Error("Failed to fetch students");
+    if (!res.ok) {
+      throw new Error("Failed to fetch students");
+    }
 
     const result = await res.json();
 
@@ -1109,7 +1129,7 @@ useEffect(() => {
 
 useEffect(() => {
   fetchStudents();
-}, [currentPage, debouncedSearch, statusFilter]);
+}, [currentPage, debouncedSearch, cityFilter, statusFilter]);
 
   // ── Filter & Paginate ──────────────────────────────────────────────────────
   // const filtered = students
@@ -1284,6 +1304,20 @@ setDeleteStudent(null);
               onKeyDown={(e) => e.key === "Enter" && applySearchNow()}
             />
           </div>
+
+         <select
+  className="sm-status-select"
+  value={cityFilter}
+  onChange={(e) => {
+    setCityFilter(e.target.value);
+    setCurrentPage(1);
+  }}
+>
+  <option value="All Cities">All Cities</option>
+  <option value="Sydney">Sydney</option>
+  <option value="Adelaide">Adelaide</option>
+</select>
+
           <select
             className="sm-status-select"
             value={statusFilter}
@@ -1349,6 +1383,7 @@ setDeleteStudent(null);
                   <th>Name</th>
                   <th>Type</th>
                   <th>Email</th>
+                  <th>Preferred City</th>
                   <th>Phone</th>
                   <th>Course</th>
                   <th>Course schedule date</th>
@@ -1433,7 +1468,9 @@ setDeleteStudent(null);
                         )}
                       </td>
                       <td className="sm-email">{s.email}</td>
+                      <td>{s.preferredCity}</td>
                       <td>{s.phone}</td>
+                       
                       <td className="sm-course">
                         <div style={{ fontWeight: 500 }}>{s.courseTitle || "—"}</div>
                         <div style={{ fontSize: "0.75rem", color: colors.textIcon }}>{s.courseCategory || ""}</div>

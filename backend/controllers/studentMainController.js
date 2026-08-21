@@ -484,7 +484,9 @@ exports.updateStudent = async (req, res) => {
 
 exports.getAllStudents = async (req, res) => {
   try {
-    // ✅ Pagination
+    // ============================================
+    // PAGINATION
+    // ============================================
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
@@ -492,21 +494,59 @@ exports.getAllStudents = async (req, res) => {
     const search = (req.query.search || "").trim();
     const statusFilter = (req.query.status || "").trim();
 
-    const flowQuery = { studentId: { $ne: null } };
+    // ============================================
+    // PREFERRED CITY FILTER
+    // ============================================
+    const preferredCityFilter = (
+      req.query.preferredCity || ""
+    ).trim();
 
+    console.log("======================================");
+    console.log("GET ALL STUDENTS");
+    console.log("Page:", page);
+    console.log("Limit:", limit);
+    console.log("Search:", search);
+    console.log("Status:", statusFilter);
+    console.log("Preferred City:", preferredCityFilter);
+    console.log("======================================");
+
+    // ============================================
+    // FLOW QUERY
+    // ============================================
+    const flowQuery = {
+      studentId: { $ne: null },
+    };
+
+    // ============================================
+    // STATUS FILTER
+    // ============================================
     if (statusFilter === "Active") {
       flowQuery.status = "active";
-    } else if (statusFilter === "Inactive") {
+    }
+
+    if (statusFilter === "Inactive") {
       flowQuery.status = "inactive";
     }
 
+    // ============================================
+    // SEARCH
+    // ============================================
     if (search) {
-      const regex = new RegExp(escapeRegex(search), "i");
-      const matchingStudents = await StudentMain.find({
-        $or: [{ name: regex }, { email: regex }, { phone: regex }],
-      })
-        .select("_id")
-        .lean();
+      const regex = new RegExp(
+        escapeRegex(search),
+        "i"
+      );
+
+      const matchingStudents =
+        await StudentMain.find({
+          $or: [
+            { name: regex },
+            { email: regex },
+            { phone: regex },
+          ],
+        })
+          .select("_id")
+          .lean();
 
       if (matchingStudents.length === 0) {
         return res.json({
@@ -517,198 +557,813 @@ exports.getAllStudents = async (req, res) => {
         });
       }
 
-      // Flows may store studentId as ObjectId or string — include both so search matches all rows
       const studentIds = [
         ...new Set(
-          matchingStudents.flatMap((s) => {
-            const id = s._id;
-            const str = String(id);
-            return mongoose.Types.ObjectId.isValid(str)
-              ? [id, new mongoose.Types.ObjectId(str), str]
-              : [id, str];
+          matchingStudents.flatMap((student) => {
+            const id = student._id;
+            const idString = String(id);
+
+            if (
+              mongoose.Types.ObjectId.isValid(
+                idString
+              )
+            ) {
+              return [
+                id,
+                new mongoose.Types.ObjectId(
+                  idString
+                ),
+                idString,
+              ];
+            }
+
+            return [
+              id,
+              idString,
+            ];
           })
         ),
       ];
-      flowQuery.studentId = { $in: studentIds };
+
+      flowQuery.studentId = {
+        $in: studentIds,
+      };
     }
 
-    // ✅ Fetch main data
-    const data = await EnrollmentFlow.find(flowQuery)
-      .populate("studentId", "name email phone lastLogin")
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
+    // ============================================
+    // FETCH FLOWS
+    // ============================================
+    const allFlows =
+      await EnrollmentFlow.find(flowQuery)
+        .populate(
+          "studentId",
+          "name email phone lastLogin companyId"
+        )
+        .sort({
+          createdAt: -1,
+        })
+        .lean();
 
-    // ✅ Collect IDs for bulk fetch
+    console.log(
+      "Flows before preferred city filter:",
+      allFlows.length
+    );
+
+    // ============================================
+    // COLLECT IDS
+    // ============================================
     const companyIds = new Set();
     const linkIds = new Set();
     const formIds = new Set();
 
-    data.forEach(flow => {
+    const paymentTransactionIds = new Set();
+    const paymentGatewayTransactionIds =
+      new Set();
+
+    // ============================================
+    // LOOP FLOWS
+    // ============================================
+    allFlows.forEach((flow) => {
       const student = flow.studentId || {};
-      const resolvedCompanyId = flow.companyId || student.companyId;
-      if (resolvedCompanyId && mongoose.Types.ObjectId.isValid(resolvedCompanyId)) {
-        companyIds.add(resolvedCompanyId.toString());
+
+      // ==========================================
+      // COMPANY
+      // ==========================================
+      const resolvedCompanyId =
+        flow.companyId ||
+        student.companyId;
+
+      if (
+        resolvedCompanyId &&
+        mongoose.Types.ObjectId.isValid(
+          resolvedCompanyId
+        )
+      ) {
+        companyIds.add(
+          String(resolvedCompanyId)
+        );
       }
+
+      // ==========================================
+      // ENROLLMENT LINK
+      // ==========================================
       if (
         flow.source === "Enrollment Link" &&
         flow.sourceToken &&
-        mongoose.Types.ObjectId.isValid(flow.sourceToken)
+        mongoose.Types.ObjectId.isValid(
+          flow.sourceToken
+        )
       ) {
-        linkIds.add(flow.sourceToken.toString());
+        linkIds.add(
+          String(flow.sourceToken)
+        );
       }
-      if (flow.enrollmentFormId && mongoose.Types.ObjectId.isValid(flow.enrollmentFormId)) {
-        formIds.add(flow.enrollmentFormId.toString());
+
+      // ==========================================
+      // ENROLLMENT FORM
+      // ==========================================
+      if (
+        flow.enrollmentFormId &&
+        mongoose.Types.ObjectId.isValid(
+          flow.enrollmentFormId
+        )
+      ) {
+        formIds.add(
+          String(flow.enrollmentFormId)
+        );
+      }
+
+      // ==========================================
+      // PAYMENT IDS
+      // ==========================================
+      const item =
+        flow.items?.[0] || {};
+
+      const payment =
+        item.payment || {};
+
+      if (payment.transactionId) {
+        paymentTransactionIds.add(
+          String(
+            payment.transactionId
+          )
+        );
+      }
+
+      if (
+        payment.gatewayTransactionId
+      ) {
+        paymentGatewayTransactionIds.add(
+          String(
+            payment.gatewayTransactionId
+          )
+        );
       }
     });
 
-    // ✅ Bulk fetch (parallel)
-    const [companies, links, forms] = await Promise.all([
-      Company.find({ _id: { $in: [...companyIds] } }).lean(),
-      EnrollmentLink.find({ _id: { $in: [...linkIds] } }).lean(),
-      EnrollmentForm.find({ _id: { $in: [...formIds] } }).select("status").lean(),
+    // ============================================
+    // BULK FETCH
+    // ============================================
+    const [
+      companies,
+      links,
+      forms,
+      paymentsByTransaction,
+      paymentsByGateway,
+    ] = await Promise.all([
+      // ==========================================
+      // COMPANY
+      // ==========================================
+      Company.find({
+        _id: {
+          $in: [...companyIds],
+        },
+      }).lean(),
+
+      // ==========================================
+      // ENROLLMENT LINKS
+      // ==========================================
+      EnrollmentLink.find({
+        _id: {
+          $in: [...linkIds],
+        },
+      }).lean(),
+
+      // ==========================================
+      // ENROLLMENT FORMS
+      // ==========================================
+      EnrollmentForm.find({
+        _id: {
+          $in: [...formIds],
+        },
+      })
+        .select("status")
+        .lean(),
+
+      // ==========================================
+      // PAYMENT BY TRANSACTION ID
+      // ==========================================
+      Payment.find({
+        transactionId: {
+          $in: [
+            ...paymentTransactionIds,
+          ],
+        },
+      }).lean(),
+
+      // ==========================================
+      // PAYMENT BY GATEWAY TRANSACTION ID
+      // ==========================================
+      Payment.find({
+        gatewayTransactionId: {
+          $in: [
+            ...paymentGatewayTransactionIds,
+          ],
+        },
+      }).lean(),
     ]);
 
-    // ✅ Convert to map (fast lookup)
-    const companyMap = Object.fromEntries(
-      companies.map(c => [c._id.toString(), c])
+    // ============================================
+    // COMPANY MAP
+    // ============================================
+    const companyMap =
+      Object.fromEntries(
+        companies.map((company) => [
+          String(company._id),
+          company,
+        ])
+      );
+
+    // ============================================
+    // LINK MAP
+    // ============================================
+    const linkMap =
+      Object.fromEntries(
+        links.map((link) => [
+          String(link._id),
+          link,
+        ])
+      );
+
+    // ============================================
+    // FORM MAP
+    // ============================================
+    const formMap =
+      Object.fromEntries(
+        forms.map((form) => [
+          String(form._id),
+          form,
+        ])
+      );
+
+    // ============================================
+    // PAYMENT TRANSACTION MAP
+    // ============================================
+    const paymentTransactionMap =
+      Object.fromEntries(
+        paymentsByTransaction.map(
+          (payment) => [
+            String(
+              payment.transactionId
+            ),
+            payment,
+          ]
+        )
+      );
+
+    // ============================================
+    // PAYMENT GATEWAY MAP
+    // ============================================
+    const paymentGatewayMap =
+      Object.fromEntries(
+        paymentsByGateway.map(
+          (payment) => [
+            String(
+              payment.gatewayTransactionId
+            ),
+            payment,
+          ]
+        )
+      );
+
+    // ============================================
+    // FILTER BY PREFERRED CITY
+    // ============================================
+    let filteredFlows = allFlows;
+
+    if (preferredCityFilter) {
+      filteredFlows =
+        allFlows.filter((flow) => {
+          const item =
+            flow.items?.[0] || {};
+
+          const flowPayment =
+            item.payment || {};
+
+          let paymentRecord = null;
+
+          // ========================================
+          // FIRST: GATEWAY TRANSACTION ID
+          // ========================================
+          if (
+            flowPayment.gatewayTransactionId
+          ) {
+            paymentRecord =
+              paymentGatewayMap[
+                String(
+                  flowPayment.gatewayTransactionId
+                )
+              ];
+          }
+
+          // ========================================
+          // SECOND: TRANSACTION ID
+          // ========================================
+          if (
+            !paymentRecord &&
+            flowPayment.transactionId
+          ) {
+            paymentRecord =
+              paymentTransactionMap[
+                String(
+                  flowPayment.transactionId
+                )
+              ];
+          }
+
+          // ========================================
+          // PAYMENT.PREFERRED CITY
+          // ========================================
+          const paymentPreferredCity =
+            paymentRecord?.preferredCity
+              ?.toString()
+              .trim() || "";
+
+          const selectedCity =
+            preferredCityFilter
+              .toString()
+              .trim();
+
+          const isMatch =
+            paymentPreferredCity.toLowerCase() ===
+            selectedCity.toLowerCase();
+
+          console.log(
+            "Preferred City Check:",
+            {
+              flowId:
+                String(flow._id),
+
+              studentId:
+                flow.studentId?._id
+                  ? String(
+                      flow.studentId._id
+                    )
+                  : "",
+
+              studentName:
+                flow.studentId?.name ||
+                "",
+
+              transactionId:
+                flowPayment.transactionId ||
+                "",
+
+              gatewayTransactionId:
+                flowPayment.gatewayTransactionId ||
+                "",
+
+              paymentPreferredCity,
+
+              paymentCreatedAt:
+                paymentRecord?.createdAt ||
+                null,
+
+              selectedCity,
+
+              isMatch,
+            }
+          );
+
+          return isMatch;
+        });
+    }
+
+    // ============================================
+    // TOTAL AFTER CITY FILTER
+    // ============================================
+    const total =
+      filteredFlows.length;
+
+    // ============================================
+    // PAGINATION
+    // ============================================
+    const data =
+      filteredFlows.slice(
+        skip,
+        skip + limit
+      );
+
+    console.log(
+      "Flows after preferred city filter:",
+      total
     );
 
-    const linkMap = Object.fromEntries(
-      links.map(l => [l._id.toString(), l])
+    console.log(
+      "Flows returned:",
+      data.length
     );
 
-    const formMap = Object.fromEntries(
-      forms.map(f => [f._id.toString(), f])
-    );
+    // ============================================
+    // FORMAT RESPONSE
+    // ============================================
+    const formatted =
+      data.map((flow) => {
+        const student =
+          flow.studentId || {};
 
-    // ✅ Format response (NO DB calls inside loop)
-    const formatted = data.map((flow) => {
-      const student = flow.studentId || {};
-      const item = flow.items?.[0] || {};
+        const item =
+          flow.items?.[0] || {};
 
-      // Company
-      const resolvedCompanyId =
-        (flow.companyId || student.companyId)?.toString();
-      const company = companyMap[resolvedCompanyId];
-      const companyName = company?.name || company?.companyName || "";
+        const flowPayment =
+          item.payment || {};
 
-      // Link / Agent
-      const link = linkMap[flow.sourceToken?.toString()];
-      let agentName = "";
-      let linkName = "";
+        // ========================================
+        // COMPANY
+        // ========================================
+        const resolvedCompanyId = (
+          flow.companyId ||
+          student.companyId ||
+          ""
+        ).toString();
 
-      if (flow.source === "Enrollment Link" && link) {
-        if (link.agent) {
-          agentName = link.name || "";
-        } else {
-          linkName = link.name || "";
+        const company =
+          companyMap[
+            resolvedCompanyId
+          ];
+
+        const companyName =
+          company?.name ||
+          company?.companyName ||
+          "";
+
+        // ========================================
+        // LINK / AGENT
+        // ========================================
+        const link =
+          linkMap[
+            flow.sourceToken?.toString()
+          ];
+
+        let agentName = "";
+        let linkName = "";
+
+        if (
+          flow.source ===
+            "Enrollment Link" &&
+          link
+        ) {
+          if (link.agent) {
+            agentName =
+              link.name || "";
+          } else {
+            linkName =
+              link.name || "";
+          }
         }
-      }
 
-      // Form
-      const form = formMap[flow.enrollmentFormId?.toString()];
-      const formStatus = form?.status || "Not Started";
+        // ========================================
+        // FORM
+        // ========================================
+        const form =
+          formMap[
+            flow.enrollmentFormId?.toString()
+          ];
 
-      return {
-        id: student._id,
-        flowId: flow._id,
+        const formStatus =
+          form?.status ||
+          "Not Started";
 
-        registerDate: flow.createdAt
-          ? new Date(flow.createdAt).toLocaleDateString("en-AU", {
-              timeZone: "Australia/Sydney",
-            })
-          : "—",
+        // ========================================
+        // FIND PAYMENT
+        // ========================================
+        let paymentRecord = null;
 
-        registerTime: flow.createdAt
-          ? new Date(flow.createdAt).toLocaleTimeString("en-AU", {
-              timeZone: "Australia/Sydney",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })
-          : "",
+        // Gateway transaction
+        if (
+          flowPayment.gatewayTransactionId
+        ) {
+          paymentRecord =
+            paymentGatewayMap[
+              String(
+                flowPayment.gatewayTransactionId
+              )
+            ];
+        }
 
-        name: student.name || "",
-        email: student.email || "",
-        phone: student.phone || "",
+        // Transaction
+        if (
+          !paymentRecord &&
+          flowPayment.transactionId
+        ) {
+          paymentRecord =
+            paymentTransactionMap[
+              String(
+                flowPayment.transactionId
+              )
+            ];
+        }
 
-        type: flow.enrollmentType
-          ? flow.enrollmentType.charAt(0).toUpperCase() +
-            flow.enrollmentType.slice(1)
-          : "Individual",
+        // ========================================
+        // ⭐ PAYMENT CREATED AT
+        // FROM PAYMENT MODEL
+        // ========================================
+        const paymentCreatedAt =
+          paymentRecord?.createdAt ||
+          null;
 
-        companyName,
-        agentName,
-        linkName,
+        // ========================================
+        // ⭐ PAYMENT CREATED DATE
+        // AUSTRALIA/SYDNEY DATE
+        // ========================================
+        const paymentCreatedDate =
+          paymentCreatedAt
+            ? new Date(
+                paymentCreatedAt
+              ).toLocaleDateString(
+                "en-AU",
+                {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                  timeZone:
+                    "Australia/Sydney",
+                }
+              )
+            : "—";
 
-        courseCategory: item.course?.courseCategory || "",
-        courseTitle: item.course?.courseName || "",
-        course: item.course?.courseName || "",
+        // ========================================
+        // PREFERRED CITY
+        // FROM PAYMENT MODEL
+        // ========================================
+        const preferredCity =
+          paymentRecord?.preferredCity
+            ?.toString()
+            .trim() || "";
 
-        paymentMethod: item.payment?.method || "—",
-        transactionId: item.payment?.transactionId || "—",
-        gatewayTransactionId: item.payment?.gatewayTransactionId || "—",
-        slipUrl: item.payment?.slipUrl || "—",
+        // ========================================
+        // RETURN STUDENT
+        // ========================================
+        return {
+          id: student._id,
 
-        courseBookingDate: flow.sessionDate
-          ? `${new Date(flow.sessionDate).toLocaleDateString("en-AU", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-              timeZone: "Australia/Sydney",
-            })} | ${flow.startTime} - ${flow.endTime}`
-          : "-",
+          flowId: flow._id,
 
-        llndStatus:
-          flow.llnd?.status === "completed"
-            ? "Completed"
-            : "Not Completed",
+          // ======================================
+          // ⭐ PAYMENT CREATED DATE
+          // ======================================
+          paymentCreatedAt,
 
-        enrollmentForm: flow.enrollmentFormId
-          ? "Completed"
-          : "Not Completed",
+          paymentCreatedDate,
 
-        enrollmentFormId: flow.enrollmentFormId,
-        enrollmentFormStatus: formStatus,
+          // ======================================
+          // REGISTER DATE
+          // ======================================
+          registerDate:
+            flow.createdAt
+              ? new Date(
+                  flow.createdAt
+                ).toLocaleDateString(
+                  "en-AU",
+                  {
+                    timeZone:
+                      "Australia/Sydney",
+                  }
+                )
+              : "—",
 
-        paymentStatus:
-          item.payment?.method === "Card Payment"
-            ? item.payment?.status === "success" ||
-              item.payment?.status === "completed"
-              ? "Paid"
-              : "Unpaid"
-            : item.payment?.method === "Bank Transfer"
-            ? item.payment?.status === "success"
-              ? "Verified"
-              : "Not Verified"
-            : item.payment?.method === "Pay Later"
-            ? "Unpaid"
-            : "—",
+          // ======================================
+          // REGISTER TIME
+          // ======================================
+          registerTime:
+            flow.createdAt
+              ? new Date(
+                  flow.createdAt
+                ).toLocaleTimeString(
+                  "en-AU",
+                  {
+                    timeZone:
+                      "Australia/Sydney",
 
-        status: flow.status === "active" ? "Active" : "Inactive",
+                    hour: "2-digit",
 
-        lastLogin: student.lastLogin || "Never",
+                    minute: "2-digit",
 
-        bookingId: formatBookingId(flow.createdAt || flow._id),
-      };
-    });
+                    hour12: true,
+                  }
+                )
+              : "",
 
-    // ✅ total count (for pagination UI)
-    const total = await EnrollmentFlow.countDocuments(flowQuery);
-    console.log("getted");
+          // ======================================
+          // STUDENT
+          // ======================================
+          name:
+            student.name || "",
 
-    res.json({
+          email:
+            student.email || "",
+
+          phone:
+            student.phone || "",
+
+          // ======================================
+          // TYPE
+          // ======================================
+          type: flow.enrollmentType
+            ? flow.enrollmentType
+                .charAt(0)
+                .toUpperCase() +
+              flow.enrollmentType.slice(1)
+            : "Individual",
+
+          // ======================================
+          // COMPANY
+          // ======================================
+          companyName,
+
+          agentName,
+
+          linkName,
+
+          // ======================================
+          // COURSE
+          // ======================================
+          courseCategory:
+            item.course
+              ?.courseCategory || "",
+
+          courseTitle:
+            item.course
+              ?.courseName || "",
+
+          course:
+            item.course
+              ?.courseName || "",
+
+          // ======================================
+          // PAYMENT
+          // ======================================
+          paymentMethod:
+            flowPayment.method ||
+            "—",
+
+          transactionId:
+            flowPayment.transactionId ||
+            "—",
+
+          gatewayTransactionId:
+            flowPayment.gatewayTransactionId ||
+            "—",
+
+          slipUrl:
+            flowPayment.slipUrl ||
+            "—",
+
+          // ======================================
+          // ⭐ PREFERRED CITY
+          // ======================================
+          preferredCity,
+
+          // ======================================
+          // BOOKING DATE
+          // ======================================
+          courseBookingDate:
+            flow.sessionDate
+              ? `${new Date(
+                  flow.sessionDate
+                ).toLocaleDateString(
+                  "en-AU",
+                  {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    timeZone:
+                      "Australia/Sydney",
+                  }
+                )} | ${
+                  flow.startTime || ""
+                } - ${
+                  flow.endTime || ""
+                }`
+              : "-",
+
+          // ======================================
+          // LLND
+          // ======================================
+          llndStatus:
+            flow.llnd?.status ===
+            "completed"
+              ? "Completed"
+              : "Not Completed",
+
+          // ======================================
+          // ENROLLMENT FORM
+          // ======================================
+          enrollmentForm:
+            flow.enrollmentFormId
+              ? "Completed"
+              : "Not Completed",
+
+          enrollmentFormId:
+            flow.enrollmentFormId,
+
+          enrollmentFormStatus:
+            formStatus,
+
+          // ======================================
+          // PAYMENT STATUS
+          // ======================================
+          paymentStatus:
+            flowPayment.method ===
+            "Card Payment"
+              ? flowPayment.status ===
+                  "success" ||
+                flowPayment.status ===
+                  "completed"
+                ? "Paid"
+                : "Unpaid"
+
+              : flowPayment.method ===
+                "Bank Transfer"
+              ? flowPayment.status ===
+                "success"
+                ? "Verified"
+                : "Not Verified"
+
+              : flowPayment.method ===
+                "Pay Later"
+              ? "Unpaid"
+
+              : "—",
+
+          // ======================================
+          // STATUS
+          // ======================================
+          status:
+            flow.status ===
+            "active"
+              ? "Active"
+              : "Inactive",
+
+          // ======================================
+          // LOGIN
+          // ======================================
+          lastLogin:
+            student.lastLogin ||
+            "Never",
+
+          // ======================================
+          // BOOKING ID
+          // ======================================
+          bookingId:
+            formatBookingId(
+              flow.createdAt ||
+                flow._id
+            ),
+        };
+      });
+
+    // ============================================
+    // FINAL RESPONSE
+    // ============================================
+    console.log(
+      "======================================"
+    );
+
+    console.log(
+      "getAllStudents completed"
+    );
+
+    console.log(
+      "Preferred City:",
+      preferredCityFilter || "ALL"
+    );
+
+    console.log(
+      "Total matching students:",
+      total
+    );
+
+    console.log(
+      "Current page students:",
+      formatted.length
+    );
+
+    console.log(
+      "======================================"
+    );
+
+    return res.json({
       data: formatted,
-      total,
-      page,
-      totalPages: Math.ceil(total / limit),
-    });
 
+      total,
+
+      page,
+
+      totalPages:
+        Math.ceil(
+          total / limit
+        ),
+    });
   } catch (err) {
-    console.error("ERROR:", err);
-    res.status(500).json({ error: err.message });
+    console.error(
+      "getAllStudents ERROR:",
+      err
+    );
+
+    return res.status(500).json({
+      error: err.message,
+    });
   }
 };
 exports.deleteStudent = async (req, res) => {

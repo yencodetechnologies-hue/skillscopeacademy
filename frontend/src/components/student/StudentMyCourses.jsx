@@ -202,7 +202,7 @@ export default function StudentMyCourses() {
         </p>
       </div>
 
-      {assessmentPassed && (
+      {/* {assessmentPassed && (
         <div className="mc-banner mc-banner--success">
           <span className="mc-banner__icon">✓</span>
           <div>
@@ -210,7 +210,7 @@ export default function StudentMyCourses() {
             <p>Score: {scoreDisplay}% – You can now enroll in courses. You can also retake LLN anytime if you want to improve your result.</p>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Enrollment Form Alert */}
       {assessmentPassed && !enrollmentFormSubmitted && (
@@ -234,7 +234,7 @@ export default function StudentMyCourses() {
         </div>
       )}
 
-      {assessmentPassed && (
+      {/* {assessmentPassed && (
         <div className="mc-banner mc-banner--optional">
           <div className="mc-banner__left">
             <span className="mc-optional-badge">Optional</span>
@@ -250,9 +250,9 @@ export default function StudentMyCourses() {
             <span>📖</span> Retake Assessment
           </button>
         </div>
-      )}
+      )} */}
 
-      {formApproved && (
+      {/* {formApproved && (
         <div className="mc-banner mc-banner--success">
           <span className="mc-banner__icon">✓</span>
           <div>
@@ -274,7 +274,7 @@ export default function StudentMyCourses() {
             </button>
           </div>
         </div>
-      )}
+      )} */}
 
       {tab === "enrolled" && (
         <div className="mc-enrolled">
@@ -319,16 +319,16 @@ export default function StudentMyCourses() {
                         Payment: {coursePaymentPaid || paymentVerified ? "Paid" : "Pending"}
                       </span>
                     )}
-                    <span className={`mc-badge ${courseLlnDone ? "status-completed" : "status-pending"}`}>
+                    {/* <span className={`mc-badge ${courseLlnDone ? "status-completed" : "status-pending"}`}>
                       LLN: {courseLlnDone ? "Completed" : "Pending"}
                     </span>
                     <span className={`mc-badge ${formApproved ? "status-approved" : courseFormDone ? "status-completed" : "status-pending"}`}>
                       Form: {courseFormLabel}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
 
-                <div className="mc-course-card__progress-section">
+                {/* <div className="mc-course-card__progress-section">
                   <div className="mc-course-card__progress-label">
                     <span>Overall Progress</span>
                     <span className="mc-course-card__progress-pct">10%</span>
@@ -336,7 +336,7 @@ export default function StudentMyCourses() {
                   <div className="mc-progress-bar">
                     <div className="mc-progress-bar__fill" style={{ width: "10%" }} />
                   </div>
-                </div>
+                </div> */}
 
                 {course.sessionDate && (
                   <div className="mc-course-card__schedule">

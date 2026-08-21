@@ -326,7 +326,7 @@ background:var(--color-brand-primary);
   gap: 12px;
 }
 
-.enrol-type-card {
+/* .enrol-type-card {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -337,17 +337,17 @@ background:var(--color-brand-primary);
   background: var(--color-slate-50);
   transition: all 0.18s;
   user-select: none;
-}
+} */
 
-.enrol-type-card:hover {
+/* .enrol-type-card:hover {
   border-color: var(--color-brand-primary);
   background: var(--color-sky-panel);
-}
+} */
 
-.enrol-type-card--active {
+/* .enrol-type-card--active {
   background: var(--color-navy-deep) !important;
   border-color: var(--color-navy-deep) !important;
-}
+} */
 
 .enrol-type-icon {
   font-size: 28px;
@@ -361,18 +361,18 @@ background:var(--color-brand-primary);
   color: var(--color-navy-deep);
   line-height: 1.2;
 }
-.enrol-type-card--active .enrol-type-label {
+/* .enrol-type-card--active .enrol-type-label {
   color: var(--color-surface);
-}
+} */
 
 .enrol-type-sub {
   font-size: 13px;
   color: var(--color-slate-500);
   margin-top: 3px;
 }
-.enrol-type-card--active .enrol-type-sub {
+/* .enrol-type-card--active .enrol-type-sub {
   color: rgba(255, 255, 255, 0.6);
-}
+} */
 
 /* ===== ORDER SUMMARY ===== */
 .company-order-summary {

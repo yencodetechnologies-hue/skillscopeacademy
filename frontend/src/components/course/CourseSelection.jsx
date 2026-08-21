@@ -2860,82 +2860,101 @@ const getCompanyGroupedSlots = (courseId) => {
 
     return (
         <>
-            {/* Enrolment Type */}
-            {!hideEnrollmentType && (
-                <div className="form-group">
-                    <label className="form-label">
-                        Enrolment Type{" "}
-                        <span className="form-required">
-                            *
-                        </span>
-                    </label>
+           {/* Enrolment Type */}
+{!hideEnrollmentType && (
+    <div className="form-group enrollment-type-section">
+        <label className="form-label enrollment-type-title">
+            Enrolment Type <span className="form-required">*</span>
+        </label>
 
-                    <div className="enrol-type-grid">
-                        <div
-                            className={`enrol-type-card ${
-                                enrollmentType ===
-                                "individual"
-                                    ? "enrol-type-card--active"
-                                    : ""
-                            }`}
-                            onClick={() =>
-                                setEnrollmentType(
-                                    "individual"
-                                )
-                            }
-                        >
-                            <span className="enrol-type-icon">
-                                👤
-                            </span>
+        <div className="enrol-type-grid">
 
-                            <div>
-                                <div className="enrol-type-label">
-                                    Individual
-                                </div>
+            {/* INDIVIDUAL */}
+            <div
+                className={`enrol-type-card ${
+                    enrollmentType === "individual"
+                        ? "enrol-type-card--active"
+                        : ""
+                }`}
+                onClick={() => setEnrollmentType("individual")}
+            >
+                <div className="enrol-type-top">
 
-                                <div className="enrol-type-sub">
-                                    Personal enrolment
-                                </div>
-                            </div>
+                    <div className="enrol-type-icon enrol-type-icon--individual">
+                        <i className="fa-solid fa-user"></i>
+                    </div>
+
+                    <div className="enrol-type-content">
+                        <div className="enrol-type-label">
+                            Individual
                         </div>
 
-                        <div
-                            className={`enrol-type-card ${
-                                enrollmentType ===
-                                "company"
-                                    ? "enrol-type-card--active"
-                                    : ""
-                            }`}
-                            onClick={() =>
-                                setEnrollmentType(
-                                    "company"
-                                )
-                            }
-                        >
-                            <span className="enrol-type-icon">
-                                🏢
-                            </span>
-
-                            <div>
-                                <div className="enrol-type-label">
-                                    Company
-                                </div>
-
-                                <div className="enrol-type-sub">
-                                    Group / corporate
-                                    booking
-                                </div>
-                            </div>
+                        <div className="enrol-type-sub">
+                            Personal enrolment
                         </div>
                     </div>
 
-                    <input
-                        type="hidden"
-                        name="type"
-                        value={enrollmentType}
-                    />
+                    <div className="enrol-type-radio">
+                        {enrollmentType === "individual" && (
+                            <span className="enrol-type-radio-inner"></span>
+                        )}
+                    </div>
                 </div>
-            )}
+
+                <div className="enrol-type-badge enrol-type-badge--individual">
+                    <i className="fa-regular fa-user"></i>
+                    <span>For individual learners</span>
+                </div>
+            </div>
+
+
+            {/* COMPANY */}
+            <div
+                className={`enrol-type-card ${
+                    enrollmentType === "company"
+                        ? "enrol-type-card--active"
+                        : ""
+                }`}
+                onClick={() => setEnrollmentType("company")}
+            >
+                <div className="enrol-type-top">
+
+                    <div className="enrol-type-icon enrol-type-icon--company">
+                        <i className="fa-solid fa-building"></i>
+                    </div>
+
+                    <div className="enrol-type-content">
+                        <div className="enrol-type-label">
+                            Company
+                        </div>
+
+                        <div className="enrol-type-sub">
+                            Group / corporate booking
+                        </div>
+                    </div>
+
+                    <div className="enrol-type-radio">
+                        {enrollmentType === "company" && (
+                            <span className="enrol-type-radio-inner"></span>
+                        )}
+                    </div>
+                </div>
+
+                <div className="enrol-type-badge enrol-type-badge--company">
+                    <i className="fa-regular fa-user-group"></i>
+                    <span>For teams and organizations</span>
+                </div>
+            </div>
+
+        </div>
+
+        <input
+            type="hidden"
+            name="type"
+            value={enrollmentType}
+        />
+    </div>
+)}
 
             {/* ─────────────────────────────────────────
                 SIMPLE FLOW

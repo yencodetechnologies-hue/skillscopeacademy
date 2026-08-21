@@ -118,7 +118,7 @@ export default function StudentDashboard() {
 
       <div className="dashboard-alerts">
         {/* LLND Assessment Alert (NOW BACK TO TOP) */}
-        {!assessmentPassed ? (
+        {/* {!assessmentPassed ? (
           <div className="alert alert-danger">
             <div className="alert-icon-wrap">📖</div>
             <div className="alert-body">
@@ -147,10 +147,10 @@ export default function StudentDashboard() {
               </p>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Enrollment Form Alert (NOW BELOW LLND) */}
-        {!enrollmentFormSubmitted ? (
+        {/* {!enrollmentFormSubmitted ? (
           <div className="alert alert-danger">
             <div className="alert-icon-wrap">📄</div>
             <div className="alert-body">
@@ -224,7 +224,7 @@ export default function StudentDashboard() {
               </button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       <div className="quick-actions-card">

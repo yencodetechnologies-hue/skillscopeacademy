@@ -1,79 +1,294 @@
-import "../../styles/Navbar.css"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-import Student from "../../components/Profile"
+import "../../styles/Navbar.css";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import Student from "../../components/Profile";
 
 function Navbar({ user }) {
-    const navigate = useNavigate()
-    const [sidebarOpen, setSidebarOpen] = useState(false)
+    const navigate = useNavigate();
+
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
+
+    const profileRef = useRef(null);
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
 
     const openSidebar = () => {
-        setSidebarOpen(true)
-        document.body.classList.add("sidebar-open")
-    }
+        setSidebarOpen(true);
+        document.body.classList.add("sidebar-open");
+    };
 
     const closeSidebar = () => {
-        setSidebarOpen(false)
-        document.body.classList.remove("sidebar-open")
-    }
+        setSidebarOpen(false);
+        document.body.classList.remove("sidebar-open");
+    };
+
+    /* =========================================================
+       PROFILE
+    ========================================================= */
 
     const goProfile = () => {
-        navigate("/student/profile")
-        closeSidebar()
-    }
+        navigate("/student/profile");
+        setProfileOpen(false);
+        closeSidebar();
+    };
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    const handleLogout = () => {
+        // Remove your stored login data
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("student");
+        localStorage.removeItem("authToken");
+
+        // Close dropdown/sidebar
+        setProfileOpen(false);
+        closeSidebar();
+
+        // Redirect to login
+        navigate("/login");
+    };
+
+    /* =========================================================
+       CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+    ========================================================= */
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                profileRef.current &&
+                !profileRef.current.contains(event.target)
+            ) {
+                setProfileOpen(false);
+            }
+        };
+
+        document.addEventListener(
+            "mousedown",
+            handleClickOutside
+        );
+
+        return () => {
+            document.removeEventListener(
+                "mousedown",
+                handleClickOutside
+            );
+        };
+    }, []);
 
     return (
         <>
-            {/* Overlay - sidebar open-ஆ இருக்கும்போது background dim ஆகும் */}
+            {/* =================================================
+                OVERLAY
+            ================================================= */}
+
             {sidebarOpen && (
-                <div className="sidebar-overlay" onClick={closeSidebar} />
+                <div
+                    className="sidebar-overlay"
+                    onClick={closeSidebar}
+                />
             )}
 
-            {/* Mobile Sidebar */}
-            <div className={`mobile-sidebar ${sidebarOpen ? "open" : ""}`}>
+            {/* =================================================
+                MOBILE SIDEBAR
+            ================================================= */}
+
+            <div
+                className={`mobile-sidebar ${
+                    sidebarOpen ? "open" : ""
+                }`}
+            >
                 <div className="sidebar-inner">
+
+                    {/* Close */}
                     <span onClick={closeSidebar}>
                         <i className="fa-solid fa-xmark"></i>
                     </span>
-                    <span><i className="fa-regular fa-bell"></i></span>
-                    <span><i className="fa-solid fa-gear"></i></span>
-                    {/* ✅ Mobile: user icon → profile */}
-                    <span onClick={goProfile}>
+
+                    {/* Notification */}
+                    <span>
+                        <i className="fa-regular fa-bell"></i>
+                    </span>
+
+                    {/* Settings */}
+                    <span>
+                        <i className="fa-solid fa-gear"></i>
+                    </span>
+
+                    {/* User */}
+                    <span
+                        onClick={() => {
+                            setProfileOpen(
+                                !profileOpen
+                            );
+                        }}
+                    >
                         <i className="fa-regular fa-user"></i>
                     </span>
+
+                    {/* Mobile Logout */}
+                    {profileOpen && (
+                        <div className="mobile-profile-dropdown">
+                            <button
+                                onClick={handleLogout}
+                            >
+                                <i className="fa-solid fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    )}
+
                 </div>
             </div>
 
-            <section className="navbar">
-                <div className="navbar-burger">
-                  
-                    <h2 className="navbar-title">{user?.role} Portal</h2>
+            {/* =================================================
+                NAVBAR
+            ================================================= */}
 
-                 
-                    <div className="home-pg-btn" onClick={() => navigate("/")}>
-                        <p className="home-text">Go To Home Page</p>
+            <section className="navbar">
+
+                <div className="navbar-burger">
+
+                    <h2 className="navbar-title">
+                        {user?.role} Portal
+                    </h2>
+
+                    <div
+                        className="home-pg-btn"
+                        onClick={() =>
+                            navigate("/")
+                        }
+                    >
+                        <p className="home-text">
+                            Go To Home Page
+                        </p>
+
                         <i className="fa-solid fa-house home-icon"></i>
                     </div>
+
                 </div>
+
+                {/* =================================================
+                    RIGHT SIDE
+                ================================================= */}
 
                 <div className="navbar-right">
-                    {/* Desktop icons */}
+
+                    {/* =================================================
+                        DESKTOP ICONS
+                    ================================================= */}
+
                     <div className="desktop-icons">
-                        <span><i className="fa-regular fa-bell"></i></span>
-                        {/* ✅ Desktop: user icon → profile */}
-                        <span onClick={goProfile} style={{ cursor: "pointer" }}>
-                            <i className="fa-regular fa-user"></i>
+
+                        {/* Notification */}
+                        <span>
+                            <i className="fa-regular fa-bell"></i>
                         </span>
+
+                        {/* User Dropdown */}
+                        <div
+                            className="profile-dropdown-wrapper"
+                            ref={profileRef}
+                        >
+
+                            <span
+                                className={`profile-icon ${
+                                    profileOpen
+                                        ? "profile-active"
+                                        : ""
+                                }`}
+                                onClick={() =>
+                                    setProfileOpen(
+                                        !profileOpen
+                                    )
+                                }
+                            >
+                                <i className="fa-regular fa-user"></i>
+                            </span>
+
+                            {/* Dropdown */}
+                            {profileOpen && (
+                                <div className="profile-dropdown">
+
+                                    {/* User Info */}
+                                    {/* <div className="profile-dropdown-header">
+
+                                        <div className="profile-avatar">
+                                            <i className="fa-regular fa-user"></i>
+                                        </div>
+
+                                        <div className="profile-info">
+                                            <strong>
+                                                {user?.name ||
+                                                    "User"}
+                                            </strong>
+
+                                            <span>
+                                                {user?.role ||
+                                                    "Student"}
+                                            </span>
+                                        </div>
+
+                                    </div> */}
+
+                                    <div className="profile-dropdown-divider"></div>
+
+                                    {/* Profile */}
+                                    {/* <button
+                                        className="profile-menu-item"
+                                        onClick={
+                                            goProfile
+                                        }
+                                    >
+                                        <i className="fa-regular fa-user"></i>
+
+                                        <span>
+                                            Profile
+                                        </span>
+                                    </button> */}
+
+                                    {/* Logout */}
+                                    <button
+                                        className="profile-menu-item logout-item"
+                                        onClick={
+                                            handleLogout
+                                        }
+                                    >
+                                        <i className="fa-solid fa-right-from-bracket"></i>
+
+                                        <span>
+                                            Logout
+                                        </span>
+                                    </button>
+
+                                </div>
+                            )}
+
+                        </div>
+
                     </div>
 
-                    {/* Mobile burger icon */}
-                    <span className="burger-icon" onClick={openSidebar}>
+                    {/* =================================================
+                        MOBILE BURGER
+                    ================================================= */}
+
+                    <span
+                        className="burger-icon"
+                        onClick={openSidebar}
+                    >
                         <i className="fa-solid fa-bars"></i>
                     </span>
+
                 </div>
+
             </section>
         </>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

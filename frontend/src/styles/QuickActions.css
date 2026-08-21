@@ -1,63 +1,119 @@
-.qa__wrapper {
-  /* background: linear-gradient(#02b0ef82 100%); */
-  background: #D4920E;
+/* Container Box */
+.qa__container {
+  background-color: #f6f5ff;
+  border: 1px solid #e2e0ff;
   border-radius: 16px;
   padding: 20px;
-  margin: 33px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Header */
+.qa__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.qa__header-icon {
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
 }
 
 .qa__title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-surface);
-  margin-bottom: 14px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e1b4b;
 }
 
-.qa__list {
+/* Grid Layout */
+.qa__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+/* Card Button */
+.qa__card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.qa__btn {
-  background: var(--color-surface);
-  border: none;
-  border-radius: 10px;
-  padding: 13px 16px;
-  display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 20px 14px 14px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background-color: #ffffff;
   cursor: pointer;
-  transition: background 0.15s ease;
-  width: 100%;
-  text-align: left;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-.qa__btn--hovered,
-.qa__btn:hover {
-  background: var(--color-bg-muted);
+.qa__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.qa__btn-left {
+/* Card Icon Box */
+.qa__icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 
-.qa__btn-icon {
-  color: var(--color-text-muted);
+/* Card Text Styling */
+.qa__card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.qa__card-footer {
   display: flex;
   align-items: center;
-}
-
-.qa__btn-label {
-  font-size: 14px;
+  gap: 4px;
+  font-size: 11px;
   font-weight: 500;
-  color: var(--color-text-primary);
+  color: #94a3b8;
+  margin-top: auto;
 }
 
-.qa__btn-chevron {
-  color: var(--gray-400);
-  display: flex;
-  align-items: center;
+/* Color Schemes per Card */
+
+/* Purple (Landing) */
+.qa__card--purple .qa__icon-wrapper {
+  background-color: #f0edff;
+  color: #6366f1;
+}
+
+/* Green (Walk-in) */
+.qa__card--green .qa__icon-wrapper {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+/* Orange (Course) */
+.qa__card--orange .qa__icon-wrapper {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+
+/* Blue (Student) */
+.qa__card--blue .qa__icon-wrapper {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+/* Pink (Schedule) */
+.qa__card--pink .qa__icon-wrapper {
+  background-color: #fdf2f8;
+  color: #ec4899;
 }

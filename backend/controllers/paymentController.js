@@ -146,19 +146,19 @@ exports.createPayment = async (req, res) => {
   let payment;
   try {
     const {
-      amount,
-      email,
-      name,
-      phone,
-      sourceId,
-      currency: requestedCurrency,
-      userId,
-      description,
-      courseName,
-      // Legacy eWay fields — reject raw cards (PCI)
-      cardNumber,
-      cvv,
-    } = req.body;
+  amount,
+  email,
+  name,
+  phone,
+  preferredCity,   // ✅ Add this
+  sourceId,
+  currency: requestedCurrency,
+  userId,
+  description,
+  courseName,
+  cardNumber,
+  cvv,
+} = req.body;
 
     if (cardNumber || cvv) {
       return res.status(400).json({
@@ -185,15 +185,16 @@ exports.createPayment = async (req, res) => {
     const { locationId, currency: locationCurrency } = await resolveLocation();
     const currency = (requestedCurrency || locationCurrency || 'AUD').toUpperCase();
 
-    payment = new Payment({
-      transactionId: `sq_${Date.now()}`,
-      userId: userId || phone || email || 'guest',
-      amount: numericAmount,
-      currency,
-      paymentMethod: 'square',
-      description: description || `Payment by ${name || 'customer'} - ${email || ''}`,
-      status: 'pending',
-    });
+payment = new Payment({
+  transactionId: `sq_${Date.now()}`,
+  userId: userId || phone || email || "guest",
+  amount: numericAmount,
+  currency,
+  paymentMethod: "square",
+  preferredCity,          // ✅ Save it
+  description: description || `Payment by ${name || "customer"} - ${email || ""}`,
+  status: "pending",
+});
     await payment.save();
 
     const idempotencyKey = crypto.randomUUID();

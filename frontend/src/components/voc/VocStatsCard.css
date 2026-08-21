@@ -1,73 +1,146 @@
 .vsc__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
-  margin: 33px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+/* Container Wrapper */
+.vsc__container {
+  width: 100%;
 }
 
-.vsc__card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+/* Header Styling */
+.vsc__welcome-header {
+  margin-bottom: 24px;
 }
 
-.vsc__card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
+.vsc__welcome-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
 }
 
-.vsc__card-title {
+.vsc__welcome-subtitle {
   font-size: 14px;
-  color: var(--color-text-muted);
-  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+  font-weight: 400;
+}
+.vsc__card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background-size: cover;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
-.vsc__card-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+/* Rounded Icon Badges */
+.vsc__badge {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   flex-shrink: 0;
 }
 
-.vsc__icon--warning {
-  background: var(--color-surface)3cd;
-  color: #856404;
+/* Card Content Structure */
+.vsc__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.vsc__icon--success {
-  background: #d1f5e0;
-  color: #1a7f44;
+.vsc__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
 }
 
-.vsc__icon--purple {
-  background: #dbeeff;
-  color: #0a5f8c;
+.vsc__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a202c;
 }
 
-.vsc__card-value {
-  font-size: 32px;
+.vsc__status-icon {
+  display: flex;
+  align-items: center;
+}
+
+.vsc__value {
+  font-size: 22px;
   font-weight: 700;
-  color: var(--color-text-primary);
-  line-height: 1;
+  color: #0f172a;
+  line-height: 1.2;
 }
 
-.vsc__card-subtitle {
-  font-size: 13px;
-  color: var(--gray-400);
-  margin-top: 4px;
+.vsc__subtitle {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 6px;
+  font-weight: 400;
 }
 
-@media (max-width: 768px) {
-  .vsc__grid {
-    grid-template-columns: 1fr;
-  }
+/* Theme Color Schemes */
+
+/* 1. VOC Pending Theme */
+.vsc__card--pending {
+  background-color: #fffaf5;
+  border-color: #ffebd8;
+}
+.vsc__card--pending .vsc__badge {
+  background-color: #ffe8d2;
+  color: #f97316;
+}
+.vsc__card--pending .vsc__status-icon {
+  color: #f97316;
+}
+
+/* 2. VOC Verified Theme */
+.vsc__card--verified {
+  background-color: #f6fbf7;
+  border-color: #e2f4e6;
+}
+.vsc__card--verified .vsc__badge {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+.vsc__card--verified .vsc__status-icon {
+  color: #16a34a;
+}
+
+/* 3. Sydney Theme */
+.vsc__card--sydney {
+  background-color: #f7faff;
+  border-color: #e2ebff;
+  /* Option for background silhouette artwork */
+  /* background-image: url('./assets/sydney-skyline.svg'); */
+}
+.vsc__card--sydney .vsc__badge {
+  background-color: #ebf2ff;
+  color: #2563eb;
+}
+
+/* 4. Adelaide Theme */
+.vsc__card--adelaide {
+  background-color: #faf8ff;
+  border-color: #ede9fe;
+  /* Option for background silhouette artwork */
+  /* background-image: url('./assets/adelaide-skyline.svg'); */
+}
+.vsc__card--adelaide .vsc__badge {
+  background-color: #f3e8ff;
+  color: #7c3aed;
 }

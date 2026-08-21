@@ -27,6 +27,10 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     default: 'square'
   },
+  preferredCity: {
+    type: String,
+    default: "",
+},
   gatewayTransactionId: String,
   gatewayResponse: Object,
   description: String,

@@ -1,66 +1,107 @@
-/* ===== VOC PAGE ===== */
-.voc-page {
-    min-height: 100vh;
-    background: var(--color-slate-50);
-    font-family: 'Segoe UI', sans-serif;
+.vsc__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    /* width: 100%; */
+    margin-bottom: 20px;
 }
 
-.voc-container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 16px 16px 60px;
-}
-
-/* Done screen */
-.voc-done {
-    background: var(--color-surface);
+.vsc__card {
+    background: #ffffff;
     border-radius: 14px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 60px 32px;
-    text-align: center;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    min-width: 0;
 }
 
-.voc-done-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
+.vsc__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
-.voc-done h2 {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin: 0 0 12px;
-}
-
-.voc-done p {
-    font-size: 15px;
-    color: var(--color-text-dim);
-    line-height: 1.6;
-}
-
-.voc-done-home-btn {
-    display: inline-block;
-    margin-top: 28px;
-    background: var(--color-slate-900);
-    color: var(--color-surface);
-    border: none;
-    border-radius: 10px;
-    padding: 12px 26px;
+.vsc__card-title {
     font-size: 14px;
     font-weight: 600;
-    letter-spacing: 0.4px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background 0.15s ease, transform 0.15s ease;
+    color: #374151;
 }
 
-.voc-done-home-btn:hover {
-    background: var(--color-slate-800);
-    transform: translateY(-1px);
+.vsc__card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.voc-done-home-btn:active {
-    transform: translateY(0);
+.vsc__card-value {
+    margin-top: 14px;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 700;
+    color: #111827;
+}
+
+.vsc__card-subtitle {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Existing icons */
+
+.vsc__icon--warning {
+    background: #fff7ed;
+    color: #f97316;
+}
+
+.vsc__icon--success {
+    background: #ecfdf5;
+    color: #10b981;
+}
+
+.vsc__icon--purple {
+    background: #f5f3ff;
+    color: #8b5cf6;
+}
+
+/* Sydney */
+
+.vsc__icon--sydney {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+/* Adelaide */
+
+.vsc__icon--adelaide {
+    background: #ecfeff;
+    color: #0891b2;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+    .vsc__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .vsc__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .vsc__grid {
+        grid-template-columns: 1fr;
+    }
 }

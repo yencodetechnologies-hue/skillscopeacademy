@@ -73,6 +73,7 @@ function Payment({
     setUserDetails,
     setIsValid,
     triggerValidation,
+    selectedSession,
     isCompanyEnroll,
     setPaymentData,
     onCardPayment,
@@ -85,7 +86,8 @@ function Payment({
     tokenData = null,          // ✅ NEW
     enrollmentLinkData = null, // ✅ NEW
 }) {
-    console.log(selectedCourses,"selectedCoursessssssss")
+    console.log(selectedCourse,"selectedCoursessssssss");
+    console.log(selectedSession)
 
     const [paymentMethod, setPaymentMethod] = useState(() => {
         // We initialize with a safe default, but useEffect below will adjust it
@@ -111,6 +113,7 @@ function Payment({
     const [squareLoading, setSquareLoading] = useState(false)
     const [squareError, setSquareError] = useState("")
     const [squareCurrency, setSquareCurrency] = useState("AUD")
+    const [preferredCity, setPreferredCity] = useState("");
 
     // ✅ File input ref
     const fileInputRef = useRef(null)
@@ -187,9 +190,26 @@ function Payment({
     }, [blockPaymentForExistingEmail])
 
     useEffect(() => {
-        if (!name && !email && !phone) return
-        setUserDetails(prev => ({ ...prev, name, email, phone }))
-    }, [name, email, phone])
+    const cities = selectedSession?.preferredCity || [];
+
+    if (cities.length > 0) {
+        setPreferredCity(cities[0]);
+    } else {
+        setPreferredCity("");
+    }
+}, [selectedSession]);
+
+ useEffect(() => {
+    if (!name && !email && !phone) return;
+
+    setUserDetails(prev => ({
+        ...prev,
+        name,
+        email,
+        phone,
+        preferredCity,
+    }));
+}, [name, email, phone, preferredCity]);
 
     useEffect(() => {
         if ((isExistingCompany || shouldAutofill) && initialPaymentData && initialPaymentData.email) {
@@ -224,17 +244,33 @@ function Payment({
     }, [email, isExistingCompany, shouldAutofill, isCompanyRegister])
 
     useEffect(() => {
-        const fullData = {
-            name, email, phone, agreed,
-            contactPerson,
-            paymentMethod,
-            transactionId, paymentSlip,
-            cardName,
-            ewayTransactionId,
-            paymentConfirmed: paymentStatus === "success",
-        }
+       const fullData = {
+    name,
+    email,
+    phone,
+    agreed,
+    contactPerson,
+    preferredCity,
+    paymentMethod,
+    transactionId,
+    paymentSlip,
+    cardName,
+    ewayTransactionId,
+    paymentConfirmed: paymentStatus === "success",
+}
         setPaymentData(fullData)
-    }, [name, email, phone, agreed, contactPerson, paymentMethod, transactionId, paymentSlip, cardName, ewayTransactionId, paymentStatus])
+    }, [ name,
+    email,
+    phone,
+    agreed,
+    contactPerson,
+    preferredCity,
+    paymentMethod,
+    transactionId,
+    paymentSlip,
+    cardName,
+    ewayTransactionId,
+    paymentStatus])
 
     const getFullErrors = async (overrideValues = {}) => {
         const vals = {
@@ -462,23 +498,24 @@ function Payment({
             }
 
             const amount = Number(coursePrice) || Number(selectedCourse?.sellingPrice) || 0
-            const response = await fetch(`${API_URL}/api/payment/pay`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    sourceId: tokenResult.token,
-                    amount,
-                    currency: squareCurrency,
-                    email,
-                    name,
-                    phone,
-                    userId: phone || email,
-                    courseName: selectedCourse?.title || "",
-                    description: selectedCourse
-                        ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
-                        : "Course enrollment",
-                }),
-            })
+           const response = await fetch(`${API_URL}/api/payment/pay`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    sourceId: tokenResult.token,
+    amount,
+    currency: squareCurrency,
+    email,
+    name,
+    phone,
+    preferredCity,          // ✅ Add this
+    userId: phone || email,
+    courseName: selectedCourse?.title || "",
+    description: selectedCourse
+      ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
+      : "Course enrollment",
+  }),
+});
             const result = await response.json()
             if (result.success) {
                 setPaymentStatus("success")
@@ -635,6 +672,35 @@ function Payment({
                     )}
                     {errors.email && !blockPaymentForExistingEmail && <span className="error-text">⚠ {errors.email}</span>}
                 </div>
+
+                {selectedSession?.preferredCity?.length > 0 && (
+    <div className="form-group">
+        <label>Preferred City *</label>
+
+        <select
+            value={preferredCity}
+            onChange={(e) => {
+                setPreferredCity(e.target.value);
+                clearFieldError("preferredCity");
+            }}
+            className={errors.preferredCity ? "input-error" : ""}
+        >
+            <option value="">Select preferred city</option>
+
+            {selectedSession.preferredCity.map((city) => (
+                <option key={city} value={city}>
+                    {city}
+                </option>
+            ))}
+        </select>
+
+        {errors.preferredCity && (
+            <span className="error-text">
+                ⚠ {errors.preferredCity}
+            </span>
+        )}
+    </div>
+)}
 
                 <div className="terms">
                     <input

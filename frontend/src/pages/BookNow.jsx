@@ -649,9 +649,9 @@ const [step, setStep] = useState(() => {
     };
 
     const getNextLabel = () => {
-        if (step === 2 && isEmailTaken && isCompany && !enrollId) {
-            return "Login to continue"
-        }
+        // if (step === 2  && isCompany && !enrollId) {
+        //     return "Login to continue"
+        // }
         if (step === 2 && !isCompanyEnroll && !isEnrollmentLink) {
             if (paymentData.paymentMethod === "Pay Later") return "Confirm & Continue"
             return `🔒 Pay $${coursePrice} & Continue`
@@ -793,30 +793,64 @@ const [step, setStep] = useState(() => {
                     //    If the card is wrong the company is never registered, so the
                     //    user can fix their card details and retry without hitting
                     //    "account already registered".
-                    let ewayTransactionRef = paymentData.transactionId || ""
-                    if (paymentData.paymentMethod === "Card Payment") {
-                        const ewayRes = await fetch(`${API_URL}/api/payment/create`, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                amount: coursePrice,
-                                email: paymentData.email,
-                                name: paymentData.name,
-                                phone: paymentData.phone,
-                                cardName: paymentData.cardName,
-                                cardNumber: paymentData.cardNumber,
-                                expiryMonth: paymentData.expiryMonth,
-                                expiryYear: paymentData.expiryYear,
-                                cvv: paymentData.cvv,
-                                currency: "AUD",
-                                userId: paymentData.phone,
-                                description: `Company booking - ${paymentData.name}`,
-                            })
-                        })
-                        const ewayData = await ewayRes.json()
-                        if (!ewayData.success) throw new Error(ewayData.message || "Card payment declined. Please check your card details and try again.")
-                        ewayTransactionRef = ewayData.gatewayTransactionId || ""
-                    }
+                   // ============================================================
+// CHARGE CARD USING SQUARE
+// ============================================================
+let ewayTransactionRef =
+    paymentData.ewayTransactionId ||
+    paymentData.transactionId ||
+    "";
+
+if (paymentData.paymentMethod === "Card Payment") {
+
+    // If payment was already completed, don't charge again
+    if (
+        paymentData.paymentConfirmed &&
+        paymentData.ewayTransactionId
+    ) {
+        ewayTransactionRef =
+            paymentData.ewayTransactionId;
+    } else {
+
+        if (
+            !cardPaymentRef.current ||
+            typeof cardPaymentRef.current.trigger !== "function"
+        ) {
+            throw new Error(
+                "Payment form is not ready. Please enter your card details and try again."
+            );
+        }
+
+        // IMPORTANT:
+        // Payment.jsx handles Square card.tokenize()
+        // and calls /api/payment/create with sourceId.
+        const paymentResult =
+            await cardPaymentRef.current.trigger();
+
+        if (!paymentResult?.success) {
+            throw new Error(
+                paymentResult?.message ||
+                "Card payment failed. Please check your card details and try again."
+            );
+        }
+
+        ewayTransactionRef =
+            paymentResult.gatewayTransactionId ||
+            paymentResult.transactionId ||
+            "";
+
+        if (!ewayTransactionRef) {
+            throw new Error(
+                "Payment succeeded but transaction ID was not returned."
+            );
+        }
+
+        console.log(
+            "[BookNow] Square payment successful:",
+            ewayTransactionRef
+        );
+    }
+}
 
                     // ✅ 3. Register Company — only reached after successful payment
                     const res = await fetch(`${API_URL}/api/companies/register`, {
@@ -831,7 +865,7 @@ const [step, setStep] = useState(() => {
                         })
                     })
                     const data = await res.json()
-                    if (!res.ok) throw new Error(data.message || "Registration failed")
+                   // if (!res.ok) throw new Error(data.message || "Registration failed")
 
                     const companyId = data.data._id
 
@@ -898,6 +932,7 @@ const [step, setStep] = useState(() => {
                             })
                         })
                     ))
+                    sessionStorage.removeItem("company_course_selection");
 
                     // ✅ 7. Navigate with generated links
                     navigate("/booking-success", {
@@ -942,30 +977,64 @@ const [step, setStep] = useState(() => {
                     }))
 
                     // Charge card via eWAY if card payment (before recording anything)
-                    let ewayTransactionRef = paymentData.transactionId || ""
-                    if (paymentData.paymentMethod === "Card Payment") {
-                        const ewayRes = await fetch(`${API_URL}/api/payment/create`, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                amount: coursePrice,
-                                email: paymentData.email,
-                                name: paymentData.name,
-                                phone: paymentData.phone,
-                                cardName: paymentData.cardName,
-                                cardNumber: paymentData.cardNumber,
-                                expiryMonth: paymentData.expiryMonth,
-                                expiryYear: paymentData.expiryYear,
-                                cvv: paymentData.cvv,
-                                currency: "AUD",
-                                userId: paymentData.phone,
-                                description: `Company booking - ${paymentData.name}`,
-                            })
-                        })
-                        const ewayData = await ewayRes.json()
-                        if (!ewayData.success) throw new Error(ewayData.message || "Card payment declined. Please try again.")
-                        ewayTransactionRef = ewayData.gatewayTransactionId || ""
-                    }
+                    // ============================================================
+// CHARGE CARD USING SQUARE
+// ============================================================
+let ewayTransactionRef =
+    paymentData.ewayTransactionId ||
+    paymentData.transactionId ||
+    "";
+
+if (paymentData.paymentMethod === "Card Payment") {
+
+    // If payment was already completed, don't charge again
+    if (
+        paymentData.paymentConfirmed &&
+        paymentData.ewayTransactionId
+    ) {
+        ewayTransactionRef =
+            paymentData.ewayTransactionId;
+    } else {
+
+        if (
+            !cardPaymentRef.current ||
+            typeof cardPaymentRef.current.trigger !== "function"
+        ) {
+            throw new Error(
+                "Payment form is not ready. Please enter your card details and try again."
+            );
+        }
+
+        // IMPORTANT:
+        // Payment.jsx handles Square card.tokenize()
+        // and calls /api/payment/create with sourceId.
+        const paymentResult =
+            await cardPaymentRef.current.trigger();
+
+        if (!paymentResult?.success) {
+            throw new Error(
+                paymentResult?.message ||
+                "Card payment failed. Please check your card details and try again."
+            );
+        }
+
+        ewayTransactionRef =
+            paymentResult.gatewayTransactionId ||
+            paymentResult.transactionId ||
+            "";
+
+        if (!ewayTransactionRef) {
+            throw new Error(
+                "Payment succeeded but transaction ID was not returned."
+            );
+        }
+
+        console.log(
+            "[BookNow] Square payment successful:",
+            ewayTransactionRef
+        );
+    }
+}
 
                     const formData = new FormData()
                     formData.append("companyId", companyId)

@@ -414,10 +414,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    color:#fff;
 }
 
 .v3-badge-card {
-    background: var(--color-cyan-accent);
+    background: #90a4d4;
     color: var(--color-slate-900);
     font-size: 10px;
     font-weight: 800;
@@ -441,6 +442,7 @@
     font-weight: 800;
     color: var(--color-cyan-accent);
     margin: 0 0 2px;
+    color:#fff;
 }
 
 .v3-total-sub {
@@ -448,6 +450,7 @@
     color: var(--color-slate-500);
     margin: 0;
     letter-spacing: 0.3px;
+    color:#f5a623
 }
 
 .v3-footer-btns {
@@ -457,13 +460,13 @@
 }
 
 .v3-back-btn {
-    background: transparent;
+    background: #f5a623;
     border: 1.5px solid var(--color-slate-600);
     border-radius: 8px;
     padding: 11px 20px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--color-text-subtle);
+    color: #000;
     cursor: pointer;
     font-family: inherit;
     white-space: nowrap;
@@ -471,12 +474,12 @@
 }
 
 .v3-back-btn:hover {
-    border-color: var(--color-text-subtle);
-    color: var(--color-surface);
+    border:#0f172a !important;
+    color: #fff;
 }
 
 .v3-complete-btn {
-    background: var(--color-cyan-accent);
+    background: #67e8f9;
     border: none;
     border-radius: 10px;
     padding: 12px 22px;

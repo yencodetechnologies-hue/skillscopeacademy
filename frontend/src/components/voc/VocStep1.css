@@ -133,6 +133,7 @@
 
 .v1-cta-btn:hover {
     background: var(--color-cyan-accent);
+    color:#fff;
 }
 
 /* Responsive */

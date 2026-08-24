@@ -501,6 +501,15 @@ exports.getAllStudents = async (req, res) => {
       req.query.preferredCity || ""
     ).trim();
 
+    // ============================================
+    // ⭐ PAYMENT DATE FILTER
+    // Example:
+    // paymentDate=2026-08-22
+    // ============================================
+    const paymentDateFilter = (
+      req.query.paymentDate || ""
+    ).trim();
+
     console.log("======================================");
     console.log("GET ALL STUDENTS");
     console.log("Page:", page);
@@ -508,6 +517,7 @@ exports.getAllStudents = async (req, res) => {
     console.log("Search:", search);
     console.log("Status:", statusFilter);
     console.log("Preferred City:", preferredCityFilter);
+    console.log("Payment Date:", paymentDateFilter);
     console.log("======================================");
 
     // ============================================
@@ -605,7 +615,7 @@ exports.getAllStudents = async (req, res) => {
         .lean();
 
     console.log(
-      "Flows before preferred city filter:",
+      "Flows before filters:",
       allFlows.length
     );
 
@@ -624,7 +634,8 @@ exports.getAllStudents = async (req, res) => {
     // LOOP FLOWS
     // ============================================
     allFlows.forEach((flow) => {
-      const student = flow.studentId || {};
+      const student =
+        flow.studentId || {};
 
       // ==========================================
       // COMPANY
@@ -648,7 +659,8 @@ exports.getAllStudents = async (req, res) => {
       // ENROLLMENT LINK
       // ==========================================
       if (
-        flow.source === "Enrollment Link" &&
+        flow.source ===
+          "Enrollment Link" &&
         flow.sourceToken &&
         mongoose.Types.ObjectId.isValid(
           flow.sourceToken
@@ -827,11 +839,18 @@ exports.getAllStudents = async (req, res) => {
       );
 
     // ============================================
-    // FILTER BY PREFERRED CITY
+    // FILTER FLOWS
+    //
+    // Filters:
+    // 1. Preferred City
+    // 2. Payment Created Date
     // ============================================
     let filteredFlows = allFlows;
 
-    if (preferredCityFilter) {
+    if (
+      preferredCityFilter ||
+      paymentDateFilter
+    ) {
       filteredFlows =
         allFlows.filter((flow) => {
           const item =
@@ -851,7 +870,8 @@ exports.getAllStudents = async (req, res) => {
             paymentRecord =
               paymentGatewayMap[
                 String(
-                  flowPayment.gatewayTransactionId
+                  flowPayment
+                    .gatewayTransactionId
                 )
               ];
           }
@@ -866,13 +886,14 @@ exports.getAllStudents = async (req, res) => {
             paymentRecord =
               paymentTransactionMap[
                 String(
-                  flowPayment.transactionId
+                  flowPayment
+                    .transactionId
                 )
               ];
           }
 
           // ========================================
-          // PAYMENT.PREFERRED CITY
+          // PAYMENT PREFERRED CITY
           // ========================================
           const paymentPreferredCity =
             paymentRecord?.preferredCity
@@ -884,56 +905,156 @@ exports.getAllStudents = async (req, res) => {
               .toString()
               .trim();
 
-          const isMatch =
-            paymentPreferredCity.toLowerCase() ===
-            selectedCity.toLowerCase();
+          // ========================================
+          // CITY MATCH
+          // ========================================
+          let cityMatch = true;
 
-          console.log(
-            "Preferred City Check:",
-            {
-              flowId:
-                String(flow._id),
+          if (selectedCity) {
+            cityMatch =
+              paymentPreferredCity
+                .toLowerCase() ===
+              selectedCity.toLowerCase();
+          }
 
-              studentId:
-                flow.studentId?._id
-                  ? String(
-                      flow.studentId._id
-                    )
-                  : "",
+          // ========================================
+          // PAYMENT DATE MATCH
+          //
+          // IMPORTANT:
+          // Payment.createdAt is converted to
+          // Australia/Sydney date.
+          // ========================================
+          let paymentDateMatch = true;
 
-              studentName:
-                flow.studentId?.name ||
-                "",
+          let actualPaymentDate = null;
 
-              transactionId:
-                flowPayment.transactionId ||
-                "",
+          if (paymentDateFilter) {
+            const paymentCreatedAt =
+              paymentRecord?.createdAt;
 
-              gatewayTransactionId:
-                flowPayment.gatewayTransactionId ||
-                "",
+            if (!paymentCreatedAt) {
+              paymentDateMatch = false;
+            } else {
+              actualPaymentDate =
+                new Date(
+                  paymentCreatedAt
+                ).toLocaleDateString(
+                  "en-CA",
+                  {
+                    timeZone:
+                      "Australia/Sydney",
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  }
+                );
 
-              paymentPreferredCity,
-
-              paymentCreatedAt:
-                paymentRecord?.createdAt ||
-                null,
-
-              selectedCity,
-
-              isMatch,
+              paymentDateMatch =
+                actualPaymentDate ===
+                paymentDateFilter;
             }
+          }
+
+          // ========================================
+          // DEBUG
+          // ========================================
+          console.log(
+            "======================================"
           );
 
-          return isMatch;
+          console.log(
+            "Student Filter Check:"
+          );
+
+          console.log({
+            flowId:
+              String(flow._id),
+
+            studentId:
+              flow.studentId?._id
+                ? String(
+                    flow.studentId._id
+                  )
+                : "",
+
+            studentName:
+              flow.studentId?.name ||
+              "",
+
+            transactionId:
+              flowPayment.transactionId ||
+              "",
+
+            gatewayTransactionId:
+              flowPayment
+                .gatewayTransactionId ||
+              "",
+
+            paymentPreferredCity,
+
+            selectedCity,
+
+            paymentCreatedAt:
+              paymentRecord?.createdAt ||
+              null,
+
+            actualPaymentDate,
+
+            requestedPaymentDate:
+              paymentDateFilter,
+
+            cityMatch,
+
+            paymentDateMatch,
+
+            finalMatch:
+              cityMatch &&
+              paymentDateMatch,
+          });
+
+          console.log(
+            "======================================"
+          );
+
+          return (
+            cityMatch &&
+            paymentDateMatch
+          );
         });
     }
 
     // ============================================
-    // TOTAL AFTER CITY FILTER
+    // TOTAL AFTER ALL FILTERS
     // ============================================
     const total =
       filteredFlows.length;
+
+    console.log(
+      "======================================"
+    );
+
+    console.log(
+      "FILTERED RESULT"
+    );
+
+    console.log(
+      "Preferred City:",
+      preferredCityFilter || "ALL"
+    );
+
+    console.log(
+      "Payment Date:",
+      paymentDateFilter || "ALL"
+    );
+
+    console.log(
+      "Total matching students:",
+      total
+    );
+
+    console.log(
+      "======================================"
+    );
 
     // ============================================
     // PAGINATION
@@ -943,11 +1064,6 @@ exports.getAllStudents = async (req, res) => {
         skip,
         skip + limit
       );
-
-    console.log(
-      "Flows after preferred city filter:",
-      total
-    );
 
     console.log(
       "Flows returned:",
@@ -1031,12 +1147,14 @@ exports.getAllStudents = async (req, res) => {
 
         // Gateway transaction
         if (
-          flowPayment.gatewayTransactionId
+          flowPayment
+            .gatewayTransactionId
         ) {
           paymentRecord =
             paymentGatewayMap[
               String(
-                flowPayment.gatewayTransactionId
+                flowPayment
+                  .gatewayTransactionId
               )
             ];
         }
@@ -1049,22 +1167,22 @@ exports.getAllStudents = async (req, res) => {
           paymentRecord =
             paymentTransactionMap[
               String(
-                flowPayment.transactionId
+                flowPayment
+                  .transactionId
               )
             ];
         }
 
         // ========================================
-        // ⭐ PAYMENT CREATED AT
-        // FROM PAYMENT MODEL
+        // PAYMENT CREATED AT
         // ========================================
         const paymentCreatedAt =
           paymentRecord?.createdAt ||
           null;
 
         // ========================================
-        // ⭐ PAYMENT CREATED DATE
-        // AUSTRALIA/SYDNEY DATE
+        // PAYMENT CREATED DATE
+        // AUSTRALIA/SYDNEY
         // ========================================
         const paymentCreatedDate =
           paymentCreatedAt
@@ -1084,10 +1202,10 @@ exports.getAllStudents = async (req, res) => {
 
         // ========================================
         // PREFERRED CITY
-        // FROM PAYMENT MODEL
         // ========================================
         const preferredCity =
-          paymentRecord?.preferredCity
+          paymentRecord
+            ?.preferredCity
             ?.toString()
             .trim() || "";
 
@@ -1100,7 +1218,7 @@ exports.getAllStudents = async (req, res) => {
           flowId: flow._id,
 
           // ======================================
-          // ⭐ PAYMENT CREATED DATE
+          // PAYMENT CREATED DATE
           // ======================================
           paymentCreatedAt,
 
@@ -1202,7 +1320,8 @@ exports.getAllStudents = async (req, res) => {
             "—",
 
           gatewayTransactionId:
-            flowPayment.gatewayTransactionId ||
+            flowPayment
+              .gatewayTransactionId ||
             "—",
 
           slipUrl:
@@ -1210,7 +1329,7 @@ exports.getAllStudents = async (req, res) => {
             "—",
 
           // ======================================
-          // ⭐ PREFERRED CITY
+          // PREFERRED CITY
           // ======================================
           preferredCity,
 
@@ -1327,6 +1446,11 @@ exports.getAllStudents = async (req, res) => {
     console.log(
       "Preferred City:",
       preferredCityFilter || "ALL"
+    );
+
+    console.log(
+      "Payment Date:",
+      paymentDateFilter || "ALL"
     );
 
     console.log(

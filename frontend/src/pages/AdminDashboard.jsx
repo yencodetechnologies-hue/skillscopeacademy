@@ -418,127 +418,151 @@ function AdminDashboard() {
        the returned data.
     ========================================================= */
 
-    const fetchCityCount = async (city) => {
-        try {
-            const url =
-                `${API_URL}/api/students` +
-                `?preferredCity=${encodeURIComponent(
-                    city
-                )}` +
-                `&page=1&limit=10000`;
+const fetchCityCount = async (city) => {
+    try {
+        // ============================================
+        // TODAY IN AUSTRALIA/SYDNEY
+        // ============================================
+        const today = new Date();
 
-            console.log(
-                "========================================"
+        const todayDate =
+            new Intl.DateTimeFormat(
+                "en-CA",
+                {
+                    timeZone:
+                        "Australia/Sydney",
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                }
+            ).format(today);
+
+        // ============================================
+        // API URL
+        // ============================================
+        const url =
+            `${API_URL}/api/students` +
+            `?preferredCity=${encodeURIComponent(
+                city
+            )}` +
+            `&paymentDate=${encodeURIComponent(
+                todayDate
+            )}` +
+            `&page=1` +
+            `&limit=10000`;
+
+        console.log(
+            "========================================"
+        );
+
+        console.log(
+            `FETCHING TODAY'S ${city.toUpperCase()} COUNT`
+        );
+
+        console.log(
+            "Today Australia/Sydney:",
+            todayDate
+        );
+
+        console.log(
+            "URL:",
+            url
+        );
+
+        // ============================================
+        // FETCH
+        // ============================================
+        const response =
+            await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(
+                `Failed to load ${city} students`
             );
-
-            console.log(
-                `FETCHING ${city.toUpperCase()} COUNT`
-            );
-
-            console.log(
-                "URL:",
-                url
-            );
-
-            const response =
-                await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(
-                    `Failed to load ${city} students`
-                );
-            }
-
-            const data =
-                await response.json();
-
-            console.log(
-                `${city} API RESPONSE:`,
-                data
-            );
-
-            const students =
-                Array.isArray(data.data)
-                    ? data.data
-                    : [];
-
-            /*
-             * VERY IMPORTANT
-             *
-             * If backend returns:
-             *
-             * {
-             *   data: [...],
-             *   total: 4
-             * }
-             *
-             * use total = 4.
-             *
-             * This prevents pagination from making
-             * the count incorrect.
-             */
-
-            let cityCount = 0;
-
-            if (
-                typeof data.total ===
-                    "number" &&
-                data.total >= 0
-            ) {
-                cityCount =
-                    data.total;
-            } else if (
-                typeof data.total ===
-                    "string" &&
-                data.total.trim() !== ""
-            ) {
-                cityCount =
-                    Number(data.total);
-            } else {
-                cityCount =
-                    students.length;
-            }
-
-            /*
-             * Safety fallback
-             */
-
-            if (
-                !Number.isFinite(cityCount)
-            ) {
-                cityCount =
-                    students.length;
-            }
-
-            console.log(
-                `${city} DATA LENGTH:`,
-                students.length
-            );
-
-            console.log(
-                `${city} API TOTAL:`,
-                data.total
-            );
-
-            console.log(
-                `✅ FINAL ${city.toUpperCase()} COUNT:`,
-                cityCount
-            );
-
-            console.log(
-                "========================================"
-            );
-
-            return cityCount;
-        } catch (error) {
-            console.error(
-                `❌ ${city} count error:`,
-                error
-            );
-
-            return 0;
         }
-    };
+
+        const data =
+            await response.json();
+
+        console.log(
+            `${city} TODAY API RESPONSE:`,
+            data
+        );
+
+        // ============================================
+        // DATA
+        // ============================================
+        const students =
+            Array.isArray(data.data)
+                ? data.data
+                : [];
+
+        // ============================================
+        // TOTAL
+        // ============================================
+        let cityCount = 0;
+
+        if (
+            typeof data.total ===
+                "number" &&
+            data.total >= 0
+        ) {
+            cityCount =
+                data.total;
+        } else if (
+            typeof data.total ===
+                "string" &&
+            data.total.trim() !== ""
+        ) {
+            cityCount =
+                Number(data.total);
+        } else {
+            cityCount =
+                students.length;
+        }
+
+        // ============================================
+        // SAFETY
+        // ============================================
+        if (
+            !Number.isFinite(
+                cityCount
+            )
+        ) {
+            cityCount =
+                students.length;
+        }
+
+        console.log(
+            `${city} DATA LENGTH:`,
+            students.length
+        );
+
+        console.log(
+            `${city} API TOTAL:`,
+            data.total
+        );
+
+        console.log(
+            `✅ TODAY ${city.toUpperCase()} COUNT:`,
+            cityCount
+        );
+
+        console.log(
+            "========================================"
+        );
+
+        return cityCount;
+
+    } catch (error) {
+        console.error(
+            `❌ ${city} today's count error:`,
+            error
+        );
+
+        return 0;
+    }
+};
 
     /* =========================================================
        FETCH VOC STATS + CITY COUNTS

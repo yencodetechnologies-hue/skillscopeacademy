@@ -22,54 +22,54 @@ export default function StudentEnrollmentForm() {
   const enrollmentRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const studentId = user?.id;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const user = JSON.parse(localStorage.getItem("user"));
+  //       const studentId = user?.id;
 
-        if (!studentId) throw new Error("Student ID not found. Please login again.");
+  //       if (!studentId) throw new Error("Student ID not found. Please login again.");
 
-        const [userRes, formRes, dashRes] = await Promise.all([
-          fetch(`${API_URL}/api/students/enrollment/${studentId}`),
-          fetch(`${API_URL}/api/enrollment-form?studentId=${studentId}`),
-          fetch(`${API_URL}/api/student/dashboard/${studentId}`)
-        ]);
+  //       const [userRes, formRes, dashRes] = await Promise.all([
+  //         fetch(`${API_URL}/api/students/enrollment/${studentId}`),
+  //         fetch(`${API_URL}/api/enrollment-form?studentId=${studentId}`),
+  //         fetch(`${API_URL}/api/student/dashboard/${studentId}`)
+  //       ]);
 
-        if (!userRes.ok) throw new Error("Failed to fetch user details");
+  //       if (!userRes.ok) throw new Error("Failed to fetch user details");
 
-        const userData = await userRes.json();
-        setUserDetails(userData);
+  //       const userData = await userRes.json();
+  //       setUserDetails(userData);
 
-        if (formRes.ok) {
-          const formData = await formRes.json();
-          if (formData.length > 0) {
-            const data = formData[0]; ``
-            if (data?.personalDetails?.dob) {
-              data.personalDetails.dob = data.personalDetails.dob.split("T")[0];
-            }
-            setSavedFormData(data);
-          }
-        }
+  //       if (formRes.ok) {
+  //         const formData = await formRes.json();
+  //         if (formData.length > 0) {
+  //           const data = formData[0]; ``
+  //           if (data?.personalDetails?.dob) {
+  //             data.personalDetails.dob = data.personalDetails.dob.split("T")[0];
+  //           }
+  //           setSavedFormData(data);
+  //         }
+  //       }
 
-        if (dashRes.ok) {
-          const dashData = await dashRes.json();
-          setPaymentVerified(dashData.paymentVerified === true);
-          setAssessmentPassed(dashData.assessmentPassed === true);
-          setEnrollmentType(dashData.enrollmentType || "");
-          setPaymentMethod(dashData.paymentMethod || "");
-        }
+  //       if (dashRes.ok) {
+  //         const dashData = await dashRes.json();
+  //         setPaymentVerified(dashData.paymentVerified === true);
+  //         setAssessmentPassed(dashData.assessmentPassed === true);
+  //         setEnrollmentType(dashData.enrollmentType || "");
+  //         setPaymentMethod(dashData.paymentMethod || "");
+  //       }
 
-      } catch (err) {
-        console.error(err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //     } catch (err) {
+  //       console.error(err);
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const handleSubmit = async () => {
     if (isSubmitting) return;
@@ -110,9 +110,9 @@ export default function StudentEnrollmentForm() {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  // if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!userDetails) return <div>No user details found.</div>;
+  // if (!userDetails) return <div>No user details found.</div>;
 
   const canAccess = true;
 
@@ -120,7 +120,7 @@ export default function StudentEnrollmentForm() {
     <section>
       <EnrollmentRegister
         ref={enrollmentRef}
-        userDetails={userDetails}
+       // userDetails={userDetails}
         savedFormData={savedFormData}
         section={step}
         setSection={setStep}

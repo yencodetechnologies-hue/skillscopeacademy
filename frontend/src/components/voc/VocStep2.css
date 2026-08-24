@@ -28,7 +28,7 @@
 }
 
 .v2-price-highlight {
-    color: var(--color-cyan-accent);
+    color: #f5a623;
     font-weight: 600;
 }
 
@@ -94,6 +94,7 @@
 
 .v2-add-btn:hover {
     background: var(--color-cyan-accent);
+    color:#fff;
 }
 
 /* Empty box */
@@ -328,6 +329,7 @@
 
 .v2-next-btn:hover {
     background: var(--color-cyan-accent);
+    color:#fff;
 }
 
 @media (max-width: 600px) {
@@ -335,3 +337,112 @@
     .v2-footer { flex-direction: column; align-items: flex-start; }
     .v2-footer-btns { width: 100%; justify-content: flex-end; }
 }
+
+.v2-session-selection {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.v2-city-section {
+    margin-bottom: 22px;
+}
+
+.v2-time-slots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.v2-time-slot {
+    position: relative;
+    min-height: 58px;
+    padding: 12px 42px 12px 16px;
+    background: #fff;
+    border: 1.5px solid #d9dee7;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.v2-time-slot:hover {
+    border-color: #f5a623;
+}
+
+.v2-time-slot-selected {
+    border-color: #10b981;
+    background: #ecfdf5;
+}
+
+.v2-time-text {
+    font-weight: 600;
+}
+
+.v2-time-check {
+    position: absolute;
+    right: 14px;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.v2-time-placeholder,
+.v2-no-slots {
+    margin-top: 10px;
+    padding: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+}
+
+.v2-selected-session {
+    margin-top: 18px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+}
+
+.v2-selected-session-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.v2-selected-session-title {
+    font-weight: 700;
+    color: #047857;
+}
+
+.v2-selected-session-details {
+    margin-top: 3px;
+    font-size: 13px;
+    color: #334155;
+}
+
+@media (max-width: 700px) {
+    .v2-time-slots {
+        grid-template-columns: 1fr;
+    }
+}
+

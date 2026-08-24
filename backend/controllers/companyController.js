@@ -237,39 +237,111 @@ exports.checkCompanyEmail = async (req, res) => {
 // ─── CREATE COMPANY ──────────────────────────────────────────────
 exports.createCompany = async (req, res) => {
   try {
-    const { companyName, email, password, mobileNumber, contactPerson, payLater } = req.body;
+    const {
+      companyName,
+      email,
+      password,
+      mobileNumber,
+      contactPerson,
+      payLater,
+    } = req.body;
 
     if (!companyName || !email || !password) {
-      return res.status(400).json({ success: false, message: "Company name, email and password are required" });
-    }
-
-    const existing = await Company.findOne({ email: email.toLowerCase() });
-    if (existing) {
-      return res.status(400).json({ success: false, message: "Email already registered" });
+      return res.status(400).json({
+        success: false,
+        message: "Company name, email and password are required",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const company = await Company.create({
-      companyName: companyName.trim(),
-      email: email.toLowerCase().trim(),
-      password: hashedPassword,
-      mobileNumber: mobileNumber || null,
-      contactPerson: typeof contactPerson === "string" ? contactPerson.trim() : "",
-      payLater: !!payLater,
-      status: "Active",
-      role: "Company"
-    });
+    let company;
 
-    // Send welcome email — fire and forget (don't block response on failure)
+    try {
+      company = await Company.create({
+        companyName: companyName.trim(),
+        email: email.toLowerCase().trim(),
+        password: hashedPassword,
+        mobileNumber: mobileNumber || null,
+        contactPerson:
+          typeof contactPerson === "string"
+            ? contactPerson.trim()
+            : "",
+        payLater: !!payLater,
+        status: "Active",
+        role: "Company",
+      });
+    } catch (error) {
+
+      // ============================================================
+      // REMOVE OLD UNIQUE EMAIL INDEX
+      // ============================================================
+      if (
+        error.code === 11000 &&
+        error.keyPattern &&
+        error.keyPattern.email
+      ) {
+        try {
+          await Company.collection.dropIndex("email_1");
+
+          // Retry company creation after removing unique index
+          company = await Company.create({
+            companyName: companyName.trim(),
+            email: email.toLowerCase().trim(),
+            password: hashedPassword,
+            mobileNumber: mobileNumber || null,
+            contactPerson:
+              typeof contactPerson === "string"
+                ? contactPerson.trim()
+                : "",
+            payLater: !!payLater,
+            status: "Active",
+            role: "Company",
+          });
+
+        } catch (retryError) {
+          console.error(
+            "Company creation retry failed:",
+            retryError
+          );
+
+          return res.status(500).json({
+            success: false,
+            message: retryError.message,
+          });
+        }
+      } else {
+        throw error;
+      }
+    }
+
+    // ============================================================
+    // SEND WELCOME EMAIL
+    // ============================================================
     sendEmail({
       to: company.email,
-      subject: "Welcome — your company portal is ready | Safety Training Academy",
-      html: buildCompanyWelcomeHtml({ companyName: company.companyName, email: company.email, password })
-    }).catch(err => console.error("Company welcome email failed:", err.message));
+      subject:
+        "Welcome — your company portal is ready | Safety Training Academy",
+      html: buildCompanyWelcomeHtml({
+        companyName: company.companyName,
+        email: company.email,
+        password,
+      }),
+    }).catch((err) => {
+      console.error(
+        "Company welcome email failed:",
+        err.message
+      );
+    });
 
+    // ============================================================
+    // REMOVE PASSWORD FROM RESPONSE
+    // ============================================================
     const { password: _, ...companyData } = company.toObject();
 
+    // ============================================================
+    // ADMIN ACTIVITY LOG
+    // ============================================================
     logAdminActivity(req, {
       action: "create",
       module: "company",
@@ -277,9 +349,23 @@ exports.createCompany = async (req, res) => {
       targetId: company._id,
       statusCode: 201,
     });
-    res.status(201).json({ success: true, data: companyData, message: "Company created successfully" });
+
+    // ============================================================
+    // RESPONSE
+    // ============================================================
+    return res.status(201).json({
+      success: true,
+      data: companyData,
+      message: "Company created successfully",
+    });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Create company error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
@@ -396,87 +482,358 @@ exports.deleteCompany = async (req, res) => {
 // ─── COMPANY DETAILS (admin) ─────────────────────────────────────
 exports.getCompanyDetails = async (req, res) => {
   try {
-    const company = await Company.findById(req.params.id).select("-password");
-    if (!company) return res.status(404).json({ success: false, message: "Company not found" });
+    /* ─────────────────────────────────────────
+       1. GET COMPANY
+    ───────────────────────────────────────── */
 
-    const rawLinks = await CourseLink.find({ companyId: req.params.id }).sort({ createdAt: -1 }).lean();
-    const links = dedupeCourseLinks(rawLinks);
+    const company = await Company.findById(req.params.id)
+      .select("-password");
 
-    const linkTokens = links.map(l => l.token);
-    const flows = await EnrollmentFlow.find({
-      $or: [
-        { companyId: req.params.id },
-        ...(linkTokens.length > 0 ? [{ sourceToken: { $in: linkTokens } }] : [])
-      ]
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "Company not found",
+      });
+    }
+
+    /* ─────────────────────────────────────────
+       2. GET COURSE LINKS
+    ───────────────────────────────────────── */
+
+    const rawLinks = await CourseLink.find({
+      companyId: req.params.id,
     })
-      .populate("studentId", "name email phone")
       .sort({ createdAt: -1 })
       .lean();
 
-    const students = flows.map(flow => {
+    const links = dedupeCourseLinks(rawLinks);
+
+    const linkTokens = links
+      .map((link) => link.token)
+      .filter(Boolean);
+
+    /* ─────────────────────────────────────────
+       3. GET ENROLLMENT FLOWS
+    ───────────────────────────────────────── */
+
+    const flows = await EnrollmentFlow.find({
+      $or: [
+        {
+          companyId: req.params.id,
+        },
+
+        ...(linkTokens.length > 0
+          ? [
+              {
+                sourceToken: {
+                  $in: linkTokens,
+                },
+              },
+            ]
+          : []),
+      ],
+    })
+      .populate(
+        "studentId",
+        "name email phone"
+      )
+      .sort({
+        createdAt: -1,
+      })
+      .lean();
+
+    /* ─────────────────────────────────────────
+       4. FILTER INVALID STUDENT FLOWS
+       
+       IMPORTANT:
+       
+       If BOTH name and email are empty,
+       the enrollment must NOT be displayed.
+
+       Examples:
+
+       name = "test"
+       email = "test@gmail.com"
+       => SHOW
+
+       name = ""
+       email = "test@gmail.com"
+       => SHOW
+
+       name = "test"
+       email = ""
+       => SHOW
+
+       name = ""
+       email = ""
+       => DO NOT SHOW
+
+       studentId = null
+       => DO NOT SHOW
+    ───────────────────────────────────────── */
+
+    const validFlows = flows.filter((flow) => {
       const student = flow.studentId;
-      const item = flow.items?.[0];
-      const payStatus = item?.payment?.status;
-      const payLabel = payStatus === "success" ? "Paid" : payStatus === "failed" ? "Failed" : "Pending";
-      const llndStatus = flow.llnd?.status === "completed" ? "Completed" : "Not Started";
-      const formStatus = flow.enrollmentFormId ? "Submitted" : "Pending";
-      const trainingStatus = flow.currentStep >= 4 ? "Completed" : flow.currentStep >= 2 ? "In Progress" : "Not Started";
+
+      // No student linked to this enrollment
+      if (!student) {
+        return false;
+      }
+
+      const name = String(
+        student.name || ""
+      ).trim();
+
+      const email = String(
+        student.email || ""
+      ).trim();
+
+      // Remove only records where BOTH are empty
+      if (!name && !email) {
+        return false;
+      }
+
+      return true;
+    });
+
+    /* ─────────────────────────────────────────
+       DEBUG LOGS
+    ───────────────────────────────────────── */
+
+    console.log(
+      "Company ID:",
+      req.params.id
+    );
+
+    console.log(
+      "Total enrollment flows:",
+      flows.length
+    );
+
+    console.log(
+      "Valid enrollment flows:",
+      validFlows.length
+    );
+
+    console.log(
+      "Removed empty student flows:",
+      flows.length - validFlows.length
+    );
+
+    /* ─────────────────────────────────────────
+       5. CREATE STUDENT LIST
+    ───────────────────────────────────────── */
+
+    const students = validFlows.map((flow) => {
+      const student = flow.studentId;
+
+      const item =
+        Array.isArray(flow.items) &&
+        flow.items.length > 0
+          ? flow.items[0]
+          : null;
+
+      /* PAYMENT */
+
+      const payStatus =
+        item?.payment?.status;
+
+      const payLabel =
+        payStatus === "success"
+          ? "Paid"
+          : payStatus === "failed"
+          ? "Failed"
+          : "Pending";
+
+      /* LLN */
+
+      const llndStatus =
+        flow.llnd?.status === "completed"
+          ? "Completed"
+          : "Not Started";
+
+      /* ENROLMENT FORM */
+
+      const formStatus =
+        flow.enrollmentFormId
+          ? "Submitted"
+          : "Pending";
+
+      /* TRAINING */
+
+      const trainingStatus =
+        flow.currentStep >= 4
+          ? "Completed"
+          : flow.currentStep >= 2
+          ? "In Progress"
+          : "Not Started";
+
+      /* STUDENT */
+
+      const name = String(
+        student?.name || ""
+      ).trim();
+
+      const email = String(
+        student?.email || ""
+      ).trim();
+
+      const phone = String(
+        student?.phone || ""
+      ).trim();
+
       return {
-        name: student?.name || "—",
-        email: student?.email || "—",
-        phone: student?.phone || "",
-        course: item?.course?.courseName || "—",
-        amount: item?.payment?.amount ? `$${item.payment.amount}` : "N/A",
+        _id:
+          student?._id ||
+          flow.studentId?._id ||
+          flow._id,
+
+        flowId: flow._id,
+
+        name: name || "",
+        email: email || "",
+        phone: phone,
+
+        course:
+          item?.course?.courseName || "—",
+
+        amount:
+          item?.payment?.amount !== undefined &&
+          item?.payment?.amount !== null
+            ? `$${Number(
+                item.payment.amount
+              ).toFixed(2)}`
+            : "N/A",
+
         payment: payLabel,
+
         llnd: llndStatus,
+
         form: formStatus,
+
         training: trainingStatus,
-        enrolled: new Date(flow.createdAt).toLocaleDateString("en-GB"),
+
+        enrolled: flow.createdAt
+          ? new Date(
+              flow.createdAt
+            ).toLocaleDateString("en-GB")
+          : "",
+
         bill: "N/A",
-        sourceToken: flow.sourceToken || ""
+
+        sourceToken:
+          flow.sourceToken || "",
       };
     });
 
-    const orders = await CompanyPayment.find({ companyId: req.params.id })
-      .sort({ createdAt: -1 })
-      .lean();
+    /* ─────────────────────────────────────────
+       6. GET COMPANY PAYMENTS / PURCHASES
+    ───────────────────────────────────────── */
+
+    const orders =
+      await CompanyPayment.find({
+        companyId: req.params.id,
+      })
+        .sort({
+          createdAt: -1,
+        })
+        .lean();
 
     const purchases = orders.map((p) => ({
       _id: p._id,
-      orderId: p.orderId || "",
-      createdAt: p.createdAt,
-      amount: p.amount || 0,
-      status: p.status || "pending",
-      confirmed: !!p.confirmed,
-      paymentMethod: p.paymentMethod || "",
-      gatewayTransactionId: p.gatewayTransactionId || "",
-      courses: (p.courses || []).map((c) => ({
-        courseName: c.courseName || "",
-        courseCode: c.courseCode || "",
-        quantity: c.quantity || 1,
-        pricePerPerson: c.pricePerPerson || 0,
-        sessionDate: c.sessionDate || null,
-        startTime: c.startTime || "",
-        endTime: c.endTime || "",
+
+      orderId:
+        p.orderId || "",
+
+      createdAt:
+        p.createdAt,
+
+      amount:
+        p.amount || 0,
+
+      status:
+        p.status || "pending",
+
+      confirmed:
+        !!p.confirmed,
+
+      paymentMethod:
+        p.paymentMethod || "",
+
+      gatewayTransactionId:
+        p.gatewayTransactionId || "",
+
+      courses: (
+        p.courses || []
+      ).map((c) => ({
+        courseName:
+          c.courseName || "",
+
+        courseCode:
+          c.courseCode || "",
+
+        quantity:
+          c.quantity || 1,
+
+        pricePerPerson:
+          c.pricePerPerson || 0,
+
+        sessionDate:
+          c.sessionDate || null,
+
+        startTime:
+          c.startTime || "",
+
+        endTime:
+          c.endTime || "",
       })),
     }));
 
-    res.json({
+    /* ─────────────────────────────────────────
+       7. RESPONSE
+    ───────────────────────────────────────── */
+
+    return res.json({
       success: true,
+
       data: {
         ...company.toObject(),
+
+        /* COURSE LINKS */
+
         courseLinks: links,
-        courseLinksCount: links.length,
-        enrolmentsCount: flows.length,
+
+        courseLinksCount:
+          links.length,
+
+        /* IMPORTANT:
+           Use validFlows instead of flows.
+        */
+
+        enrolmentsCount:
+          validFlows.length,
+
+        /* Only valid students */
+
         students,
+
+        /* PURCHASES */
+
         purchases,
-      }
+      },
     });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error(
+      "getCompanyDetails error:",
+      err
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
-
 // ─── COMPANY LOGIN ───────────────────────────────────────────────
 exports.companyLogin = async (req, res) => {
   try {

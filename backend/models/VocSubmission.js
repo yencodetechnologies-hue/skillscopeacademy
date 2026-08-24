@@ -23,6 +23,42 @@ const vocSubmissionSchema = new mongoose.Schema(
                 name: { type: String, required: true },
                 price: { type: Number, default: 150 },
                 date: { type: String, required: true }, // human-readable, e.g. "Tue, 12 May 2026"
+                       courseId: {
+            type: String,
+            default: "",
+        },
+
+        baseCourseId: {
+            type: String,
+            default: "",
+        },
+
+        variant: {
+            type: String,
+            default: "",
+        },
+
+     
+
+        preferredCity: {
+            type: String,
+            default: "",
+        },
+
+        time: {
+            type: String,
+            default: "",
+        },
+
+        scheduleId: {
+            type: String,
+            default: "",
+        },
+
+        sessionId: {
+            type: String,
+            default: "",
+        },
             }],
             validate: v => Array.isArray(v) && v.length > 0,
         },

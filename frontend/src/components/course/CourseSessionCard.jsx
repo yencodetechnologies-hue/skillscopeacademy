@@ -67,6 +67,7 @@ export function getBookingOptions(course) {
       },
     ];
   }
+  
 
   return [
     {

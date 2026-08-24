@@ -84,20 +84,20 @@ function EnrollmentModal({ form, onClose, onStatusChange, onDateChange }) {
   };
   const sc = statusConfig[form.status] || statusConfig.Pending;
 
-  const handleStatus = async (status) => {
-    setUpdating(true);
-    try {
-      await axios.patch(`${API_URL}/api/enrollment-form/${form.id}/status`, { status }, {
-        headers: authHeaders(),
-      });
-      onStatusChange(form.id, status);
-      onClose();
-    } catch (err) {
-      alert("Failed to update status");
-    } finally {
-      setUpdating(false);
-    }
-  };
+  // const handleStatus = async (status) => {
+  //   setUpdating(true);
+  //   try {
+  //     await axios.patch(`${API_URL}/api/enrollment-form/${form.id}/status`, { status }, {
+  //       headers: authHeaders(),
+  //     });
+  //     onStatusChange(form.id, status);
+  //     onClose();
+  //   } catch (err) {
+  //     alert("Failed to update status");
+  //   } finally {
+  //     setUpdating(false);
+  //   }
+  // };
 
   const handleSaveDate = async (newDate) => {
     if (!newDate) return;

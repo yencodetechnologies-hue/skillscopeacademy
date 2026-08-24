@@ -71,7 +71,7 @@ export default function VOCStatsCard({
       themeClass: "vsc__card--verified",
     },
     {
-      title: "Sydney",
+      title: "Today's Sydney",
       value: sydney,
       subtitle: "Preferred city students",
       leftIcon: <LocationIcon />,
@@ -79,7 +79,7 @@ export default function VOCStatsCard({
       themeClass: "vsc__card--sydney",
     },
     {
-      title: "Adelaide",
+      title: "Today's Adelaide",
       value: adelaide,
       subtitle: "Preferred city students",
       leftIcon: <LocationIcon />,

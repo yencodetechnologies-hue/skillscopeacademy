@@ -23,20 +23,20 @@ const menu = {
       },
     },
 
-    // {
-    //   name: "Enrollment Form",
-    //   path: "/student/enrollment-form",
-    // },
+    {
+      name: "Enrollment Form",
+      path: "/student/enrollment-form",
+    },
 
     {
       name: "Schedule",
       path: "/student/schedule",
     },
 
-    // {
-    //   name: "Results",
-    //   path: "/student/results",
-    // },
+    {
+      name: "Results",
+      path: "/student/results",
+    },
 
     // {
     //   name: "Certificates",

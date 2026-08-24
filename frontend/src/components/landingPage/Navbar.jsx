@@ -1,7 +1,8 @@
 import "../../styles/Navbar.css";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext} from "react";
 import Student from "../../components/Profile";
+import { AuthContext } from "../../context/AuthContext";
 
 function Navbar({ user }) {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ function Navbar({ user }) {
     const [profileOpen, setProfileOpen] = useState(false);
 
     const profileRef = useRef(null);
+    const { logout } = useContext(AuthContext);
 
     /* =========================================================
        SIDEBAR
@@ -39,20 +41,12 @@ function Navbar({ user }) {
        LOGOUT
     ========================================================= */
 
-    const handleLogout = () => {
-        // Remove your stored login data
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        localStorage.removeItem("student");
-        localStorage.removeItem("authToken");
+   const handleLogout = () => {
+    logout();
 
-        // Close dropdown/sidebar
-        setProfileOpen(false);
-        closeSidebar();
+    navigate("/login");
+  };
 
-        // Redirect to login
-        navigate("/login");
-    };
 
     /* =========================================================
        CLOSE DROPDOWN WHEN CLICKING OUTSIDE

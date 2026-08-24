@@ -1158,7 +1158,7 @@ const handleOpenCop = (doc) => {
             </a>
 
             <div className="combo-nav-wrapper">
-              <button onClick={() => navigate("/combo-courses")} className="combo-btn-nav">
+              <button onClick={() => navigate("/all-courses?category=Combo%20Courses")} className="combo-btn-nav">
                 Combo Courses <span className="save-badge">Save More</span>
               </button>
             </div>

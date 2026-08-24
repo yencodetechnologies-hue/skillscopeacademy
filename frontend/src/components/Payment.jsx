@@ -138,52 +138,52 @@ function Payment({
     const blockPaymentForExistingEmail = emailExists && isCompanyRegister
 
     // ── Email Check ──────────────────────────────────────────────
-    const checkEmailExists = async (emailValue) => {
-        if (!emailValue || !emailValue.includes("@")) return
-        if (isExistingCompany || shouldAutofill) return
-        setEmailChecking(true)
-        setEmailExists(false)
-        const checkUrl = isCompanyRegister
-            ? `${API_URL}/api/companies/check-email`
-            : `${API_URL}/api/auth/check-email`
-        try {
-            const response = await fetch(checkUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: emailValue })
-            })
-            const result = await response.json()
-            if (result.exists) {
-                setEmailExists(true)
-                if (isCompanyRegister) {
-                    setErrors(prev => ({ ...prev, email: result.message || companyEmailTakenMsg }))
-                } else {
-                    setErrors(prev => {
-                        const newErrors = { ...prev }
-                        delete newErrors.email
-                        return newErrors
-                    })
-                    if (result.studentId && onExistingStudentId) {
-                        onExistingStudentId(result.studentId)
-                    }
-                }
-            } else {
-                setEmailExists(false)
-                if (onExistingStudentId) onExistingStudentId(null)
-                setErrors(prev => {
-                    const newErrors = { ...prev }
-                    if (newErrors.email === companyEmailTakenMsg) {
-                        delete newErrors.email
-                    }
-                    return newErrors
-                })
-            }
-        } catch (err) {
-            console.error("Email check failed:", err)
-        } finally {
-            setEmailChecking(false)
-        }
-    }
+    // const checkEmailExists = async (emailValue) => {
+    //     if (!emailValue || !emailValue.includes("@")) return
+    //     if (isExistingCompany || shouldAutofill) return
+    //     setEmailChecking(true)
+    //     setEmailExists(false)
+    //     const checkUrl = isCompanyRegister
+    //         ? `${API_URL}/api/companies/check-email`
+    //         : `${API_URL}/api/auth/check-email`
+    //     try {
+    //         const response = await fetch(checkUrl, {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({ email: emailValue })
+    //         })
+    //         const result = await response.json()
+    //         if (result.exists) {
+    //             setEmailExists(true)
+    //             if (isCompanyRegister) {
+    //                 setErrors(prev => ({ ...prev, email: result.message || companyEmailTakenMsg }))
+    //             } else {
+    //                 setErrors(prev => {
+    //                     const newErrors = { ...prev }
+    //                     delete newErrors.email
+    //                     return newErrors
+    //                 })
+    //                 if (result.studentId && onExistingStudentId) {
+    //                     onExistingStudentId(result.studentId)
+    //                 }
+    //             }
+    //         } else {
+    //             setEmailExists(false)
+    //             if (onExistingStudentId) onExistingStudentId(null)
+    //             setErrors(prev => {
+    //                 const newErrors = { ...prev }
+    //                 if (newErrors.email === companyEmailTakenMsg) {
+    //                     delete newErrors.email
+    //                 }
+    //                 return newErrors
+    //             })
+    //         }
+    //     } catch (err) {
+    //         console.error("Email check failed:", err)
+    //     } finally {
+    //         setEmailChecking(false)
+    //     }
+    // }
 
     useEffect(() => {
         if (onEmailStatusChange) onEmailStatusChange(blockPaymentForExistingEmail)
@@ -647,30 +647,30 @@ function Payment({
                         placeholder="your.email@example.com"
                         value={email}
                         onChange={(e) => {
-                            if (isExistingCompany) return
+                          //  if (isExistingCompany) return
                             setEmail(e.target.value)
                             clearFieldError("email")
                         }}
                         onBlur={handleEmailBlur}
                         className={errors.email || blockPaymentForExistingEmail ? "input-error" : ""}
-                        disabled={emailChecking || isExistingCompany}
-                        readOnly={isExistingCompany}
+                        ////disabled={emailChecking || isExistingCompany}
+                        //readOnly={isExistingCompany}
                         autoComplete="email"
                     />
-                    {emailChecking && <span className="checking-text">🔄 Checking email...</span>}
+                    {/* {emailChecking && <span className="checking-text">🔄 Checking email...</span>}
                     {blockPaymentForExistingEmail && (
                         <span className="error-text">
                             ⚠ {companyEmailTakenMsg}{" "}
                             <a href="/login" style={{ color: colors.brandPrimary, textDecoration: "underline" }}>Login</a>
                             {" "}to continue.
                         </span>
-                    )}
-                    {emailExists && !blockPaymentForExistingEmail && (
-                        <span className="checking-text" style={{ color: "#059669" }}>
+                    )} */}
+                    {/* {emailExists && !blockPaymentForExistingEmail && ( */}
+                        {/* <span className="checking-text" style={{ color: "#059669" }}>
                             ✓ {existingStudentInfoMsg}
                         </span>
-                    )}
-                    {errors.email && !blockPaymentForExistingEmail && <span className="error-text">⚠ {errors.email}</span>}
+                    )} */}
+                    {/* {errors.email && !blockPaymentForExistingEmail && <span className="error-text">⚠ {errors.email}</span>} */}
                 </div>
 
                 {selectedSession?.preferredCity?.length > 0 && (

@@ -1945,7 +1945,7 @@ import {
   getCoursePriceNumber,
 } from "../utils/coursePrice";
 import BookingModal from "../components/course/BookingModal";
-import logo from "../assets/staLogo.png";
+import logo from "../assets/staLogo.jpg";
 import PdfViewer from "../components/common/PdfViewer";
 //import { ChevronDown } from "lucide-react";
 import {

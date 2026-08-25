@@ -1,457 +1,657 @@
-import { useEffect, useState } from "react";
-import {
-    useLocation,
-    useNavigate,
-    useSearchParams,
-} from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import "./CompanyCourses.css";
 
 import { API_URL } from "../../data/service";
 import { ACTIVE_COURSES_URL } from "../../utils/courseStatus";
-import { cdnImage } from "../../utils/cdnImage";
-
-// Make sure this path matches your actual CourseCard file
 import CourseCard from "../course/CourseCard";
 
 export default function CompanyCourses() {
+    // =========================================================
+    // BASIC STATE
+    // =========================================================
 
-  const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [browseCourses, setBrowseCourses] = useState([]);
+
+    const [categoryList, setCategoryList] = useState([]);
+
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [search, setSearch] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("All");
 
-  
-    useEffect(() => {
-      fetch(ACTIVE_COURSES_URL(API_URL))
-        .then(res => res.json())
-        .then(data => setCourses(Array.isArray(data) ? data : []))
-        .catch(console.error)
-        .finally(() => setLoading(false));
-    }, []);
+    const [dashboardData, setDashboardData] = useState({
+        enrolledCourses: [],
+    });
 
-    
+    const [enrolledCourseDetails, setEnrolledCourseDetails] = useState([]);
+
+    const [showAssessment, setShowAssessment] = useState(false);
+
+    const [paymentData, setPaymentData] = useState({});
+
+    const [userDetails, setUserDetails] = useState({
+        name: "",
+        email: "",
+        phone: "",
+    });
 
     const location = useLocation();
 
-    const [searchParams, setSearchParams] =
-        useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     // =========================================================
-    // TAB
+    // GET USER
     // =========================================================
 
+    const getStoredUser = () => {
+        try {
+            const storedUser = localStorage.getItem("user");
 
+            if (!storedUser) {
+                return null;
+            }
 
+            return JSON.parse(storedUser);
+        } catch (err) {
+            console.error("Invalid user data in localStorage:", err);
+            return null;
+        }
+    };
 
-
-    
-    const [browseCourses, setBrowseCourses] =
-        useState([]);
-
-    const [categoryList, setCategoryList] =
-        useState([]);
-
-
-    const [error, setError] =
-        useState(null);
-
-    const [paymentData, setPaymentData] =
-        useState({});
-
+    const user = getStoredUser();
 
     // =========================================================
-    // USER
+    // UPDATE USER DETAILS
     // =========================================================
 
-    let user = null;
-
-    try {
-
-        const storedUser =
-            localStorage.getItem("user");
-
-        user =
-            storedUser
-                ? JSON.parse(storedUser)
-                : null;
-
-    } catch (error) {
-
-        console.error(
-            "Invalid user data in localStorage:",
-            error
-        );
-
-        user = null;
-    }
-
-
-    const [userDetails, setUserDetails] =
-        useState({
+    useEffect(() => {
+        setUserDetails({
             name: user?.name || "",
             email: user?.email || "",
             phone: user?.phone || "",
         });
-
+    }, []);
 
     // =========================================================
-    // FETCH DATA
+    // NORMALIZE COURSE RESPONSE
     // =========================================================
 
-    const fetchData = async () => {
+    const normalizeCourses = (response) => {
+        if (Array.isArray(response)) {
+            return response;
+        }
 
+        if (Array.isArray(response?.courses)) {
+            return response.courses;
+        }
+
+        if (Array.isArray(response?.data)) {
+            return response.data;
+        }
+
+        if (Array.isArray(response?.results)) {
+            return response.results;
+        }
+
+        return [];
+    };
+
+    // =========================================================
+    // NORMALIZE CATEGORY RESPONSE
+    // =========================================================
+
+    const normalizeCategories = (response) => {
+        if (Array.isArray(response)) {
+            return response;
+        }
+
+        if (Array.isArray(response?.categories)) {
+            return response.categories;
+        }
+
+        if (Array.isArray(response?.data)) {
+            return response.data;
+        }
+
+        if (Array.isArray(response?.results)) {
+            return response.results;
+        }
+
+        return [];
+    };
+
+    // =========================================================
+    // GET COURSE CATEGORY NAME
+    // =========================================================
+
+    const getCourseCategory = (course) => {
+        if (!course) {
+            return "";
+        }
+
+        if (typeof course.category === "string") {
+            return course.category;
+        }
+
+        if (course.category?.name) {
+            return course.category.name;
+        }
+
+        if (course.categoryName) {
+            return course.categoryName;
+        }
+
+        if (course.category?.title) {
+            return course.category.title;
+        }
+
+        return "";
+    };
+
+    // =========================================================
+    // GET COURSE TITLE
+    // =========================================================
+
+    const getCourseTitle = (course) => {
+        if (!course) {
+            return "";
+        }
+
+        return (
+            course.title ||
+            course.name ||
+            course.courseName ||
+            course.courseTitle ||
+            ""
+        );
+    };
+
+    // =========================================================
+    // FETCH COURSES
+    // =========================================================
+    //
+    // IMPORTANT:
+    // Courses are fetched independently.
+    // They should NOT depend on studentId.
+    // =========================================================
+
+    const fetchCourses = async () => {
         try {
+            console.log("Fetching active courses...");
 
-            setLoading(true);
-            setError(null);
-
-            const studentId =
-                user?.id ||
-                user?._id ||
-                user?.studentId;
-
-
-            if (!studentId) {
-
-                throw new Error(
-                    "Student ID not found. Please login again."
-                );
-            }
-
-
-            // =================================================
-            // API REQUESTS
-            // =================================================
-
-            const [
-                dashRes,
-                coursesRes,
-                catsRes,
-            ] = await Promise.all([
-
-                fetch(
-                    `${API_URL}/api/student/dashboard/${studentId}`
-                ),
-
-                fetch(
-                    `${API_URL}/api/courses`
-                ),
-
-                fetch(
-                    `${API_URL}/api/categories`
-                ),
-            ]);
-
-
-            // =================================================
-            // CHECK RESPONSES
-            // =================================================
-
-            if (!dashRes.ok) {
-
-                throw new Error(
-                    "Failed to fetch dashboard data"
-                );
-            }
-
-            if (!coursesRes.ok) {
-
-                throw new Error(
-                    "Failed to fetch courses"
-                );
-            }
-
-            if (!catsRes.ok) {
-
-                throw new Error(
-                    "Failed to fetch categories"
-                );
-            }
-
-
-            // =================================================
-            // PARSE JSON
-            // =================================================
-
-            const dash =
-                await dashRes.json();
-
-            const coursesResponse =
-                await coursesRes.json();
-
-            const categoriesResponse =
-                await catsRes.json();
-
-
-            // =================================================
-            // NORMALIZE COURSES RESPONSE
-            // =================================================
-
-            const courses =
-                Array.isArray(coursesResponse)
-                    ? coursesResponse
-                    : coursesResponse?.courses ||
-                      coursesResponse?.data ||
-                      [];
-
-
-            // =================================================
-            // NORMALIZE CATEGORIES
-            // =================================================
-
-            const categories =
-                Array.isArray(categoriesResponse)
-                    ? categoriesResponse
-                    : categoriesResponse?.categories ||
-                      categoriesResponse?.data ||
-                      [];
-
-
-            // =================================================
-            // SET DATA
-            // =================================================
-
-            setDashboardData(dash);
-
-            setBrowseCourses(courses);
-
-            setCategoryList(categories);
-
-            setEnrolledCourseDetails(
-                Array.isArray(dash?.enrolledCourses)
-                    ? dash.enrolledCourses
-                    : []
+            const response = await fetch(
+                ACTIVE_COURSES_URL(API_URL)
             );
 
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to fetch courses: ${response.status}`
+                );
+            }
 
+            const data = await response.json();
+
+            console.log("Active courses response:", data);
+
+            const normalizedCourses = normalizeCourses(data);
+
+            console.log(
+                "Normalized courses:",
+                normalizedCourses
+            );
+
+            setCourses(normalizedCourses);
+            setBrowseCourses(normalizedCourses);
+
+            return normalizedCourses;
         } catch (err) {
+            console.error("Course fetch error:", err);
 
-            console.error(
-                "CompanyCourses fetch error:",
-                err
-            );
+            // -------------------------------------------------
+            // FALLBACK TO /api/courses
+            // -------------------------------------------------
 
+            try {
+                console.log(
+                    "Trying fallback /api/courses..."
+                );
 
-            // Don't show error for missing enrollment data
-            if (
-                !err.message?.includes(
-                    "Student ID"
-                )
-            ) {
+                const response = await fetch(
+                    `${API_URL}/api/courses`
+                );
 
-                setDashboardData({
-                    enrolledCourses: [],
-                });
+                if (!response.ok) {
+                    throw new Error(
+                        `Fallback courses API failed: ${response.status}`
+                    );
+                }
 
-                setEnrolledCourseDetails([]);
+                const data = await response.json();
 
-                // Keep course list usable if possible
+                console.log(
+                    "Fallback courses response:",
+                    data
+                );
+
+                const normalizedCourses =
+                    normalizeCourses(data);
+
+                console.log(
+                    "Fallback normalized courses:",
+                    normalizedCourses
+                );
+
+                setCourses(normalizedCourses);
+                setBrowseCourses(normalizedCourses);
+
+                return normalizedCourses;
+            } catch (fallbackError) {
+                console.error(
+                    "Fallback course fetch error:",
+                    fallbackError
+                );
+
+                setCourses([]);
                 setBrowseCourses([]);
 
-                setCategoryList([]);
-
-            } else {
-
-                setError(
-                    err.message
-                );
+                throw fallbackError;
             }
-
-        } finally {
-
-            setLoading(false);
         }
     };
 
+    // =========================================================
+    // FETCH CATEGORIES
+    // =========================================================
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch(
+                `${API_URL}/api/categories`
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to fetch categories: ${response.status}`
+                );
+            }
+
+            const data = await response.json();
+
+            console.log("Categories response:", data);
+
+            const categories =
+                normalizeCategories(data);
+
+            setCategoryList(categories);
+
+            return categories;
+        } catch (err) {
+            console.error(
+                "Category fetch error:",
+                err
+            );
+
+            setCategoryList([]);
+
+            return [];
+        }
+    };
+
+    // =========================================================
+    // FETCH DASHBOARD
+    // =========================================================
+    //
+    // Dashboard is optional.
+    // It must NOT prevent courses from loading.
+    // =========================================================
+
+    const fetchDashboard = async () => {
+        const studentId =
+            user?.id ||
+            user?._id ||
+            user?.studentId;
+
+        if (!studentId) {
+            console.log(
+                "No student ID found. Skipping dashboard API."
+            );
+
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `${API_URL}/api/student/dashboard/${studentId}`
+            );
+
+            if (!response.ok) {
+                console.warn(
+                    "Dashboard API failed:",
+                    response.status
+                );
+
+                return;
+            }
+
+            const dashboard = await response.json();
+
+            console.log(
+                "Dashboard response:",
+                dashboard
+            );
+
+            setDashboardData(dashboard);
+
+            const enrolled =
+                Array.isArray(
+                    dashboard?.enrolledCourses
+                )
+                    ? dashboard.enrolledCourses
+                    : [];
+
+            setEnrolledCourseDetails(enrolled);
+        } catch (err) {
+            console.error(
+                "Dashboard fetch error:",
+                err
+            );
+
+            setDashboardData({
+                enrolledCourses: [],
+            });
+
+            setEnrolledCourseDetails([]);
+        }
+    };
 
     // =========================================================
     // INITIAL LOAD
     // =========================================================
 
     useEffect(() => {
+        let mounted = true;
 
-        fetchData();
+        const loadPage = async () => {
+            try {
+                setLoading(true);
+                setError(null);
 
+                // ------------------------------------------------
+                // IMPORTANT:
+                // Load courses independently from dashboard.
+                // ------------------------------------------------
+
+                await Promise.all([
+                    fetchCourses(),
+                    fetchCategories(),
+                    fetchDashboard(),
+                ]);
+            } catch (err) {
+                console.error(
+                    "CompanyCourses page loading error:",
+                    err
+                );
+
+                if (mounted) {
+                    setError(
+                        "Unable to load courses. Please try again."
+                    );
+                }
+            } finally {
+                if (mounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        loadPage();
+
+        return () => {
+            mounted = false;
+        };
     }, []);
-
 
     // =========================================================
     // ASSESSMENT COMPLETE
     // =========================================================
 
-    const handleAssessmentComplete = () => {
-
+    const handleAssessmentComplete = async () => {
         setShowAssessment(false);
 
-        fetchData();
+        // Refresh dashboard only.
+        // Courses are already independent.
+        await fetchDashboard();
     };
 
+    // =========================================================
+    // USED CATEGORY NAMES
+    // =========================================================
+
+    const usedCategoryNames = useMemo(() => {
+        const names = new Set();
+
+        browseCourses.forEach((course) => {
+            const category =
+                getCourseCategory(course);
+
+            if (category) {
+                names.add(category);
+            }
+        });
+
+        return names;
+    }, [browseCourses]);
+
+    // =========================================================
+    // SORTED CATEGORIES
+    // =========================================================
+
+    const sortedCategories = useMemo(() => {
+        const result = ["All"];
+
+        // First use admin category ordering
+        categoryList.forEach((category) => {
+            const name =
+                typeof category === "string"
+                    ? category
+                    : category?.name ||
+                      category?.title ||
+                      "";
+
+            if (
+                name &&
+                usedCategoryNames.has(name) &&
+                !result.includes(name)
+            ) {
+                result.push(name);
+            }
+        });
+
+        // Add categories that exist in courses
+        // but are missing from /api/categories
+        browseCourses.forEach((course) => {
+            const category =
+                getCourseCategory(course);
+
+            if (
+                category &&
+                !result.includes(category)
+            ) {
+                result.push(category);
+            }
+        });
+
+        return result;
+    }, [
+        categoryList,
+        browseCourses,
+        usedCategoryNames,
+    ]);
 
     // =========================================================
     // FILTER COURSES
     // =========================================================
 
-    const filtered = browseCourses
-        .filter((course) => {
+    const filtered = useMemo(() => {
+        const searchText =
+            search.trim().toLowerCase();
 
-            const searchText =
-                search
-                    .trim()
-                    .toLowerCase();
+        const result = browseCourses.filter(
+            (course) => {
+                const title =
+                    getCourseTitle(course).toLowerCase();
 
+                const category =
+                    getCourseCategory(course);
 
-            const title =
-                course?.title ||
-                course?.name ||
-                "";
+                const matchesSearch =
+                    !searchText ||
+                    title.includes(searchText);
 
+                const matchesCategory =
+                    selectedCategory === "All" ||
+                    category === selectedCategory;
 
-            const matchesSearch =
-                !searchText ||
-                title
-                    .toLowerCase()
-                    .includes(searchText);
-
-
-            const matchesCategory =
-                selectedCategory === "All" ||
-                course?.category ===
-                    selectedCategory;
-
-
-            return (
-                matchesSearch &&
-                matchesCategory
-            );
-        })
-        .sort((a, b) => {
-
-            if (!search.trim()) {
-                return 0;
-            }
-
-
-            const searchText =
-                search
-                    .trim()
-                    .toLowerCase();
-
-
-            const aTitle =
-                (
-                    a?.title ||
-                    a?.name ||
-                    ""
-                ).toLowerCase();
-
-
-            const bTitle =
-                (
-                    b?.title ||
-                    b?.name ||
-                    ""
-                ).toLowerCase();
-
-
-            const aStarts =
-                aTitle.startsWith(
-                    searchText
+                return (
+                    matchesSearch &&
+                    matchesCategory
                 );
-
-            const bStarts =
-                bTitle.startsWith(
-                    searchText
-                );
-
-
-            if (
-                aStarts &&
-                !bStarts
-            ) {
-                return -1;
             }
-
-
-            if (
-                !aStarts &&
-                bStarts
-            ) {
-                return 1;
-            }
-
-
-            return 0;
-        });
-
-
-    // =========================================================
-    // USED CATEGORIES
-    // =========================================================
-
-    const usedCategoryNames =
-        new Set(
-            browseCourses
-                .map(
-                    (course) =>
-                        course?.category
-                )
-                .filter(Boolean)
         );
 
+        // ------------------------------------------------------
+        // SEARCH SORT
+        // ------------------------------------------------------
+
+        if (searchText) {
+            result.sort((a, b) => {
+                const aTitle =
+                    getCourseTitle(a).toLowerCase();
+
+                const bTitle =
+                    getCourseTitle(b).toLowerCase();
+
+                const aStarts =
+                    aTitle.startsWith(searchText);
+
+                const bStarts =
+                    bTitle.startsWith(searchText);
+
+                if (aStarts && !bStarts) {
+                    return -1;
+                }
+
+                if (!aStarts && bStarts) {
+                    return 1;
+                }
+
+                return 0;
+            });
+        }
+
+        return result;
+    }, [
+        browseCourses,
+        search,
+        selectedCategory,
+    ]);
 
     // =========================================================
-    // SORT CATEGORIES USING ADMIN ORDER
+    // DEBUG
     // =========================================================
 
-    const sortedCategories = [
+    useEffect(() => {
+        console.log(
+            "===================================="
+        );
 
-        "All",
+        console.log(
+            "Total courses:",
+            courses.length
+        );
 
-        ...categoryList
-            .map(
-                (category) =>
-                    category?.name
-            )
-            .filter(
-                (name) =>
-                    name &&
-                    usedCategoryNames.has(
-                        name
-                    )
-            ),
-    ];
+        console.log(
+            "Browse courses:",
+            browseCourses
+        );
 
+        console.log(
+            "Filtered courses:",
+            filtered
+        );
+
+        console.log(
+            "Selected category:",
+            selectedCategory
+        );
+
+        console.log(
+            "===================================="
+        );
+    }, [
+        courses,
+        browseCourses,
+        filtered,
+        selectedCategory,
+    ]);
 
     // =========================================================
     // ERROR
     // =========================================================
 
-    if (error) {
-
+    if (error && !loading && browseCourses.length === 0) {
         return (
             <div className="cr-wrapper">
-
                 <p className="cr-page-label">
                     Courses
                 </p>
 
                 <div className="cr-empty">
-
                     {error}
 
-                </div>
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            try {
+                                setLoading(true);
+                                setError(null);
 
+                                await Promise.all([
+                                    fetchCourses(),
+                                    fetchCategories(),
+                                ]);
+                            } catch (err) {
+                                setError(
+                                    "Unable to load courses. Please try again."
+                                );
+                            } finally {
+                                setLoading(false);
+                            }
+                        }}
+                        style={{
+                            marginTop: "15px",
+                            padding: "10px 18px",
+                            border: "none",
+                            borderRadius: "8px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Retry
+                    </button>
+                </div>
             </div>
         );
     }
-
 
     // =========================================================
     // UI
     // =========================================================
 
     return (
-
         <div className="cr-wrapper">
 
             {/* =================================================
@@ -468,89 +668,33 @@ export default function CompanyCourses() {
                 employees.
             </p>
 
-
-            {/* =================================================
-                SEARCH
-            ================================================= */}
-
-            {/* <div className="cr-search-wrap">
-
-                <div className="cr-search-box">
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                    >
-
-                        <circle
-                            cx="11"
-                            cy="11"
-                            r="8"
-                        />
-
-                        <path
-                            d="M21 21l-4.35-4.35"
-                        />
-
-                    </svg>
-
-
-                    <input
-                        className="cr-search-input"
-                        type="text"
-                        placeholder="Search courses..."
-                        value={search}
-                        onChange={(e) =>
-                            setSearch(
-                                e.target.value
-                            )
-                        }
-                    />
-
-                </div>
-
-            </div> */}
-
-
             {/* =================================================
                 LOADING
             ================================================= */}
 
             {loading ? (
-
                 <div className="cr-loading">
-
                     Loading courses...
-
                 </div>
-
-            ) : filtered.length === 0 ? (
-
+            ) : browseCourses.length === 0 ? (
                 <div className="cr-empty">
-
-                    No courses found.
-
+                    No courses available.
                 </div>
-
             ) : (
-
                 <div className="mc-browse">
 
-
                     {/* =========================================
-                        SECOND SEARCH
+                        SEARCH
                     ========================================= */}
 
                     <div className="mc-search-wrap">
-
                         <span className="mc-search-icon">
                             🔍
                         </span>
 
                         <input
                             className="mc-search"
+                            type="text"
                             placeholder="Search for courses..."
                             value={search}
                             onChange={(e) =>
@@ -559,74 +703,76 @@ export default function CompanyCourses() {
                                 )
                             }
                         />
-
                     </div>
-
 
                     {/* =========================================
                         CATEGORIES
                     ========================================= */}
 
-                    <div className="mc-categories">
-
-                        {sortedCategories.map(
-                            (category) => (
-
-                                <button
-                                    key={category}
-                                    type="button"
-                                    className={`
-                                        mc-category-btn
-                                        ${
-                                            selectedCategory ===
-                                            category
-                                                ? "active"
-                                                : ""
+                    {sortedCategories.length > 0 && (
+                        <div className="mc-categories">
+                            {sortedCategories.map(
+                                (category) => (
+                                    <button
+                                        key={category}
+                                        type="button"
+                                        className={`
+                                            mc-category-btn
+                                            ${
+                                                selectedCategory ===
+                                                category
+                                                    ? "active"
+                                                    : ""
+                                            }
+                                        `}
+                                        onClick={() =>
+                                            setSelectedCategory(
+                                                category
+                                            )
                                         }
-                                    `}
-                                    onClick={() =>
-                                        setSelectedCategory(
-                                            category
-                                        )
-                                    }
-                                >
-
-                                    {category}
-
-                                </button>
-
-                            )
-                        )}
-
-                    </div>
-
+                                    >
+                                        {category}
+                                    </button>
+                                )
+                            )}
+                        </div>
+                    )}
 
                     {/* =========================================
                         COURSE GRID
                     ========================================= */}
 
-                    <div className="mc-grid">
-
-                        {filtered.map(
-                            (course) => (
-
-                                <CourseCard
-                                    key={
+                    {filtered.length === 0 ? (
+                        <div className="cr-empty">
+                            No courses found
+                            {search
+                                ? ` for "${search}"`
+                                : ""}
+                            .
+                        </div>
+                    ) : (
+                        <div className="mc-grid">
+                            {filtered.map(
+                                (course) => {
+                                    const courseId =
                                         course?._id ||
-                                        course?.id
-                                    }
-                                    course={course}
-                                    fromPortal={true}
-                                />
+                                        course?.id ||
+                                        course?.courseId;
 
-                            )
-                        )}
-
-                    </div>
+                                    return (
+                                        <CourseCard
+                                            key={courseId}
+                                            course={course}
+                                            fromPortal={true}
+                                        />
+                                    );
+                                }
+                            )}
+                        </div>
+                    )}
 
                 </div>
             )}
-
         </div>
     );
 }

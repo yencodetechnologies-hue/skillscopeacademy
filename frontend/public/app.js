@@ -348,7 +348,7 @@ function renderQualificationCertificates(qual) {
         sheet.innerHTML = `
             <div class="row g-0 align-items-start mb-2">
                 <div class="col-3">
-                    <img class="sta-logo" src="./assets/staLogo.png" alt="SafeTicks logo">
+                    <img class="sta-logo" src="./assets/staLogo.jpg" alt="SafeTicks logo">
                 </div>
                 <div class="col-6 text-center">
                     <div class="fw-black sta-title">Safeticks</div>

@@ -13,7 +13,7 @@ import {
 } from "../../../utils/coursePrice";
 import BookingModal from "../../course/BookingModal";
 import { ORG_PHONE_1300 } from "../../../utils/organizationPhones";
-import logo from "../../../assets/staLogo.png";
+import logo from "../../../assets/staLogo.jpg";
 import PdfViewer from "../../common/PdfViewer";
 import {
   FaBuildingColumns,

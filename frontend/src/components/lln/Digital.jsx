@@ -17,7 +17,7 @@ import iphone       from "../../assets/phone.png"
 import photoCopier  from "../../assets/photocopier.jpg"
 import laptop       from "../../assets/laptop.jpg"
 import barCode      from "../../assets/barcode-scanner.jpg"
-import logo        from "../../assets/staLogo.png"
+import logo        from "../../assets/staLogo.jpg"
 
 const digitalQuestions = [
     { type: "drag-files"  },

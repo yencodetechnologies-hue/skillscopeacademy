@@ -246,6 +246,13 @@ const menu = {
     },
 
     {
+      name: " My Courses",
+      path: "/company/MycompanyCourses",
+      icon: "fa-solid fa-book",
+    },
+
+
+    {
       name: "Courses",
       path: "/company/companyCourses",
       icon: "fa-solid fa-book",

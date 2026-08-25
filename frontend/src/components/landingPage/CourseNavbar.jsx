@@ -711,7 +711,7 @@
 // export default PublicNavbar;
 
 // import "../styles/PublicNavbar.css";
-// import logo from "../assets/staLogo.png";
+// import logo from "../assets/g";
 // import { Link, useNavigate } from "react-router-dom";
 // import { useState, useEffect } from "react";
 // import { API_URL } from "../data/service";
@@ -908,7 +908,7 @@
 // export default PublicNavbar;
 
 import "../styles/CourseNavbar.css";
-import logo from "../assets/staLogo.png";
+import logo from "../assets/staLogo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { API_URL } from "../data/service";

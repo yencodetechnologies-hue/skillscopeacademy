@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import logo from "../assets/staLogo.png";
+import logo from "../assets/staLogo.jpg";
 import "../styles/MobileNavbar.css";
 
 const defaultMenuItems = [

@@ -122,7 +122,7 @@ import Footer from './landingPage/Footer';
 import { API_URL } from '../data/service';
 import { openPdf } from '../utils/openPdf';
 import { cdnImage } from '../utils/cdnImage';
-import logo from '../assets/staLogo.png';
+import logo from '../assets/staLogo.jpg';
 import '../styles/PublicForms.css';
 
 export default function PublicForms({ courses }) {

@@ -116,7 +116,7 @@ function Footer({ courses }) {
                     <div className="footer-logo-wrap">
                         
                         <div className="footer-logo-text">
-                            SAFETY TRAINING ACADEMY
+                            SAFETICKS
                         </div>
                     </div>
 

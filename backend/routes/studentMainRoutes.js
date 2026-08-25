@@ -13,12 +13,13 @@ const {
   getStudentsByCompany,
   getPaymentsByCompany,
   paySelected,
-  getStudentsByLink
+  getStudentsByLink,
+   getCompanyStudents
 } = require("../controllers/studentMainController");
 const { verifyCompany } = require("../middleware/authMiddleware");
 
 router.get("/company/:companyId", verifyCompany, getStudentsByCompany);
-router.get("/company/:companyId/payments", verifyCompany, getPaymentsByCompany);
+router.get("/company/:email/payments", verifyCompany, getPaymentsByCompany);
 router.get("/company/:companyId/link/:token", verifyCompany, getStudentsByLink);
 router.post("/enrollment", uploadPayment.single("paymentSlip"), createStudent); // ✅ middleware add
 router.put("/enrollment/:id", updateStudent);
@@ -30,5 +31,10 @@ router.put("/:id", updateStudent);
 router.patch("/:id/status", updateStudentStatus);
 router.delete("/:id", deleteStudent);
 router.post("/company/pay-selected", uploadPayment.single("receipt"), paySelected);
+router.get(
+  "/company/:companyId/students",
+  verifyCompany,
+  getCompanyStudents
+);
 
 module.exports = router;

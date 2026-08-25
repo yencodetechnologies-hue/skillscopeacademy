@@ -1652,67 +1652,347 @@ exports.getStudentsByCompany = async (req, res) => {
 
 exports.getPaymentsByCompany = async (req, res) => {
   try {
-    const { companyId } = req.params;
+    const { email } = req.params;
 
-    // ✅ CompanyPayment-லிருந்து எடு
-    const companyPayments = await CompanyPayment.find({ companyId })
+    // =========================================================
+    // 1. VALIDATE EMAIL
+    // =========================================================
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Company email is required",
+      });
+    }
+
+    const companyEmail = decodeURIComponent(email)
+      .trim()
+      .toLowerCase();
+
+    // =========================================================
+    // 2. FIND COMPANY BY EMAIL
+    // =========================================================
+    const company = await Company.findOne({
+      email: {
+        $regex: `^${companyEmail.replace(
+          /[.*+?^${}()|[\]\\]/g,
+          "\\$&"
+        )}$`,
+        $options: "i",
+      },
+    })
+      .select("_id companyName email")
+      .lean();
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "Company not found with this email",
+      });
+    }
+
+    const companyId = company._id;
+    const normalizedCompanyEmail = company.email
+      ?.trim()
+      .toLowerCase();
+
+    console.log("======================================");
+    console.log("COMPANY PAYMENT SEARCH");
+    console.log("Company ID:", companyId);
+    console.log("Company Name:", company.companyName);
+    console.log("Company Email:", normalizedCompanyEmail);
+
+    // =========================================================
+    // 3. FIND ALL PAYMENTS FOR THIS COMPANY
+    //
+    // Handles payments saved using:
+    //   companyId
+    //   companyEmail
+    //   email
+    //
+    // This is important because your existing payment records
+    // may not all have companyId saved consistently.
+    // =========================================================
+    const companyPayments = await CompanyPayment.find({
+      $or: [
+        {
+          companyId: companyId,
+        },
+        {
+          companyEmail: {
+            $regex: `^${normalizedCompanyEmail.replace(
+              /[.*+?^${}()|[\]\\]/g,
+              "\\$&"
+            )}$`,
+            $options: "i",
+          },
+        },
+        {
+          email: {
+            $regex: `^${normalizedCompanyEmail.replace(
+              /[.*+?^${}()|[\]\\]/g,
+              "\\$&"
+            )}$`,
+            $options: "i",
+          },
+        },
+      ],
+    })
       .sort({ createdAt: -1 })
       .lean();
 
+    console.log(
+      "TOTAL COMPANY PAYMENTS FOUND:",
+      companyPayments.length
+    );
+
+    console.log(
+      "PAYMENT IDS:",
+      companyPayments.map((payment) => ({
+        id: payment._id,
+        companyId: payment.companyId,
+        companyEmail: payment.companyEmail,
+        email: payment.email,
+        amount: payment.amount,
+        status: payment.status,
+        createdAt: payment.createdAt,
+      }))
+    );
+
     const payments = [];
 
+    // =========================================================
+    // 4. PROCESS EVERY PAYMENT
+    // =========================================================
     for (const payment of companyPayments) {
-      const isPaid = payment.status === "success" || payment.confirmed === true;
+      const isPaid =
+        payment.status === "success" ||
+        payment.confirmed === true;
 
-      if (payment.courses?.length > 0) {
-        // ✅ Per course row
+      // =======================================================
+      // 5. PAYMENT HAS COURSES
+      // =======================================================
+      if (
+        Array.isArray(payment.courses) &&
+        payment.courses.length > 0
+      ) {
         for (const course of payment.courses) {
-          const total = (course.pricePerPerson || 0) * (course.quantity || 1);
+          const quantity = Number(course.quantity) || 1;
 
-          // ✅ CourseLink-லிருந்து usage எடு
+          const pricePerPerson =
+            Number(course.pricePerPerson) || 0;
+
+          const total = pricePerPerson * quantity;
+
+          // =================================================
+          // FIND COURSE LINK
+          // =================================================
           const link = await CourseLink.findOne({
             companyPaymentId: payment._id,
-            courseId: course.courseId
+            courseId: course.courseId,
           }).lean();
 
-          const usedCount = link?.usedCount || 0;
-          const maxUses = link?.maxUses || course.quantity || 1;
+          const usedCount = Number(link?.usedCount) || 0;
 
+          const maxUses =
+            Number(link?.maxUses) ||
+            quantity ||
+            1;
+
+          // =================================================
+          // ADD COURSE PAYMENT ROW
+          // =================================================
           payments.push({
             id: `${payment._id}_${course.courseId}`,
-            date: new Date(payment.createdAt).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" }),
+
+            paymentId: payment._id,
+
+            companyId: company._id,
+
+            companyName:
+              company.companyName || "",
+
+            companyEmail:
+              company.email || "",
+
+            date: payment.createdAt
+              ? new Date(payment.createdAt).toLocaleDateString(
+                  "en-AU",
+                  {
+                    timeZone: "Australia/Sydney",
+                  }
+                )
+              : "—",
+
             student: `${usedCount}/${maxUses} enrolled`,
-            course: course.courseName || "—",
-            payment: isPaid ? "paid" : "pending",
+
+            course:
+              course.courseName ||
+              course.name ||
+              "—",
+
+            payment: isPaid
+              ? "paid"
+              : "pending",
+
             total,
-            paid: isPaid ? total : 0,
-            balance: isPaid ? 0 : total,
-            gatewayTransactionId: payment.card?.gatewayTransactionId || payment.gatewayTransactionId || "",
+
+            paid: isPaid
+              ? total
+              : 0,
+
+            balance: isPaid
+              ? 0
+              : total,
+
+            gatewayTransactionId:
+              payment.card?.gatewayTransactionId ||
+              payment.gatewayTransactionId ||
+              payment.transactionId ||
+              "",
           });
         }
-      } else {
-        // ✅ Fallback
+      }
+
+      // =======================================================
+      // 6. PAYMENT WITHOUT COURSES
+      // =======================================================
+      else {
+        const amount =
+          Number(payment.amount) || 0;
+
         payments.push({
           id: payment._id,
-          date: new Date(payment.createdAt).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" }),
+
+          paymentId: payment._id,
+
+          companyId: company._id,
+
+          companyName:
+            company.companyName || "",
+
+          companyEmail:
+            company.email || "",
+
+          date: payment.createdAt
+            ? new Date(payment.createdAt).toLocaleDateString(
+                "en-AU",
+                {
+                  timeZone: "Australia/Sydney",
+                }
+              )
+            : "—",
+
           student: "—",
+
           course: "—",
-          payment: isPaid ? "paid" : "pending",
-          total: payment.amount || 0,
-          paid: isPaid ? payment.amount || 0 : 0,
-          balance: isPaid ? 0 : payment.amount || 0,
-          gatewayTransactionId: payment.card?.gatewayTransactionId || payment.gatewayTransactionId || "",
+
+          payment: isPaid
+            ? "paid"
+            : "pending",
+
+          total: amount,
+
+          paid: isPaid
+            ? amount
+            : 0,
+
+          balance: isPaid
+            ? 0
+            : amount,
+
+          gatewayTransactionId:
+            payment.card?.gatewayTransactionId ||
+            payment.gatewayTransactionId ||
+            payment.transactionId ||
+            "",
         });
       }
     }
 
-    res.json(payments);
+    // =========================================================
+    // 7. FINAL RESPONSE
+    // =========================================================
+    console.log(
+      "FINAL PAYMENT ROWS:",
+      payments.length
+    );
+
+    console.log("======================================");
+
+    return res.status(200).json({
+      success: true,
+
+      company: {
+        id: company._id,
+        companyName: company.companyName,
+        email: company.email,
+      },
+
+      totalPayments: companyPayments.length,
+
+      totalRows: payments.length,
+
+      payments,
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    console.error(
+      "getPaymentsByCompany error:",
+      err
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
+exports.getCompanyStudents = async (req, res) => {
+  try {
+    const { companyId } = req.params;
+
+    // ==========================================
+    // 1. CHECK COMPANY ID
+    // ==========================================
+    if (!companyId) {
+      return res.status(400).json({
+        success: false,
+        message: "Company ID is required",
+      });
+    }
+
+    // ==========================================
+    // 2. FIND STUDENTS FOR THIS COMPANY
+    // ==========================================
+    const students = await StudentMain.find({
+      companyId: companyId,
+      enrollmentType: "company",
+    })
+      .populate("courses.courseId", "name title")
+      .populate("courses.sessionId")
+      .select(
+        "name email phone companyId enrollmentType courses status createdAt"
+      )
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // ==========================================
+    // 3. RETURN STUDENTS
+    // ==========================================
+    return res.status(200).json({
+      success: true,
+      count: students.length,
+      students,
+    });
+  } catch (error) {
+    console.error("getCompanyStudents error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 exports.paySelected = async (req, res) => {
   try {
     const { flowIds, amount, method, companyId, transactionId, gatewayTransactionId } = req.body;

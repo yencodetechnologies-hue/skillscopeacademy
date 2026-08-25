@@ -908,7 +908,7 @@
 // export default PublicNavbar;
 
 import "../styles/PublicNavbar.css";
-import logo from "../assets/staLogo.jpg";
+import logo from "../assets/staLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { API_URL } from "../data/service";

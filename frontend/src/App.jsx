@@ -247,6 +247,7 @@ import VocMain from "./components/voc/VocMain"
 import Contact from "./components/Contact"
 import About from "./components/About"
 import CourseCard from "./components/course/CourseCard"
+import MycompanyCourses from "./components/course/MycompanyCourses"
 import Companies from "./components/Companies"
 import CompanyCourses from "./components/company/CompanyCourses"
 import StudentsEnrolled from "./components/company/StudentsEnrolled"
@@ -367,6 +368,8 @@ function App() {
                 </Route>
 
                 {/* COMPANY */}
+
+                  
                 <Route
                     path="/company"
                     element={
@@ -375,6 +378,8 @@ function App() {
                         </ProtectedRoute>
                     }
                 >
+                    <Route path="/company/MycompanyCourses" element={<MycompanyCourses />} />
+                  
                     <Route index element={<CompanyDashboard />} />
                     <Route path="companyCourses" element={<CompanyCourses />} />
                     <Route path="companyStudents" element={<StudentsEnrolled />} />

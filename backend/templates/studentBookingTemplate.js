@@ -1,5 +1,6 @@
 const studentBookingTemplate = (data) => {
   // Clean IDs: remove hyphens and non-numeric chars for Booking ID
+  console.log(data,"data");
   const digits = String(data.bookingId || '').replace(/[^0-9]/g, '');
   const orderNumber = digits !== '' ? digits : (data.bookingId || '—');
 
@@ -102,7 +103,12 @@ const studentBookingTemplate = (data) => {
         <table class="eb-table">
           <tr><td class="lbl">Course</td><td class="val"><strong style="color:#0d2240;">${data.courseName}</strong></td></tr>
           <tr><td class="lbl">Date & Time</td><td class="val">${data.courseDate} @ ${data.courseTime}</td></tr>
-          <tr><td class="lbl">Location</td><td class="val">15/3 Lancaster Street Ingleburn NSW 2565</td></tr>
+          <tr><td class="lbl">Date & Time</td><td class="val">${data.courseDate} @ ${data.courseTime}</td></tr>
+<tr><td class="lbl">Location</td><td class="val">${
+    data.preferredCity === "Adelaide"
+        ? "8 Cord Street, Dudley Park, Adelaide SA 5008, Australia"
+        : "15/3 Lancaster Street, Ingleburn NSW 2565, Sydney"
+}</td></tr>
         </table>
       </div>
 

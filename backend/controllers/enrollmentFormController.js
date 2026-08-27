@@ -844,6 +844,8 @@ function buildEnrollmentFormSummary(data, flow) {
   return `Enrollment form submitted: ${identity}${coursePart}`
 }
 
+
+
 const createEnrollmentForm = async (req, res) => {
   try {
     const data = req.body;
@@ -1446,6 +1448,28 @@ const deleteSection5File = async (req, res) => {
   }
 }
 
+const getEnrollmentFormByStudentId = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    if (!studentId) {
+      return res.status(400).json({ message: "studentId is required" });
+    }
+
+    const form = await EnrollmentForm.findOne({ studentId });
+
+    if (!form) {
+      // Not an error — just means the student hasn't started/saved anything yet
+      return res.status(200).json({ found: false, data: null });
+    }
+
+    return res.status(200).json({ found: true, data: form });
+  } catch (err) {
+    console.error("[getEnrollmentFormByStudentId] Error:", err);
+    return res.status(500).json({ message: "Failed to fetch enrollment form" });
+  }
+};
+
 const getEnrollmentFormById = async (req, res) => {
   console.log("getEnrollmentFormById called with id:", req.params.id)
   try {
@@ -1508,5 +1532,6 @@ module.exports = {
   deleteSection2File,
   deleteSection3File,
   deleteSection5File,
-  getEnrollmentFormById
+  getEnrollmentFormById,
+  getEnrollmentFormByStudentId
 }

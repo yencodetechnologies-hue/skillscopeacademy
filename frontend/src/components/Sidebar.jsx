@@ -110,17 +110,17 @@ const menu = {
       icon: "fa-solid fa-chalkboard-user",
     },
 
-    // {
-    //   name: "LLN Results",
-    //   path: "/admin/llnd-results",
-    //   icon: "fa-solid fa-clipboard-check",
-    // },
+    {
+      name: "LLN Results",
+      path: "/admin/llnd-results",
+      icon: "fa-solid fa-clipboard-check",
+    },
 
-    // {
-    //   name: "Enrollment Forms",
-    //   path: "/admin/enrollment-forms",
-    //   icon: "fa-solid fa-file-pen",
-    // },
+    {
+      name: "Enrollment Forms",
+      path: "/admin/enrollment-forms",
+      icon: "fa-solid fa-file-pen",
+    },
 
     {
       name: "Enrollment Links",

@@ -4637,7 +4637,7 @@ background:
 }
 
 .cdp-btn-book {
-  display: block;
+
   width: 100%;
   background: var(--color-brand-primary);
   color: var(--color-brand-on-primary);

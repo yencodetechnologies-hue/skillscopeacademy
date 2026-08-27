@@ -638,6 +638,7 @@ const [step, setStep] = useState(() => {
                     endTime: selectedSession?.endTime,
                     coursePrice,
                     paymentMethod: paymentData.paymentMethod,
+                    preferredCity: paymentData.preferredCity || "",
                     phone: paymentData.phone,
                     gatewayTransactionId: txId || paymentData.ewayTransactionId || paymentData.transactionId || "",
                     bankTransferId: paymentData.transactionId || "",

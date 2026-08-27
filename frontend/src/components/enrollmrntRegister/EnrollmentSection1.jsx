@@ -5,6 +5,7 @@ import ValidationToast from "./ValidationToast"
 const STATES = ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"]
 
 function EnrollmentSection1({ userDetails, data, setData, next }) {
+    console.log(data,"data");
     
     const [errors, setErrors] = useState([])
     const [showToast, setShowToast] = useState(false)

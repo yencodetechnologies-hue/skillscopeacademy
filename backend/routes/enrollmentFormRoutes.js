@@ -72,7 +72,8 @@ const {
   deleteSection2File,
   deleteSection3File,
   deleteSection5File,
-  getEnrollmentFormById
+  getEnrollmentFormById,
+  getEnrollmentFormByStudentId
 } = require("../controllers/enrollmentFormController");
 const { uploadEnrollment } = require("../middleware/upload");
 
@@ -118,6 +119,7 @@ router.patch("/:id/status", updateEnrollmentStatus);
 router.patch("/:id/reviewed-date", updateReviewedDate);
 router.delete("/section3-file", deleteSection3File)
 router.delete("/section5-file", deleteSection5File)
-router.get("/:id", getEnrollmentFormById);
+// router.get("/:id", getEnrollmentFormById);
+router.get("/:studentId", getEnrollmentFormByStudentId);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/SessionsBar.css";
@@ -163,6 +163,13 @@ const formatPrice = (value) => {
 };
 
 /* =========================================================
+   SESSION KEY HELPER (unique id for a single session/time slot)
+   ========================================================= */
+
+const getSessionKey = (session) =>
+  session?._id || session?.id || `${session?.date}_${session?.startTime}`;
+
+/* =========================================================
    COMPONENT
    ========================================================= */
 
@@ -190,6 +197,14 @@ function SessionsBar() {
      ========================================================= */
 
   const [showAll, setShowAll] = useState(false);
+
+  /* =========================================================
+     SCROLLABLE LIST REF
+     (used so the "View All" expanded list scrolls within a
+     fixed height instead of pushing the page down)
+     ========================================================= */
+
+  const listRef = useRef(null);
 
   /* =========================================================
      BOOKING MODAL STATE
@@ -378,8 +393,11 @@ function SessionsBar() {
      GROUP COURSES FOR SELECTED DATE
 
      IMPORTANT:
-     Multiple sessions for the same course are
-     combined into ONE course card.
+     Multiple sessions for the same course on the
+     same date are combined into ONE course card,
+     but every individual time slot for that course
+     is still shown (as selectable time chips) so the
+     user can pick which session/time to book.
      ========================================================= */
 
   const groupedDateCourses = useMemo(() => {
@@ -428,7 +446,7 @@ function SessionsBar() {
   }, [selectedDateKey, selectedCourse]);
 
   /* =========================================================
-     VISIBLE COURSE LIST
+     VISIBLE COURSE LIST (for a selected date)
      ========================================================= */
 
   const visibleCourses = useMemo(() => {
@@ -441,6 +459,8 @@ function SessionsBar() {
 
   /* =========================================================
      ALL AVAILABLE SESSIONS WHEN NO DATE SELECTED
+     (this is the DEFAULT view — every upcoming
+     session/time slot, sorted by date then time)
      ========================================================= */
 
   const visibleSessions = useMemo(() => {
@@ -478,6 +498,18 @@ function SessionsBar() {
       }
     );
   }, [filteredSessions]);
+
+  /* =========================================================
+     VISIBLE (SLICED) DEFAULT SESSIONS — respects "View All"
+     ========================================================= */
+
+  const visibleDefaultSessions = useMemo(() => {
+    if (showAll) {
+      return visibleSessions;
+    }
+
+    return visibleSessions.slice(0, 2);
+  }, [visibleSessions, showAll]);
 
   /* =========================================================
      CALENDAR DAYS
@@ -577,10 +609,11 @@ function SessionsBar() {
   };
 
   /* =========================================================
-     BOOK NOW
+     BOOK NOW (grouped/date view)
 
-     We internally use the first session for this course.
-     The session/time itself is NOT displayed here.
+     Uses the currently selected time chip for this course
+     if the user picked one; otherwise falls back to the
+     first session for that course, exactly like before.
      ========================================================= */
 
   const handleBookNowClick = (
@@ -589,20 +622,183 @@ function SessionsBar() {
   ) => {
     e.stopPropagation();
 
-    const firstSession =
-      courseGroup?.sessions?.[0];
+    const chosenSession =
+      courseGroup?.sessions?.find(
+        (s) =>
+          getSessionKey(s) === selectedTimeId
+      ) || courseGroup?.sessions?.[0];
 
-    if (!firstSession) {
+    if (!chosenSession) {
       return;
     }
 
     setSelectedBookingSlot(
-      firstSession
+      chosenSession
     );
 
     setSelectedOptionId(null);
 
     setShowModal(true);
+  };
+
+  /* =========================================================
+     BOOK NOW (default / all sessions view)
+
+     Each row here is already a single session/time slot,
+     so we just book that exact session directly.
+     ========================================================= */
+
+  const handleBookNowSessionClick = (
+    e,
+    session
+  ) => {
+    e.stopPropagation();
+
+    if (!session) return;
+
+    setSelectedBookingSlot(session);
+    setSelectedOptionId(null);
+    setShowModal(true);
+  };
+
+  /* =========================================================
+     PRICING BLOCK RENDERER (shared)
+     ========================================================= */
+
+  const renderPricing = (course) => {
+    const pricingType =
+      course?.pricingType ||
+      (course?.experienceBasedBooking
+        ? "experience"
+        : "standard");
+
+    const isExperience =
+      pricingType === "experience" ||
+      ["excavator", "haul truck", "skid steer"].some(
+        (keyword) =>
+          course?.title
+            ?.toLowerCase()
+            .includes(keyword)
+      );
+
+    const isSlbl =
+      pricingType === "slbl" || !!course?.slblPrice;
+
+    if (isExperience) {
+      return (
+        <>
+          {(course?.withExperiencePrice ??
+            course?.sellingPrice) != null && (
+            <span className="sb-slot-price">
+              With Experience
+              <strong>
+                {formatPrice(
+                  course?.withExperiencePrice ??
+                    course?.sellingPrice
+                )}
+              </strong>
+            </span>
+          )}
+
+          {(course?.withoutExperiencePrice ??
+            course?.sellingPrice) != null && (
+            <span className="sb-slot-price">
+              Without Experience
+              <strong>
+                {formatPrice(
+                  course?.withoutExperiencePrice ??
+                    course?.sellingPrice
+                )}
+              </strong>
+            </span>
+          )}
+
+          {course?.vocPrice != null && (
+            <span className="sb-slot-price">
+              VOC
+              <strong>
+                {formatPrice(course.vocPrice)}
+              </strong>
+            </span>
+          )}
+        </>
+      );
+    }
+
+    if (isSlbl) {
+      return (
+        <>
+          {course?.slblPrice != null && (
+            <span className="sb-slot-price">
+              SL + BL
+              <strong>
+                {formatPrice(course.slblPrice)}
+              </strong>
+            </span>
+          )}
+
+          {(course?.slSinglePrice ??
+            course?.sellingPrice) != null && (
+            <span className="sb-slot-price">
+              SL or BL
+              <strong>
+                {formatPrice(
+                  course?.slSinglePrice ??
+                    course?.sellingPrice
+                )}
+              </strong>
+            </span>
+          )}
+
+          {course?.vocPrice != null && (
+            <span className="sb-slot-price">
+              VOC
+              <strong>
+                {formatPrice(course.vocPrice)}
+              </strong>
+            </span>
+          )}
+        </>
+      );
+    }
+
+    return (
+      <>
+        {course?.sellingPrice != null && (
+          <span className="sb-slot-price">
+            Standard
+            <strong>
+              {formatPrice(course.sellingPrice)}
+            </strong>
+          </span>
+        )}
+
+        {course?.vocPrice != null && (
+          <span className="sb-slot-price">
+            VOC
+            <strong>
+              {formatPrice(course.vocPrice)}
+            </strong>
+          </span>
+        )}
+      </>
+    );
+  };
+
+  /* =========================================================
+     LIST CONTAINER STYLE
+     Applies a fixed max-height + scroll ONLY when the list
+     is expanded via "View All". Collapsed state is untouched.
+     ========================================================= */
+
+  const expandedListStyle = {
+    maxHeight: "520px",
+    overflowY: "auto",
+    overflowX: "hidden",
+    scrollBehavior: "smooth",
+    paddingRight: "6px",
+    width: "100%",
+    boxSizing: "border-box",
   };
 
   /* =========================================================
@@ -916,24 +1112,22 @@ function SessionsBar() {
             </div>
 
             {/* =================================================
-                SELECTED DATE - COURSE CARDS ONLY
+                SELECTED DATE - COURSE CARDS (grouped by course,
+                with every individual time slot shown as a chip)
                 ================================================= */}
 
             {selectedDateKey ? (
 
               groupedDateCourses.length > 0 ? (
 
-                <div className="sb-slots-list sb-fade-in">
+                <div
+                  ref={listRef}
+                  className="sb-slots-list sb-fade-in sb-slots-list--scroll"
+                  style={showAll ? expandedListStyle : undefined}
+                >
 
                   {visibleCourses.map(
                     (group) => {
-
-                      /*
-                       * FIRST SESSION IS ONLY USED
-                       * INTERNALLY FOR BOOKING/LOCATION.
-                       *
-                       * SESSION/TIME IS NOT DISPLAYED.
-                       */
 
                       const firstSession =
                         group.sessions?.[0];
@@ -945,35 +1139,6 @@ function SessionsBar() {
                         firstSession?.location ||
                         course?.location ||
                         "Sefton";
-
-                      const pricingType =
-                        course?.pricingType ||
-                        (
-                          course?.experienceBasedBooking
-                            ? "experience"
-                            : "standard"
-                        );
-
-                      const isExperience =
-                        pricingType ===
-                          "experience" ||
-                        [
-                          "excavator",
-                          "haul truck",
-                          "skid steer",
-                        ].some(
-                          (keyword) =>
-                            course?.title
-                              ?.toLowerCase()
-                              .includes(
-                                keyword
-                              )
-                        );
-
-                      const isSlbl =
-                        pricingType ===
-                          "slbl" ||
-                        !!course?.slblPrice;
 
                       return (
                         <div
@@ -1007,101 +1172,40 @@ function SessionsBar() {
                               )}
                             </div>
 
-                            {/* PRICE - DIRECTLY UNDER COURSE TITLE */}
+                            {/* TIME SLOTS FOR THIS COURSE ON THIS DATE */}
+                            {group.sessions.length > 0 && (
+                              <div className="sb-slot-time-row">
+                                {group.sessions.map((s) => {
+                                  const key = getSessionKey(s);
+                                  const isTimeSelected =
+                                    selectedTimeId === key;
+
+                                  return (
+                                    <button
+                                      type="button"
+                                      key={key}
+                                      className={`sb-time-chip ${
+                                        isTimeSelected
+                                          ? "sb-time-chip--selected"
+                                          : ""
+                                      }`}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedTimeId(
+                                          isTimeSelected ? null : key
+                                        );
+                                      }}
+                                    >
+                                      {s.startTime}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+
+                            {/* PRICE - DIRECTLY UNDER TIME SLOTS */}
                             <div className="sb-slot-card-pricing">
-
-                              {isExperience ? (
-                                <>
-                                  {(course?.withExperiencePrice ??
-                                    course?.sellingPrice) != null && (
-                                    <span className="sb-slot-price">
-                                      With Experience
-                                      <strong>
-                                        {formatPrice(
-                                          course?.withExperiencePrice ??
-                                            course?.sellingPrice
-                                        )}
-                                      </strong>
-                                    </span>
-                                  )}
-
-                                  {(course?.withoutExperiencePrice ??
-                                    course?.sellingPrice) != null && (
-                                    <span className="sb-slot-price">
-                                      Without Experience
-                                      <strong>
-                                        {formatPrice(
-                                          course?.withoutExperiencePrice ??
-                                            course?.sellingPrice
-                                        )}
-                                      </strong>
-                                    </span>
-                                  )}
-
-                                  {course?.vocPrice != null && (
-                                    <span className="sb-slot-price">
-                                      VOC
-                                      <strong>
-                                        {formatPrice(course.vocPrice)}
-                                      </strong>
-                                    </span>
-                                  )}
-                                </>
-                              ) : isSlbl ? (
-                                <>
-                                  {course?.slblPrice != null && (
-                                    <span className="sb-slot-price">
-                                      SL + BL
-                                      <strong>
-                                        {formatPrice(course.slblPrice)}
-                                      </strong>
-                                    </span>
-                                  )}
-
-                                  {(course?.slSinglePrice ??
-                                    course?.sellingPrice) != null && (
-                                    <span className="sb-slot-price">
-                                      SL or BL
-                                      <strong>
-                                        {formatPrice(
-                                          course?.slSinglePrice ??
-                                            course?.sellingPrice
-                                        )}
-                                      </strong>
-                                    </span>
-                                  )}
-
-                                  {course?.vocPrice != null && (
-                                    <span className="sb-slot-price">
-                                      VOC
-                                      <strong>
-                                        {formatPrice(course.vocPrice)}
-                                      </strong>
-                                    </span>
-                                  )}
-                                </>
-                              ) : (
-                                <>
-                                  {course?.sellingPrice != null && (
-                                    <span className="sb-slot-price">
-                                      Standard
-                                      <strong>
-                                        {formatPrice(course.sellingPrice)}
-                                      </strong>
-                                    </span>
-                                  )}
-
-                                  {course?.vocPrice != null && (
-                                    <span className="sb-slot-price">
-                                      VOC
-                                      <strong>
-                                        {formatPrice(course.vocPrice)}
-                                      </strong>
-                                    </span>
-                                  )}
-                                </>
-                              )}
-
+                              {renderPricing(course)}
                             </div>
 
                             {/* COURSE META */}
@@ -1212,65 +1316,248 @@ function SessionsBar() {
             ) : (
 
               /* =================================================
-                 NO DATE SELECTED
+                 NO DATE SELECTED — DEFAULT VIEW
+                 Show every available session/time slot.
                  ================================================= */
 
-              <div className="sb-prompt-card">
+              visibleSessions.length > 0 ? (
 
-                <div className="sb-prompt-icon">
-                  ◷
+                <div
+                  ref={listRef}
+                  className="sb-slots-list sb-fade-in"
+                  style={showAll ? expandedListStyle : undefined}
+                >
+
+                  {visibleDefaultSessions.map(
+                    (session) => {
+
+                      const course =
+                        session.course || {};
+
+                      const location =
+                        session?.location ||
+                        course?.location ||
+                        "Sefton";
+
+                      return (
+                        <div
+                          key={getSessionKey(session)}
+                          className="sb-slot-card"
+                        >
+                          {/* DATE */}
+                          <div className="sb-slot-date-col">
+                            <span className="sb-slot-date">
+                              {formatSessionDate(session?.date)}
+                            </span>
+                          </div>
+
+                          {/* COURSE DETAILS */}
+                          <div className="sb-slot-main-col">
+
+                            {/* COURSE TITLE + CODE */}
+                            <div className="sb-slot-course-row">
+                              <span className="sb-slot-course-title-main">
+                                {course?.title || "Course"}
+                              </span>
+
+                              {(course?.courseCode ||
+                                course?.code ||
+                                course?.course_code) && (
+                                <span className="sb-slot-course-code">
+                                  {course?.courseCode ||
+                                    course?.code ||
+                                    course?.course_code}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* TIME SLOT FOR THIS SESSION */}
+                            <div className="sb-slot-time-row">
+                              <span className="sb-time-chip sb-time-chip--static">
+                                {session.startTime}
+                              </span>
+                            </div>
+
+                            {/* PRICE */}
+                            <div className="sb-slot-card-pricing">
+                              {renderPricing(course)}
+                            </div>
+
+                            {/* COURSE META */}
+                            <div className="sb-slot-meta">
+
+                              {/* LOCATION */}
+                              <div className="sb-slot-meta-item">
+                                <span className="sb-meta-icon">📍</span>
+                                <span>
+                                  {location || "Location not specified"}
+                                </span>
+                              </div>
+
+                              {/* DURATION */}
+                              <div className="sb-slot-meta-item">
+                                <span className="sb-meta-icon">⏱</span>
+                                <span>
+                                  {course?.duration ||
+                                    course?.courseDuration ||
+                                    session?.duration ||
+                                    "Duration not specified"}
+                                </span>
+                              </div>
+
+                              {/* DELIVERY METHOD */}
+                              <div className="sb-slot-meta-item">
+                                <span className="sb-meta-icon">🎓</span>
+                                <span>
+                                  {course?.deliveryMethod ||
+                                    course?.delivery ||
+                                    course?.deliveryMode ||
+                                    course?.mode ||
+                                    "Delivery method not specified"}
+                                </span>
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          {/* REFERRAL */}
+                          {session?.referralCode && (
+                            <div className="sb-referral-col">
+
+                              <span className="sb-referral-label">
+                                Referral
+                              </span>
+
+                              <span className="sb-referral-code">
+                                {session.referralCode}
+                              </span>
+
+                            </div>
+                          )}
+
+                          {/* BOOK NOW */}
+                          <div className="sb-slot-cta-col">
+
+                            <button
+                              type="button"
+                              className="sb-book-btn"
+                              onClick={(e) =>
+                                handleBookNowSessionClick(e, session)
+                              }
+                            >
+                              Book Now
+
+                              <span className="sb-book-arrow">
+                                →
+                              </span>
+                            </button>
+
+                          </div>
+
+                        </div>
+                      );
+                    }
+                  )}
+
                 </div>
 
-                <h3>
-                  Select a Date
-                </h3>
+              ) : (
 
-                <p>
-                  Select an available date
-                  from the calendar to view
-                  the courses available on
-                  that day.
-                </p>
+                <div className="sb-prompt-card">
 
-              </div>
+                  <div className="sb-prompt-icon">
+                    ◷
+                  </div>
+
+                  <h3>
+                    No Available Sessions
+                  </h3>
+
+                  <p>
+                    There are currently no
+                    upcoming sessions to
+                    display.
+                  </p>
+
+                </div>
+
+              )
 
             )}
 
             {/* =================================================
                 VIEW ALL
 
+                Works for BOTH the "selected date" (grouped by
+                course) view and the DEFAULT (all sessions) view.
+
                 IMPORTANT:
                 Button is outside the cards so it does not
-                change position when courses are rendered.
+                change position when courses/sessions render.
                 ================================================= */}
 
-            {selectedDateKey &&
-              groupedDateCourses.length > 2 && (
+            {selectedDateKey
+              ? groupedDateCourses.length > 2 && (
 
-                <button
-                  type="button"
-                  className="sb-book-btn"
-                  onClick={() =>
-                    setShowAll(
-                      (prev) => !prev
-                    )
-                  }
-                  style={{
-                    alignSelf: "center",
-                    marginTop: "4px",
-                  }}
-                >
-                  {showAll
-                    ? "Show Less"
-                    : `View All (${groupedDateCourses.length})`}
+                  <button
+                    type="button"
+                    className="sb-book-btn"
+                    onClick={() => {
+                      setShowAll((prev) => !prev);
+                      requestAnimationFrame(() => {
+                        listRef?.current?.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      });
+                    }}
+                    style={{
+                      alignSelf: "center",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {showAll
+                      ? "Show Less"
+                      : `View All (${groupedDateCourses.length})`}
 
-                  <span className="sb-book-arrow">
-                    {showAll ? "⌃" : "⌄"}
-                  </span>
+                    <span className="sb-book-arrow">
+                      {showAll ? "⌃" : "⌄"}
+                    </span>
 
-                </button>
+                  </button>
 
-              )}
+                )
+              : visibleSessions.length > 2 && (
+
+                  <button
+                    type="button"
+                    className="sb-book-btn"
+                    onClick={() => {
+                      setShowAll((prev) => !prev);
+                      requestAnimationFrame(() => {
+                        listRef?.current?.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      });
+                    }}
+                    style={{
+                      alignSelf: "center",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {showAll
+                      ? "Show Less"
+                      : `View All (${visibleSessions.length})`}
+
+                    <span className="sb-book-arrow">
+                      {showAll ? "⌃" : "⌄"}
+                    </span>
+
+                  </button>
+
+                )}
 
           </main>
 

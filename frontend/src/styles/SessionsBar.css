@@ -2,6 +2,79 @@
    SESSION BOOKING SECTION
    ========================================================= */
 
+   .sb-slots-list--scroll {
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scroll-behavior: smooth;
+}
+
+/* optional: nicer scrollbar */
+.sb-slots-list--scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sb-slots-list--scroll::-webkit-scrollbar-thumb {
+  background: #e0c584;
+  border-radius: 10px;
+}
+
+.sb-slots-list--scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+   .sb-slot-time-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+
+.sb-time-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #e2c98a;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7a5b12;
+  background: #fdf6e3;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: all 0.15s ease;
+}
+
+.sb-time-chip::before {
+  content: "🕐";
+  font-size: 11px;
+}
+
+.sb-time-chip:hover {
+  border-color: #d4a63a;
+  background: #fbeecb;
+}
+
+.sb-time-chip--selected {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+}
+
+.sb-time-chip--static {
+  cursor: default;
+  background: #f4f4f4;
+  border-color: #e0e0e0;
+  color: #444;
+}
+
+.sb-time-chip--static:hover {
+  background: #f4f4f4;
+  border-color: #e0e0e0;
+}
+
 .sb-section {
     width: 100%;
 
@@ -612,10 +685,9 @@
     display: grid;
 
     grid-template-columns:
-        72px
-        minmax(220px, 1fr)
+        100px
+        minmax(700px, 1fr)
         minmax(170px, 0.75fr)
-        minmax(90px, 0.45fr)
         auto;
 
     align-items: center;
@@ -1159,7 +1231,6 @@
 
     align-items: center;
 
-    justify-content: flex-end;
 
     gap: 8px;
 
@@ -1741,3 +1812,4 @@
     }
 
 }
+

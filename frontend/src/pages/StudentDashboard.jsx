@@ -118,7 +118,7 @@ export default function StudentDashboard() {
 
       <div className="dashboard-alerts">
         {/* LLND Assessment Alert (NOW BACK TO TOP) */}
-        {/* {!assessmentPassed ? (
+        {!assessmentPassed ? (
           <div className="alert alert-danger">
             <div className="alert-icon-wrap">📖</div>
             <div className="alert-body">
@@ -147,10 +147,10 @@ export default function StudentDashboard() {
               </p>
             </div>
           </div>
-        )} */}
+        )}
 
         {/* Enrollment Form Alert (NOW BELOW LLND) */}
-        {/* {!enrollmentFormSubmitted ? (
+        {!enrollmentFormSubmitted ? (
           <div className="alert alert-danger">
             <div className="alert-icon-wrap">📄</div>
             <div className="alert-body">
@@ -163,11 +163,12 @@ export default function StudentDashboard() {
             <button
               className="alert-action-btn"
               onClick={() => {
-                if (!assessmentPassed) {
-                  alert("Please complete your LLN assessment before continuing");
-                } else {
+                // if (!assessmentPassed) {
+                //   alert("Please complete your LLN assessment before continuing4");
+                // } 
+                // else {
                   navigate("/student/enrollment-form");
-                }
+                //}
               }}
             >
               📝 Complete Form
@@ -224,7 +225,7 @@ export default function StudentDashboard() {
               </button>
             </div>
           </div>
-        )} */}
+        )}
       </div>
 
       <div className="quick-actions-card">
@@ -237,7 +238,7 @@ export default function StudentDashboard() {
             disabled={!canTakeAssessment}
             onClick={() => {
               if (!assessmentPassed) {
-                alert("Please complete your LLN assessment before continuing");
+                alert("Please complete your LLN assessment before continuing1");
               } else if (!enrollmentFormSubmitted) {
                 alert("Please complete your enrollment form before continuing");
               } else {
@@ -253,7 +254,7 @@ export default function StudentDashboard() {
             className="quick-action-btn"
             onClick={() => {
               if (!assessmentPassed) {
-                alert("Please complete your LLN assessment before continuing");
+                alert("Please complete your LLN assessment before continuing2");
               } else if (!enrollmentFormSubmitted) {
                 alert("Please complete your enrollment form before continuing");
               } else {
@@ -269,7 +270,7 @@ export default function StudentDashboard() {
             className="quick-action-btn"
             onClick={() => {
               if (!assessmentPassed) {
-                alert("Please complete your LLN assessment before continuing");
+                alert("Please complete your LLN assessment before continuing3");
               } else if (!enrollmentFormSubmitted) {
                 alert("Please complete your enrollment form before continuing");
               } else {

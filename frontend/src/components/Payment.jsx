@@ -115,6 +115,9 @@ function Payment({
     const [squareCurrency, setSquareCurrency] = useState("AUD")
     const [preferredCity, setPreferredCity] = useState("");
 
+    // ✅ NEW: tracks whether company details were auto-filled from localStorage id/role
+    const [isAutoFilledCompany, setIsAutoFilledCompany] = useState(false)
+
     // ✅ File input ref
     const fileInputRef = useRef(null)
     const didShowTriggeredErrors = useRef(false)
@@ -226,8 +229,57 @@ function Payment({
         }
     }, [isExistingCompany, shouldAutofill, initialPaymentData, enrollmentLinkData, tokenData])
 
+    // ✅ NEW: Auto-fill company details from localStorage id/role.
+    // Only runs when the existing "isExistingCompany" / "shouldAutofill" prop-driven
+    // autofill paths above are NOT already supplying data, so it never conflicts
+    // with existing behavior — it's purely an additional fallback source.
+    // ✅ Auto-fill company details from localStorage "user" object
+useEffect(() => {
+    //if (isExistingCompany || shouldAutofill) return
+    let cancelled = false
+
+    let storedUser = null
+    try {
+        const raw = localStorage.getItem("user")
+        if (raw) storedUser = JSON.parse(raw)
+    } catch (err) {
+        console.error("Failed to parse stored user:", err)
+        return
+    }
+
+    // if (!storedUser || !storedUser.id) return
+    // if (storedUser.role !== "company") return   // adjust if the key name differs
+
+    
+
+    const fetchCompanyDetails = async () => {
+        try {
+            const token = localStorage.getItem("token")
+            const response = await fetch(`${API_URL}/api/companies/${storedUser.id}`, {
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
+            })
+            const result = await response.json()
+
+            if (!cancelled && result.success && result.data) {
+                const company = result.data
+                setName(company.companyName || company.name || "")
+                setEmail(company.email || "")
+                setPhone(company.mobileNumber || company.mobile || company.phone || "")
+                setContactPerson(company.contactPerson || "")
+                setAgreed(true)
+                setIsAutoFilledCompany(true)
+            }
+        } catch (err) {
+            console.error("Failed to auto-fetch company details:", err)
+        }
+    }
+
+    fetchCompanyDetails()
+    return () => { cancelled = true }
+}, [isExistingCompany, shouldAutofill])
+
     useEffect(() => {
-        if (isExistingCompany || shouldAutofill) {
+        if (isExistingCompany || shouldAutofill || isAutoFilledCompany) {
             setEmailExists(false)
             setErrors(prev => {
                 const copy = { ...prev }
@@ -235,13 +287,13 @@ function Payment({
                 return copy
             })
         }
-    }, [isExistingCompany, shouldAutofill])
+    }, [isExistingCompany, shouldAutofill, isAutoFilledCompany])
 
     useEffect(() => {
-        if (isExistingCompany || shouldAutofill) return
+        if (isExistingCompany || shouldAutofill || isAutoFilledCompany) return
         const timer = setTimeout(() => { if (email) checkEmailExists(email.trim()) }, 900)
         return () => clearTimeout(timer)
-    }, [email, isExistingCompany, shouldAutofill, isCompanyRegister])
+    }, [email, isExistingCompany, shouldAutofill, isAutoFilledCompany, isCompanyRegister])
 
     useEffect(() => {
        const fullData = {
@@ -281,7 +333,7 @@ function Payment({
             ...overrideValues,
         }
         const schema = isCompanyRegister ? personalCompanySchema : personalSchema
-        const personalErrors = isExistingCompany ? {} : await runSchema(schema, {
+        const personalErrors = (isExistingCompany || isAutoFilledCompany) ? {} : await runSchema(schema, {
             name: vals.name, phone: vals.phone,
             email: vals.email, agreed: vals.agreed,
             contactPerson: vals.contactPerson,
@@ -463,7 +515,7 @@ function Payment({
     }
 
     const handleEmailBlur = async () => {
-        if (isExistingCompany) return
+        if (isExistingCompany || isAutoFilledCompany) return
         const trimmed = email.trim()
         if (trimmed !== email) setEmail(trimmed)
         await handleBlur("email", { email: trimmed })
@@ -596,13 +648,13 @@ function Payment({
                         placeholder={isCompany && !isCompanyEnroll && !isEnrollmentLink && !isExistingCompany ? "Enter your company name" : "Enter your full name"}
                         value={name}
                         onChange={(e) => {
-                            if (isExistingCompany) return
+                            if (isExistingCompany || isAutoFilledCompany) return
                             setName(e.target.value)
                             clearFieldError("name")
                         }}
-                        onBlur={() => !isExistingCompany && handleBlur("name")}
+                        onBlur={() => !(isExistingCompany || isAutoFilledCompany) && handleBlur("name")}
                         className={errors.name ? "input-error" : ""}
-                        readOnly={isExistingCompany}
+                        readOnly={isExistingCompany || isAutoFilledCompany}
                     />
                     {errors.name && <span className="error-text">⚠ {errors.name}</span>}
                 </div>
@@ -614,9 +666,13 @@ function Payment({
                             type="text"
                             placeholder="Primary contact name at the company"
                             value={contactPerson}
-                            onChange={(e) => setContactPerson(e.target.value)}
-                            onBlur={() => handleBlur("contactPerson")}
+                            onChange={(e) => {
+                                if (isAutoFilledCompany) return
+                                setContactPerson(e.target.value)
+                            }}
+                            onBlur={() => !isAutoFilledCompany && handleBlur("contactPerson")}
                             className={errors.contactPerson ? "input-error" : ""}
+                            readOnly={isAutoFilledCompany}
                         />
                         {errors.contactPerson && <span className="error-text">⚠ {errors.contactPerson}</span>}
                     </div>
@@ -629,13 +685,13 @@ function Payment({
                         placeholder="+61 xxx xxx xxx"
                         value={phone}
                         onChange={(e) => {
-                            if (isExistingCompany) return
+                            if (isExistingCompany || isAutoFilledCompany) return
                             setPhone(e.target.value)
                             clearFieldError("phone")
                         }}
-                        onBlur={() => !isExistingCompany && handleBlur("phone")}
+                        onBlur={() => !(isExistingCompany || isAutoFilledCompany) && handleBlur("phone")}
                         className={errors.phone ? "input-error" : ""}
-                        readOnly={isExistingCompany}
+                        readOnly={isExistingCompany || isAutoFilledCompany}
                     />
                     {errors.phone && <span className="error-text">⚠ {errors.phone}</span>}
                 </div>
@@ -648,6 +704,7 @@ function Payment({
                         value={email}
                         onChange={(e) => {
                           //  if (isExistingCompany) return
+                            if (isAutoFilledCompany) return
                             setEmail(e.target.value)
                             clearFieldError("email")
                         }}
@@ -655,6 +712,7 @@ function Payment({
                         className={errors.email || blockPaymentForExistingEmail ? "input-error" : ""}
                         ////disabled={emailChecking || isExistingCompany}
                         //readOnly={isExistingCompany}
+                        readOnly={isAutoFilledCompany}
                         autoComplete="email"
                     />
                     {/* {emailChecking && <span className="checking-text">🔄 Checking email...</span>}
@@ -675,7 +733,7 @@ function Payment({
 
                 {selectedSession?.preferredCity?.length > 0 && (
     <div className="form-group">
-        <label>Preferred City *</label>
+        <label>Preferred City1 *</label>
 
         <select
             value={preferredCity}
@@ -710,7 +768,7 @@ function Payment({
                             setAgreed(e.target.checked)
                             handleBlur("agreed", { agreed: e.target.checked })
                         }}
-                        disabled={isExistingCompany}
+                        disabled={isExistingCompany || isAutoFilledCompany}
                     />
                     <span>I agree to the terms and conditions and understand my information will be used for enrollment purposes</span>
                 </div>
@@ -981,7 +1039,7 @@ function Payment({
 
                     <div className="card-logos">
                         <span>We accept</span>
-                         <img
+                          <img
         src="https://cdn.simpleicons.org/visa"
         alt="Visa"
         className="card-logo visa-logo"

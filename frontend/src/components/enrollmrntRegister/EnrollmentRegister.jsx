@@ -8,12 +8,12 @@ import { useLocation } from "react-router-dom"
 import { API_URL } from "../../data/service"
 import { authHeaders } from "../../utils/authHeaders"
 
-const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, setSection }, ref) => {
+// ✅ removed savedFormData from props — component fetches it internally now
+const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref) => {
 
     const location = useLocation()
     const urlParams = new URLSearchParams(location.search)
 
-    // ✅ scrollToTop helper
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" })
         document.querySelector("main")?.scrollTo({ top: 0, behavior: "smooth" })
@@ -29,6 +29,28 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
             el = el.parentElement
         }
     }
+
+    // ✅ single source of truth for saved data — fetched internally
+    const [savedFormData, setSavedFormData] = useState(null)
+
+    useEffect(() => {
+        const studentId = localStorage.getItem("studentId")
+        if (!studentId) return
+
+        const fetchSavedForm = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/enrollment-form/${studentId}`)
+                const result = await res.json()
+                if (result.found) {
+                    setSavedFormData(result.data)
+                }
+            } catch (err) {
+                console.error("Failed to load saved enrollment form:", err)
+            }
+        }
+
+        fetchSavedForm()
+    }, [])
 
     const [formData, setFormData] = useState({
         flowId: localStorage.getItem("flowId") !== "null" ? localStorage.getItem("flowId") : null,
@@ -71,7 +93,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
         qualificationDetails: "",
         qualificationFile: null,
         qualificationFileUrl: null,
-        // ✅ per-qualification evidence tracking
         qualEvidences: {},
         qualEvidenceUrls: [],
         employmentStatus: "",
@@ -100,7 +121,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
         disabilityTypes: [],
         disabilityNotes: "",
 
-        // Section 5
         acceptPrivacy: false,
         acceptTerms: false,
         studentName: "",
@@ -111,7 +131,8 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
     })
 
     const saveSectionToBackend = async (sectionNumber) => {
-        const studentId = formData.userId
+        // ✅ fixed: was `location.getItem(...)` — location has no such method
+        const studentId = localStorage.getItem("studentId")
         if (!studentId) return
 
         let payload = {}
@@ -187,7 +208,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
                     hasQualification: formData.hasQualifications === "yes",
                     types: formData.qualificationLevels,
                     details: formData.qualificationDetails || "",
-                    // ✅ evidenceUrls controller-ல dot notation use பண்றதால தொடாது
                 },
                 employment: {
                     status: formData.employmentStatus,
@@ -242,7 +262,7 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
 
         setFormData(prev => ({
             ...prev,
-            userId: userDetails._id || prev.userId, // ✅ Prioritize ID from userDetails
+            userId: userDetails._id || prev.userId,
             givenName: parts[0] || "",
             surname: parts.slice(1).join(" ") || "",
             email: userDetails.email || "",
@@ -250,10 +270,10 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
         }))
     }, [userDetails])
 
+    // Bind fetched saved data into formData
     useEffect(() => {
         if (!savedFormData) return;
 
-        // ✅ Build qualEvidences from savedFormData.qualifications.evidenceUrls
         const buildQualEvidences = () => {
             const evidences = {}
             const urls = savedFormData.qualifications?.evidenceUrls || []
@@ -328,7 +348,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
             idDocumentUrl: savedFormData.idDocumentUrl ?? prev.idDocumentUrl ?? null,
             photoDocumentUrl: savedFormData.photoDocumentUrl ?? prev.photoDocumentUrl ?? null,
             staIdFileUrl: savedFormData.usi?.staIdFileUrl || prev.staIdFileUrl,
-            // ✅ Restore qualEvidences and qualEvidenceUrls from savedFormData
             qualEvidences: Object.keys(builtEvidences).length > 0 ? builtEvidences : (prev.qualEvidences || {}),
             qualEvidenceUrls: savedFormData.qualifications?.evidenceUrls?.map(e => ({
                 level: e.level,
@@ -337,7 +356,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
         }));
     }, [savedFormData]);
 
-    // ✅ VALIDATION FUNCTION
     const validateForm = () => {
         if (!formData.acceptPrivacy) return "Accept Privacy Policy"
         if (!formData.acceptTerms) return "Accept Terms"
@@ -349,7 +367,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
         return null
     }
 
-    // ✅ base64 → blob helper
     const dataURLtoBlob = (dataUrl) => {
         const arr = dataUrl.split(",")
         const mime = arr[0].match(/:(.*?);/)[1]
@@ -377,27 +394,33 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
                 } else if (typeof value === "boolean") {
                     fd.append(key, value.toString())
                 } else if (typeof value === "object") {
-                    // ✅ Skip plain objects like qualEvidences
                     return
                 } else {
                     fd.append(key, value)
                 }
             })
 
-            console.log("[EnrollmentRegister] Submitting form for userId:", formData.userId, "flowId:", formData.flowId);
             const token = localStorage.getItem("token");
+            const studentId = localStorage.getItem("studentId");
+
+            if (studentId) {
+                fd.append("studentId", studentId);
+            }
+
             const submitHeaders = {};
-            if (token) submitHeaders.Authorization = `Bearer ${token}`;
+            if (token) {
+                submitHeaders.Authorization = `Bearer ${token}`;
+            }
+
             const res = await fetch(`${API_URL}/api/enrollment-form`, {
                 method: "POST",
                 headers: submitHeaders,
-                body: fd
-            })
+                body: fd,
+            });
 
             const data = await res.json()
             if (!res.ok) throw new Error(data.message)
 
-            // ✅ If enrollment form is successful, ALSO complete the flow
             if (formData.flowId) {
                 try {
                     await fetch(`${API_URL}/api/flow/complete`, {
@@ -407,7 +430,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
                     });
                 } catch (flowErr) {
                     console.error("[EnrollmentRegister] Flow complete error (swallowed):", flowErr);
-                    // We don't block the user if only the notification/flow-update fails
                 }
             }
 
@@ -422,7 +444,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
         scrollToTop()
     }, [section])
 
-    // ✅ EXPOSE TO PARENT
     useImperativeHandle(ref, () => ({
         submitForm: async () => {
             const error = validateForm()
@@ -441,7 +462,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
 
     return (
         <div>
-
             {section === 1 && (
                 <EnrollmentSection1
                     userDetails={userDetails}
@@ -512,7 +532,6 @@ const EnrollmentRegister = forwardRef(({ userDetails, savedFormData, section, se
                     }}
                 />
             )}
-
         </div>
     )
 })

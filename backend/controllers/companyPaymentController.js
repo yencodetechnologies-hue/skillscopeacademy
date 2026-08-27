@@ -38,7 +38,7 @@ const buildOrderEmails = (payment) => {
 </td></tr>
 <tr><td style="padding:30px;">
     <p style="margin:0 0 16px;font-size:15px;color:#555;">Dear <strong>${payment.companyName}</strong>,</p>
-    <p style="margin:0 0 24px;font-size:15px;color:#555;">Thank you for your booking with Safety Training Academy. We have received your order and will confirm once payment is verified.</p>
+    <p style="margin:0 0 24px;font-size:15px;color:#555;">Thank you for your booking with Safeticks. We have received your order and will confirm once payment is verified.</p>
     <table width="100%" cellpadding="12" cellspacing="0" border="0" style="background-color:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;margin-bottom:20px;">
         <tr><td style="color:#64748b;width:140px;">Order #</td><td><strong>${orderId}</strong></td></tr>
         <tr><td style="color:#64748b;">Order Date</td><td>${orderDate}</td></tr>
@@ -51,7 +51,7 @@ const buildOrderEmails = (payment) => {
     <p style="margin:0;font-size:14px;color:#64748b;">Questions? Contact us at <a href="mailto:info@safetytrainingacademy.edu.au" style="color:#3b82f6;">info@safetytrainingacademy.edu.au</a> or call 1300 976 097.</p>
 </td></tr>
 <tr><td style="padding:20px 30px;background-color:#f8fafc;border-top:1px solid #e2e8f0;">
-    <p style="margin:0;font-size:13px;color:#64748b;">Kind regards,<br/><strong>Safety Training Academy</strong><br/>Training Team | 1300 976 097</p>
+    <p style="margin:0;font-size:13px;color:#64748b;">Kind regards,<br/><strong>Safeticks</strong><br/>Training Team | 1300 976 097</p>
 </td></tr>
 </table></td></tr></table></body></html>`;
 
@@ -76,7 +76,7 @@ const buildOrderEmails = (payment) => {
     <p style="margin:16px 0 0;font-size:14px;color:#334155;">Please confirm payment and generate employee enrolment links.</p>
 </td></tr>
 <tr><td style="padding:20px 30px;background-color:#f8fafc;border-top:1px solid #e2e8f0;">
-    <p style="margin:0;font-size:13px;color:#64748b;">Safety Training Academy System</p>
+    <p style="margin:0;font-size:13px;color:#64748b;">Safeticks System</p>
 </td></tr>
 </table></td></tr></table></body></html>`;
 
@@ -248,7 +248,7 @@ exports.createPayment = async (req, res) => {
     try {
       const { orderId, companyHtml, internalHtml } = buildOrderEmails(payment);
       const promises = [
-        sendEmail({ to: payment.email, subject: `Order Received – #${orderId} | Safety Training Academy`, html: companyHtml })
+        sendEmail({ to: payment.email, subject: `Order Received – #${orderId} | Safeticks`, html: companyHtml })
       ];
       if (process.env.BOOKINGS_EMAIL) {
         promises.push(sendEmail({ to: process.env.BOOKINGS_EMAIL, subject: `New Company Order #${orderId} – ${payment.companyName}`, html: internalHtml }));

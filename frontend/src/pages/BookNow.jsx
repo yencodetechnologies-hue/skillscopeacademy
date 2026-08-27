@@ -582,6 +582,7 @@ const [step, setStep] = useState(() => {
         formData.append("name", paymentData.name);
         formData.append("email", paymentData.email);
         formData.append("phone", paymentData.phone);
+        formData.append("preferredCity", paymentData.preferredCity || ""); 
         formData.append("paymentMethod", paymentData.paymentMethod);
         formData.append("transactionId", txId || paymentData.transactionId || "");
         if (paymentData.paymentMethod === "Card Payment") {
@@ -684,6 +685,7 @@ const [step, setStep] = useState(() => {
                     formData.append("name", paymentData.name);
                     formData.append("email", paymentData.email);
                     formData.append("phone", paymentData.phone);
+                    formData.append("preferredCity", paymentData.preferredCity || "");
                     formData.append("enrollmentType", enrollmentType);
                     formData.append("courseId", selectedCourse?._id);
                     formData.append("sessionDate", selectedSession?.date);

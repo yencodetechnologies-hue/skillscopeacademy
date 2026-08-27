@@ -77,10 +77,12 @@ exports.createStudent = async (req, res) => {
       paymentMethod,
       transactionId,
       enrollmentType,
+      preferredCity,
       companyId
     } = req.body;
     const finalPhone = phone || mobile || mobileNumber || mobilePhone || "";
     const data = req.body;
+    console.log(data,"data");
     const normalizedEmail = data.email
       ? String(data.email).toLowerCase().trim()
       : "";
@@ -134,6 +136,7 @@ exports.createStudent = async (req, res) => {
         name: data.name,
         email: normalizedEmail || data.email,
         phone: finalPhone,
+        preferredCity: data.preferredCity || "", 
         companyId: data.companyId || null,
         enrollmentType: data.enrollmentType || "individual",
         password: hashedPassword,
@@ -159,6 +162,9 @@ exports.createStudent = async (req, res) => {
       if (finalPhone && !student.phone) {
         student.phone = finalPhone;
       }
+      if (data.preferredCity && !student.preferredCity) {   // ← added
+  student.preferredCity = data.preferredCity;
+}
       if (data.enrollmentType && data.enrollmentType !== student.enrollmentType) {
         // Only escalate to "company"/"agent"; never silently downgrade a
         // company student back to "individual".
@@ -607,7 +613,7 @@ exports.getAllStudents = async (req, res) => {
       await EnrollmentFlow.find(flowQuery)
         .populate(
           "studentId",
-          "name email phone lastLogin companyId"
+          "name email phone lastLogin companyId preferredCity"
         )
         .sort({
           createdAt: -1,
@@ -853,6 +859,9 @@ exports.getAllStudents = async (req, res) => {
     ) {
       filteredFlows =
         allFlows.filter((flow) => {
+          const student =
+            flow.studentId || {};
+
           const item =
             flow.items?.[0] || {};
 
@@ -893,12 +902,18 @@ exports.getAllStudents = async (req, res) => {
           }
 
           // ========================================
-          // PAYMENT PREFERRED CITY
+          // PREFERRED CITY
+          // (Payment record first, fallback to
+          // StudentMain.preferredCity)
           // ========================================
           const paymentPreferredCity =
             paymentRecord?.preferredCity
               ?.toString()
-              .trim() || "";
+              .trim() ||
+            student.preferredCity
+              ?.toString()
+              .trim() ||
+            "";
 
           const selectedCity =
             preferredCityFilter
@@ -991,6 +1006,9 @@ exports.getAllStudents = async (req, res) => {
               "",
 
             paymentPreferredCity,
+
+            studentPreferredCity:
+              student.preferredCity || "",
 
             selectedCity,
 
@@ -1202,12 +1220,18 @@ exports.getAllStudents = async (req, res) => {
 
         // ========================================
         // PREFERRED CITY
+        // (Payment record first, fallback to
+        // StudentMain.preferredCity)
         // ========================================
         const preferredCity =
           paymentRecord
             ?.preferredCity
             ?.toString()
-            .trim() || "";
+            .trim() ||
+          student.preferredCity
+            ?.toString()
+            .trim() ||
+          "";
 
         // ========================================
         // RETURN STUDENT
@@ -1806,7 +1830,7 @@ exports.getPaymentsByCompany = async (req, res) => {
 
             paymentId: payment._id,
 
-            companyId: company._id,
+            companyId: payment.companyId,
 
             companyName:
               company.companyName || "",
@@ -1865,7 +1889,7 @@ exports.getPaymentsByCompany = async (req, res) => {
 
           paymentId: payment._id,
 
-          companyId: company._id,
+          companyId: payment.companyId,
 
           companyName:
             company.companyName || "",

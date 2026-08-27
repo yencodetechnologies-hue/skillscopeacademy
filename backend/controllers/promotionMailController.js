@@ -97,7 +97,7 @@ exports.sendPromotionMail = async (req, res) => {
             ">
 
                 <h1 style="margin:0">
-                    Safety Training Academy
+                    Safeticks
                 </h1>
 
                 <p>
@@ -162,7 +162,7 @@ exports.sendPromotionMail = async (req, res) => {
                 Regards,<br>
 
                 <b>
-                Safety Training Academy Team
+                Safeticks Team
                 </b>
 
                 </p>
@@ -180,7 +180,7 @@ exports.sendPromotionMail = async (req, res) => {
                 font-size:13px;
             ">
 
-            © 2026 Safety Training Academy<br>
+            © 2026 Safeticks<br>
             Workplace Safety | Certification
 
             </div>

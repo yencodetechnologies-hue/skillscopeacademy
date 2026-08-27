@@ -117,7 +117,7 @@ const adminBookingTemplate = (data) => {
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
-            <p class="eb-hdr-title">Safety Training Academy</p>
+            <p class="eb-hdr-title">Safeticks</p>
             <p class="eb-hdr-sub"> &nbsp;·&nbsp; Admin Notification</p>
           </td>
           <td align="right" valign="top">
@@ -199,7 +199,7 @@ const adminBookingTemplate = (data) => {
 
     <!-- ── Footer ── -->
     <div class="eb-footer">
-      This is an automated admin notification from <strong>Safety Training Academy</strong> ().<br />
+      This is an automated admin notification from <strong>Safeticks</strong> ().<br />
       15/3 Lancaster Street Ingleburn NSW 2565 &nbsp;·&nbsp; 1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au
     </div>
 

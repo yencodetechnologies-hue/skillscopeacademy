@@ -6299,3 +6299,7 @@ background:
     width: 100%;
   }
 }
+.cdp{
+    .courses-dropdown{top:55px !important}
+ .resources-dropdown{top:60px !important}
+}

@@ -56,7 +56,7 @@ const buildVocStudentHtml = (data) => {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VOC Submission Received – Safety Training Academy</title>
+  <title>VOC Submission Received – Safeticks</title>
   <style>
     body { margin: 0; padding: 24px; background: #f0f2f5; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; color: #333; }
 
@@ -111,14 +111,14 @@ const buildVocStudentHtml = (data) => {
     <!-- ── Header ── -->
     <div class="eb-hdr">
       <h1>VOC Submission Received</h1>
-      <p class="eb-hdr-sub">Safety Training Academy &nbsp;·&nbsp; </p>
+      <p class="eb-hdr-sub">Safeticks &nbsp;·&nbsp; </p>
     </div>
     <div class="eb-divider"></div>
 
     <div class="eb-content">
 
       <p class="eb-greeting">Dear <strong>${firstName} ${lastName}</strong>,</p>
-      <p class="eb-intro">Thank you for your VOC submission to Safety Training Academy. We have received your request and our team will review it shortly.</p>
+      <p class="eb-intro">Thank you for your VOC submission to Safeticks. We have received your request and our team will review it shortly.</p>
 
       <!-- ── Submission Details ── -->
       <div class="eb-section">
@@ -184,8 +184,8 @@ const buildVocStudentHtml = (data) => {
       Questions? Contact us at
       <a href="mailto:admin@safetytrainingacademy.com.au">admin@safetytrainingacademy.com.au</a>
       or call <a href="tel:1300976097">1300 976 097</a>.<br />
-      <strong>Safety Training Academy</strong> &nbsp;|&nbsp; <br /><br />
-      &copy; ${new Date().getFullYear()} Safety Training Academy. All rights reserved.<br />
+      <strong>Safeticks</strong> &nbsp;|&nbsp; <br /><br />
+      &copy; ${new Date().getFullYear()} Safeticks. All rights reserved.<br />
       <span style="font-size:9px;">This is an automated confirmation. Please do not reply directly to this email.</span>
     </div>
 

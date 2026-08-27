@@ -67,7 +67,7 @@ exports.sendStudentMail = async (req, res) => {
 
           <p>
               Regards,<br>
-              <strong>Safety Training Academy</strong>
+              <strong>Safeticks</strong>
           </p>
       </div>
       `,

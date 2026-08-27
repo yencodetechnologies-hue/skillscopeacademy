@@ -17,6 +17,8 @@ const studentMainSchema = new mongoose.Schema(
       required: true
     },
 
+    preferredCity: { type: String, default: "" },
+
     enrollmentType: {
       type: String,
       enum: ["individual", "company", "agent"],

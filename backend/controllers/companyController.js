@@ -59,7 +59,7 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
   <div class="cr-body">
     <div class="cr-hdr">
       <div>
-        <p class="cr-hdr-title">Safety Training Academy</p>
+        <p class="cr-hdr-title">Safeticks</p>
         <p class="cr-hdr-sub"> &nbsp;·&nbsp; Company Portal</p>
       </div>
       <span class="cr-badge">Welcome</span>
@@ -70,7 +70,7 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
     </div>
     <div class="cr-content">
       <p class="cr-greeting">Hello <strong>${companyName}</strong>,</p>
-      <p class="cr-intro">Your company account has been created with Safety Training Academy. You can now log in to the company portal to manage employee enrolments.</p>
+      <p class="cr-intro">Your company account has been created with Safeticks. You can now log in to the company portal to manage employee enrolments.</p>
       <div class="cr-section">
         <div class="cr-section-head"><span>Your sign-in details</span></div>
         <div class="cr-section-body">
@@ -100,11 +100,11 @@ const buildCompanyWelcomeHtml = ({ companyName, email, password }) => {
       </p>
       <div class="cr-sign">
         Kind regards,<br>
-        <strong>Safety Training Academy</strong>
+        <strong>Safeticks</strong>
       </div>
     </div>
     <div class="cr-footer">
-      <div class="cr-footer-brand">Safety Training Academy</div>
+      <div class="cr-footer-brand">Safeticks</div>
       <p class="cr-footer-info">
         2 Wellington St, Sefton NSW 2162 &nbsp;·&nbsp; <br>
         1300 976 097 &nbsp;·&nbsp; info@safetytrainingacademy.edu.au
@@ -321,7 +321,7 @@ exports.createCompany = async (req, res) => {
     sendEmail({
       to: company.email,
       subject:
-        "Welcome — your company portal is ready | Safety Training Academy",
+        "Welcome — your company portal is ready | Safeticks",
       html: buildCompanyWelcomeHtml({
         companyName: company.companyName,
         email: company.email,

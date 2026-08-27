@@ -842,6 +842,7 @@ export function PaymentsTable({
   company,
   onRefresh,
 }) {
+  console.log( payments," payments")
   const [selected, setSelected] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [detailsGroup, setDetailsGroup] = useState(null);
@@ -858,32 +859,26 @@ export function PaymentsTable({
   const [studentsError, setStudentsError] =
     useState("");
 
-  /*
-   * Which company's students the modal is currently
-   * showing — set per-row when a "view students" button
-   * is clicked, so the modal title matches the row that
-   * was actually clicked (not always the same company).
-   */
-  const [activeCompanyLabel, setActiveCompanyLabel] =
-    useState("");
-
   const user = JSON.parse(
     localStorage.getItem("user") || "{}"
   );
 
   /*
-   * FALLBACK ONLY.
-   * This is used only when a row/group has no company id
-   * of its own (e.g. single-company screens where every
-   * row is for the logged-in company). Per-row clicks
-   * should prefer group.companyId — see groupedArray below.
+   * IMPORTANT:
+   * The company ID must come from company.id / company._id
+   * or fallback to logged-in user.id.
+   *
+   * DO NOT use group.id here because group.id is payment ID.
    */
-  const fallbackCompanyId =
+  const companyId =
     company?.id ||
     company?._id ||
     user?.id ||
     user?._id ||
     "";
+
+  console.log("Company object:", company);
+  console.log("Company ID:", companyId);
 
   /* =======================================================
      GROUP PAYMENTS
@@ -904,6 +899,7 @@ export function PaymentsTable({
         rows: [],
         total: 0,
         paid: 0,
+        companyId:row.companyId,
         balance: 0,
         isCoursePayment:
           row.student &&
@@ -911,30 +907,6 @@ export function PaymentsTable({
         payment: row.payment,
         gatewayTransactionId:
           row.gatewayTransactionId || "",
-        /*
-         * FIX: each payment row belongs to its OWN company.
-         * Previously the table used one shared `companyId`
-         * (from the `company` prop) for every row, so every
-         * "view students" click showed the same company's
-         * students. Capture the row's own company identity
-         * here instead, falling back through the likely
-         * field names the API may return.
-         */
-        companyId:
-          row.companyId ||
-          row.company_id ||
-          row.company?.id ||
-          row.company?._id ||
-          "",
-        companyName:
-          row.companyName ||
-          row.company?.companyName ||
-          row.company?.name ||
-          "",
-        companyEmail:
-          row.companyEmail ||
-          row.company?.email ||
-          "",
       };
     }
 
@@ -952,6 +924,7 @@ export function PaymentsTable({
 
   const groupedArray =
     Object.values(groupedPayments);
+    console.log(groupedArray,"groupedArray");
 
   const outstanding = groupedArray.filter(
     (g) =>
@@ -963,7 +936,8 @@ export function PaymentsTable({
      VIEW COMPANY STUDENTS
   ======================================================= */
 
-  const handleViewStudents = async (companyId) => {
+  const handleViewStudents = async (groupId) => {
+     console.log("Selected Group ID:", groupId);
     try {
       setStudentsLoading(true);
       setStudentsError("");
@@ -992,7 +966,7 @@ export function PaymentsTable({
 
       const response = await fetch(
         `${API_URL}/api/students/company/${encodeURIComponent(
-          companyId
+        groupId
         )}/students`,
         {
           method: "GET",
@@ -1090,17 +1064,17 @@ export function PaymentsTable({
               <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
             </svg>
 
-            Pay training fees
+            My Companies
           </div>
 
-          <p className="py-card-desc">
+          {/* <p className="py-card-desc">
             Each pay-later company enrolment
             appears as a line here. Balance
             reflects payments already applied.
-          </p>
+          </p> */}
         </div>
 
-        <div className="py-card-actions">
+        {/* <div className="py-card-actions">
           <button
             className="py-btn-icon"
             title="Refresh"
@@ -1141,7 +1115,7 @@ export function PaymentsTable({
           >
             Pay selected
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className="py-table-wrap">
@@ -1184,21 +1158,6 @@ export function PaymentsTable({
                   group.isCoursePayment
                     ? "Course"
                     : "Students";
-
-                /*
-                 * FIX: use THIS row's own company id first.
-                 * Only fall back to the shared/logged-in
-                 * company id when the row itself has none
-                 * (e.g. single-company screens).
-                 */
-                const rowCompanyId =
-                  group.companyId ||
-                  fallbackCompanyId;
-
-                const rowCompanyLabel =
-                  group.companyName ||
-                  company?.companyName ||
-                  "this company";
 
                 return (
                   <tr
@@ -1282,44 +1241,22 @@ export function PaymentsTable({
                           👁
                         </button>
 
-                        {/* =================================================
-                            VIEW COMPANY STUDENTS
-
-                            IMPORTANT:
-                            Use THIS ROW's own company id
-                            (rowCompanyId), not a single
-                            shared id and NOT group.id
-                            (group.id is the payment id).
-
-                            FIX #1: onClick wrapped in an
-                            arrow function so it fires on
-                            click, not on every render.
-
-                            FIX #2: rowCompanyId is derived
-                            per-group above, so each row
-                            opens ITS OWN company's students
-                            instead of always the same one.
-                        ================================================= */}
+                   
 
                         <button
                           type="button"
-                          onClick={() => {
-                            setActiveCompanyLabel(
-                              rowCompanyLabel
-                            );
-                            handleViewStudents(
-                              rowCompanyId
-                            );
-                          }}
+                          onClick={() =>
+                            handleViewStudents(group.companyId)
+                          }
                           disabled={
-                            !rowCompanyId
+                            !companyId
                           }
                           style={{
                             border: "none",
                             background:
                               "none",
                             cursor:
-                              rowCompanyId
+                              companyId
                                 ? "pointer"
                                 : "not-allowed",
                             padding: 0,
@@ -1327,12 +1264,12 @@ export function PaymentsTable({
                               colors.brandPrimary,
                             fontSize: 16,
                             opacity:
-                              rowCompanyId
+                              companyId
                                 ? 1
                                 : 0.5,
                           }}
                           title={
-                            rowCompanyId
+                            companyId
                               ? "View company students"
                               : "Company ID not found"
                           }
@@ -1460,8 +1397,7 @@ export function PaymentsTable({
                 >
                   Students enrolled under{" "}
                   <strong>
-                    {activeCompanyLabel ||
-                      company?.companyName ||
+                    {company?.companyName ||
                       "this company"}
                   </strong>
                 </div>
@@ -1628,59 +1564,115 @@ export function PaymentsTable({
                             student.courses
                               .length >
                               0 && (
-                              <div
+                                                          <div
                                 style={{
                                   marginTop: 10,
-                                  paddingTop:
-                                    10,
-                                  borderTop:
-                                    "1px solid #f1f5f9",
+                                  paddingTop: 10,
+                                  borderTop: "1px solid #f1f5f9",
                                 }}
                               >
                                 <div
                                   style={{
                                     fontSize: 11,
-                                    fontWeight:
-                                      700,
-                                    color:
-                                      colors.textMuted,
-                                    marginBottom:
-                                      6,
+                                    fontWeight: 700,
+                                    color: colors.textMuted,
+                                    marginBottom: 6,
                                   }}
                                 >
                                   COURSES
                                 </div>
 
-                                {student.courses.map(
-                                  (
-                                    course,
-                                    courseIndex
-                                  ) => (
-                                    <div
-                                      key={
-                                        course._id ||
-                                        course.id ||
-                                        courseIndex
+                                <table
+                                  style={{
+                                    width: "100%",
+                                    borderCollapse: "collapse",
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  <thead>
+                                    <tr>
+                                      <th
+                                        style={{
+                                          textAlign: "left",
+                                          padding: "4px 6px",
+                                          borderBottom:
+                                            "1px solid #e5e7eb",
+                                          color: colors.textMuted,
+                                          fontSize: 11,
+                                          fontWeight: 700,
+                                        }}
+                                      >
+                                        Course
+                                      </th>
+                                      <th
+                                        style={{
+                                          textAlign: "left",
+                                          padding: "4px 6px",
+                                          borderBottom:
+                                            "1px solid #e5e7eb",
+                                          color: colors.textMuted,
+                                          fontSize: 11,
+                                          fontWeight: 700,
+                                        }}
+                                      >
+                                        Enrolled Date
+                                      </th>
+                                    </tr>
+                                  </thead>
+
+                                  <tbody>
+                                    {student.courses.map(
+                                      (course, courseIndex) => {
+                                        const enrolledDate =
+                                          course.enrolledDate ||
+                                          course.enrolledAt ||
+                                          course.createdAt ||
+                                          course.date ||
+                                          null;
+
+                                        return (
+                                          <tr
+                                            key={
+                                              course._id ||
+                                              course.id ||
+                                              courseIndex
+                                            }
+                                          >
+                                            <td
+                                              style={{
+                                                padding: "4px 6px",
+                                                borderBottom:
+                                                  "1px solid #f8fafc",
+                                              }}
+                                            >
+                                              {course.courseId?.name ||
+                                                course.courseId?.title ||
+                                                course.name ||
+                                                course.title ||
+                                                "Course"}
+                                            </td>
+                                            <td
+                                              style={{
+                                                padding: "4px 6px",
+                                                borderBottom:
+                                                  "1px solid #f8fafc",
+                                                color: colors.textMuted,
+                                              }}
+                                            >
+                                              {enrolledDate
+                                                ? new Date(
+                                                    enrolledDate
+                                                  ).toLocaleDateString()
+                                                : "—"}
+                                            </td>
+                                          </tr>
+                                        );
                                       }
-                                      style={{
-                                        fontSize: 12,
-                                        marginBottom:
-                                          4,
-                                      }}
-                                    >
-                                      {course
-                                        .courseId
-                                        ?.name ||
-                                        course
-                                          .courseId
-                                          ?.title ||
-                                        course.name ||
-                                        course.title ||
-                                        "Course"}
-                                    </div>
-                                  )
-                                )}
+                                    )}
+                                  </tbody>
+                                </table>
                               </div>
+                              
                             )}
                         </div>
                       )
@@ -1846,12 +1838,12 @@ function StudentsTable({
 
   return (
     <div
-      className="py-card"
+     // className="py-card"
       style={{
         marginTop: "1.5rem",
       }}
     >
-      <div className="py-card-top">
+      {/* <div className="py-card-top">
         <div className="py-card-info">
           <div className="py-card-heading">
             <svg
@@ -2099,7 +2091,7 @@ function StudentsTable({
             </tbody>
           </table>
         )}
-      </div>
+      </div> */}
 
       {showModal && (
         <PayModal
@@ -2367,6 +2359,7 @@ export default function MycompanyCourses() {
       .then((res) => {
         const companyData =
           res?.data || res;
+          console.log(companyData,"companyData");
 
         setCompany({
           /*

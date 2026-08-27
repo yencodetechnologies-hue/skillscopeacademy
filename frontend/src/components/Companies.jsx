@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { colors } from '../constants/theme';
 import "../styles/Companies.css";
 import axios from "axios";
-import CompanyViewModal from "./CompanyViewModal";
 import { API_URL } from "../data/service";
 const PAGE_SIZE = 10;
 
@@ -426,6 +425,446 @@ function DeleteCompanyModal({ company, onClose, onConfirm }) {
     );
 }
 
+/* ── View All Details Modal (email group + enrolled students) ── */
+function ViewAllDetailsModal({ records, onClose, onPayLaterToggle }) {
+    const [detailsByCompany, setDetailsByCompany] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [openToken, setOpenToken] = useState({}); // { [companyId]: token }
+    const [copied, setCopied] = useState(null); // key of whatever was just copied
+    const email = records?.[0]?.email || "";
+
+    useEffect(() => {
+        let cancelled = false;
+        const token = localStorage.getItem("token");
+        const fetchAll = async () => {
+            try {
+                const results = await Promise.all(
+                    records.map((r) =>
+                        axios
+                            .get(`${API_URL}/api/companies/${r._id}/details`, {
+                                headers: { Authorization: `Bearer ${token}` },
+                            })
+                            .then((res) => ({
+                                id: r._id,
+                                students: res.data?.data?.students || [],
+                                courseLinks: res.data?.data?.courseLinks || [],
+                            }))
+                            .catch(() => ({ id: r._id, students: [], courseLinks: [] }))
+                    )
+                );
+                if (cancelled) return;
+                const map = {};
+                results.forEach((r) => { map[r.id] = r; });
+                setDetailsByCompany(map);
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        };
+        fetchAll();
+        return () => { cancelled = true; };
+    }, [records]);
+
+    const handleBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
+
+    const handleCopy = (key, text) => {
+        navigator.clipboard.writeText(text);
+        setCopied(key);
+        setTimeout(() => setCopied(null), 2000);
+    };
+
+    const detailRow = (label, value) => (
+        <div style={{ display: "flex", padding: "6px 0", borderBottom: "1px solid #f2f2f2" }}>
+            <span style={{ width: 140, flexShrink: 0, color: colors.textMuted, fontSize: 12, fontWeight: 600 }}>{label}</span>
+            <span style={{ color: "#1a1a2e", fontSize: 13 }}>{value ?? <span className="dash">—</span>}</span>
+        </div>
+    );
+
+    return (
+        <div className="modal-backdrop" onClick={handleBackdrop}>
+            <div className="modal-box" style={{ maxWidth: 920 }}>
+                <div className="modal-header">
+                    <div>
+                        <h2 className="modal-title">Company Details — {email}</h2>
+                        <p className="modal-subtitle">{records.length} record{records.length !== 1 ? "s" : ""} for this email</p>
+                    </div>
+                    <button className="modal-close-btn" onClick={onClose}><CloseIcon /></button>
+                </div>
+                <div className="modal-body" style={{ maxHeight: "72vh", overflowY: "auto" }}>
+                    {records.map((r, idx) => {
+                        const detail = detailsByCompany[r._id] || { students: [], courseLinks: [] };
+                        const students = detail.students;
+                        const courseLinks = detail.courseLinks;
+                        const enrolmentLink = `${window.location.origin}/book-now/company/${r._id}`;
+
+                        return (
+                            <div
+                                key={r._id}
+                                style={{
+                                    border: "1px solid #eee",
+                                    borderRadius: 10,
+                                    padding: 16,
+                                    marginBottom: 16,
+                                    background: idx % 2 === 0 ? "#fff" : "#fafafa",
+                                }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                                    <div className="company-icon"><BuildingIcon /></div>
+                                    <div>
+                                        <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 15 }}>
+                                            {r.companyName || r.name || "—"}
+                                        </div>
+                                        <span className={`badge ${r.status === "Active" ? "badge-active" : "badge-inactive"}`}>
+                                            {r.status}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* ── Details grid, neatly aligned ── */}
+                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
+                                    <div>
+                                        {detailRow("Contact Person", r.contactPerson)}
+                                        {detailRow("Email", r.email)}
+                                        {detailRow("Mobile", r.mobileNumber)}
+                                        {detailRow(
+                                            "Registered On",
+                                            r.createdAt
+                                                ? new Date(r.createdAt).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" })
+                                                : "—"
+                                        )}
+                                    </div>
+                                    <div>
+                                        {detailRow("Links Generated", r.linkCount ?? courseLinks.length ?? 0)}
+                                        {detailRow("Enrolments", r.enrollmentCount ?? students.length ?? 0)}
+                                        {detailRow(
+                                            "Pay Later",
+                                            <label
+                                                className={`pay-later-switch ${r.payLater ? "is-on" : ""}`}
+                                                title={r.payLater ? "Pay Later enabled — click to disable" : "Pay Later disabled — click to enable"}
+                                                style={{ marginTop: 2 }}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={!!r.payLater}
+                                                    onChange={() => onPayLaterToggle(r._id)}
+                                                />
+                                                <span className="pay-later-slider" />
+                                                <span className="pay-later-label">{r.payLater ? "On" : "Off"}</span>
+                                            </label>
+                                        )}
+                                        {detailRow("Last Login", r.lastLogin || "Never")}
+                                    </div>
+                                </div>
+
+                                {/* ── General Enrolment Link ── */}
+                                <div style={{ marginTop: 16, background: "#f7f6fd", border: "1px solid #ece9fb", borderRadius: 10, padding: 14 }}>
+                                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>General Enrolment Link</h4>
+                                    <p style={{ fontSize: 12, color: colors.textMuted, margin: "4px 0 10px" }}>
+                                        Share this link with employees. They can select any course and enroll themselves under your company account.
+                                    </p>
+                                    <div style={{
+                                        background: "white", border: "1px solid #e5e7eb", borderRadius: 8,
+                                        padding: "8px 12px", fontSize: 12, color: "#555", marginBottom: 10,
+                                        overflowX: "auto", whiteSpace: "nowrap",
+                                    }}>
+                                        {enrolmentLink}
+                                    </div>
+                                    <button
+                                        style={{
+                                            border: "none", background: colors.brandPrimary, color: "white",
+                                            fontWeight: 700, fontSize: 13, borderRadius: 8, padding: "8px 16px",
+                                            cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6,
+                                        }}
+                                        onClick={() => handleCopy(`enrol-${r._id}`, enrolmentLink)}
+                                    >
+                                        <LinkIcon /> {copied === `enrol-${r._id}` ? "Copied!" : "Copy Enrolment Link"}
+                                    </button>
+                                </div>
+
+                                {/* ── Course Booking Links ── */}
+                                <div style={{ marginTop: 16, background: "#fafafa", border: "1px solid #eee", borderRadius: 10, padding: 14 }}>
+                                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>Course Booking Links</h4>
+                                    <p style={{ fontSize: 12, color: colors.textMuted, margin: "4px 0 12px" }}>
+                                        Each link was generated for a specific course. Click "View Students" to see who enrolled via that link.
+                                    </p>
+
+                                    {loading ? (
+                                        <p style={{ color: colors.textIcon, fontSize: 12 }}>Loading links...</p>
+                                    ) : courseLinks.length === 0 ? (
+                                        <p style={{ color: "#9ca3af", fontSize: 12 }}>No course-specific links generated yet.</p>
+                                    ) : (
+                                        courseLinks.map((link) => {
+                                            const linkStudents = students.filter((s) => s.sourceToken === link.token);
+                                            const isOpen = openToken[r._id] === link.token;
+                                            const isExpired = link.usedCount >= link.maxUses;
+                                            const linkUrl = `${window.location.origin}/book-now?token=${link.token}`;
+                                            const statusLabel = isExpired
+                                                ? `${link.usedCount}/${link.maxUses} used · Full`
+                                                : `${link.usedCount}/${link.maxUses} used`;
+
+                                            return (
+                                                <div
+                                                    key={link._id}
+                                                    style={{
+                                                        background: "white", border: "1px solid #eee", borderRadius: 10,
+                                                        padding: 14, marginBottom: 10,
+                                                    }}
+                                                >
+                                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                                                        <div>
+                                                            <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>
+                                                                {link.courseName || "—"}
+                                                            </div>
+                                                            <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>
+                                                                {[
+                                                                    link.courseCode,
+                                                                    link.sessionDate
+                                                                        ? new Date(link.sessionDate).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" })
+                                                                        : null,
+                                                                    link.startTime && link.endTime ? `${link.startTime} – ${link.endTime}` : null,
+                                                                ].filter(Boolean).join(" · ")}
+                                                            </div>
+                                                        </div>
+                                                        <span style={{
+                                                            fontWeight: 700, fontSize: 11, whiteSpace: "nowrap",
+                                                            color: isExpired ? "#e53e3e" : link.usedCount > 0 ? "#f59e0b" : colors.success,
+                                                            background: isExpired ? "#fff5f5" : link.usedCount > 0 ? "#fffbeb" : "#f0fdf4",
+                                                            padding: "4px 10px", borderRadius: 12,
+                                                        }}>
+                                                            {statusLabel}
+                                                        </span>
+                                                    </div>
+
+                                                    <div style={{
+                                                        background: "#f9fafb", border: "1px solid #eee", borderRadius: 8,
+                                                        padding: "8px 12px", fontSize: 12, color: "#555", margin: "10px 0",
+                                                        overflowX: "auto", whiteSpace: "nowrap",
+                                                    }}>
+                                                        {linkUrl}
+                                                    </div>
+
+                                                    <div style={{ display: "flex", gap: 8 }}>
+                                                        <button
+                                                            style={{
+                                                                border: "1px solid #ddd", background: "#f3f4f6", color: "#6b7280",
+                                                                fontWeight: 700, fontSize: 12, borderRadius: 8, padding: "6px 14px",
+                                                                cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6,
+                                                            }}
+                                                            onClick={() => handleCopy(link.token, linkUrl)}
+                                                        >
+                                                            <LinkIcon /> {copied === link.token ? "Copied!" : "Copy Link"}
+                                                        </button>
+                                                        <button
+                                                            style={{
+                                                                border: `1px solid ${colors.brandPrimary}33`, background: "white",
+                                                                color: colors.brandPrimary, fontWeight: 700, fontSize: 12,
+                                                                borderRadius: 8, padding: "6px 14px", cursor: "pointer",
+                                                            }}
+                                                            onClick={() => setOpenToken((prev) => ({
+                                                                ...prev,
+                                                                [r._id]: isOpen ? null : link.token,
+                                                            }))}
+                                                        >
+                                                            {isOpen ? "Hide Students" : "View Students"}
+                                                        </button>
+                                                        <a
+                                                            href={linkUrl}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            style={{
+                                                                border: `1px solid ${colors.brandPrimary}33`, background: "white",
+                                                                color: colors.brandPrimary, fontWeight: 700, fontSize: 12,
+                                                                borderRadius: 8, padding: "6px 14px", textDecoration: "none",
+                                                                display: "inline-flex", alignItems: "center",
+                                                            }}
+                                                        >
+                                                            Open Link ↗
+                                                        </a>
+                                                    </div>
+
+                                                    {isOpen && (
+                                                        <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #f0f0f0" }}>
+                                                            {linkStudents.length === 0 ? (
+                                                                <p style={{ color: "#9ca3af", fontSize: 12, margin: 0 }}>No students enrolled via this link yet.</p>
+                                                            ) : (
+                                                                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                                                                    <thead>
+                                                                        <tr style={{ color: "#9ca3af" }}>
+                                                                            <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Name</th>
+                                                                            <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Email</th>
+                                                                            <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Enrolled</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {linkStudents.map((s, si) => (
+                                                                            <tr key={si} style={{ borderTop: "1px solid #f5f5f5" }}>
+                                                                                <td style={{ padding: "6px 8px", fontWeight: 600, color: "#1a1a2e" }}>{s.name}</td>
+                                                                                <td style={{ padding: "6px 8px", color: "#555" }}>{s.email}</td>
+                                                                                <td style={{ padding: "6px 8px", color: "#9ca3af" }}>{s.enrolled}</td>
+                                                                            </tr>
+                                                                        ))}
+                                                                    </tbody>
+                                                                </table>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })
+                                    )}
+                                </div>
+
+                                {/* ── All enrolled students for this record ── */}
+                                <div style={{ marginTop: 14 }}>
+                                    <h4 style={{ fontSize: 13, fontWeight: 700, color: colors.textMuted, margin: "0 0 8px" }}>
+                                        All Enrolled Students ({students.length})
+                                    </h4>
+                                    {loading ? (
+                                        <p style={{ color: colors.textIcon, fontSize: 12 }}>Loading students...</p>
+                                    ) : students.length === 0 ? (
+                                        <p style={{ color: "#9ca3af", fontSize: 12 }}>No students enrolled yet.</p>
+                                    ) : (
+                                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                                            <thead>
+                                                <tr style={{ color: "#9ca3af", borderBottom: "1px solid #eee" }}>
+                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Name</th>
+                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Email</th>
+                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Course</th>
+                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Enrolled</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {students.map((s, si) => (
+                                                    <tr key={si} style={{ borderTop: "1px solid #f5f5f5" }}>
+                                                        <td style={{ padding: "6px 8px", fontWeight: 600, color: "#1a1a2e" }}>{s.name}</td>
+                                                        <td style={{ padding: "6px 8px", color: "#555" }}>{s.email}</td>
+                                                        <td style={{ padding: "6px 8px", color: colors.textSecondary }}>{s.course}</td>
+                                                        <td style={{ padding: "6px 8px", color: "#9ca3af" }}>{s.enrolled}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+/* ── Grouped Records Modal (same email) ── */
+function GroupedRecordsModal({ records, onClose, onView, onEdit, onToggle, onDeleteRequest, onOpenLinks, onPayLaterToggle }) {
+    const handleBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
+    const email = records?.[0]?.email || "";
+
+    return (
+        <div className="modal-backdrop" onClick={handleBackdrop}>
+            <div className="modal-box" style={{ maxWidth: 1100 }}>
+                <div className="modal-header">
+                    <div>
+                        <h2 className="modal-title">All Records — {email}</h2>
+                        <p className="modal-subtitle">{records.length} record{records.length !== 1 ? "s" : ""} for this email</p>
+                    </div>
+                    <button className="modal-close-btn" onClick={onClose}><CloseIcon /></button>
+                </div>
+                <div className="modal-body" style={{ maxHeight: "70vh", overflowY: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                        <thead>
+                            <tr style={{ borderBottom: "2px solid #e5e7eb", background: colors.bg }}>
+                                <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>#</th>
+                                <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Date</th>
+                                <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Company</th>
+                                <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Contact Person</th>
+                                <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Mobile</th>
+                                <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Links</th>
+                                <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Enrolments</th>
+                                <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Status</th>
+                                <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Pay Later</th>
+                                <th style={{ padding: "10px 12px", textAlign: "left", color: colors.textMuted, fontWeight: 600 }}>Last Login</th>
+                                <th style={{ padding: "10px 12px", textAlign: "center", color: colors.textMuted, fontWeight: 600 }}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {records.map((r, i) => (
+                                <tr key={r._id} style={{ borderBottom: "1px solid #f0f0f0" }}>
+                                    <td style={{ padding: "10px 12px", color: "#9ca3af" }}>{i + 1}</td>
+                                    <td style={{ padding: "10px 12px", color: "#555", whiteSpace: "nowrap" }}>
+                                        {r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" }) : "—"}
+                                    </td>
+                                    <td style={{ padding: "10px 12px", fontWeight: 600, color: "#1a1a2e" }}>
+                                        {r.companyName || r.name || "—"}
+                                    </td>
+                                    <td style={{ padding: "10px 12px", color: "#555" }}>{r.contactPerson || "—"}</td>
+                                    <td style={{ padding: "10px 12px", color: "#555" }}>{r.mobileNumber || "—"}</td>
+                                    <td style={{ padding: "10px 12px", textAlign: "center" }}>
+                                        <div style={{ display: "flex", alignItems: "center", gap: 6, justifyContent: "center" }}>
+                                            <span style={{ fontWeight: 700, color: r.linkCount > 0 ? colors.brandPrimary : "#9ca3af" }}>
+                                                {r.linkCount ?? 0}
+                                            </span>
+                                            {r.linkCount > 0 && (
+                                                <button
+                                                    style={{ border: "none", background: "none", cursor: "pointer", color: colors.brandPrimary, display: "flex", alignItems: "center", padding: 2 }}
+                                                    title="View links"
+                                                    onClick={() => onOpenLinks(r)}
+                                                >
+                                                    <LinkIcon />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td style={{ padding: "10px 12px", textAlign: "center" }}>
+                                        <span style={{ fontWeight: 700, color: r.enrollmentCount > 0 ? "#0d9488" : "#9ca3af" }}>
+                                            {r.enrollmentCount ?? 0}
+                                        </span>
+                                    </td>
+                                    <td style={{ padding: "10px 12px", textAlign: "center" }}>
+                                        <span className={`badge ${r.status === "Active" ? "badge-active" : "badge-inactive"}`}>
+                                            {r.status}
+                                        </span>
+                                    </td>
+                                    <td style={{ padding: "10px 12px", textAlign: "center" }}>
+                                        <label
+                                            className={`pay-later-switch ${r.payLater ? "is-on" : ""}`}
+                                            title={r.payLater ? "Pay Later enabled — click to disable" : "Pay Later disabled — click to enable"}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={!!r.payLater}
+                                                onChange={() => onPayLaterToggle(r._id)}
+                                            />
+                                            <span className="pay-later-slider" />
+                                            <span className="pay-later-label">{r.payLater ? "On" : "Off"}</span>
+                                        </label>
+                                    </td>
+                                    <td style={{ padding: "10px 12px", color: "#555", whiteSpace: "nowrap" }}>{r.lastLogin || "Never"}</td>
+                                    <td style={{ padding: "10px 12px" }}>
+                                        <div className="actions-cell">
+                                            <button className="btn-icon btn-icon-view" title="View" onClick={() => onView(r)}>
+                                                <EyeIcon />
+                                            </button>
+                                            <button className="btn-icon btn-icon-edit" title="Edit" onClick={() => onEdit(r)}>
+                                                <EditIcon />
+                                            </button>
+                                            <button className="btn-deactivate" onClick={() => onToggle(r._id)}>
+                                                {r.status === "Active" ? "Deactivate" : "Activate"}
+                                            </button>
+                                            <button className="btn-icon btn-icon-delete" title="Delete" onClick={() => onDeleteRequest(r)}>
+                                                <TrashIcon />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 /* ── Main Component ── */
 export default function Companies() {
     const [search, setSearch] = useState("");
@@ -434,46 +873,30 @@ export default function Companies() {
     const [companies, setCompanies] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [editCompany, setEditCompany] = useState(null);
-    const [viewCompany, setViewCompany] = useState(null);
+    const [viewCompany, setViewCompany] = useState(null); // records array for View All Details modal
     const [linksModalCompany, setLinksModalCompany] = useState(null);
     const [deleteTarget, setDeleteTarget] = useState(null);
-
-    // useEffect(() => {
-    //     const fetchCompanies = async () => {
-    //         try {
-    //             const token = localStorage.getItem("token");
-    //             const res = await axios.get(`${API_URL}/api/companies`, {
-    //                 headers: { Authorization: `Bearer ${token}` },
-    //             });
-    //             setCompanies(res.data.data);
-    //             console.log(res?.data?.data,"companies data");
-                
-    //         } catch (err) {
-    //             console.error(err);
-    //         }
-    //     };
-    //     fetchCompanies();
-    // }, []);
+    const [groupedRecordsFor, setGroupedRecordsFor] = useState(null); // holds the group (array of companies) to show in popup
 
     useEffect(() => {
-    const fetchCompanies = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) return; // ⛔ important
+        const fetchCompanies = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return; // ⛔ important
 
-            const res = await axios.get(`${API_URL}/api/companies`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+                const res = await axios.get(`${API_URL}/api/companies`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
 
-            setCompanies(res.data.data || []);
-        } catch (err) {
-            console.error("Fetch error:", err);
-            setCompanies([]); // fallback
-        }
-    };
+                setCompanies(res.data.data || []);
+            } catch (err) {
+                console.error("Fetch error:", err);
+                setCompanies([]); // fallback
+            }
+        };
 
-    fetchCompanies();
-}, []);
+        fetchCompanies();
+    }, []);
 
     const filtered = companies.filter((c) => {
         const name  = c.companyName || c.name || "";
@@ -486,8 +909,25 @@ export default function Companies() {
         return matchSearch && matchStatus;
     });
 
-    const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-    const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+    // ── Group filtered companies by email (frontend only) ──
+    const groupedByEmail = React.useMemo(() => {
+        const map = new Map();
+        filtered.forEach((c) => {
+            const key = (c.email || "").trim().toLowerCase() || `__no-email-${c._id}`;
+            if (!map.has(key)) map.set(key, []);
+            map.get(key).push(c);
+        });
+        // Each group: use the most recently created record as the "primary" row shown in the table
+        return Array.from(map.values()).map((records) => {
+            const sorted = [...records].sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            return { primary: sorted[0], records: sorted };
+        });
+    }, [filtered]);
+
+    const totalPages = Math.ceil(groupedByEmail.length / PAGE_SIZE);
+    const paginatedGroups = groupedByEmail.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     const handleToggle = async (id) => {
         try {
@@ -549,11 +989,12 @@ export default function Companies() {
                 />
             )}
 
-            {/* ── View Modal ── */}
+            {/* ── View All Details Modal ── */}
             {viewCompany && (
-                <CompanyViewModal
-                    company={viewCompany}
+                <ViewAllDetailsModal
+                    records={companies.filter((c) => viewCompany.some((v) => v._id === c._id))}
                     onClose={() => setViewCompany(null)}
+                    onPayLaterToggle={handlePayLaterToggle}
                 />
             )}
 
@@ -571,6 +1012,20 @@ export default function Companies() {
                     company={deleteTarget}
                     onClose={() => setDeleteTarget(null)}
                     onConfirm={handleDelete}
+                />
+            )}
+
+            {/* ── Grouped Records Modal (email view-all) ── */}
+            {groupedRecordsFor && (
+                <GroupedRecordsModal
+                    records={companies.filter((c) => groupedRecordsFor.some((g) => g._id === c._id))}
+                    onClose={() => setGroupedRecordsFor(null)}
+                    onView={() => { setGroupedRecordsFor(null); setViewCompany(groupedRecordsFor); }}
+                    onEdit={(r) => { setGroupedRecordsFor(null); setEditCompany(r); setShowModal(true); }}
+                    onToggle={handleToggle}
+                    onDeleteRequest={(r) => { setGroupedRecordsFor(null); setDeleteTarget(r); }}
+                    onOpenLinks={(r) => { setGroupedRecordsFor(null); setLinksModalCompany(r); }}
+                    onPayLaterToggle={handlePayLaterToggle}
                 />
             )}
 
@@ -618,7 +1073,7 @@ export default function Companies() {
             {/* Table */}
             <div className="table-card">
                 <div className="table-card-header">
-                    <h3 className="table-card-title">Company Accounts ({filtered.length})</h3>
+                    <h3 className="table-card-title">Company Accounts ({groupedByEmail.length})</h3>
                     <p className="table-card-subtitle">Manage company registrations</p>
                 </div>
 
@@ -627,20 +1082,20 @@ export default function Companies() {
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Company</th>
-                                <th>Contact Person</th>
+                                {/* <th>Company</th>
+                                <th>Contact Person</th> */}
                                 <th>Email</th>
                                 <th>Company mobile number</th>
-                                <th>Links</th>
-                                <th>Enrolments</th>
+                                {/* <th>Links</th> */}
+                                {/* <th>Enrolments</th>
                                 <th>Status</th>
                                 <th>Pay Later</th>
-                                <th>Last Login</th>
+                                <th>Last Login</th> */}
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {paginated.map((company) => (
+                            {paginatedGroups.map(({ primary: company, records }) => (
                                 <tr key={company._id}>
                                     <td>
                                         <div className="cell-date-main">
@@ -653,16 +1108,37 @@ export default function Companies() {
                                             })}
                                         </div>
                                     </td>
-                                    <td>
+                                    {/* <td>
                                         <div className="company-cell">
                                             <div className="company-icon"><BuildingIcon /></div>
                                             <span className="company-name">{company.companyName || company.name}</span>
                                         </div>
                                     </td>
-                                    <td>{company.contactPerson ? company.contactPerson : <span className="dash">—</span>}</td>
-                                    <td>{company.email}</td>
-                                    <td>{company.mobileNumber ? company.mobileNumber : <span className="dash">—</span>}</td>
+                                    <td>{company.contactPerson ? company.contactPerson : <span className="dash">—</span>}</td> */}
                                     <td>
+                                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                            <span>{company.email}</span>
+                                            <button
+                                                style={{
+                                                    border: "none",
+                                                    background: records.length > 1 ? colors.brandPrimary : "#f3f4f6",
+                                                    color: records.length > 1 ? "white" : "#6b7280",
+                                                    borderRadius: 10,
+                                                    fontSize: 11,
+                                                    fontWeight: 700,
+                                                    padding: "2px 8px",
+                                                    cursor: "pointer",
+                                                    whiteSpace: "nowrap",
+                                                }}
+                                                title="View all details"
+                                                onClick={() => setGroupedRecordsFor(records)}
+                                            >
+                                                {records.length > 1 ? `View All (${records.length})` : "View All"}
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>{company.mobileNumber ? company.mobileNumber : <span className="dash">—</span>}</td>
+                                    {/* <td>
                                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                             <span style={{ fontWeight: 700, color: company.linkCount > 0 ? colors.brandPrimary : "#9ca3af" }}>
                                                 {company.linkCount ?? 0}
@@ -701,19 +1177,19 @@ export default function Companies() {
                                             <span className="pay-later-slider" />
                                             <span className="pay-later-label">{company.payLater ? "On" : "Off"}</span>
                                         </label>
-                                    </td>
-                                    <td><span className="last-login">{company.lastLogin || "Never"}</span></td>
+                                    </td> */}
+                                    {/* <td><span className="last-login">{company.lastLogin || "Never"}</span></td> */}
                                     <td>
                                         <div className="actions-cell">
-                                            {/* ← Eye icon now opens CompanyViewModal */}
+                                            {/* ← Eye icon opens CompanyViewModal */}
                                             <button
                                                 className="btn-icon btn-icon-view"
                                                 title="View"
-                                                onClick={() => setViewCompany(company)}
+                                                onClick={() => setViewCompany(records)}
                                             >
                                                 <EyeIcon />
                                             </button>
-                                            <button
+                                            {/* <button
                                                 className="btn-icon btn-icon-edit"
                                                 title="Edit"
                                                 onClick={() => { setEditCompany(company); setShowModal(true); }}
@@ -732,7 +1208,7 @@ export default function Companies() {
                                                 onClick={() => setDeleteTarget(company)}
                                             >
                                                 <TrashIcon />
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </td>
                                 </tr>
@@ -744,8 +1220,8 @@ export default function Companies() {
                 {/* Pagination */}
                 <div className="pagination-row">
                     <span className="pagination-info">
-                        Showing {Math.min((page - 1) * PAGE_SIZE + 1, filtered.length)} to{" "}
-                        {Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length} results
+                        Showing {Math.min((page - 1) * PAGE_SIZE + 1, groupedByEmail.length)} to{" "}
+                        {Math.min(page * PAGE_SIZE, groupedByEmail.length)} of {groupedByEmail.length} results
                     </span>
                     <div className="pagination-controls">
                         <button className="btn-page" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}>

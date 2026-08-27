@@ -109,7 +109,7 @@ cron.schedule("0 9 * * *", async () => {
                 margin-top:10px;
                 font-size:16px;
             ">
-                Warm wishes from Safety Training Academy
+                Warm wishes from Safeticks
             </p>
         </div>
 
@@ -148,7 +148,7 @@ cron.schedule("0 9 * * *", async () => {
 
             <p>
                 Thank you for being a valuable part of 
-                <strong>Safety Training Academy</strong>.
+                <strong>Safeticks</strong>.
             </p>
 
 
@@ -158,7 +158,7 @@ cron.schedule("0 9 * * *", async () => {
             <p>
                 Best Regards,<br>
                 <strong style="color:#2563eb;">
-                    Safety Training Academy
+                    Safeticks
                 </strong>
             </p>
 
@@ -173,7 +173,7 @@ cron.schedule("0 9 * * *", async () => {
             font-size:13px;
             color:#64748b;
         ">
-            © ${new Date().getFullYear()} Safety Training Academy.
+            © ${new Date().getFullYear()} Safeticks.
             All Rights Reserved.
         </div>
 

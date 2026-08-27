@@ -239,7 +239,7 @@ body{
 
 <h1>⏰ Certificate Expiring in ${REMINDER_DAYS_BEFORE} Days</h1>
 
-<p>Safety Training Academy</p>
+<p>Safeticks</p>
 
 </div>
 
@@ -303,7 +303,7 @@ Warm Regards,
 
 <strong>
 
-Safety Training Academy Team
+Safeticks Team
 
 </strong>
 
@@ -315,7 +315,7 @@ Safety Training Academy Team
 
 <p>
 
-© 2026 Safety Training Academy
+© 2026 Safeticks
 
 </p>
 

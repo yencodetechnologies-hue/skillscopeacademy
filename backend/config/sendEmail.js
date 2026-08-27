@@ -29,7 +29,7 @@ const sendEmail = async ({ to, subject, html, bcc, attachments }) => {
 
   try {
     const mailOptions = {
-      from: `"Safety Training Academy No-Reply" <${process.env.SMTP_USER}>`,
+      from: `"Safeticks No-Reply" <${process.env.SMTP_USER}>`,
       to: to,
       bcc: bcc || [process.env.BOOKINGS_EMAIL, process.env.NOTIFY_EMAIL].filter(Boolean).join(','),
       replyTo: process.env.BOOKINGS_EMAIL || process.env.SMTP_USER,

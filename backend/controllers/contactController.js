@@ -158,7 +158,7 @@ const submitContactForm = async (req, res) => {
           font-size:14px;
         "
       >
-        Safety Training Academy
+        Safeticks
       </p>
 
     </div>

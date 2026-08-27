@@ -208,7 +208,7 @@
 /* RESOURCES DROPDOWN */
 .resources-dropdown {
   position: fixed;
-  top: 85px !important;
+  top: 95px !important;
   left: 400px;
   background: #0d1b2a;
   color: var(--color-surface);

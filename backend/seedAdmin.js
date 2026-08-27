@@ -11,7 +11,7 @@ const seedUser = async () => {
 
     const email = "info@safetytrainingacademy.edu.au";
     const password = "Safety45234@";
-    const name = "Safety Training Academy Admin";
+    const name = "Safeticks Admin";
 
     // Hash the password
     const salt = await bcrypt.genSalt(10);

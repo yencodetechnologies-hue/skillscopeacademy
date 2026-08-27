@@ -184,7 +184,7 @@ body{
 
 <h1>🎂 Happy Birthday!</h1>
 
-<p>Safety Training Academy</p>
+<p>Safeticks</p>
 
 </div>
 
@@ -202,7 +202,7 @@ Dear ${student.name},
 
 <p>
 
-On behalf of everyone at <strong>Safety Training Academy</strong>,
+On behalf of everyone at <strong>Safeticks</strong>,
 we would like to wish you a very Happy Birthday!
 
 </p>
@@ -251,7 +251,7 @@ Warm Regards,
 
 <strong>
 
-Safety Training Academy Team
+Safeticks Team
 
 </strong>
 
@@ -263,7 +263,7 @@ Safety Training Academy Team
 
 <p>
 
-© 2026 Safety Training Academy
+© 2026 Safeticks
 
 </p>
 

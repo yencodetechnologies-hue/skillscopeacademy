@@ -2132,7 +2132,7 @@ exports.updatePaymentStatus = async (req, res) => {
     </td></tr></table>
 </td></tr>
 <tr><td style="padding:20px 30px;background-color:#f8fafc;border-top:1px solid #e2e8f0;">
-    <p style="margin:0;font-size:13px;color:#64748b;">Kind regards,<br/><strong style="color:#334155;">Safety Training Academy</strong><br/>Training Team | 1300 976 097</p>
+    <p style="margin:0;font-size:13px;color:#64748b;">Kind regards,<br/><strong style="color:#334155;">Safeticks</strong><br/>Training Team | 1300 976 097</p>
 </td></tr>
 </table></td></tr></table></body></html>`;
 

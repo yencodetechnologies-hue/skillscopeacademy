@@ -146,3 +146,59 @@
         padding: 20px 16px 24px;
     }
 }
+/* =========================================================
+   STATE SELECT
+========================================================= */
+
+.v1-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Select box */
+.v1-select {
+  width: 100%;
+  
+  padding: 0 42px 0 14px;
+
+  
+}
+
+
+
+/* Custom arrow */
+.v1-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+
+  transform: translateY(-55%);
+
+  color: #6b7280;
+  font-size: 18px;
+  line-height: 1;
+
+  pointer-events: none;
+
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Arrow when wrapper is hovered */
+.v1-select-wrap:hover .v1-chevron {
+  color: #374151;
+}
+
+/* =========================================================
+   DROPDOWN OPTIONS
+========================================================= */
+
+.v1-select option {
+  padding: 10px 14px;
+
+  background: #ffffff;
+  color: #1f2937;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+

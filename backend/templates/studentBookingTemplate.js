@@ -9,7 +9,7 @@ const studentBookingTemplate = (data) => {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Booking Confirmation - Safety Training Academy</title>
+  <title>Booking Confirmation - Safeticks</title>
   <style>
     body { margin: 0; padding: 24px; background: #f0f2f5; font-family: 'Helvetica Neue', Arial, sans-serif; }
     .eb-body { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; border: 1px solid #e0e0e0; overflow: hidden; font-size: 13px; color: #1a1a1a; }
@@ -65,7 +65,7 @@ const studentBookingTemplate = (data) => {
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
-            <p class="eb-hdr-title">Safety Training Academy</p>
+            <p class="eb-hdr-title">Safeticks</p>
             <p class="eb-hdr-sub"> &nbsp;·&nbsp; BOOKING CONFIRMATION</p>
           </td>
           <td align="right" valign="top">
@@ -85,7 +85,7 @@ const studentBookingTemplate = (data) => {
     <div class="eb-content">
       <p class="eb-welcome">Hi <strong>${(data.name || '').split(' ')[0]}</strong>,</p>
       <p style="color: #475569; font-size: 13px; margin: 0 0 20px; line-height: 1.6;">
-        Thank you for booking with Safety Training Academy. Your spot is secured. Please review your details below and complete the required pre-course assessments.
+        Thank you for booking with Safeticks. Your spot is secured. Please review your details below and complete the required pre-course assessments.
       </p>
 
       <div class="eb-section">
@@ -143,8 +143,8 @@ const studentBookingTemplate = (data) => {
 
     <div class="eb-footer">
       Questions? <a href="mailto:info@safetytrainingacademy.edu.au">info@safetytrainingacademy.edu.au</a> | 1300 976 097<br/>
-      <strong>Safety Training Academy</strong> | <br/><br/>
-      &copy; ${new Date().getFullYear()} Safety Training Academy. All rights reserved.
+      <strong>Safeticks</strong> | <br/><br/>
+      &copy; ${new Date().getFullYear()} Safeticks. All rights reserved.
     </div>
   </div>
 </body>

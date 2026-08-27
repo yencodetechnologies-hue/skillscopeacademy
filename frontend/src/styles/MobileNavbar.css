@@ -1,6 +1,6 @@
 /* Navy Top Bar Container */
 .mnb-header-bar {
-  background-color: #031427; /* Dark navy blue from logo image */
+  background-color: #fff; /* Dark navy blue from logo image */
   width: 100%;
   position: relative;
   z-index: 1000;
@@ -24,7 +24,7 @@
 }
 
 .mnb-logo-img {
-  height: 38px;
+  height: 50px;
   width: auto;
   display: block;
 }
@@ -60,7 +60,7 @@
 .mnb-toggle-btn {
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: #031427;
   font-size: 26px;
   cursor: pointer;
   padding: 0;

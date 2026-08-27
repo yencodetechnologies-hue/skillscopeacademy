@@ -841,9 +841,9 @@ function GroupedRecordsModal({ records, onClose, onView, onEdit, onToggle, onDel
                                     <td style={{ padding: "10px 12px", color: "#555", whiteSpace: "nowrap" }}>{r.lastLogin || "Never"}</td>
                                     <td style={{ padding: "10px 12px" }}>
                                         <div className="actions-cell">
-                                            <button className="btn-icon btn-icon-view" title="View" onClick={() => onView(r)}>
+                                            {/* <button className="btn-icon btn-icon-view" title="View" onClick={() => onView(r)}>
                                                 <EyeIcon />
-                                            </button>
+                                            </button> */}
                                             <button className="btn-icon btn-icon-edit" title="Edit" onClick={() => onEdit(r)}>
                                                 <EditIcon />
                                             </button>

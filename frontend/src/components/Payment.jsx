@@ -981,7 +981,11 @@ function Payment({
 
                     <div className="card-logos">
                         <span>We accept</span>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+                         <img
+        src="https://cdn.simpleicons.org/visa"
+        alt="Visa"
+        className="card-logo visa-logo"
+    />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" />
                     </div>

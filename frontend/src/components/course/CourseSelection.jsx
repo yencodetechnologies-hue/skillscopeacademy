@@ -877,10 +877,10 @@ useEffect(() => {
                 (sc.course?.__variant || null) === (variant || null)
         )
 
-        if (exists) {
-            alert("This course is already added.")
-            return
-        }
+        // if (exists) {
+        //     alert("This course is already added.")
+        //     return
+        // }
 
         const uid = `${courseId}_${variant || "default"}_${Date.now()}`
 

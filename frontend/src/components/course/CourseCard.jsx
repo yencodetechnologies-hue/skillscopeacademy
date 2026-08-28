@@ -72,6 +72,7 @@ function CourseCard({ course, fromPortal }) {
                     <div className="course-info-row">
                         <span className="course-info-item">
                             <i className="fa-regular fa-calendar-days" />
+                             {course.duration}
                         </span>
                         <span className="course-info-item">
                             <i className="fa-solid fa-location-dot" />

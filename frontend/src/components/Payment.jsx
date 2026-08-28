@@ -229,54 +229,32 @@ function Payment({
         }
     }, [isExistingCompany, shouldAutofill, initialPaymentData, enrollmentLinkData, tokenData])
 
-    // ✅ NEW: Auto-fill company details from localStorage id/role.
-    // Only runs when the existing "isExistingCompany" / "shouldAutofill" prop-driven
-    // autofill paths above are NOT already supplying data, so it never conflicts
-    // with existing behavior — it's purely an additional fallback source.
-    // ✅ Auto-fill company details from localStorage "user" object
-useEffect(() => {
-    //if (isExistingCompany || shouldAutofill) return
-    let cancelled = false
-
-    let storedUser = null
-    try {
-        const raw = localStorage.getItem("user")
-        if (raw) storedUser = JSON.parse(raw)
-    } catch (err) {
-        console.error("Failed to parse stored user:", err)
-        return
-    }
-
-    // if (!storedUser || !storedUser.id) return
-    // if (storedUser.role !== "company") return   // adjust if the key name differs
-
-    
-
-    const fetchCompanyDetails = async () => {
+    // ✅ Auto-fill + lock details from localStorage "user" object based on role.
+    // Only "student" and "company" roles get their fields bound from localStorage
+    // and made read-only. Empty role or "admin" leaves fields editable and unbound.
+    useEffect(() => {
+        let storedUser = null
         try {
-            const token = localStorage.getItem("token")
-            const response = await fetch(`${API_URL}/api/companies/${storedUser.id}`, {
-                headers: token ? { Authorization: `Bearer ${token}` } : {},
-            })
-            const result = await response.json()
-
-            if (!cancelled && result.success && result.data) {
-                const company = result.data
-                setName(company.companyName || company.name || "")
-                setEmail(company.email || "")
-                setPhone(company.mobileNumber || company.mobile || company.phone || "")
-                setContactPerson(company.contactPerson || "")
-                setAgreed(true)
-                setIsAutoFilledCompany(true)
-            }
+            const raw = localStorage.getItem("user")
+            if (raw) storedUser = JSON.parse(raw)
         } catch (err) {
-            console.error("Failed to auto-fetch company details:", err)
+            console.error("Failed to parse stored user:", err)
+            return
         }
-    }
 
-    fetchCompanyDetails()
-    return () => { cancelled = true }
-}, [isExistingCompany, shouldAutofill])
+        if (!storedUser || !storedUser.id) return
+
+        const lockedRoles = ["student", "company"]
+        const userRole = (storedUser.role || "").toLowerCase()
+        if (!lockedRoles.includes(userRole)) return
+
+        setName(storedUser.name || "")
+        setEmail(storedUser.email || "")
+        setPhone(storedUser.mobileNumber || storedUser.phone || "")
+        setContactPerson(storedUser.contactPerson || "")
+        setAgreed(true)
+        setIsAutoFilledCompany(true)
+    }, [])
 
     useEffect(() => {
         if (isExistingCompany || shouldAutofill || isAutoFilledCompany) {
@@ -691,7 +669,7 @@ useEffect(() => {
                         }}
                         onBlur={() => !(isExistingCompany || isAutoFilledCompany) && handleBlur("phone")}
                         className={errors.phone ? "input-error" : ""}
-                        readOnly={isExistingCompany || isAutoFilledCompany}
+                        readOnly={isAutoFilledCompany}
                     />
                     {errors.phone && <span className="error-text">⚠ {errors.phone}</span>}
                 </div>
@@ -768,7 +746,7 @@ useEffect(() => {
                             setAgreed(e.target.checked)
                             handleBlur("agreed", { agreed: e.target.checked })
                         }}
-                        disabled={isExistingCompany || isAutoFilledCompany}
+                        disabled={isAutoFilledCompany}
                     />
                     <span>I agree to the terms and conditions and understand my information will be used for enrollment purposes</span>
                 </div>

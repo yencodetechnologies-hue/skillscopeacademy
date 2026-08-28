@@ -425,7 +425,10 @@ function DeleteCompanyModal({ company, onClose, onConfirm }) {
     );
 }
 
-/* ── View All Details Modal (email group + enrolled students) ── */
+/* ── View All Details Modal (email group + enrolled students) ──
+   Simplified: only shows the General Enrolment Link and the
+   Course Booking Links, each expandable to the students who
+   enrolled through that specific link. */
 function ViewAllDetailsModal({ records, onClose, onPayLaterToggle }) {
     const [detailsByCompany, setDetailsByCompany] = useState({});
     const [loading, setLoading] = useState(true);
@@ -472,13 +475,6 @@ function ViewAllDetailsModal({ records, onClose, onPayLaterToggle }) {
         setTimeout(() => setCopied(null), 2000);
     };
 
-    const detailRow = (label, value) => (
-        <div style={{ display: "flex", padding: "6px 0", borderBottom: "1px solid #f2f2f2" }}>
-            <span style={{ width: 140, flexShrink: 0, color: colors.textMuted, fontSize: 12, fontWeight: 600 }}>{label}</span>
-            <span style={{ color: "#1a1a2e", fontSize: 13 }}>{value ?? <span className="dash">—</span>}</span>
-        </div>
-    );
-
     return (
         <div className="modal-backdrop" onClick={handleBackdrop}>
             <div className="modal-box" style={{ maxWidth: 920 }}>
@@ -490,80 +486,32 @@ function ViewAllDetailsModal({ records, onClose, onPayLaterToggle }) {
                     <button className="modal-close-btn" onClick={onClose}><CloseIcon /></button>
                 </div>
                 <div className="modal-body" style={{ maxHeight: "72vh", overflowY: "auto" }}>
-                    {records.map((r, idx) => {
-                        const detail = detailsByCompany[r._id] || { students: [], courseLinks: [] };
-                        const students = detail.students;
-                        const courseLinks = detail.courseLinks;
-                        const enrolmentLink = `${window.location.origin}/book-now/company/${r._id}`;
+                    {/* ── Company name shown once ── */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
+                        <div className="company-icon"><BuildingIcon /></div>
+                        <div>
+                            <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 15 }}>
+                                {records[0]?.companyName || records[0]?.name || "—"}
+                            </div>
+                            <span className={`badge ${records[0]?.status === "Active" ? "badge-active" : "badge-inactive"}`}>
+                                {records[0]?.status}
+                            </span>
+                        </div>
+                    </div>
 
-                        return (
-                            <div
-                                key={r._id}
-                                style={{
-                                    border: "1px solid #eee",
-                                    borderRadius: 10,
-                                    padding: 16,
-                                    marginBottom: 16,
-                                    background: idx % 2 === 0 ? "#fff" : "#fafafa",
-                                }}
-                            >
-                                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                                    <div className="company-icon"><BuildingIcon /></div>
-                                    <div>
-                                        <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 15 }}>
-                                            {r.companyName || r.name || "—"}
-                                        </div>
-                                        <span className={`badge ${r.status === "Active" ? "badge-active" : "badge-inactive"}`}>
-                                            {r.status}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* ── Details grid, neatly aligned ── */}
-                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
-                                    <div>
-                                        {detailRow("Contact Person", r.contactPerson)}
-                                        {detailRow("Email", r.email)}
-                                        {detailRow("Mobile", r.mobileNumber)}
-                                        {detailRow(
-                                            "Registered On",
-                                            r.createdAt
-                                                ? new Date(r.createdAt).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" })
-                                                : "—"
-                                        )}
-                                    </div>
-                                    <div>
-                                        {detailRow("Links Generated", r.linkCount ?? courseLinks.length ?? 0)}
-                                        {detailRow("Enrolments", r.enrollmentCount ?? students.length ?? 0)}
-                                        {detailRow(
-                                            "Pay Later",
-                                            <label
-                                                className={`pay-later-switch ${r.payLater ? "is-on" : ""}`}
-                                                title={r.payLater ? "Pay Later enabled — click to disable" : "Pay Later disabled — click to enable"}
-                                                style={{ marginTop: 2 }}
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    checked={!!r.payLater}
-                                                    onChange={() => onPayLaterToggle(r._id)}
-                                                />
-                                                <span className="pay-later-slider" />
-                                                <span className="pay-later-label">{r.payLater ? "On" : "Off"}</span>
-                                            </label>
-                                        )}
-                                        {detailRow("Last Login", r.lastLogin || "Never")}
-                                    </div>
-                                </div>
-
-                                {/* ── General Enrolment Link ── */}
-                                <div style={{ marginTop: 16, background: "#f7f6fd", border: "1px solid #ece9fb", borderRadius: 10, padding: 14 }}>
-                                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>General Enrolment Link</h4>
-                                    <p style={{ fontSize: 12, color: colors.textMuted, margin: "4px 0 10px" }}>
-                                        Share this link with employees. They can select any course and enroll themselves under your company account.
-                                    </p>
+                    {/* ── Enrolment Links (separate section, one per record) ── */}
+                    <div style={{ background: "#f7f6fd", border: "1px solid #ece9fb", borderRadius: 10, padding: 14, marginBottom: 16 }}>
+                        <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>Enrolment Links</h4>
+                        <p style={{ fontSize: 12, color: colors.textMuted, margin: "4px 0 12px" }}>
+                            Share this link with employees. They can select any course and enroll themselves under your company account.
+                        </p>
+                        {records.map((r) => {
+                            const enrolmentLink = `${window.location.origin}/book-now/company/${r._id}`;
+                            return (
+                                <div key={r._id} style={{ marginBottom: 10 }}>
                                     <div style={{
                                         background: "white", border: "1px solid #e5e7eb", borderRadius: 8,
-                                        padding: "8px 12px", fontSize: 12, color: "#555", marginBottom: 10,
+                                        padding: "8px 12px", fontSize: 12, color: "#555", marginBottom: 8,
                                         overflowX: "auto", whiteSpace: "nowrap",
                                     }}>
                                         {enrolmentLink}
@@ -579,175 +527,151 @@ function ViewAllDetailsModal({ records, onClose, onPayLaterToggle }) {
                                         <LinkIcon /> {copied === `enrol-${r._id}` ? "Copied!" : "Copy Enrolment Link"}
                                     </button>
                                 </div>
+                            );
+                        })}
+                    </div>
 
-                                {/* ── Course Booking Links ── */}
-                                <div style={{ marginTop: 16, background: "#fafafa", border: "1px solid #eee", borderRadius: 10, padding: 14 }}>
-                                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>Course Booking Links</h4>
-                                    <p style={{ fontSize: 12, color: colors.textMuted, margin: "4px 0 12px" }}>
-                                        Each link was generated for a specific course. Click "View Students" to see who enrolled via that link.
-                                    </p>
+                    {/* ── Course Booking Links (separate section, all records) ── */}
+                    <div style={{ background: "#fafafa", border: "1px solid #eee", borderRadius: 10, padding: 14 }}>
+                        <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e", margin: 0 }}>Course Booking Links</h4>
+                        <p style={{ fontSize: 12, color: colors.textMuted, margin: "4px 0 12px" }}>
+                            Each link was generated for a specific course. Click "View Students" to see who enrolled via that link.
+                        </p>
 
-                                    {loading ? (
-                                        <p style={{ color: colors.textIcon, fontSize: 12 }}>Loading links...</p>
-                                    ) : courseLinks.length === 0 ? (
-                                        <p style={{ color: "#9ca3af", fontSize: 12 }}>No course-specific links generated yet.</p>
-                                    ) : (
-                                        courseLinks.map((link) => {
-                                            const linkStudents = students.filter((s) => s.sourceToken === link.token);
-                                            const isOpen = openToken[r._id] === link.token;
-                                            const isExpired = link.usedCount >= link.maxUses;
-                                            const linkUrl = `${window.location.origin}/book-now?token=${link.token}`;
-                                            const statusLabel = isExpired
-                                                ? `${link.usedCount}/${link.maxUses} used · Full`
-                                                : `${link.usedCount}/${link.maxUses} used`;
+                        {loading ? (
+                            <p style={{ color: colors.textIcon, fontSize: 12 }}>Loading links...</p>
+                        ) : (
+                            (() => {
+                                const allCourseLinks = records.flatMap((r) => {
+                                    const detail = detailsByCompany[r._id] || { students: [], courseLinks: [] };
+                                    return detail.courseLinks.map((link) => ({ link, recordId: r._id, students: detail.students }));
+                                });
 
-                                            return (
-                                                <div
-                                                    key={link._id}
+                                if (allCourseLinks.length === 0) {
+                                    return <p style={{ color: "#9ca3af", fontSize: 12 }}>No course-specific links generated yet.</p>;
+                                }
+
+                                return allCourseLinks.map(({ link, recordId, students }) => {
+                                    const linkStudents = students.filter((s) => s.sourceToken === link.token);
+                                    const isOpen = openToken[recordId] === link.token;
+                                    const isExpired = link.usedCount >= link.maxUses;
+                                    const linkUrl = `${window.location.origin}/book-now?token=${link.token}`;
+                                    const statusLabel = isExpired
+                                        ? `${link.usedCount}/${link.maxUses} used · Full`
+                                        : `${link.usedCount}/${link.maxUses} used`;
+
+                                    return (
+                                        <div
+                                            key={link._id}
+                                            style={{
+                                                background: "white", border: "1px solid #eee", borderRadius: 10,
+                                                padding: 14, marginBottom: 10,
+                                            }}
+                                        >
+                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                                                <div>
+                                                    <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>
+                                                        {link.courseName || "—"}
+                                                    </div>
+                                                    <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>
+                                                        {[
+                                                            link.courseCode,
+                                                            link.sessionDate
+                                                                ? new Date(link.sessionDate).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" })
+                                                                : null,
+                                                            link.startTime && link.endTime ? `${link.startTime} – ${link.endTime}` : null,
+                                                        ].filter(Boolean).join(" · ")}
+                                                    </div>
+                                                </div>
+                                                <span style={{
+                                                    fontWeight: 700, fontSize: 11, whiteSpace: "nowrap",
+                                                    color: isExpired ? "#e53e3e" : link.usedCount > 0 ? "#f59e0b" : colors.success,
+                                                    background: isExpired ? "#fff5f5" : link.usedCount > 0 ? "#fffbeb" : "#f0fdf4",
+                                                    padding: "4px 10px", borderRadius: 12,
+                                                }}>
+                                                    {statusLabel}
+                                                </span>
+                                            </div>
+
+                                            <div style={{
+                                                background: "#f9fafb", border: "1px solid #eee", borderRadius: 8,
+                                                padding: "8px 12px", fontSize: 12, color: "#555", margin: "10px 0",
+                                                overflowX: "auto", whiteSpace: "nowrap",
+                                            }}>
+                                                {linkUrl}
+                                            </div>
+
+                                            <div style={{ display: "flex", gap: 8 }}>
+                                                <button
                                                     style={{
-                                                        background: "white", border: "1px solid #eee", borderRadius: 10,
-                                                        padding: 14, marginBottom: 10,
+                                                        border: "1px solid #ddd", background: "#f3f4f6", color: "#6b7280",
+                                                        fontWeight: 700, fontSize: 12, borderRadius: 8, padding: "6px 14px",
+                                                        cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6,
+                                                    }}
+                                                    onClick={() => handleCopy(link.token, linkUrl)}
+                                                >
+                                                    <LinkIcon /> {copied === link.token ? "Copied!" : "Copy Link"}
+                                                </button>
+                                                <button
+                                                    style={{
+                                                        border: `1px solid ${colors.brandPrimary}33`, background: "white",
+                                                        color: colors.brandPrimary, fontWeight: 700, fontSize: 12,
+                                                        borderRadius: 8, padding: "6px 14px", cursor: "pointer",
+                                                    }}
+                                                    onClick={() => setOpenToken((prev) => ({
+                                                        ...prev,
+                                                        [recordId]: isOpen ? null : link.token,
+                                                    }))}
+                                                >
+                                                    {isOpen ? "Hide Students" : `View Students (${linkStudents.length})`}
+                                                </button>
+                                                <a
+                                                    href={linkUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    style={{
+                                                        border: `1px solid ${colors.brandPrimary}33`, background: "white",
+                                                        color: colors.brandPrimary, fontWeight: 700, fontSize: 12,
+                                                        borderRadius: 8, padding: "6px 14px", textDecoration: "none",
+                                                        display: "inline-flex", alignItems: "center",
                                                     }}
                                                 >
-                                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
-                                                        <div>
-                                                            <div style={{ fontWeight: 700, color: "#1a1a2e", fontSize: 14 }}>
-                                                                {link.courseName || "—"}
-                                                            </div>
-                                                            <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 2 }}>
-                                                                {[
-                                                                    link.courseCode,
-                                                                    link.sessionDate
-                                                                        ? new Date(link.sessionDate).toLocaleDateString("en-AU", { timeZone: "Australia/Sydney" })
-                                                                        : null,
-                                                                    link.startTime && link.endTime ? `${link.startTime} – ${link.endTime}` : null,
-                                                                ].filter(Boolean).join(" · ")}
-                                                            </div>
-                                                        </div>
-                                                        <span style={{
-                                                            fontWeight: 700, fontSize: 11, whiteSpace: "nowrap",
-                                                            color: isExpired ? "#e53e3e" : link.usedCount > 0 ? "#f59e0b" : colors.success,
-                                                            background: isExpired ? "#fff5f5" : link.usedCount > 0 ? "#fffbeb" : "#f0fdf4",
-                                                            padding: "4px 10px", borderRadius: 12,
-                                                        }}>
-                                                            {statusLabel}
-                                                        </span>
-                                                    </div>
+                                                    Open Link ↗
+                                                </a>
+                                            </div>
 
-                                                    <div style={{
-                                                        background: "#f9fafb", border: "1px solid #eee", borderRadius: 8,
-                                                        padding: "8px 12px", fontSize: 12, color: "#555", margin: "10px 0",
-                                                        overflowX: "auto", whiteSpace: "nowrap",
-                                                    }}>
-                                                        {linkUrl}
-                                                    </div>
-
-                                                    <div style={{ display: "flex", gap: 8 }}>
-                                                        <button
-                                                            style={{
-                                                                border: "1px solid #ddd", background: "#f3f4f6", color: "#6b7280",
-                                                                fontWeight: 700, fontSize: 12, borderRadius: 8, padding: "6px 14px",
-                                                                cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 6,
-                                                            }}
-                                                            onClick={() => handleCopy(link.token, linkUrl)}
-                                                        >
-                                                            <LinkIcon /> {copied === link.token ? "Copied!" : "Copy Link"}
-                                                        </button>
-                                                        <button
-                                                            style={{
-                                                                border: `1px solid ${colors.brandPrimary}33`, background: "white",
-                                                                color: colors.brandPrimary, fontWeight: 700, fontSize: 12,
-                                                                borderRadius: 8, padding: "6px 14px", cursor: "pointer",
-                                                            }}
-                                                            onClick={() => setOpenToken((prev) => ({
-                                                                ...prev,
-                                                                [r._id]: isOpen ? null : link.token,
-                                                            }))}
-                                                        >
-                                                            {isOpen ? "Hide Students" : "View Students"}
-                                                        </button>
-                                                        <a
-                                                            href={linkUrl}
-                                                            target="_blank"
-                                                            rel="noreferrer"
-                                                            style={{
-                                                                border: `1px solid ${colors.brandPrimary}33`, background: "white",
-                                                                color: colors.brandPrimary, fontWeight: 700, fontSize: 12,
-                                                                borderRadius: 8, padding: "6px 14px", textDecoration: "none",
-                                                                display: "inline-flex", alignItems: "center",
-                                                            }}
-                                                        >
-                                                            Open Link ↗
-                                                        </a>
-                                                    </div>
-
-                                                    {isOpen && (
-                                                        <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #f0f0f0" }}>
-                                                            {linkStudents.length === 0 ? (
-                                                                <p style={{ color: "#9ca3af", fontSize: 12, margin: 0 }}>No students enrolled via this link yet.</p>
-                                                            ) : (
-                                                                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
-                                                                    <thead>
-                                                                        <tr style={{ color: "#9ca3af" }}>
-                                                                            <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Name</th>
-                                                                            <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Email</th>
-                                                                            <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Enrolled</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {linkStudents.map((s, si) => (
-                                                                            <tr key={si} style={{ borderTop: "1px solid #f5f5f5" }}>
-                                                                                <td style={{ padding: "6px 8px", fontWeight: 600, color: "#1a1a2e" }}>{s.name}</td>
-                                                                                <td style={{ padding: "6px 8px", color: "#555" }}>{s.email}</td>
-                                                                                <td style={{ padding: "6px 8px", color: "#9ca3af" }}>{s.enrolled}</td>
-                                                                            </tr>
-                                                                        ))}
-                                                                    </tbody>
-                                                                </table>
-                                                            )}
-                                                        </div>
+                                            {isOpen && (
+                                                <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #f0f0f0" }}>
+                                                    {linkStudents.length === 0 ? (
+                                                        <p style={{ color: "#9ca3af", fontSize: 12, margin: 0 }}>No students enrolled via this link yet.</p>
+                                                    ) : (
+                                                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                                                            <thead>
+                                                                <tr style={{ color: "#9ca3af" }}>
+                                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Name</th>
+                                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Email</th>
+                                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Enrolled</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {linkStudents.map((s, si) => (
+                                                                    <tr key={si} style={{ borderTop: "1px solid #f5f5f5" }}>
+                                                                        <td style={{ padding: "6px 8px", fontWeight: 600, color: "#1a1a2e" }}>{s.name}</td>
+                                                                        <td style={{ padding: "6px 8px", color: "#555" }}>{s.email}</td>
+                                                                        <td style={{ padding: "6px 8px", color: "#9ca3af" }}>{s.enrolled}</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
                                                     )}
                                                 </div>
-                                            );
-                                        })
-                                    )}
-                                </div>
-
-                                {/* ── All enrolled students for this record ── */}
-                                <div style={{ marginTop: 14 }}>
-                                    <h4 style={{ fontSize: 13, fontWeight: 700, color: colors.textMuted, margin: "0 0 8px" }}>
-                                        All Enrolled Students ({students.length})
-                                    </h4>
-                                    {loading ? (
-                                        <p style={{ color: colors.textIcon, fontSize: 12 }}>Loading students...</p>
-                                    ) : students.length === 0 ? (
-                                        <p style={{ color: "#9ca3af", fontSize: 12 }}>No students enrolled yet.</p>
-                                    ) : (
-                                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
-                                            <thead>
-                                                <tr style={{ color: "#9ca3af", borderBottom: "1px solid #eee" }}>
-                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Name</th>
-                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Email</th>
-                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Course</th>
-                                                    <th style={{ padding: "4px 8px", textAlign: "left", fontWeight: 600 }}>Enrolled</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {students.map((s, si) => (
-                                                    <tr key={si} style={{ borderTop: "1px solid #f5f5f5" }}>
-                                                        <td style={{ padding: "6px 8px", fontWeight: 600, color: "#1a1a2e" }}>{s.name}</td>
-                                                        <td style={{ padding: "6px 8px", color: "#555" }}>{s.email}</td>
-                                                        <td style={{ padding: "6px 8px", color: colors.textSecondary }}>{s.course}</td>
-                                                        <td style={{ padding: "6px 8px", color: "#9ca3af" }}>{s.enrolled}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
+                                            )}
+                                        </div>
+                                    );
+                                });
+                            })()
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
@@ -1082,15 +1006,15 @@ export default function Companies() {
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                {/* <th>Company</th>
-                                <th>Contact Person</th> */}
+                                <th>Company</th>
+                                <th>Contact Person</th> 
                                 <th>Email</th>
                                 <th>Company mobile number</th>
-                                {/* <th>Links</th> */}
-                                {/* <th>Enrolments</th>
+                                <th>Links</th>
+                                <th>Enrolments</th>
                                 <th>Status</th>
                                 <th>Pay Later</th>
-                                <th>Last Login</th> */}
+                                <th>Last Login</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -1108,17 +1032,17 @@ export default function Companies() {
                                             })}
                                         </div>
                                     </td>
-                                    {/* <td>
+                                    <td>
                                         <div className="company-cell">
                                             <div className="company-icon"><BuildingIcon /></div>
                                             <span className="company-name">{company.companyName || company.name}</span>
                                         </div>
                                     </td>
-                                    <td>{company.contactPerson ? company.contactPerson : <span className="dash">—</span>}</td> */}
+                                    <td>{company.contactPerson ? company.contactPerson : <span className="dash">—</span>}</td>
                                     <td>
                                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                             <span>{company.email}</span>
-                                            <button
+                                            {/* <button
                                                 style={{
                                                     border: "none",
                                                     background: records.length > 1 ? colors.brandPrimary : "#f3f4f6",
@@ -1134,11 +1058,11 @@ export default function Companies() {
                                                 onClick={() => setGroupedRecordsFor(records)}
                                             >
                                                 {records.length > 1 ? `View All (${records.length})` : "View All"}
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </td>
                                     <td>{company.mobileNumber ? company.mobileNumber : <span className="dash">—</span>}</td>
-                                    {/* <td>
+                                    <td>
                                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                             <span style={{ fontWeight: 700, color: company.linkCount > 0 ? colors.brandPrimary : "#9ca3af" }}>
                                                 {company.linkCount ?? 0}
@@ -1177,8 +1101,8 @@ export default function Companies() {
                                             <span className="pay-later-slider" />
                                             <span className="pay-later-label">{company.payLater ? "On" : "Off"}</span>
                                         </label>
-                                    </td> */}
-                                    {/* <td><span className="last-login">{company.lastLogin || "Never"}</span></td> */}
+                                    </td>
+                                    <td><span className="last-login">{company.lastLogin || "Never"}</span></td>
                                     <td>
                                         <div className="actions-cell">
                                             {/* ← Eye icon opens CompanyViewModal */}
@@ -1189,7 +1113,7 @@ export default function Companies() {
                                             >
                                                 <EyeIcon />
                                             </button>
-                                            {/* <button
+                                            <button
                                                 className="btn-icon btn-icon-edit"
                                                 title="Edit"
                                                 onClick={() => { setEditCompany(company); setShowModal(true); }}
@@ -1208,7 +1132,7 @@ export default function Companies() {
                                                 onClick={() => setDeleteTarget(company)}
                                             >
                                                 <TrashIcon />
-                                            </button> */}
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

@@ -190,7 +190,6 @@
 
 // export default App
 
-
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import { useContext, useEffect, useRef, Suspense, lazy } from "react"
 import { AuthContext } from "./context/AuthContext"
@@ -261,7 +260,7 @@ import StudentResults from "./components/student/StudentResults"
 import StudentSchedule from "./components/student/StudentSchedule"
 import ProtectedRoute from "./components/ProtectedRoute"
 import EnrollmentSuccess from "./components/student/StudentEnrollmentSuccess"
-import StudentProfile from "./components/Profile"
+import AdminProfile from "./components/AdminProfile"
 import ScrollToTop from "./components/ScrollToTop"
 import LegacyCourseRedirect from "./components/LegacyCourseRedirect"
 import CompanyPayment from "./components/CompanyPayment"
@@ -350,7 +349,7 @@ function App() {
                     <Route path="/student/enrollment-form" element={<StudentEnrollmentForm />} />
                     <Route path="/student/results" element={<StudentResults />} />
                     <Route path="/student/certificates" element={<StudentCertificate />} />
-                    <Route path="/student/profile" element={<StudentProfile />} />
+                    <Route path="/student/profile" element={<AdminProfile />} />
 
 
                 </Route>
@@ -365,6 +364,7 @@ function App() {
                     }
                 >
                     <Route index element={<TeacherDashboard />} />
+                    <Route path="/teacher/profile" element={<AdminProfile />} />
                 </Route>
 
                 {/* COMPANY */}
@@ -384,6 +384,7 @@ function App() {
                     <Route path="companyCourses" element={<CompanyCourses />} />
                     <Route path="companyStudents" element={<StudentsEnrolled />} />
                     <Route path="companyPayments" element={<CompanyPayments />} />
+                    <Route path="/company/profile" element={<AdminProfile />} />
                 </Route>
 
                 {/* ADMIN */}
@@ -426,6 +427,7 @@ function App() {
                     <Route path="sliders" element={<Sliders />} />
                     <Route path="partners" element={<Partners />} />
                     <Route path="code-of-practice" element={<AdminCodeOfPractice />} />
+                    <Route path="/admin/profile" element={<AdminProfile />} />
                 </Route>
 
             </Routes>

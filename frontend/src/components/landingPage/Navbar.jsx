@@ -1,7 +1,7 @@
 import "../../styles/Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext} from "react";
-import Student from "../../components/Profile";
+import AdminProfile from "../AdminProfile";
 import { AuthContext } from "../../context/AuthContext";
 
 function Navbar({ user }) {
@@ -9,6 +9,7 @@ function Navbar({ user }) {
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
+    const [profileModalOpen, setProfileModalOpen] = useState(false);
 
     const profileRef = useRef(null);
     const { logout } = useContext(AuthContext);
@@ -32,7 +33,7 @@ function Navbar({ user }) {
     ========================================================= */
 
     const goProfile = () => {
-        navigate("/student/profile");
+        setProfileModalOpen(true);
         setProfileOpen(false);
         closeSidebar();
     };
@@ -77,6 +78,14 @@ function Navbar({ user }) {
 
     return (
         <>
+            {/* =================================================
+                PROFILE MODAL
+            ================================================= */}
+
+            {profileModalOpen && (
+                <AdminProfile onClose={() => setProfileModalOpen(false)} />
+            )}
+
             {/* =================================================
                 OVERLAY
             ================================================= */}
@@ -210,7 +219,7 @@ function Navbar({ user }) {
                                 <div className="profile-dropdown">
 
                                     {/* User Info */}
-                                    {/* <div className="profile-dropdown-header">
+                                    <div className="profile-dropdown-header">
 
                                         <div className="profile-avatar">
                                             <i className="fa-regular fa-user"></i>
@@ -228,12 +237,12 @@ function Navbar({ user }) {
                                             </span>
                                         </div>
 
-                                    </div> */}
+                                    </div>
 
                                     <div className="profile-dropdown-divider"></div>
 
                                     {/* Profile */}
-                                    {/* <button
+                                    <button
                                         className="profile-menu-item"
                                         onClick={
                                             goProfile
@@ -244,7 +253,7 @@ function Navbar({ user }) {
                                         <span>
                                             Profile
                                         </span>
-                                    </button> */}
+                                    </button>
 
                                     {/* Logout */}
                                     <button

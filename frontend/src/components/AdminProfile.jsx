@@ -102,7 +102,7 @@ function AdminProfile({ onClose }) {
                                 ))}
 
                                 {/* Edit password */}
-                                <button
+                               {/* <button
                                     type="button"
                                     className="profile-info-row profile-edit-password"
                                     onClick={() => setShowPasswordForm((v) => !v)}
@@ -113,7 +113,7 @@ function AdminProfile({ onClose }) {
                                         <i className="fa-solid fa-key"></i>
                                         Change
                                     </span>
-                                </button>
+                                </button>*/}
 
                                 {showPasswordForm && (
                                     <div className="profile-password-form">

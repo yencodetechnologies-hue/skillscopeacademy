@@ -216,6 +216,11 @@ const [step, setStep] = useState(() => {
         ? selectedCourses.reduce((sum, sc) => sum + (getIndividualCoursePrice(sc.course) * sc.quantity), 0)
         : getIndividualCoursePrice(selectedCourse)
 
+    // ✅ Coupon-aware amount — falls back to coursePrice when no coupon is applied.
+    // paymentData.discountedAmount is kept in sync by Payment.jsx whenever a
+    // coupon is applied/removed (see handleApplyCoupon / handleRemoveCoupon).
+    const payableAmount = paymentData.discountedAmount ?? coursePrice
+
     // ✅ Token validate — URL-ல ?token= இருந்தா
     useEffect(() => {
         const token = searchParams.get("token")
@@ -524,7 +529,9 @@ const [step, setStep] = useState(() => {
             formData.append("courseId", selectedCourse._id);
             formData.append("courseCategory", selectedCourse.category);
             formData.append("courseName", selectedCourse.title);
-            formData.append("price", coursePrice);
+            // ✅ Use the coupon-discounted amount when a coupon is applied,
+            // otherwise fall back to the full coursePrice.
+            formData.append("price", payableAmount);
             formData.append("enrollmentType",
                 isEnrollmentLink ? enrollmentType :
                 (isCompanyEnroll || isPublicCompanyLink) ? "company" :
@@ -541,6 +548,14 @@ const [step, setStep] = useState(() => {
                 formData.append("ewayTransactionId", resolvedTxId);
             }
             formData.append("slipUrl", slipUrl);
+            // ✅ Coupon information — kept alongside the flow record so it's
+            // traceable even for bank-transfer / pay-later bookings.
+            if (paymentData.couponId) {
+                formData.append("couponId", paymentData.couponId);
+                formData.append("couponCode", paymentData.couponCode || "");
+                formData.append("couponDiscountAmount", paymentData.couponDiscountAmount || 0);
+                formData.append("originalAmount", paymentData.originalAmount ?? coursePrice);
+            }
             if (isEnrollmentLink) {
                 formData.append("source", "Enrollment Link");
                 formData.append("sourceToken", enrollmentLinkId);
@@ -636,13 +651,18 @@ const [step, setStep] = useState(() => {
                     courseDate: selectedSession?.date,
                     startTime: selectedSession?.startTime,
                     endTime: selectedSession?.endTime,
-                    coursePrice,
+                    // ✅ Coupon-aware amount shown/charged to the customer.
+                    coursePrice: payableAmount,
                     paymentMethod: paymentData.paymentMethod,
                     preferredCity: paymentData.preferredCity || "",
                     phone: paymentData.phone,
                     gatewayTransactionId: txId || paymentData.ewayTransactionId || paymentData.transactionId || "",
                     bankTransferId: paymentData.transactionId || "",
-                    bookingId: localStorage.getItem("flowId")
+                    bookingId: localStorage.getItem("flowId"),
+                    // ✅ Coupon details for the email template, if it wants them.
+                    couponCode: paymentData.couponCode || "",
+                    couponDiscountAmount: paymentData.couponDiscountAmount || 0,
+                    originalAmount: paymentData.originalAmount ?? coursePrice,
                 }),
             });
         } catch (err) {
@@ -656,7 +676,8 @@ const [step, setStep] = useState(() => {
         // }
         if (step === 2 && !isCompanyEnroll && !isEnrollmentLink) {
             if (paymentData.paymentMethod === "Pay Later") return "Confirm & Continue"
-            return `🔒 Pay $${coursePrice} & Continue`
+            // ✅ Reflect the coupon-discounted amount, not the raw coursePrice.
+            return `🔒 Pay $${payableAmount} & Continue`
         }
         if (step === 2 && isEnrollmentLink) return "Create Account & Continue"
         if (step === 4 && enrollSection === 5) return "Submit"
@@ -737,7 +758,7 @@ const [step, setStep] = useState(() => {
                                 endTime: selectedSession?.endTime || "",
                                 phone: paymentData.phone,
                                 bookingId: localStorage.getItem("flowId"),
-                                totalAmount: coursePrice,
+                                totalAmount: payableAmount,
                                 paymentMethod: "Pay Later",
                                 isAgent: enrollmentLinkData?.agent || enrollmentType === "agent" || false
                             })
@@ -875,11 +896,17 @@ if (paymentData.paymentMethod === "Card Payment") {
                     // ✅ 4. Build FormData
                     const formData = new FormData()
                     formData.append("companyId", companyId)
-                    formData.append("amount", coursePrice)
+                    formData.append("amount", payableAmount)
                     formData.append("paymentMethod", paymentData.paymentMethod || "Bank Transfer")
                     formData.append("transactionReference", ewayTransactionRef)
                     formData.append("courseCount", selectedCourses.length)
                     formData.append("notes", "")
+                    if (paymentData.couponId) {
+                        formData.append("couponId", paymentData.couponId)
+                        formData.append("couponCode", paymentData.couponCode || "")
+                        formData.append("couponDiscountAmount", paymentData.couponDiscountAmount || 0)
+                        formData.append("originalAmount", paymentData.originalAmount ?? coursePrice)
+                    }
 
                     coursesPayload.forEach((course, i) => {
                         formData.append(`courses[${i}][courseId]`,      course.courseId)
@@ -941,7 +968,7 @@ if (paymentData.paymentMethod === "Card Payment") {
                     navigate("/booking-success", {
                         state: {
                             selectedCourses,
-                            coursePrice,
+                            coursePrice: payableAmount,
                             paymentMethod: paymentData.paymentMethod || "Bank Transfer",
                             email: paymentData.email,
                             name: paymentData.name,
@@ -1041,11 +1068,17 @@ if (paymentData.paymentMethod === "Card Payment") {
 
                     const formData = new FormData()
                     formData.append("companyId", companyId)
-                    formData.append("amount", coursePrice)
+                    formData.append("amount", payableAmount)
                     formData.append("paymentMethod", paymentData.paymentMethod || "Bank Transfer")
                     formData.append("transactionReference", ewayTransactionRef)
                     formData.append("courseCount", selectedCourses.length)
                     formData.append("notes", "")
+                    if (paymentData.couponId) {
+                        formData.append("couponId", paymentData.couponId)
+                        formData.append("couponCode", paymentData.couponCode || "")
+                        formData.append("couponDiscountAmount", paymentData.couponDiscountAmount || 0)
+                        formData.append("originalAmount", paymentData.originalAmount ?? coursePrice)
+                    }
 
                     coursesPayload.forEach((course, i) => {
                         formData.append(`courses[${i}][courseId]`,      course.courseId)
@@ -1103,7 +1136,7 @@ if (paymentData.paymentMethod === "Card Payment") {
                     navigate("/booking-success", {
                         state: {
                             selectedCourses,
-                            coursePrice,
+                            coursePrice: payableAmount,
                             paymentMethod: paymentData.paymentMethod || "Bank Transfer",
                             email: paymentData.email,
                             name: paymentData.name,
@@ -1224,7 +1257,7 @@ if (paymentData.paymentMethod === "Card Payment") {
                         name: paymentData.name || userDetails.name,
                         phone: paymentData.phone || userDetails.phone,
                         selectedCourse,
-                        coursePrice,
+                        coursePrice: payableAmount,
                         paymentMethod: paymentData.paymentMethod,
                         enrollmentType: isCompanyEnroll ? "company" : "individual",
                         bookingId: localStorage.getItem("flowId") || "",
@@ -1493,7 +1526,7 @@ if (paymentData.paymentMethod === "Card Payment") {
                                 courseTime: `${selectedSession?.startTime || ""} - ${
                                     selectedSession?.endTime || ""
                                 }`,
-                                coursePrice,
+                                coursePrice: payableAmount,
                                 paymentMethod: paymentData.paymentMethod,
                                 email: paymentData.email,
                                 name: paymentData.name,

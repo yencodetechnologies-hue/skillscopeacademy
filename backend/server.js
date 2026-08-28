@@ -113,6 +113,7 @@ app.use("/api/form-documents", require("./routes/formDocumentRoutes"));
 app.use("/api/code-of-practice", require("./routes/codeOfPracticeRoutes"));
 app.use("/api/voc", require("./routes/vocRoutes"));
 app.use("/api/files", require("./routes/filesRoutes"));
+app.use("/api", require("./routes/couponRoutes"));
 
 app.use("/api/admin-logs", require("./routes/adminActivityLogRoutes"));
 app.use("/api/student-assessment", require("./routes/studentAssessmentRoutes"));

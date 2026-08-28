@@ -118,6 +118,176 @@ function Payment({
     // ✅ NEW: tracks whether company details were auto-filled from localStorage id/role
     const [isAutoFilledCompany, setIsAutoFilledCompany] = useState(false)
 
+
+    const [couponCode, setCouponCode] = useState("");
+const [couponLoading, setCouponLoading] = useState(false);
+const [couponError, setCouponError] = useState("");
+const [couponSuccess, setCouponSuccess] = useState("");
+const [appliedCoupon, setAppliedCoupon] = useState(null);
+const originalCourseAmount = Number(
+    coursePrice ||
+    selectedCourse?.sellingPrice ||
+    0
+);
+
+const handleApplyCoupon = async () => {
+    const code = couponCode.trim().toUpperCase();
+
+    setCouponError("");
+    setCouponSuccess("");
+
+    if (!code) {
+        setCouponError("Please enter a coupon code.");
+        return;
+    }
+
+    if (originalCourseAmount <= 0) {
+        setCouponError(
+            "Unable to determine the course amount."
+        );
+        return;
+    }
+
+    const couponType = isCompany
+        ? "company"
+        : "individual";
+
+    // Individual enrollment
+    if (!isCompany && !selectedCourse?._id) {
+        setCouponError(
+            "Please select a course before applying a coupon."
+        );
+        return;
+    }
+
+    setCouponLoading(true);
+
+    try {
+        const validationCourseId = isCompany
+            ? selectedCourses?.[0]?.course?._id
+            : selectedCourse?._id;
+
+        if (!validationCourseId) {
+            throw new Error(
+                "Unable to determine the selected course."
+            );
+        }
+
+        const response = await fetch(
+            `${API_URL}/api/coupons/validate`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    couponCode: code,
+                    courseId: validationCourseId,
+                    type: couponType,
+                    amount: originalCourseAmount,
+                }),
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(
+                result.message ||
+                "Invalid coupon code."
+            );
+        }
+
+        const coupon = result.data;
+
+        setAppliedCoupon(coupon);
+
+        // FIXED AMOUNT MESSAGE
+        setCouponSuccess(
+            `Coupon applied! $${Number(
+                coupon.discountAmount
+            ).toFixed(2)} discount`
+        );
+
+        setCouponCode(coupon.couponCode);
+
+        // Store coupon details
+        setPaymentData((prev) => ({
+            ...prev,
+
+            couponId:
+                coupon.couponId,
+
+            couponCode:
+                coupon.couponCode,
+
+            couponType:
+                coupon.type,
+
+            couponDiscountAmount:
+                coupon.discountAmount,
+
+            originalAmount:
+                coupon.originalAmount,
+
+            discountedAmount:
+                coupon.finalAmount,
+        }));
+
+    } catch (error) {
+        console.error(
+            "Coupon validation error:",
+            error
+        );
+
+        setAppliedCoupon(null);
+
+        setCouponError(
+            error.message ||
+            "Unable to validate coupon."
+        );
+
+        setPaymentData((prev) => ({
+            ...prev,
+
+            couponId: null,
+
+            couponCode: "",
+
+            couponType: null,
+
+            couponDiscountAmount: 0,
+
+            originalAmount:
+                originalCourseAmount,
+
+            discountedAmount:
+                originalCourseAmount,
+        }));
+
+    } finally {
+        setCouponLoading(false);
+    }
+};
+
+const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
+    setCouponError("");
+    setCouponSuccess("");
+
+    setPaymentData((prev) => ({
+        ...prev,
+        couponId: null,
+        couponCode: "",
+        couponType: null,
+        couponDiscountPercentage: 0,
+        couponDiscountAmount: 0,
+        originalAmount: originalCourseAmount,
+        discountedAmount: originalCourseAmount,
+    }));
+};
+
     // ✅ File input ref
     const fileInputRef = useRef(null)
     const didShowTriggeredErrors = useRef(false)
@@ -273,8 +443,9 @@ function Payment({
         return () => clearTimeout(timer)
     }, [email, isExistingCompany, shouldAutofill, isAutoFilledCompany, isCompanyRegister])
 
-    useEffect(() => {
-       const fullData = {
+   // new
+useEffect(() => {
+   const fullData = {
     name,
     email,
     phone,
@@ -288,7 +459,7 @@ function Payment({
     ewayTransactionId,
     paymentConfirmed: paymentStatus === "success",
 }
-        setPaymentData(fullData)
+        setPaymentData(prev => ({ ...prev, ...fullData }))
     }, [ name,
     email,
     phone,
@@ -499,75 +670,204 @@ function Payment({
         await handleBlur("email", { email: trimmed })
     }
 
-    const handleCardPayment = async () => {
-        if (blockPaymentForExistingEmail) {
-            setErrors(prev => ({ ...prev, email: companyEmailTakenMsg }))
-            return { success: false, message: "Email already registered" }
-        }
-        const newErrors = await getFullErrors()
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors)
-            return { success: false, message: "Validation failed" }
-        }
-        if (!squareCardRef.current) {
-            setPaymentStatus("error")
-            setPaymentError("Secure card form is not ready. Please wait a moment and try again.")
-            return { success: false, message: "Square card not ready" }
-        }
+const handleCardPayment = async () => {
+    if (blockPaymentForExistingEmail) {
+        setErrors(prev => ({
+            ...prev,
+            email: companyEmailTakenMsg
+        }));
 
-        setPaymentStatus("loading")
-        setPaymentError("")
-        try {
-            const tokenResult = await squareCardRef.current.tokenize()
-            if (tokenResult.status !== "OK" || !tokenResult.token) {
-                const detail = tokenResult.errors?.[0]?.message
-                    || "Please check your card details and try again."
-                setPaymentStatus("error")
-                setPaymentError(detail)
-                return { success: false, message: detail }
-            }
-
-            const amount = Number(coursePrice) || Number(selectedCourse?.sellingPrice) || 0
-           const response = await fetch(`${API_URL}/api/payment/pay`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    sourceId: tokenResult.token,
-    amount,
-    currency: squareCurrency,
-    email,
-    name,
-    phone,
-    preferredCity,          // ✅ Add this
-    userId: phone || email,
-    courseName: selectedCourse?.title || "",
-    description: selectedCourse
-      ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
-      : "Course enrollment",
-  }),
-});
-            const result = await response.json()
-            if (result.success) {
-                setPaymentStatus("success")
-                const txId = result.gatewayTransactionId || result.transactionId || ""
-                setEwayTransactionId(txId)
-                setPaymentData(prev => ({
-                    ...prev,
-                    ewayTransactionId: txId,
-                    paymentConfirmed: true,
-                }))
-                return { success: true, transactionId: txId }
-            } else {
-                setPaymentStatus("error")
-                setPaymentError(result.message || "Your card was declined. Please contact your bank or try a different payment method.")
-                return { success: false, message: result.message }
-            }
-        } catch (err) {
-            setPaymentStatus("error")
-            setPaymentError("Network error. Please check your connection and try again.")
-            return { success: false, message: "Network error" }
-        }
+        return {
+            success: false,
+            message: "Email already registered"
+        };
     }
+
+    const newErrors = await getFullErrors();
+
+    if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+
+        return {
+            success: false,
+            message: "Validation failed"
+        };
+    }
+
+    if (!squareCardRef.current) {
+        setPaymentStatus("error");
+        setPaymentError(
+            "Secure card form is not ready. Please wait a moment and try again."
+        );
+
+        return {
+            success: false,
+            message: "Square card not ready"
+        };
+    }
+
+    setPaymentStatus("loading");
+    setPaymentError("");
+
+    try {
+        const tokenResult =
+            await squareCardRef.current.tokenize();
+
+        if (
+            tokenResult.status !== "OK" ||
+            !tokenResult.token
+        ) {
+            const detail =
+                tokenResult.errors?.[0]?.message ||
+                "Please check your card details and try again.";
+
+            setPaymentStatus("error");
+            setPaymentError(detail);
+
+            return {
+                success: false,
+                message: detail
+            };
+        }
+
+        // ============================================
+        // IMPORTANT: use discounted amount
+        // ============================================
+
+        const amount = Number(
+            appliedCoupon
+                ? appliedCoupon.finalAmount
+                : originalCourseAmount
+        );
+
+        const response = await fetch(
+            `${API_URL}/api/payment/pay`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    sourceId: tokenResult.token,
+
+                    amount,
+
+                    currency: squareCurrency,
+
+                    email,
+                    name,
+                    phone,
+                    preferredCity,
+
+                    userId: phone || email,
+
+                    courseName:
+                        selectedCourse?.title || "",
+
+                    description: selectedCourse
+                        ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
+                        : "Course enrollment",
+
+                    // Coupon information
+                    couponId:
+                        appliedCoupon?.couponId || null,
+
+                    couponCode:
+                        appliedCoupon?.couponCode || "",
+
+                    couponDiscountPercentage:
+                        appliedCoupon?.discountPercentage || 0,
+
+                    couponDiscountAmount:
+                        appliedCoupon?.discountAmount || 0,
+
+                    originalAmount:
+                        originalCourseAmount,
+
+                    discountedAmount:
+                        amount,
+                }),
+            }
+        );
+
+        const result =
+            await response.json();
+
+        if (result.success) {
+            setPaymentStatus("success");
+
+            const txId =
+                result.gatewayTransactionId ||
+                result.transactionId ||
+                "";
+
+            setEwayTransactionId(txId);
+
+            setPaymentData(prev => ({
+                ...prev,
+
+                ewayTransactionId: txId,
+                paymentConfirmed: true,
+
+                // Coupon information
+                couponId:
+                    appliedCoupon?.couponId || null,
+
+                couponCode:
+                    appliedCoupon?.couponCode || "",
+
+                couponDiscountPercentage:
+                    appliedCoupon?.discountPercentage || 0,
+
+                couponDiscountAmount:
+                    appliedCoupon?.discountAmount || 0,
+
+                originalAmount:
+                    originalCourseAmount,
+
+                discountedAmount:
+                    amount,
+            }));
+
+            return {
+                success: true,
+                transactionId: txId
+            };
+        }
+
+        setPaymentStatus("error");
+
+        setPaymentError(
+            result.message ||
+            "Your card was declined. Please contact your bank or try a different payment method."
+        );
+
+        return {
+            success: false,
+            message: result.message
+        };
+
+    } catch (err) {
+
+        console.error(
+            "Card payment error:",
+            err
+        );
+
+        setPaymentStatus("error");
+
+        setPaymentError(
+            "Network error. Please check your connection and try again."
+        );
+
+        return {
+            success: false,
+            message: "Network error"
+        };
+    }
+};
 
     useEffect(() => {
         if (onCardPayment) {
@@ -754,42 +1054,214 @@ function Payment({
             </div>
 
             {/* ✅ Order Summary — company vs individual */}
-            <div className="summary-card">
-                <h4>Order Summary</h4>
+           <div className="summary-card coupon-summary-card">
 
-                {isCompany && selectedCourses?.length > 0 ? (
-                    <>
-                        {selectedCourses.map(sc => (
-                            <div className="summary-row" key={sc.uid}>
-                                <span>{sc.course.title} × {sc.quantity}</span>
-                                <span>${sc.course.sellingPrice * sc.quantity}</span>
-                            </div>
-                        ))}
-                        <div className="summary-row total">
-                            <span>Total:</span>
-                            <span>${coursePrice}</span>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className="summary-row">
-                            <span>Course:</span>
-                            <span>{selectedCourse ? `${selectedCourse.courseCode} - ${selectedCourse.title}` : "Select a course"}</span>
-                        </div>
-                        <div className="summary-row">
-                            <span>Duration:</span>
-                            <span>{selectedCourse?.duration || "0"}</span>
-                        </div>
-                        {/* Only show total if not an enrollment link OR if it's an agent link WITHOUT Pay Later */}
-                        {(!isEnrollmentLink || (isEnrollmentLink && enrollmentLinkData?.agent && !enrollmentLinkData?.payLater)) && (
-                            <div className="summary-row total">
-                                <span>Total:</span>
-                                <span>${coursePrice || selectedCourse?.sellingPrice || "0"}</span>
-                            </div>
-                        )}
-                    </>
-                )}
+    <div className="summary-title-row">
+        <h4>Order Summary</h4>
+    </div>
+
+    {/* =========================================
+        COURSE DETAILS
+    ========================================= */}
+
+    {isCompany && selectedCourses?.length > 0 ? (
+        <>
+            {selectedCourses.map((sc) => (
+                <div
+                    className="summary-row"
+                    key={sc.uid}
+                >
+                    <span>
+                        {sc.course.title} × {sc.quantity}
+                    </span>
+
+                    <span>
+                        $
+                        {(
+                            Number(
+                                sc.course.sellingPrice
+                            ) *
+                            Number(sc.quantity)
+                        ).toFixed(2)}
+                    </span>
+                </div>
+            ))}
+        </>
+    ) : (
+        <>
+            <div className="summary-row">
+                <span>Course:</span>
+
+                <span>
+                    {selectedCourse
+                        ? `${selectedCourse.courseCode} - ${selectedCourse.title}`
+                        : "Select a course"}
+                </span>
             </div>
+
+            <div className="summary-row">
+                <span>Duration:</span>
+
+                <span>
+                    {selectedCourse?.duration || "0"}
+                </span>
+            </div>
+        </>
+    )}
+
+    {/* =========================================
+        COUPON SECTION
+    ========================================= */}
+
+    {!isEnrollmentLink && (
+        <div className="coupon-apply-box">
+
+            <label className="coupon-label">
+                Have a coupon?
+            </label>
+
+            {!appliedCoupon ? (
+                <div className="coupon-input-row">
+
+                    <input
+                        type="text"
+                        value={couponCode}
+                        placeholder="Enter coupon code"
+                        onChange={(e) => {
+                            setCouponCode(
+                                e.target.value.toUpperCase()
+                            );
+
+                            setCouponError("");
+                            setCouponSuccess("");
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                handleApplyCoupon();
+                            }
+                        }}
+                        disabled={couponLoading}
+                    />
+
+                    <button
+                        type="button"
+                        className="coupon-apply-btn"
+                        onClick={handleApplyCoupon}
+                        disabled={
+                            couponLoading ||
+                            !couponCode.trim()
+                        }
+                    >
+                        {couponLoading
+                            ? "Checking..."
+                            : "Apply"}
+                    </button>
+
+                </div>
+            ) : (
+                <div className="coupon-applied-box">
+
+                    <div className="coupon-applied-left">
+
+                        <div className="coupon-check-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>
+                                {appliedCoupon.couponCode}
+                            </strong>
+
+                            <span>
+    $
+    {Number(
+        appliedCoupon.discountAmount
+    ).toFixed(2)}
+    {" "}discount applied
+</span>
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        className="coupon-remove-btn"
+                        onClick={handleRemoveCoupon}
+                    >
+                        Remove
+                    </button>
+
+                </div>
+            )}
+
+            {couponError && (
+                <div className="coupon-message coupon-error">
+                    <span>⚠</span>
+                    <span>{couponError}</span>
+                </div>
+            )}
+
+            {couponSuccess && (
+                <div className="coupon-message coupon-success">
+                    <span>✓</span>
+                    <span>{couponSuccess}</span>
+                </div>
+            )}
+
+        </div>
+    )}
+
+    {/* =========================================
+        PRICE BREAKDOWN
+    ========================================= */}
+
+    <div className="summary-price-breakdown">
+
+        <div className="summary-row">
+            <span>Subtotal:</span>
+
+            <span>
+                $
+                {originalCourseAmount.toFixed(2)}
+            </span>
+        </div>
+
+{appliedCoupon && (
+    <div className="summary-row coupon-discount-row">
+
+        <span>
+            Coupon discount:
+        </span>
+
+        <span>
+            −$
+            {Number(
+                appliedCoupon.discountAmount
+            ).toFixed(2)}
+        </span>
+
+    </div>
+)}
+
+        <div className="summary-row total final-total-row">
+
+            <span>Total:</span>
+
+            <strong>
+                $
+                {Number(
+                    appliedCoupon
+                        ? appliedCoupon.finalAmount
+                        : originalCourseAmount
+                ).toFixed(2)}
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
 
             {/* Enrollment Link Info (Only show "No Payment Required" if Pay Later is NOT enabled for the link) */}
             {isEnrollmentLink && (
@@ -970,13 +1442,17 @@ function Payment({
 
                     <div className="square-amount-chip">
                         <span>Amount due</span>
-                        <strong>
-                            {squareCurrency}{" "}
-                            {Number(coursePrice || selectedCourse?.sellingPrice || 0).toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                            })}
-                        </strong>
+                       <strong>
+    {squareCurrency}{" "}
+    {Number(
+        appliedCoupon
+            ? appliedCoupon.finalAmount
+            : originalCourseAmount
+    ).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}
+</strong>
                     </div>
 
                     <div className="form-group">

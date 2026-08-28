@@ -280,6 +280,7 @@ import AdminCodeOfPractice from "./components/AdminCodeOfPractice"
 import PromotionMail from "./components/PromotionMail";
 import CustomMail from "./components/CustomMail";
 import MarqueeContent from "./components/MarqueeContent"
+import CouponSection from "./components/CouponSection"
 
 function App() {
 
@@ -400,8 +401,9 @@ function App() {
                     <Route path="students" element={<Students />} />
                     <Route path="email-templates" element={<EmailTemplates />} />
                     <Route path="/admin/promotion-mail" element={<PromotionMail />}/>
-                     <Route path="/admin/custommail-student" element={<CustomMail />} />
-                     <Route path="/admin/marquee-content" element={<MarqueeContent />} />
+                    <Route path="/admin/custommail-student" element={<CustomMail />} />
+                    <Route path="/admin/marquee-content" element={<MarqueeContent />} />
+                    <Route path="/admin/coupon" element={<CouponSection />} />
                     <Route path="schedule" element={<Schedule />} />
                     <Route path="teachers" element={<Teachers />} />
                     <Route path="llnd-results" element={<LlndResults />} />

@@ -92,6 +92,12 @@ const menu = {
       icon: "fa-solid fa-bullhorn",
     },
 
+     {
+      name: "Gift Voucher",
+      path: "/admin/coupon",
+      icon: "fa-solid fa-bullhorn",
+    },
+
     {
       name: "Companies",
       path: "/admin/companies",
@@ -246,7 +252,7 @@ const menu = {
     },
 
     {
-      name: " My Courses",
+      name: " My Companies",
       path: "/company/MycompanyCourses",
       icon: "fa-solid fa-book",
     },

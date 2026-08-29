@@ -95,7 +95,7 @@ const menu = {
      {
       name: "Gift Voucher",
       path: "/admin/coupon",
-      icon: "fa-solid fa-bullhorn",
+      icon: "fa-solid fa-gift",
     },
 
     {

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import '../styles/CouponSection.css';
 import { FiEdit2, FiTrash2, FiEye } from 'react-icons/fi';
+import { API_URL } from "../data/service";
 // ---- Config: point these at your own APIs ----
-const COURSES_API = 'http://localhost:7001/api/courses';
-const COUPONS_API = 'http://localhost:7001/api/coupons';
+const COURSES_API = `${API_URL}/api/courses`;
+const COUPONS_API = `${API_URL}/api/coupons`;
 
 const TYPE_OPTIONS = ['individual', 'company'];
 

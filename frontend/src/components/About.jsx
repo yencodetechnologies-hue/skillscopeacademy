@@ -62,7 +62,7 @@ function AboutPage() {
             </section>
 
             {/* ── ABOUT SECTION ── */}
-            <section className="ab-about">
+            {/* <section className="ab-about">
                 <div className="ab-about-inner">
                     <div className="ab-about-left">
                         <h2 className="ab-about-heading">
@@ -109,7 +109,7 @@ function AboutPage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* ── WHY CHOOSE US ── */}
             <section className="ab-why">

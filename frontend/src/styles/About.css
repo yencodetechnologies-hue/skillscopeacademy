@@ -44,7 +44,7 @@
     font-size: clamp(40px, 7vw, 64px);
     font-weight: 800;
     color: var(--color-surface);
-    margin: 0 0 16px;
+    margin: 20 0 0 16px;
     position: relative;
 }
 

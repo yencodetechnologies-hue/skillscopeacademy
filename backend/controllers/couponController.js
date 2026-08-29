@@ -1,5 +1,68 @@
-
 const Coupon = require('../models/Coupon');
+
+const ALLOWED_TYPES = ['individual', 'company'];
+
+// Normalizes a coupon's `type` to an array, whether it's stored as
+// the old single string or the new array.
+function getCouponTypes(coupon) {
+  if (Array.isArray(coupon.type)) {
+    return coupon.type;
+  }
+
+  return coupon.type ? [coupon.type] : [];
+}
+
+// A coupon is "live" right now: Active status and within its date
+// range (validUntil is inclusive through the end of that day).
+function isCouponActiveNow(coupon) {
+  if (coupon.status !== 'Active') {
+    return false;
+  }
+
+  const now = new Date();
+
+  const validFrom = new Date(coupon.validFrom);
+  const validUntil = new Date(coupon.validUntil);
+
+  if (
+    Number.isNaN(validFrom.getTime()) ||
+    Number.isNaN(validUntil.getTime())
+  ) {
+    return false;
+  }
+
+  validUntil.setHours(23, 59, 59, 999);
+
+  return now >= validFrom && now <= validUntil;
+}
+
+// Finds an active coupon (other than `excludeId`, if given) that
+// already applies to at least one of `courseIds`. A course is
+// considered "taken" as soon as ANY active coupon touches it,
+// regardless of type — this mirrors the disable logic in the UI,
+// enforced server-side so it can't be bypassed.
+async function findCourseConflict(courseIds, excludeId) {
+  const query = {
+    status: 'Active',
+    'courses.courseId': { $in: courseIds },
+  };
+
+  if (excludeId) {
+    query._id = { $ne: excludeId };
+  }
+
+  const candidateCoupons = await Coupon.find(query);
+
+  return candidateCoupons.find((candidate) => {
+    if (!isCouponActiveNow(candidate)) {
+      return false;
+    }
+
+    return (candidate.courses || []).some((c) =>
+      courseIds.includes(String(c.courseId))
+    );
+  });
+}
 
 // ============================================================
 // POST /api/coupons
@@ -53,6 +116,31 @@ exports.createCoupon = async (req, res) => {
     }
 
     // ---------------------------------------------
+    // Validate type — array of 'individual' / 'company',
+    // at least one required.
+    // ---------------------------------------------
+
+    const normalizedTypes = Array.isArray(type)
+      ? type
+      : type
+        ? [type]
+        : [];
+
+    const uniqueTypes = [...new Set(normalizedTypes)];
+
+    if (
+      uniqueTypes.length === 0 ||
+      uniqueTypes.some((t) => !ALLOWED_TYPES.includes(t))
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: `type must include at least one of: ${ALLOWED_TYPES.join(
+          ', '
+        )}.`,
+      });
+    }
+
+    // ---------------------------------------------
     // Validate courses
     // ---------------------------------------------
 
@@ -61,6 +149,18 @@ exports.createCoupon = async (req, res) => {
         success: false,
         message:
           'Select at least one course from the table.',
+      });
+    }
+
+    const courseIds = courses
+      .map((c) => c && c.courseId)
+      .filter(Boolean)
+      .map(String);
+
+    if (courseIds.length !== courses.length) {
+      return res.status(400).json({
+        success: false,
+        message: 'Each course must include a courseId.',
       });
     }
 
@@ -84,6 +184,25 @@ exports.createCoupon = async (req, res) => {
     }
 
     // ---------------------------------------------
+    // Prevent double-booking a course.
+    //
+    // A course can only ever be covered by ONE active coupon at a
+    // time, regardless of type — as soon as any active coupon
+    // touches a course, that course is off-limits for a new coupon
+    // until the existing one is edited, expired, or deleted.
+    // ---------------------------------------------
+
+    const conflictingCoupon = await findCourseConflict(courseIds);
+
+    if (conflictingCoupon) {
+      return res.status(409).json({
+        success: false,
+        message:
+          'One or more selected courses already has an active coupon. Edit that coupon instead of creating a new one.',
+      });
+    }
+
+    // ---------------------------------------------
     // Create coupon
     // ---------------------------------------------
 
@@ -91,7 +210,7 @@ exports.createCoupon = async (req, res) => {
       couponCode: normalizedCode,
       status,
       discountAmount: numericDiscountAmount,
-      type,
+      type: uniqueTypes,
       validFrom,
       validUntil,
       courses,
@@ -266,6 +385,201 @@ exports.getCouponById = async (req, res) => {
 
 
 // ============================================================
+// PUT /api/coupons/:id
+// UPDATE (EDIT) COUPON
+//
+// Courses are locked and can never be changed here — any
+// `courses` field in the request body is ignored. Everything
+// else (code, status, discount, type, dates) is editable.
+// ============================================================
+
+exports.updateCoupon = async (req, res) => {
+  try {
+    const {
+      couponCode,
+      status,
+      discountAmount,
+      type,
+      validFrom,
+      validUntil,
+    } = req.body;
+
+    const coupon = await Coupon.findById(req.params.id);
+
+    if (!coupon) {
+      return res.status(404).json({
+        success: false,
+        message: 'Coupon not found.',
+      });
+    }
+
+    // ---------------------------------------------
+    // Basic validation
+    // ---------------------------------------------
+
+    if (
+      !couponCode ||
+      discountAmount == null ||
+      !validFrom ||
+      !validUntil
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          'couponCode, discountAmount, validFrom and validUntil are required.',
+      });
+    }
+
+    const numericDiscountAmount = Number(discountAmount);
+
+    if (
+      Number.isNaN(numericDiscountAmount) ||
+      numericDiscountAmount <= 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'Discount amount must be greater than 0.',
+      });
+    }
+
+    const normalizedTypes = Array.isArray(type)
+      ? type
+      : type
+        ? [type]
+        : [];
+
+    const uniqueTypes = [...new Set(normalizedTypes)];
+
+    if (
+      uniqueTypes.length === 0 ||
+      uniqueTypes.some((t) => !ALLOWED_TYPES.includes(t))
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: `type must include at least one of: ${ALLOWED_TYPES.join(
+          ', '
+        )}.`,
+      });
+    }
+
+    if (
+      new Date(validUntil) < new Date(validFrom)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          'Valid until date cannot be before valid from date.',
+      });
+    }
+
+    // ---------------------------------------------
+    // Duplicate coupon code (excluding this coupon itself)
+    // ---------------------------------------------
+
+    const normalizedCode = String(couponCode)
+      .trim()
+      .toUpperCase();
+
+    if (normalizedCode !== coupon.couponCode) {
+      const existing = await Coupon.findOne({
+        couponCode: normalizedCode,
+        _id: { $ne: coupon._id },
+      });
+
+      if (existing) {
+        return res.status(409).json({
+          success: false,
+          message: 'Coupon code already exists.',
+        });
+      }
+    }
+
+    // ---------------------------------------------
+    // Courses are locked — this coupon keeps whatever courses it
+    // already had. We only need to make sure the (possibly new)
+    // active status/type combo doesn't collide with a DIFFERENT
+    // active coupon already sitting on those same courses.
+    // ---------------------------------------------
+
+    const courseIds = (coupon.courses || [])
+      .map((c) => String(c.courseId))
+      .filter(Boolean);
+
+    if (status === 'Active' && courseIds.length > 0) {
+      const conflictingCoupon = await findCourseConflict(
+        courseIds,
+        coupon._id
+      );
+
+      if (conflictingCoupon) {
+        return res.status(409).json({
+          success: false,
+          message:
+            'One or more of these courses already has another active coupon.',
+        });
+      }
+    }
+
+    // ---------------------------------------------
+    // Apply update (courses intentionally untouched)
+    // ---------------------------------------------
+
+    coupon.couponCode = normalizedCode;
+    coupon.status = status;
+    coupon.discountAmount = numericDiscountAmount;
+    coupon.type = uniqueTypes;
+    coupon.validFrom = validFrom;
+    coupon.validUntil = validUntil;
+
+    await coupon.save();
+
+    return res.json({
+      success: true,
+      data: coupon,
+    });
+  } catch (err) {
+    console.error('updateCoupon error:', err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+
+// ============================================================
+// DELETE /api/coupons/:id
+// DELETE COUPON
+// ============================================================
+
+exports.deleteCoupon = async (req, res) => {
+  try {
+    const coupon = await Coupon.findByIdAndDelete(req.params.id);
+
+    if (!coupon) {
+      return res.status(404).json({
+        success: false,
+        message: 'Coupon not found.',
+      });
+    }
+
+    return res.json({
+      success: true,
+      data: coupon,
+    });
+  } catch (err) {
+    console.error('deleteCoupon error:', err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+
+// ============================================================
 // POST /api/coupons/validate
 // VALIDATE & APPLY COUPON
 // ============================================================
@@ -298,7 +612,7 @@ exports.validateCoupon = async (req, res) => {
       });
     }
 
-    if (!type || !["individual", "company"].includes(type)) {
+    if (!type || !ALLOWED_TYPES.includes(type)) {
       return res.status(400).json({
         success: false,
         message: "Invalid coupon type.",
@@ -389,17 +703,19 @@ exports.validateCoupon = async (req, res) => {
 
     // ---------------------------------------------
     // 6. Coupon type validation
+    //
+    // coupon.type is now an array — the requested enrollment
+    // `type` just needs to be one of the types the coupon covers.
     // ---------------------------------------------
 
-    if (coupon.type !== type) {
-      const expectedType =
-        coupon.type === "company"
-          ? "company"
-          : "individual";
+    const couponTypes = getCouponTypes(coupon);
 
+    if (!couponTypes.includes(type)) {
       return res.status(400).json({
         success: false,
-        message: `This coupon is only available for ${expectedType} enrollment.`,
+        message: `This coupon is only available for ${couponTypes.join(
+          ' or '
+        )} enrollment.`,
       });
     }
 
@@ -488,7 +804,7 @@ exports.validateCoupon = async (req, res) => {
 
         couponCode: coupon.couponCode,
 
-        type: coupon.type,
+        type: couponTypes,
 
         courseId: normalizedCourseId,
 
@@ -522,6 +838,3 @@ exports.validateCoupon = async (req, res) => {
     });
   }
 };
-
-
-

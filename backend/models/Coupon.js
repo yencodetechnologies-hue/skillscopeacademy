@@ -16,18 +16,28 @@ const CouponSchema = new mongoose.Schema(
       default: 'Active',
     },
 
-    // Percentage discount
-discountAmount: {
-  type: Number,
-  required: true,
-  min: 0
-},
+    // Fixed amount discount
+    discountAmount: {
+      type: Number,
+      required: true,
+      min: 0
+    },
 
-    // Who can use the coupon
+    // Who can use the coupon — 'individual' and/or 'company'.
+    // Stored as an array so a single coupon can cover both types,
+    // or two separate coupons can each cover one type for the
+    // same course.
     type: {
-      type: String,
+      type: [String],
       enum: ['individual', 'company'],
-      default: 'individual',
+      required: true,
+      validate: {
+        validator: function (arr) {
+          return Array.isArray(arr) && arr.length > 0;
+        },
+        message:
+          'At least one coupon type (individual and/or company) is required.',
+      },
     },
 
     validFrom: {

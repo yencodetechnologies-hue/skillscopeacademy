@@ -119,174 +119,306 @@ function Payment({
     const [isAutoFilledCompany, setIsAutoFilledCompany] = useState(false)
 
 
+    // ── Single-course coupon (Individual enrollment) ──────────────
     const [couponCode, setCouponCode] = useState("");
-const [couponLoading, setCouponLoading] = useState(false);
-const [couponError, setCouponError] = useState("");
-const [couponSuccess, setCouponSuccess] = useState("");
-const [appliedCoupon, setAppliedCoupon] = useState(null);
-const originalCourseAmount = Number(
-    coursePrice ||
-    selectedCourse?.sellingPrice ||
-    0
-);
+    const [couponLoading, setCouponLoading] = useState(false);
+    const [couponError, setCouponError] = useState("");
+    const [couponSuccess, setCouponSuccess] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const originalCourseAmount = Number(
+        coursePrice ||
+        selectedCourse?.sellingPrice ||
+        0
+    );
 
-const handleApplyCoupon = async () => {
-    const code = couponCode.trim().toUpperCase();
+    // ── Per-course coupons (Company / multi-course enrollment) ────
+    // Keyed by sc.uid → { code, loading, error, success, applied }
+    const [courseCoupons, setCourseCoupons] = useState({});
 
-    setCouponError("");
-    setCouponSuccess("");
+    const getCourseCouponState = (uid) =>
+        courseCoupons[uid] || {
+            code: "",
+            loading: false,
+            error: "",
+            success: "",
+            applied: null,
+        };
 
-    if (!code) {
-        setCouponError("Please enter a coupon code.");
-        return;
-    }
+    const updateCourseCouponState = (uid, patch) => {
+        setCourseCoupons((prev) => ({
+            ...prev,
+            [uid]: { ...getCourseCouponState(uid), ...patch },
+        }));
+    };
 
-    if (originalCourseAmount <= 0) {
-        setCouponError(
-            "Unable to determine the course amount."
-        );
-        return;
-    }
+    const getCourseLineAmount = (sc) =>
+        Number(sc.course?.sellingPrice || 0) * Number(sc.quantity || 1);
 
-    const couponType = isCompany
-        ? "company"
-        : "individual";
+    const handleApplyCourseCoupon = async (sc) => {
+        const state = getCourseCouponState(sc.uid);
+        const code = state.code.trim().toUpperCase();
 
-    // Individual enrollment
-    if (!isCompany && !selectedCourse?._id) {
-        setCouponError(
-            "Please select a course before applying a coupon."
-        );
-        return;
-    }
+        updateCourseCouponState(sc.uid, { error: "", success: "" });
 
-    setCouponLoading(true);
-
-    try {
-        const validationCourseId = isCompany
-            ? selectedCourses?.[0]?.course?._id
-            : selectedCourse?._id;
-
-        if (!validationCourseId) {
-            throw new Error(
-                "Unable to determine the selected course."
-            );
+        if (!code) {
+            updateCourseCouponState(sc.uid, { error: "Please enter a coupon code." });
+            return;
         }
 
-        const response = await fetch(
-            `${API_URL}/api/coupons/validate`,
-            {
+        const lineAmount = getCourseLineAmount(sc);
+
+        if (lineAmount <= 0) {
+            updateCourseCouponState(sc.uid, { error: "Unable to determine the course amount." });
+            return;
+        }
+
+        if (!sc.course?._id) {
+            updateCourseCouponState(sc.uid, { error: "Unable to determine the selected course." });
+            return;
+        }
+
+        updateCourseCouponState(sc.uid, { loading: true });
+
+        try {
+            const response = await fetch(`${API_URL}/api/coupons/validate`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     couponCode: code,
-                    courseId: validationCourseId,
-                    type: couponType,
-                    amount: originalCourseAmount,
+                    courseId: sc.course._id,
+                    type: "company",
+                    amount: lineAmount,
                 }),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Invalid coupon code.");
             }
+
+            const coupon = result.data;
+
+            updateCourseCouponState(sc.uid, {
+                loading: false,
+                applied: coupon,
+                code: coupon.couponCode,
+                success: `Coupon applied! $${Number(coupon.discountAmount).toFixed(2)} discount`,
+                error: "",
+            });
+        } catch (error) {
+            console.error("Coupon validation error:", error);
+            updateCourseCouponState(sc.uid, {
+                loading: false,
+                applied: null,
+                error: error.message || "Unable to validate coupon.",
+                success: "",
+            });
+        }
+    };
+
+    const handleRemoveCourseCoupon = (uid) => {
+        updateCourseCouponState(uid, {
+            code: "",
+            applied: null,
+            error: "",
+            success: "",
+        });
+    };
+
+    // Push the per-course coupon selections into paymentData whenever they change,
+    // so the parent has the full list at submit time.
+    useEffect(() => {
+        if (!isCompany || !selectedCourses?.length) return;
+
+        const companyCoupons = selectedCourses
+            .map((sc) => {
+                const state = getCourseCouponState(sc.uid);
+                if (!state.applied) return null;
+                return {
+                    uid: sc.uid,
+                    courseId: sc.course?._id,
+                    couponId: state.applied.couponId,
+                    couponCode: state.applied.couponCode,
+                    discountAmount: state.applied.discountAmount,
+                    originalAmount: getCourseLineAmount(sc),
+                    discountedAmount: state.applied.finalAmount,
+                };
+            })
+            .filter(Boolean);
+
+        const companySubtotal = selectedCourses.reduce(
+            (sum, sc) => sum + getCourseLineAmount(sc), 0
+        );
+        const companyDiscountTotal = companyCoupons.reduce(
+            (sum, c) => sum + Number(c.discountAmount || 0), 0
         );
 
-        const result = await response.json();
+        setPaymentData((prev) => ({
+            ...prev,
+            companyCoupons,
+            originalAmount: companySubtotal,
+            discountedAmount: companySubtotal - companyDiscountTotal,
+        }));
+    }, [courseCoupons, isCompany, selectedCourses]);
 
-        if (!response.ok || !result.success) {
-            throw new Error(
-                result.message ||
-                "Invalid coupon code."
-            );
+    const handleApplyCoupon = async () => {
+        const code = couponCode.trim().toUpperCase();
+
+        setCouponError("");
+        setCouponSuccess("");
+
+        if (!code) {
+            setCouponError("Please enter a coupon code.");
+            return;
         }
 
-        const coupon = result.data;
+        if (originalCourseAmount <= 0) {
+            setCouponError(
+                "Unable to determine the course amount."
+            );
+            return;
+        }
 
-        setAppliedCoupon(coupon);
+        const couponType = isCompany
+            ? "company"
+            : "individual";
 
-        // FIXED AMOUNT MESSAGE
-        setCouponSuccess(
-            `Coupon applied! $${Number(
-                coupon.discountAmount
-            ).toFixed(2)} discount`
-        );
+        // Individual enrollment
+        if (!isCompany && !selectedCourse?._id) {
+            setCouponError(
+                "Please select a course before applying a coupon."
+            );
+            return;
+        }
 
-        setCouponCode(coupon.couponCode);
+        setCouponLoading(true);
 
-        // Store coupon details
-        setPaymentData((prev) => ({
-            ...prev,
+        try {
+            const validationCourseId = isCompany
+                ? selectedCourses?.[0]?.course?._id
+                : selectedCourse?._id;
 
-            couponId:
-                coupon.couponId,
+            if (!validationCourseId) {
+                throw new Error(
+                    "Unable to determine the selected course."
+                );
+            }
 
-            couponCode:
-                coupon.couponCode,
+            const response = await fetch(
+                `${API_URL}/api/coupons/validate`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        couponCode: code,
+                        courseId: validationCourseId,
+                        type: couponType,
+                        amount: originalCourseAmount,
+                    }),
+                }
+            );
 
-            couponType:
-                coupon.type,
+            const result = await response.json();
 
-            couponDiscountAmount:
-                coupon.discountAmount,
+            if (!response.ok || !result.success) {
+                throw new Error(
+                    result.message ||
+                    "Invalid coupon code."
+                );
+            }
 
-            originalAmount:
-                coupon.originalAmount,
+            const coupon = result.data;
 
-            discountedAmount:
-                coupon.finalAmount,
-        }));
+            setAppliedCoupon(coupon);
 
-    } catch (error) {
-        console.error(
-            "Coupon validation error:",
-            error
-        );
+            // FIXED AMOUNT MESSAGE
+            setCouponSuccess(
+                `Coupon applied! $${Number(
+                    coupon.discountAmount
+                ).toFixed(2)} discount`
+            );
 
+            setCouponCode(coupon.couponCode);
+
+            // Store coupon details
+            setPaymentData((prev) => ({
+                ...prev,
+
+                couponId:
+                    coupon.couponId,
+
+                couponCode:
+                    coupon.couponCode,
+
+                couponType:
+                    coupon.type,
+
+                couponDiscountAmount:
+                    coupon.discountAmount,
+
+                originalAmount:
+                    coupon.originalAmount,
+
+                discountedAmount:
+                    coupon.finalAmount,
+            }));
+
+        } catch (error) {
+            console.error(
+                "Coupon validation error:",
+                error
+            );
+
+            setAppliedCoupon(null);
+
+            setCouponError(
+                error.message ||
+                "Unable to validate coupon."
+            );
+
+            setPaymentData((prev) => ({
+                ...prev,
+
+                couponId: null,
+
+                couponCode: "",
+
+                couponType: null,
+
+                couponDiscountAmount: 0,
+
+                originalAmount:
+                    originalCourseAmount,
+
+                discountedAmount:
+                    originalCourseAmount,
+            }));
+
+        } finally {
+            setCouponLoading(false);
+        }
+    };
+
+    const handleRemoveCoupon = () => {
         setAppliedCoupon(null);
-
-        setCouponError(
-            error.message ||
-            "Unable to validate coupon."
-        );
+        setCouponCode("");
+        setCouponError("");
+        setCouponSuccess("");
 
         setPaymentData((prev) => ({
             ...prev,
-
             couponId: null,
-
             couponCode: "",
-
             couponType: null,
-
+            couponDiscountPercentage: 0,
             couponDiscountAmount: 0,
-
-            originalAmount:
-                originalCourseAmount,
-
-            discountedAmount:
-                originalCourseAmount,
+            originalAmount: originalCourseAmount,
+            discountedAmount: originalCourseAmount,
         }));
-
-    } finally {
-        setCouponLoading(false);
-    }
-};
-
-const handleRemoveCoupon = () => {
-    setAppliedCoupon(null);
-    setCouponCode("");
-    setCouponError("");
-    setCouponSuccess("");
-
-    setPaymentData((prev) => ({
-        ...prev,
-        couponId: null,
-        couponCode: "",
-        couponType: null,
-        couponDiscountPercentage: 0,
-        couponDiscountAmount: 0,
-        originalAmount: originalCourseAmount,
-        discountedAmount: originalCourseAmount,
-    }));
-};
+    };
 
     // ✅ File input ref
     const fileInputRef = useRef(null)
@@ -732,13 +864,45 @@ const handleCardPayment = async () => {
 
         // ============================================
         // IMPORTANT: use discounted amount
+        // (company mode: sum of per-course discounted lines;
+        //  individual mode: single-course applied coupon)
         // ============================================
 
-        const amount = Number(
-            appliedCoupon
-                ? appliedCoupon.finalAmount
-                : originalCourseAmount
-        );
+        const companySubtotal = isCompany
+            ? (selectedCourses || []).reduce((sum, sc) => sum + getCourseLineAmount(sc), 0)
+            : 0;
+        const companyDiscountTotal = isCompany
+            ? (selectedCourses || []).reduce((sum, sc) => {
+                  const state = getCourseCouponState(sc.uid);
+                  return sum + Number(state.applied?.discountAmount || 0);
+              }, 0)
+            : 0;
+
+        const amount = isCompany
+            ? Number(companySubtotal - companyDiscountTotal)
+            : Number(
+                  appliedCoupon
+                      ? appliedCoupon.finalAmount
+                      : originalCourseAmount
+              );
+
+        const companyCoupons = isCompany
+            ? (selectedCourses || [])
+                  .map((sc) => {
+                      const state = getCourseCouponState(sc.uid);
+                      if (!state.applied) return null;
+                      return {
+                          uid: sc.uid,
+                          courseId: sc.course?._id,
+                          couponId: state.applied.couponId,
+                          couponCode: state.applied.couponCode,
+                          discountAmount: state.applied.discountAmount,
+                          originalAmount: getCourseLineAmount(sc),
+                          discountedAmount: state.applied.finalAmount,
+                      };
+                  })
+                  .filter(Boolean)
+            : [];
 
         const response = await fetch(
             `${API_URL}/api/payment/pay`,
@@ -770,7 +934,7 @@ const handleCardPayment = async () => {
                         ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
                         : "Course enrollment",
 
-                    // Coupon information
+                    // Coupon information (individual)
                     couponId:
                         appliedCoupon?.couponId || null,
 
@@ -783,8 +947,12 @@ const handleCardPayment = async () => {
                     couponDiscountAmount:
                         appliedCoupon?.discountAmount || 0,
 
-                    originalAmount:
-                        originalCourseAmount,
+                    // Coupon information (company, per course)
+                    companyCoupons,
+
+                    originalAmount: isCompany
+                        ? companySubtotal
+                        : originalCourseAmount,
 
                     discountedAmount:
                         amount,
@@ -811,7 +979,7 @@ const handleCardPayment = async () => {
                 ewayTransactionId: txId,
                 paymentConfirmed: true,
 
-                // Coupon information
+                // Coupon information (individual)
                 couponId:
                     appliedCoupon?.couponId || null,
 
@@ -824,8 +992,12 @@ const handleCardPayment = async () => {
                 couponDiscountAmount:
                     appliedCoupon?.discountAmount || 0,
 
-                originalAmount:
-                    originalCourseAmount,
+                // Coupon information (company, per course)
+                companyCoupons,
+
+                originalAmount: isCompany
+                    ? companySubtotal
+                    : originalCourseAmount,
 
                 discountedAmount:
                     amount,
@@ -902,6 +1074,16 @@ const handleCardPayment = async () => {
         setPaymentSlip(file)
         handleBlur("paymentSlip", { paymentSlip: file })
     }
+
+    // ── Company totals (per-course discounts applied) ──────────────
+    const companySubtotal = (selectedCourses || []).reduce(
+        (sum, sc) => sum + getCourseLineAmount(sc), 0
+    );
+    const companyDiscountTotal = (selectedCourses || []).reduce((sum, sc) => {
+        const state = getCourseCouponState(sc.uid);
+        return sum + Number(state.applied?.discountAmount || 0);
+    }, 0);
+    const companyFinalTotal = companySubtotal - companyDiscountTotal;
 
     return (
         <div className="payment-wrapper">
@@ -1066,26 +1248,110 @@ const handleCardPayment = async () => {
 
     {isCompany && selectedCourses?.length > 0 ? (
         <>
-            {selectedCourses.map((sc) => (
-                <div
-                    className="summary-row"
-                    key={sc.uid}
-                >
-                    <span>
-                        {sc.course.title} × {sc.quantity}
-                    </span>
+            {selectedCourses.map((sc) => {
+                const state = getCourseCouponState(sc.uid);
+                const lineAmount = getCourseLineAmount(sc);
+                const lineFinal = state.applied
+                    ? Number(state.applied.finalAmount)
+                    : lineAmount;
 
-                    <span>
-                        $
-                        {(
-                            Number(
-                                sc.course.sellingPrice
-                            ) *
-                            Number(sc.quantity)
-                        ).toFixed(2)}
-                    </span>
-                </div>
-            ))}
+                return (
+                    <div className="company-course-summary-block" key={sc.uid}>
+                        <div className="summary-row">
+                            <span>
+                                {sc.course.title} × {sc.quantity}
+                            </span>
+
+                            <span>
+                                ${lineAmount.toFixed(2)}
+                            </span>
+                        </div>
+
+                        {/* ── Per-course coupon apply/remove ── */}
+                        <div className="coupon-apply-box coupon-apply-box--per-course">
+                            <label className="coupon-label">
+                                Coupon for this course
+                            </label>
+
+                            {!state.applied ? (
+                                <div className="coupon-input-row">
+                                    <input
+                                        type="text"
+                                        value={state.code}
+                                        placeholder="Enter coupon code"
+                                        onChange={(e) =>
+                                            updateCourseCouponState(sc.uid, {
+                                                code: e.target.value.toUpperCase(),
+                                                error: "",
+                                                success: "",
+                                            })
+                                        }
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                e.preventDefault();
+                                                handleApplyCourseCoupon(sc);
+                                            }
+                                        }}
+                                        disabled={state.loading}
+                                    />
+
+                                    <button
+                                        type="button"
+                                        className="coupon-apply-btn"
+                                        onClick={() => handleApplyCourseCoupon(sc)}
+                                        disabled={state.loading || !state.code.trim()}
+                                    >
+                                        {state.loading ? "Checking..." : "Apply"}
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="coupon-applied-box">
+                                    <div className="coupon-applied-left">
+                                        <div className="coupon-check-icon">✓</div>
+
+                                        <div>
+                                            <strong>{state.applied.couponCode}</strong>
+                                            <span>
+                                                ${Number(state.applied.discountAmount).toFixed(2)}{" "}
+                                                discount applied
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        className="coupon-remove-btn"
+                                        onClick={() => handleRemoveCourseCoupon(sc.uid)}
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            )}
+
+                            {state.error && (
+                                <div className="coupon-message coupon-error">
+                                    <span>⚠</span>
+                                    <span>{state.error}</span>
+                                </div>
+                            )}
+
+                            {state.success && (
+                                <div className="coupon-message coupon-success">
+                                    <span>✓</span>
+                                    <span>{state.success}</span>
+                                </div>
+                            )}
+
+                            {state.applied && (
+                                <div className="summary-row" style={{ marginTop: 6 }}>
+                                    <span>Course total after discount:</span>
+                                    <strong>${lineFinal.toFixed(2)}</strong>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
+            })}
         </>
     ) : (
         <>
@@ -1110,10 +1376,11 @@ const handleCardPayment = async () => {
     )}
 
     {/* =========================================
-        COUPON SECTION
+        COUPON SECTION (Individual enrollment only —
+        company mode applies coupons per-course above)
     ========================================= */}
 
-    {!isEnrollmentLink && (
+    {!isEnrollmentLink && !isCompany && (
         <div className="coupon-apply-box">
 
             <label className="coupon-label">
@@ -1223,25 +1490,27 @@ const handleCardPayment = async () => {
 
             <span>
                 $
-                {originalCourseAmount.toFixed(2)}
+                {(isCompany ? companySubtotal : originalCourseAmount).toFixed(2)}
             </span>
         </div>
 
-{appliedCoupon && (
-    <div className="summary-row coupon-discount-row">
-
-        <span>
-            Coupon discount:
-        </span>
-
-        <span>
-            −$
-            {Number(
-                appliedCoupon.discountAmount
-            ).toFixed(2)}
-        </span>
-
-    </div>
+{isCompany ? (
+    companyDiscountTotal > 0 && (
+        <div className="summary-row coupon-discount-row">
+            <span>Coupon discount:</span>
+            <span>−${companyDiscountTotal.toFixed(2)}</span>
+        </div>
+    )
+) : (
+    appliedCoupon && (
+        <div className="summary-row coupon-discount-row">
+            <span>Coupon discount:</span>
+            <span>
+                −$
+                {Number(appliedCoupon.discountAmount).toFixed(2)}
+            </span>
+        </div>
+    )
 )}
 
         <div className="summary-row total final-total-row">
@@ -1250,10 +1519,14 @@ const handleCardPayment = async () => {
 
             <strong>
                 $
-                {Number(
-                    appliedCoupon
-                        ? appliedCoupon.finalAmount
-                        : originalCourseAmount
+                {(
+                    isCompany
+                        ? companyFinalTotal
+                        : Number(
+                            appliedCoupon
+                                ? appliedCoupon.finalAmount
+                                : originalCourseAmount
+                        )
                 ).toFixed(2)}
             </strong>
 
@@ -1444,10 +1717,14 @@ const handleCardPayment = async () => {
                         <span>Amount due</span>
                        <strong>
     {squareCurrency}{" "}
-    {Number(
-        appliedCoupon
-            ? appliedCoupon.finalAmount
-            : originalCourseAmount
+    {(
+        isCompany
+            ? companyFinalTotal
+            : Number(
+                appliedCoupon
+                    ? appliedCoupon.finalAmount
+                    : originalCourseAmount
+            )
     ).toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,

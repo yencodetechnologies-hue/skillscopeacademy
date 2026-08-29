@@ -1,7 +1,7 @@
 .coupon-section {
-  max-width: 1100px;
+
   margin: 0 auto;
-  padding: 24px;
+
 }
 .coupon-section{
 .coupon-section-header {
@@ -512,5 +512,252 @@
 }
 .row-disabled input[type='checkbox'] {
   cursor: not-allowed;
+}
+
+/* =========================================================
+   COUPON ROW ACTIONS
+   ========================================================= */
+
+.row-actions-stack {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 48px;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+
+/* =========================================================
+   COMMON ACTION BUTTON
+   ========================================================= */
+
+.coupon-action-btn {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* Remove default button effects */
+
+.coupon-action-btn:focus {
+  outline: none;
+}
+
+.coupon-action-btn:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.35);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+   ========================================================= */
+
+.coupon-edit-btn {
+  color: #2563eb;
+  background: #eff6ff;
+  border-color: #dbeafe;
+}
+
+.coupon-edit-btn:hover {
+  color: #1d4ed8;
+  background: #dbeafe;
+  border-color: #bfdbfe;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
+}
+
+.coupon-edit-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.coupon-delete-btn {
+  color: #dc2626;
+  background: #fef2f2;
+  border-color: #fee2e2;
+}
+
+.coupon-delete-btn:hover {
+  color: #b91c1c;
+  background: #fee2e2;
+  border-color: #fecaca;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 3px 8px rgba(220, 38, 38, 0.15);
+}
+
+.coupon-delete-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.coupon-view-btn {
+  color: #475569;
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.coupon-view-btn:hover {
+  color: #1e293b;
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.1);
+}
+
+.coupon-view-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   DISABLED DELETE BUTTON
+   ========================================================= */
+
+.coupon-delete-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   DELETE LOADING SPINNER
+   ========================================================= */
+
+.delete-spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(220, 38, 38, 0.2);
+  border-top-color: #dc2626;
+
+  border-radius: 50%;
+
+  animation: couponDeleteSpin 0.7s linear infinite;
+}
+
+@keyframes couponDeleteSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   TOOLTIP
+   ========================================================= */
+
+.coupon-action-btn {
+  position: relative;
+}
+
+.coupon-action-btn::after {
+  content: attr(title);
+
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+
+  transform: translateX(-50%) translateY(3px);
+
+  padding: 5px 8px;
+
+  background: #1e293b;
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+
+  white-space: nowrap;
+
+  border-radius: 5px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+
+  z-index: 100;
+}
+
+.coupon-action-btn:hover::after {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .row-actions-stack {
+    gap: 6px;
+  }
+
+  .row-actions {
+    gap: 5px;
+  }
+
+  .coupon-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+  }
+
+  .coupon-action-btn svg {
+    width: 15px;
+    height: 15px;
+  }
 }
 }

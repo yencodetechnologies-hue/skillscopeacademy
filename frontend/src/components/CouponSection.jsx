@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import '../styles/CouponSection.css';
-import { FiEdit2, FiTrash2, FiEye } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiEye, FiChevronDown, FiX } from 'react-icons/fi';
 import { API_URL } from "../data/service";
 // ---- Config: point these at your own APIs ----
 const COURSES_API = `${API_URL}/api/courses`;
@@ -132,11 +132,12 @@ const initialForm = {
 };
 
 const PAGE_LIMIT = 8;
-const COURSE_PAGE_LIMIT = 5;
 
 function CouponSection() {
   // ============================================================
-  // COURSES STATE
+  // COURSES STATE (loaded in the background to power the course
+  // picker dropdown inside the Add coupon modal — there's no
+  // standalone course table on the page anymore)
   // ============================================================
 
   const [courses, setCourses] = useState([]);
@@ -145,9 +146,17 @@ function CouponSection() {
 
   const [selectedIds, setSelectedIds] = useState(new Set());
 
+  // Search box that lives INSIDE the course picker dropdown.
   const [courseSearchInput, setCourseSearchInput] = useState('');
-  const [courseSearch, setCourseSearch] = useState('');
-  const [coursePage, setCoursePage] = useState(1);
+
+  const [courseDropdownOpen, setCourseDropdownOpen] = useState(false);
+  const courseDropdownRef = useRef(null);
+
+  // Same picker, reused inside the Edit coupon modal.
+  const [editSelectedIds, setEditSelectedIds] = useState(new Set());
+  const [editCourseSearchInput, setEditCourseSearchInput] = useState('');
+  const [editCourseDropdownOpen, setEditCourseDropdownOpen] = useState(false);
+  const editCourseDropdownRef = useRef(null);
 
   // ============================================================
   // ADD COUPON MODAL STATE
@@ -163,11 +172,12 @@ function CouponSection() {
   // ============================================================
   // EDIT COUPON MODAL STATE
   // ============================================================
-  // Editing an existing coupon: courses are locked (can't be
-  // changed), everything else — title, code, status, discount,
-  // type, dates — is editable. Type is limited to the coupon's
-  // own current type(s) plus any type not already covered by a
-  // *different* coupon on the same course set.
+  // Editing an existing coupon: code, status, discount, type,
+  // courses, and dates are all editable. Type is limited to the
+  // coupon's own current type(s) plus any type not already
+  // covered by a *different* coupon on the same course set, and
+  // courses can be freely reselected from the picker (courses
+  // already covered by a DIFFERENT coupon can't be picked).
   // ============================================================
 
   const [editCoupon, setEditCoupon] = useState(null);
@@ -255,17 +265,48 @@ function CouponSection() {
   }, []);
 
   // ============================================================
-  // COURSE SEARCH DEBOUNCE
+  // CLOSE COURSE DROPDOWN ON OUTSIDE CLICK
   // ============================================================
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCourseSearch(courseSearchInput.trim().toLowerCase());
-      setCoursePage(1);
-    }, 400);
+    if (!courseDropdownOpen) {
+      return;
+    }
 
-    return () => clearTimeout(timer);
-  }, [courseSearchInput]);
+    const handleClickOutside = (event) => {
+      if (
+        courseDropdownRef.current &&
+        !courseDropdownRef.current.contains(event.target)
+      ) {
+        setCourseDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () =>
+      document.removeEventListener('mousedown', handleClickOutside);
+  }, [courseDropdownOpen]);
+
+  useEffect(() => {
+    if (!editCourseDropdownOpen) {
+      return;
+    }
+
+    const handleClickOutside = (event) => {
+      if (
+        editCourseDropdownRef.current &&
+        !editCourseDropdownRef.current.contains(event.target)
+      ) {
+        setEditCourseDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () =>
+      document.removeEventListener('mousedown', handleClickOutside);
+  }, [editCourseDropdownOpen]);
 
   // ============================================================
   // COUPON SEARCH DEBOUNCE
@@ -347,12 +388,18 @@ function CouponSection() {
   // Maps courseId -> Set of types ('individual' | 'company') that
   // already have an active coupon for that course. As soon as a
   // course has ANY active coupon (covering at least one type), the
-  // course is considered "used up" and its checkbox is disabled —
-  // it can only get a different type via the Edit action on the
+  // course is considered "used up" and can't be picked again — it
+  // can only get a different type via the Edit action on the
   // existing coupon, not by creating a new one.
   // ============================================================
 
   const courseTypeCoverage = new Map();
+
+  // courseId -> Set of coupon _id (string) that actively cover it —
+  // lets the Edit picker tell "covered by THIS coupon" (fine, keep
+  // it selected) apart from "covered by a DIFFERENT coupon" (can't
+  // be picked).
+  const courseCouponIds = new Map();
 
   coupons
     .filter((coupon) => !isExpired(coupon))
@@ -373,19 +420,44 @@ function CouponSection() {
         types.forEach((t) => {
           courseTypeCoverage.get(id).add(t);
         });
+
+        if (!courseCouponIds.has(id)) {
+          courseCouponIds.set(id, new Set());
+        }
+
+        courseCouponIds.get(id).add(String(coupon._id));
       });
     });
 
-  // A course is "covered" (and its checkbox disabled) as soon as it
-  // has any active coupon at all, regardless of type.
+  // A course is "covered" (and unpickable) as soon as it has any
+  // active coupon at all, regardless of type.
   const isCourseFullyCovered = (courseId) => {
     const covered = courseTypeCoverage.get(String(courseId));
     return !!covered && covered.size > 0;
   };
 
+  // Same idea, but used inside the Edit modal: a course counts as
+  // "taken" only if a coupon OTHER than the one being edited covers
+  // it — so the coupon's own current courses stay pickable.
+  const isCourseCoveredByOtherCoupon = (courseId, excludeCouponId) => {
+    const ids = courseCouponIds.get(String(courseId));
+
+    if (!ids || ids.size === 0) {
+      return false;
+    }
+
+    if (!excludeCouponId) {
+      return true;
+    }
+
+    return [...ids].some((id) => id !== String(excludeCouponId));
+  };
+
   // ============================================================
-  // COURSE FILTERING
+  // COURSE FILTERING (for the picker dropdown's search box)
   // ============================================================
+
+  const courseSearch = courseSearchInput.trim().toLowerCase();
 
   const filteredCourses = courses.filter((course) => {
     if (!courseSearch) {
@@ -401,42 +473,21 @@ function CouponSection() {
     return haystack.includes(courseSearch);
   });
 
-  // ============================================================
-  // COURSE PAGINATION
-  // ============================================================
+  const editCourseSearch = editCourseSearchInput.trim().toLowerCase();
 
-  const coursePages = Math.max(
-    1,
-    Math.ceil(
-      filteredCourses.length / COURSE_PAGE_LIMIT
-    )
-  );
+  const filteredEditCourses = courses.filter((course) => {
+    if (!editCourseSearch) {
+      return true;
+    }
 
-  const safeCoursePage = Math.min(
-    coursePage,
-    coursePages
-  );
+    const haystack = `
+      ${course.title || ''}
+      ${course.courseCode || ''}
+      ${course.category || ''}
+    `.toLowerCase();
 
-  const pagedCourses = filteredCourses.slice(
-    (safeCoursePage - 1) * COURSE_PAGE_LIMIT,
-    safeCoursePage * COURSE_PAGE_LIMIT
-  );
-
-  // ============================================================
-  // SELECTABLE COURSES ON CURRENT PAGE
-  // ============================================================
-
-  const selectablePageIds = pagedCourses
-    .filter(
-      (course) => !isCourseFullyCovered(course._id)
-    )
-    .map((course) => String(course._id));
-
-  const allPageSelected =
-    selectablePageIds.length > 0 &&
-    selectablePageIds.every((id) =>
-      selectedIds.has(id)
-    );
+    return haystack.includes(editCourseSearch);
+  });
 
   // ============================================================
   // SELECTED COURSES
@@ -444,6 +495,10 @@ function CouponSection() {
 
   const selectedCourses = courses.filter((course) =>
     selectedIds.has(String(course._id))
+  );
+
+  const editSelectedCourses = courses.filter((course) =>
+    editSelectedIds.has(String(course._id))
   );
 
   // ============================================================
@@ -470,20 +525,45 @@ function CouponSection() {
     });
   };
 
-  const toggleAll = () => {
+  const removeSelectedCourse = (id) => {
+    const normalizedId = String(id);
+
     setSelectedIds((previous) => {
       const next = new Set(previous);
+      next.delete(normalizedId);
+      return next;
+    });
+  };
 
-      if (allPageSelected) {
-        selectablePageIds.forEach((id) => {
-          next.delete(id);
-        });
+  // Same pair of handlers, for the Edit modal's course picker.
+  const toggleEditCourse = (id) => {
+    const normalizedId = String(id);
+
+    if (
+      isCourseCoveredByOtherCoupon(normalizedId, editCoupon?._id)
+    ) {
+      return;
+    }
+
+    setEditSelectedIds((previous) => {
+      const next = new Set(previous);
+
+      if (next.has(normalizedId)) {
+        next.delete(normalizedId);
       } else {
-        selectablePageIds.forEach((id) => {
-          next.add(id);
-        });
+        next.add(normalizedId);
       }
 
+      return next;
+    });
+  };
+
+  const removeEditSelectedCourse = (id) => {
+    const normalizedId = String(id);
+
+    setEditSelectedIds((previous) => {
+      const next = new Set(previous);
+      next.delete(normalizedId);
       return next;
     });
   };
@@ -499,6 +579,10 @@ function CouponSection() {
       types: [],
     });
 
+    setSelectedIds(new Set());
+    setCourseSearchInput('');
+    setCourseDropdownOpen(false);
+
     setSaveError('');
     setSaveSuccess('');
     setModalOpen(true);
@@ -507,6 +591,7 @@ function CouponSection() {
   const closeModal = () => {
     if (!saving) {
       setModalOpen(false);
+      setCourseDropdownOpen(false);
     }
   };
 
@@ -595,12 +680,12 @@ function CouponSection() {
 
     if (selectedCourses.length === 0) {
       setSaveError(
-        'Select at least one course from the table first.'
+        'Select at least one course from the dropdown first.'
       );
       return;
     }
 
-    // Since a course is disabled the moment it has any active
+    // Since a course can't be picked once it has any active
     // coupon, this is mostly a safety net against stale selection
     // state (e.g. another tab just added a coupon).
     const conflictingCourse = selectedCourses.find((course) =>
@@ -679,32 +764,11 @@ function CouponSection() {
   // ============================================================
   // EDIT COUPON MODAL
   // ============================================================
-  // Type options available while editing: the coupon's own
-  // current type(s), plus any type not already covered by a
-  // *different* coupon on this exact course set.
+  // A course can only ever have ONE active coupon at a time (see
+  // isCourseFullyCovered / isCourseCoveredByOtherCoupon above), so
+  // once picked into a coupon there's no other coupon left to
+  // conflict on type — every type option stays selectable here.
   // ============================================================
-
-  const getAvailableEditTypes = (coupon) => {
-    const ownTypes = getCouponTypes(coupon);
-    const key = getCoursesKey(coupon);
-
-    const coveredByOthers = new Set();
-
-    coupons
-      .filter(
-        (c) =>
-          c._id !== coupon._id &&
-          !isExpired(c) &&
-          getCoursesKey(c) === key
-      )
-      .forEach((c) => {
-        getCouponTypes(c).forEach((t) => coveredByOthers.add(t));
-      });
-
-    return TYPE_OPTIONS.filter(
-      (t) => ownTypes.includes(t) || !coveredByOthers.has(t)
-    );
-  };
 
   const openEditModal = (coupon) => {
     setEditCoupon(coupon);
@@ -718,6 +782,17 @@ function CouponSection() {
       validUntil: toDateInputValue(coupon.validUntil),
     });
 
+    setEditSelectedIds(
+      new Set(
+        (coupon.courses || [])
+          .map((c) => c && c.courseId)
+          .filter(Boolean)
+          .map(String)
+      )
+    );
+    setEditCourseSearchInput('');
+    setEditCourseDropdownOpen(false);
+
     setEditError('');
     setEditSuccess('');
   };
@@ -725,6 +800,7 @@ function CouponSection() {
   const closeEditModal = () => {
     if (!editSaving) {
       setEditCoupon(null);
+      setEditCourseDropdownOpen(false);
     }
   };
 
@@ -796,6 +872,28 @@ function CouponSection() {
       return;
     }
 
+    if (editSelectedCourses.length === 0) {
+      setEditError(
+        'Select at least one course from the dropdown.'
+      );
+      return;
+    }
+
+    // Safety net against stale selection state — a course picked
+    // here should never actually be covered by a DIFFERENT coupon,
+    // since the picker disables those, but re-check in case
+    // something changed elsewhere in the meantime.
+    const conflictingCourse = editSelectedCourses.find((course) =>
+      isCourseCoveredByOtherCoupon(course._id, editCoupon._id)
+    );
+
+    if (conflictingCourse) {
+      setEditError(
+        `"${conflictingCourse.title}" already has another active coupon. Refresh and try again.`
+      );
+      return;
+    }
+
     setEditSaving(true);
 
     try {
@@ -806,7 +904,11 @@ function CouponSection() {
         type: editForm.types,
         validFrom: editForm.validFrom,
         validUntil: editForm.validUntil,
-        // courses intentionally omitted — not editable here
+        courses: editSelectedCourses.map((course) => ({
+          courseId: course._id,
+          courseCode: course.courseCode,
+          title: course.title,
+        })),
       };
 
       const res = await fetch(
@@ -912,272 +1014,6 @@ function CouponSection() {
     <div className="coupon-section">
 
       {/* ======================================================
-          COURSE SELECTION
-      ====================================================== */}
-
-      <div className="coupon-section-header">
-        <h2>Courses</h2>
-      </div>
-
-      <div className="coupon-toolbar">
-        <input
-          className="coupon-search-input"
-          placeholder="Search courses by title, code, or category..."
-          value={courseSearchInput}
-          onChange={(event) =>
-            setCourseSearchInput(event.target.value)
-          }
-        />
-
-        {selectedIds.size > 0 && (
-          <button
-            className="btn-add-coupon"
-            onClick={openModal}
-          >
-            + Add coupon ({selectedIds.size} selected)
-          </button>
-        )}
-      </div>
-
-      {/* ======================================================
-          COURSE TABLE
-      ====================================================== */}
-
-      <div className="course-table-wrap">
-
-        {loadingCourses && (
-          <div className="empty-state">
-            Loading courses...
-          </div>
-        )}
-
-        {coursesError && (
-          <div className="empty-state">
-            {coursesError}
-          </div>
-        )}
-
-        {!loadingCourses && !coursesError && (
-          <table className="course-table">
-
-            <thead>
-              <tr>
-                <th style={{ width: 40 }}>
-                  <input
-                    type="checkbox"
-                    checked={allPageSelected}
-                    onChange={toggleAll}
-                    disabled={
-                      selectablePageIds.length === 0
-                    }
-                  />
-                </th>
-
-                <th>Course</th>
-                <th>Category</th>
-                <th>Duration</th>
-                <th>Price</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {pagedCourses.map((course) => {
-                const courseId = String(course._id);
-
-                const fullyCovered =
-                  isCourseFullyCovered(courseId);
-
-                const covered =
-                  courseTypeCoverage.get(courseId);
-
-                const isSelected =
-                  selectedIds.has(courseId);
-
-                return (
-                  <tr
-                    key={course._id}
-                    className={
-                      fullyCovered
-                        ? 'row-disabled'
-                        : ''
-                    }
-                  >
-                    {/* Checkbox */}
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() =>
-                          toggleCourse(courseId)
-                        }
-                        disabled={fullyCovered}
-                        title={
-                          fullyCovered
-                            ? 'This course already has an active coupon. Use Edit on that coupon to change its type.'
-                            : ''
-                        }
-                      />
-                    </td>
-
-                    {/* Course */}
-                    <td>
-                      <div className="course-title-cell">
-
-                        {course.image && (
-                          <img
-                            src={course.image}
-                            alt=""
-                            className="course-thumb"
-                            onError={(event) => {
-                              event.currentTarget.style.display =
-                                'none';
-                            }}
-                          />
-                        )}
-
-                        <div>
-                          <div className="course-title-text">
-                            {course.title}
-                          </div>
-
-                          <div className="course-code">
-                            {course.courseCode}
-                          </div>
-                        </div>
-
-                      </div>
-                    </td>
-
-                    {/* Category */}
-                    <td>
-                      {course.category || '—'}
-                    </td>
-
-                    {/* Duration */}
-                    <td>
-                      {course.duration || '—'}
-                    </td>
-
-                    {/* Price */}
-                    <td className="price-cell">
-                      $
-                      {course.sellingPrice ??
-                        course.withExperiencePrice ??
-                        '—'}
-                    </td>
-
-                    {/* Status */}
-                    <td>
-                      {fullyCovered ? (
-                        <span className="badge badge-red">
-                          {formatTypes(
-                            Array.from(covered || [])
-                          )}{' '}
-                          — Has coupon
-                        </span>
-                      ) : (
-                        <span className="badge badge-green">
-                          Available
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-
-              {pagedCourses.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={6}
-                    className="empty-state"
-                  >
-                    No courses found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-
-          </table>
-        )}
-      </div>
-
-      {/* ======================================================
-          COURSE PAGINATION
-      ====================================================== */}
-
-      {!loadingCourses &&
-        !coursesError &&
-        filteredCourses.length > 0 && (
-          <div className="pagination-bar">
-
-            <span>
-              Showing{' '}
-              {(safeCoursePage - 1) *
-                COURSE_PAGE_LIMIT +
-                1}
-              –
-              {Math.min(
-                safeCoursePage * COURSE_PAGE_LIMIT,
-                filteredCourses.length
-              )}{' '}
-              of {filteredCourses.length}
-            </span>
-
-            <div className="pagination-controls">
-
-              <button
-                className="page-btn"
-                disabled={safeCoursePage === 1}
-                onClick={() =>
-                  setCoursePage((p) =>
-                    Math.max(1, p - 1)
-                  )
-                }
-              >
-                ‹
-              </button>
-
-              {Array.from(
-                { length: coursePages },
-                (_, index) => index + 1
-              ).map((number) => (
-                <button
-                  key={number}
-                  className={`page-btn ${
-                    number === safeCoursePage
-                      ? 'active'
-                      : ''
-                  }`}
-                  onClick={() =>
-                    setCoursePage(number)
-                  }
-                >
-                  {number}
-                </button>
-              ))}
-
-              <button
-                className="page-btn"
-                disabled={
-                  safeCoursePage === coursePages
-                }
-                onClick={() =>
-                  setCoursePage((p) =>
-                    Math.min(coursePages, p + 1)
-                  )
-                }
-              >
-                ›
-              </button>
-
-            </div>
-          </div>
-        )}
-
-      <div className="section-divider" />
-
-      {/* ======================================================
           COUPONS LIST HEADER
       ====================================================== */}
 
@@ -1218,6 +1054,13 @@ function CouponSection() {
               setSearchInput(event.target.value)
             }
           />
+
+          <button
+            className="btn-add-coupon"
+            onClick={openModal}
+          >
+            + Add coupon
+          </button>
 
         </div>
       </div>
@@ -1343,51 +1186,51 @@ function CouponSection() {
                       </div>
                     </td>
 
-                  <td>
-  <div className="row-actions-stack">
-    {group.map((coupon) => (
-      <div
-        className="row-actions"
-        key={coupon._id}
-      >
-        {/* Edit */}
-        <button
-          className="coupon-action-btn coupon-edit-btn"
-          onClick={() => openEditModal(coupon)}
-          title="Edit coupon"
-          aria-label="Edit coupon"
-        >
-          <FiEdit2 size={16} strokeWidth={2} />
-        </button>
+                    <td>
+                      <div className="row-actions-stack">
+                        {group.map((coupon) => (
+                          <div
+                            className="row-actions"
+                            key={coupon._id}
+                          >
+                            {/* Edit */}
+                            <button
+                              className="coupon-action-btn coupon-edit-btn"
+                              onClick={() => openEditModal(coupon)}
+                              title="Edit coupon"
+                              aria-label="Edit coupon"
+                            >
+                              <FiEdit2 size={16} strokeWidth={2} />
+                            </button>
 
-        {/* Delete */}
-        <button
-          className="coupon-action-btn coupon-delete-btn"
-          onClick={() => handleDelete(coupon)}
-          disabled={deletingId === coupon._id}
-          title="Delete coupon"
-          aria-label="Delete coupon"
-        >
-          {deletingId === coupon._id ? (
-            <span className="delete-spinner"></span>
-          ) : (
-            <FiTrash2 size={16} strokeWidth={2} />
-          )}
-        </button>
-      </div>
-    ))}
+                            {/* Delete */}
+                            <button
+                              className="coupon-action-btn coupon-delete-btn"
+                              onClick={() => handleDelete(coupon)}
+                              disabled={deletingId === coupon._id}
+                              title="Delete coupon"
+                              aria-label="Delete coupon"
+                            >
+                              {deletingId === coupon._id ? (
+                                <span className="delete-spinner"></span>
+                              ) : (
+                                <FiTrash2 size={16} strokeWidth={2} />
+                              )}
+                            </button>
+                          </div>
+                        ))}
 
-    {/* View */}
-    <button
-      className="coupon-action-btn coupon-view-btn"
-      onClick={() => setViewCoupon(group)}
-      title="View coupon"
-      aria-label="View coupon"
-    >
-      <FiEye size={16} strokeWidth={2} />
-    </button>
-  </div>
-</td>
+                        {/* View */}
+                        <button
+                          className="coupon-action-btn coupon-view-btn"
+                          onClick={() => setViewCoupon(group)}
+                          title="View coupon"
+                          aria-label="View coupon"
+                        >
+                          <FiEye size={16} strokeWidth={2} />
+                        </button>
+                      </div>
+                    </td>
 
                   </tr>
                 );
@@ -1612,27 +1455,149 @@ function CouponSection() {
 
               </div>
 
-              {/* Applies to */}
-              <div className="coupon-field full-width">
+              {/* Select course — searchable checkbox dropdown,
+                  with the chosen courses listed neatly underneath */}
+              <div
+                className="coupon-field full-width"
+                ref={courseDropdownRef}
+              >
 
                 <label>
-                  Applies to
+                  Select course
                 </label>
 
-                <div className="selected-courses-note">
+                <div className="course-picker">
 
-                  Applies to:{' '}
+                  <button
+                    type="button"
+                    className="course-picker-trigger"
+                    onClick={() =>
+                      setCourseDropdownOpen((open) => !open)
+                    }
+                    disabled={saving || loadingCourses}
+                  >
+                    <span>
+                      {loadingCourses
+                        ? 'Loading courses...'
+                        : selectedCourses.length > 0
+                          ? `${selectedCourses.length} course${
+                              selectedCourses.length > 1 ? 's' : ''
+                            } selected`
+                          : 'Select course(s)'}
+                    </span>
 
-                  {selectedCourses.length > 0
-                    ? selectedCourses
-                        .map(
-                          (course) =>
-                            course.title
-                        )
-                        .join(', ')
-                    : 'No courses selected — go back and select from the table.'}
+                    <FiChevronDown
+                      size={16}
+                      className={`course-picker-chevron ${
+                        courseDropdownOpen ? 'open' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {courseDropdownOpen && (
+                    <div className="course-picker-panel">
+
+                      <input
+                        className="course-picker-search"
+                        placeholder="Search courses by title, code, or category..."
+                        value={courseSearchInput}
+                        onChange={(event) =>
+                          setCourseSearchInput(event.target.value)
+                        }
+                        autoFocus
+                      />
+
+                      <div className="course-picker-list">
+
+                        {coursesError && (
+                          <div className="empty-state">
+                            {coursesError}
+                          </div>
+                        )}
+
+                        {!coursesError &&
+                          filteredCourses.map((course) => {
+                            const courseId = String(course._id);
+                            const covered =
+                              isCourseFullyCovered(courseId);
+                            const checked =
+                              selectedIds.has(courseId);
+
+                            return (
+                              <label
+                                key={course._id}
+                                className={`course-picker-option ${
+                                  covered ? 'disabled' : ''
+                                }`}
+                                title={
+                                  covered
+                                    ? 'This course already has an active coupon.'
+                                    : ''
+                                }
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  disabled={covered}
+                                  onChange={() =>
+                                    toggleCourse(courseId)
+                                  }
+                                />
+
+                                <span className="course-picker-option-text">
+                                  <span className="course-picker-option-title">
+                                    {course.title}
+                                  </span>
+                                  <span className="course-picker-option-meta">
+                                    {course.courseCode}
+                                    {course.category
+                                      ? ` · ${course.category}`
+                                      : ''}
+                                    {covered ? ' · Has coupon' : ''}
+                                  </span>
+                                </span>
+                              </label>
+                            );
+                          })}
+
+                        {!coursesError &&
+                          filteredCourses.length === 0 && (
+                            <div className="empty-state">
+                              No courses found.
+                            </div>
+                          )}
+
+                      </div>
+                    </div>
+                  )}
 
                 </div>
+
+                {/* Selected courses, shown neatly as chips */}
+                {selectedCourses.length > 0 && (
+                  <div className="selected-course-chips">
+                    {selectedCourses.map((course) => (
+                      <span
+                        className="selected-course-chip"
+                        key={course._id}
+                      >
+                        {course.title}
+
+                        <button
+                          type="button"
+                          className="selected-course-chip-remove"
+                          onClick={() =>
+                            removeSelectedCourse(course._id)
+                          }
+                          disabled={saving}
+                          aria-label={`Remove ${course.title}`}
+                        >
+                          <FiX size={12} strokeWidth={2.5} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
 
               </div>
 
@@ -1713,10 +1678,10 @@ function CouponSection() {
 
       {/* ======================================================
           EDIT COUPON MODAL
-          Courses are locked; title, code, status, discount,
-          type, and dates are editable. Type choices are limited
-          to this coupon's own type(s) plus any type not already
-          taken by a different coupon on the same course set.
+          Courses are locked; code, status, discount, type, and
+          dates are editable. Type choices are limited to this
+          coupon's own type(s) plus any type not already taken by
+          a different coupon on the same course set.
       ====================================================== */}
 
       {editCoupon && (
@@ -1747,12 +1712,6 @@ function CouponSection() {
               </button>
 
             </div>
-
-            <p className="coupon-edit-note">
-              Courses can't be changed here — this coupon stays
-              applied to the same {editCoupon.courses?.length || 0}{' '}
-              course(s) it was created with.
-            </p>
 
             {/* Form */}
             <div className="coupon-form-grid">
@@ -1822,51 +1781,177 @@ function CouponSection() {
 
                 <div className="coupon-type-checkboxes">
 
-                  {TYPE_OPTIONS.map((type) => {
-                    const available =
-                      getAvailableEditTypes(
-                        editCoupon
-                      ).includes(type);
-
-                    return (
-                      <label
-                        key={type}
-                        className="coupon-type-checkbox-label"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={editForm.types.includes(
-                            type
-                          )}
-                          onChange={() =>
-                            toggleEditType(type)
-                          }
-                          disabled={
-                            editSaving || !available
-                          }
-                        />
-                        {type.charAt(0).toUpperCase() +
-                          type.slice(1)}
-                      </label>
-                    );
-                  })}
+                  {TYPE_OPTIONS.map((type) => (
+                    <label
+                      key={type}
+                      className="coupon-type-checkbox-label"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={editForm.types.includes(type)}
+                        onChange={() => toggleEditType(type)}
+                        disabled={editSaving}
+                      />
+                      {type.charAt(0).toUpperCase() +
+                        type.slice(1)}
+                    </label>
+                  ))}
 
                 </div>
 
               </div>
 
-              {/* Applies to (read-only) */}
-              <div className="coupon-field full-width">
+              {/* Select course — same searchable checkbox dropdown
+                  as the Add coupon modal, so courses can be
+                  reselected while editing. */}
+              <div
+                className="coupon-field full-width"
+                ref={editCourseDropdownRef}
+              >
 
                 <label>
-                  Applies to (locked)
+                  Select course
                 </label>
 
-                <div className="selected-courses-note">
-                  {(editCoupon.courses || [])
-                    .map((c) => c.title)
-                    .join(', ') || '—'}
+                <div className="course-picker">
+
+                  <button
+                    type="button"
+                    className="course-picker-trigger"
+                    onClick={() =>
+                      setEditCourseDropdownOpen((open) => !open)
+                    }
+                    disabled={editSaving || loadingCourses}
+                  >
+                    <span>
+                      {loadingCourses
+                        ? 'Loading courses...'
+                        : editSelectedCourses.length > 0
+                          ? `${editSelectedCourses.length} course${
+                              editSelectedCourses.length > 1
+                                ? 's'
+                                : ''
+                            } selected`
+                          : 'Select course(s)'}
+                    </span>
+
+                    <FiChevronDown
+                      size={16}
+                      className={`course-picker-chevron ${
+                        editCourseDropdownOpen ? 'open' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {editCourseDropdownOpen && (
+                    <div className="course-picker-panel">
+
+                      <input
+                        className="course-picker-search"
+                        placeholder="Search courses by title, code, or category..."
+                        value={editCourseSearchInput}
+                        onChange={(event) =>
+                          setEditCourseSearchInput(
+                            event.target.value
+                          )
+                        }
+                        autoFocus
+                      />
+
+                      <div className="course-picker-list">
+
+                        {coursesError && (
+                          <div className="empty-state">
+                            {coursesError}
+                          </div>
+                        )}
+
+                        {!coursesError &&
+                          filteredEditCourses.map((course) => {
+                            const courseId = String(course._id);
+                            const covered =
+                              isCourseCoveredByOtherCoupon(
+                                courseId,
+                                editCoupon._id
+                              );
+                            const checked =
+                              editSelectedIds.has(courseId);
+
+                            return (
+                              <label
+                                key={course._id}
+                                className={`course-picker-option ${
+                                  covered ? 'disabled' : ''
+                                }`}
+                                title={
+                                  covered
+                                    ? 'This course already has another active coupon.'
+                                    : ''
+                                }
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={checked}
+                                  disabled={covered}
+                                  onChange={() =>
+                                    toggleEditCourse(courseId)
+                                  }
+                                />
+
+                                <span className="course-picker-option-text">
+                                  <span className="course-picker-option-title">
+                                    {course.title}
+                                  </span>
+                                  <span className="course-picker-option-meta">
+                                    {course.courseCode}
+                                    {course.category
+                                      ? ` · ${course.category}`
+                                      : ''}
+                                    {covered ? ' · Has coupon' : ''}
+                                  </span>
+                                </span>
+                              </label>
+                            );
+                          })}
+
+                        {!coursesError &&
+                          filteredEditCourses.length === 0 && (
+                            <div className="empty-state">
+                              No courses found.
+                            </div>
+                          )}
+
+                      </div>
+                    </div>
+                  )}
+
                 </div>
+
+                {/* Selected courses, shown neatly as chips */}
+                {editSelectedCourses.length > 0 && (
+                  <div className="selected-course-chips">
+                    {editSelectedCourses.map((course) => (
+                      <span
+                        className="selected-course-chip"
+                        key={course._id}
+                      >
+                        {course.title}
+
+                        <button
+                          type="button"
+                          className="selected-course-chip-remove"
+                          onClick={() =>
+                            removeEditSelectedCourse(course._id)
+                          }
+                          disabled={editSaving}
+                          aria-label={`Remove ${course.title}`}
+                        >
+                          <FiX size={12} strokeWidth={2.5} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
 
               </div>
 
@@ -2088,29 +2173,6 @@ function CouponSection() {
                   </span>
 
                 </div>
-
-                {/* Row actions */}
-                {/* <div className="detail-item full-width">
-                  <button
-                    className="btn-edit"
-                    onClick={() => {
-                      setViewCoupon(null);
-                      openEditModal(coupon);
-                    }}
-                  >
-                    Edit this coupon
-                  </button>
-
-                  <button
-                    className="btn-delete"
-                    onClick={() => handleDelete(coupon)}
-                    disabled={deletingId === coupon._id}
-                  >
-                    {deletingId === coupon._id
-                      ? 'Deleting...'
-                      : 'Delete this coupon'}
-                  </button>
-                </div> */}
 
               </div>
             ))}

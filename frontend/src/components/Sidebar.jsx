@@ -93,7 +93,7 @@ const menu = {
     },
 
      {
-      name: "Gift Voucher",
+      name: "Coupons",
       path: "/admin/coupon",
       icon: "fa-solid fa-gift",
     },
@@ -134,11 +134,11 @@ const menu = {
       icon: "fa-solid fa-link",
     },
 
-    {
-      name: "Exams",
-      path: "/admin/exams",
-      icon: "fa-solid fa-file-lines",
-    },
+    // {
+    //   name: "Exams",
+    //   path: "/admin/exams",
+    //   icon: "fa-solid fa-file-lines",
+    // },
 
     {
       name: "Payments",
@@ -176,11 +176,11 @@ const menu = {
       icon: "fa-solid fa-images",
     },
 
-    {
-      name: "Partners",
-      path: "/admin/partners",
-      icon: "fa-solid fa-handshake",
-    },
+    // {
+    //   name: "Partners",
+    //   path: "/admin/partners",
+    //   icon: "fa-solid fa-handshake",
+    // },
 
     {
       name: "VOC Submission",

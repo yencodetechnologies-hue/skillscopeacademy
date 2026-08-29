@@ -388,9 +388,8 @@ exports.getCouponById = async (req, res) => {
 // PUT /api/coupons/:id
 // UPDATE (EDIT) COUPON
 //
-// Courses are locked and can never be changed here — any
-// `courses` field in the request body is ignored. Everything
-// else (code, status, discount, type, dates) is editable.
+// Everything is editable, including courses — code, status,
+// discount, type, courses, and dates.
 // ============================================================
 
 exports.updateCoupon = async (req, res) => {
@@ -402,6 +401,7 @@ exports.updateCoupon = async (req, res) => {
       type,
       validFrom,
       validUntil,
+      courses,
     } = req.body;
 
     const coupon = await Coupon.findById(req.params.id);
@@ -495,16 +495,38 @@ exports.updateCoupon = async (req, res) => {
     }
 
     // ---------------------------------------------
-    // Courses are locked — this coupon keeps whatever courses it
-    // already had. We only need to make sure the (possibly new)
-    // active status/type combo doesn't collide with a DIFFERENT
-    // active coupon already sitting on those same courses.
+    // Validate courses — required, same shape as create.
+    // Falls back to the coupon's existing courses if the request
+    // doesn't include a `courses` field at all (e.g. a client that
+    // only ever touches other fields), but an explicitly empty
+    // array is rejected rather than silently ignored.
     // ---------------------------------------------
 
-    const courseIds = (coupon.courses || [])
-      .map((c) => String(c.courseId))
-      .filter(Boolean);
+    const incomingCourses =
+      courses === undefined ? coupon.courses : courses;
 
+    if (!incomingCourses || incomingCourses.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Select at least one course.',
+      });
+    }
+
+    const courseIds = incomingCourses
+      .map((c) => c && c.courseId)
+      .filter(Boolean)
+      .map(String);
+
+    if (courseIds.length !== incomingCourses.length) {
+      return res.status(400).json({
+        success: false,
+        message: 'Each course must include a courseId.',
+      });
+    }
+
+    // A course can only ever belong to ONE active coupon at a
+    // time. Make sure none of the (possibly new) selected courses
+    // already belongs to a DIFFERENT active coupon.
     if (status === 'Active' && courseIds.length > 0) {
       const conflictingCoupon = await findCourseConflict(
         courseIds,
@@ -521,7 +543,7 @@ exports.updateCoupon = async (req, res) => {
     }
 
     // ---------------------------------------------
-    // Apply update (courses intentionally untouched)
+    // Apply update
     // ---------------------------------------------
 
     coupon.couponCode = normalizedCode;
@@ -530,6 +552,7 @@ exports.updateCoupon = async (req, res) => {
     coupon.type = uniqueTypes;
     coupon.validFrom = validFrom;
     coupon.validUntil = validUntil;
+    coupon.courses = incomingCourses;
 
     await coupon.save();
 

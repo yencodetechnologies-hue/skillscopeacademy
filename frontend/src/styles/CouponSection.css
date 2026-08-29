@@ -1,7 +1,163 @@
 .coupon-section {
 
   margin: 0 auto;
+  padding: 15px;
 
+}
+/* ============================================================
+   Append this to CouponSection.css — styles for the new
+   "Select course" searchable checkbox dropdown and the selected
+   course chips shown underneath it in the Add coupon modal.
+============================================================ */
+
+.course-picker {
+  position: relative;
+}
+
+.course-picker-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #d7dbe2;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  color: #1f2430;
+  cursor: pointer;
+}
+
+.course-picker-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.course-picker-chevron {
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+.course-picker-chevron.open {
+  transform: rotate(180deg);
+}
+
+.course-picker-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: #fff;
+  border: 1px solid #d7dbe2;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+  overflow: hidden;
+}
+
+.course-picker-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: none;
+  border-bottom: 1px solid #eceff3;
+  font-size: 13.5px;
+  outline: none;
+}
+
+.course-picker-list {
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.course-picker-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.course-picker-option:hover {
+  background: #f5f6f9;
+}
+
+.course-picker-option.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.course-picker-option input[type='checkbox'] {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.course-picker-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.course-picker-option-title {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #1f2430;
+}
+
+.course-picker-option-meta {
+  font-size: 12px;
+  color: #8a8f98;
+}
+
+.selected-course-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.selected-course-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 6px 12px;
+  background: #eef1ff;
+  border: 1px solid #d6dcff;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #2f3a8f;
+}
+
+.selected-course-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(47, 58, 143, 0.12);
+  color: #2f3a8f;
+  cursor: pointer;
+  padding: 0;
+}
+.coupon-type-checkboxes{
+  display: flex;
+  gap: 20px;
+}
+
+.selected-course-chip-remove:hover {
+  background: rgba(47, 58, 143, 0.22);
+}
+
+.selected-course-chip-remove:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 .coupon-section{
 .coupon-section-header {
@@ -740,7 +896,422 @@
    MOBILE
    ========================================================= */
 
+   /* =========================================================
+   FULL MOBILE RESPONSIVE DESIGN
+   ========================================================= */
+
 @media (max-width: 768px) {
+
+  /* ---------- Main Section ---------- */
+
+  .coupon-section {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 12px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .coupon-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .coupon-section-header h2 {
+    font-size: 18px;
+  }
+
+  /* ---------- Add Coupon Button ---------- */
+
+  .coupon-toolbar {
+    width: 100%;
+    justify-content: stretch;
+    margin-bottom: 14px;
+  }
+
+  .btn-add-coupon {
+    width: 100%;
+    padding: 11px 16px;
+    font-size: 14px;
+  }
+
+  /* ---------- Tables ---------- */
+
+  .course-table-wrap,
+  .coupons-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+  }
+
+  .course-table,
+  .coupons-table {
+    min-width: 650px;
+    font-size: 13px;
+  }
+
+  .course-table th,
+  .coupons-table th {
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  .course-table td,
+  .coupons-table td {
+    padding: 9px 12px;
+  }
+
+  .course-title-text {
+    max-width: 200px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .course-thumb {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* ---------- Section Divider ---------- */
+
+  .section-divider {
+    margin: 26px 0 22px;
+  }
+
+  /* ---------- Coupons Header ---------- */
+
+  .coupons-list-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .coupons-list-header h2 {
+    font-size: 18px;
+  }
+
+  .coupon-search-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .coupon-search-input,
+  .status-filter-select {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+  .coupon-search-input {
+    padding: 10px 12px;
+  }
+
+  .status-filter-select {
+    padding: 10px 12px;
+  }
+
+  /* ---------- Pagination ---------- */
+
+  .pagination-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .pagination-controls {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .page-btn {
+    min-width: 34px;
+    height: 34px;
+  }
+
+  /* ---------- Modal ---------- */
+
+  .coupon-modal-overlay {
+    padding: 10px;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .coupon-modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 20px);
+    margin: 0;
+    padding: 18px 16px 16px;
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+
+  .coupon-modal-header {
+    margin-bottom: 16px;
+  }
+
+  .coupon-modal-header h3 {
+    font-size: 17px;
+    padding-right: 10px;
+  }
+
+  .modal-close-btn {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Form ---------- */
+
+  .coupon-form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .coupon-field.full-width {
+    grid-column: auto;
+  }
+
+  .coupon-field label {
+    font-size: 12px;
+  }
+
+  .coupon-field input,
+  .coupon-field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 11px;
+    font-size: 14px;
+  }
+
+  .coupon-code-row {
+    width: 100%;
+  }
+
+  .regen-btn {
+    width: 40px;
+    min-width: 40px;
+  }
+
+  .selected-courses-note,
+  .form-error,
+  .form-success {
+    grid-column: auto;
+  }
+
+  /* ---------- Course Picker ---------- */
+
+  .course-picker {
+    width: 100%;
+  }
+
+  .course-picker-trigger {
+    min-height: 42px;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .course-picker-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    max-height: 300px;
+  }
+
+  .course-picker-list {
+    max-height: 220px;
+  }
+
+  .course-picker-option {
+    padding: 9px 8px;
+  }
+
+  .course-picker-option-title {
+    font-size: 13px;
+  }
+
+  .course-picker-option-meta {
+    font-size: 11px;
+  }
+
+  .selected-course-chips {
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .selected-course-chip {
+    max-width: 100%;
+    padding: 6px 8px 6px 10px;
+    font-size: 12px;
+  }
+
+  .selected-course-chip-remove {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Coupon Type ---------- */
+
+  .coupon-type-checkboxes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  /* ---------- Modal Footer ---------- */
+
+  .coupon-modal-footer {
+    flex-direction: column-reverse;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+    padding: 11px 16px;
+  }
+
+  /* ---------- View Details ---------- */
+
+  .view-details-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .detail-item .detail-label {
+    font-size: 11px;
+  }
+
+  .detail-item .detail-value {
+    font-size: 13px;
+  }
+
+  .view-courses-title {
+    margin-top: 14px;
+  }
+
+  .view-courses-list {
+    max-height: 200px;
+  }
+
+  .view-course-row {
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 10px;
+  }
+
+  .view-course-row .vc-title {
+    font-size: 12px;
+    word-break: break-word;
+  }
+
+  .view-course-row .vc-code {
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Action Buttons ---------- */
+
+  .row-actions-stack {
+    gap: 5px;
+  }
+
+  .row-actions {
+    gap: 5px;
+  }
+
+  .coupon-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+  }
+
+  .coupon-action-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Hide desktop tooltip on touch devices */
+  .coupon-action-btn::after {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .coupon-section {
+    padding: 20px !important;
+  }
+
+  .coupon-section-header h2,
+  .coupons-list-header h2 {
+    font-size: 17px;
+  }
+
+  .coupon-modal-overlay {
+    padding: 6px;
+  }
+
+  .coupon-modal {
+    max-height: calc(100vh - 12px);
+    padding: 16px 12px 14px;
+    border-radius: 10px;
+  }
+
+  .coupon-modal-header h3 {
+    font-size: 16px;
+  }
+
+  .course-table,
+  .coupons-table {
+    min-width: 620px;
+  }
+
+  .pagination-controls {
+    gap: 4px;
+  }
+
+  .page-btn {
+    min-width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .coupon-type-checkboxes {
+    gap: 8px;
+  }
+
+  .selected-course-chip {
+    font-size: 11px;
+  }
+
+  .coupon-modal-footer {
+    gap: 7px;
+  }
+}
+
+@media (max-width: 768px) {
+  .coupon-section{
+    padding:20px;
+  }
   .row-actions-stack {
     gap: 6px;
   }

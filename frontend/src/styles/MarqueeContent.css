@@ -134,7 +134,13 @@
 .modal-close:hover {
   background: #e2e8f0;
 }
+@media (max-width: 425px) {
+    .marquee-container
 
+ {
+        padding: 20px;
+    }
+}
 
 /* Form */
 

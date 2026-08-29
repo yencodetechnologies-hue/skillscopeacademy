@@ -2566,7 +2566,7 @@ export default function Students() {
             justifyContent:
               "space-between",
             alignItems: "center",
-            marginBottom: "15px",
+            margin: "15px 20px",
           }}
         >
           <div

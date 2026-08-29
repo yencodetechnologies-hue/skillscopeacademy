@@ -161,7 +161,7 @@ function ViewStudentsPanel({ companyId, token, onClose }) {
                 <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Student</th>
                 <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Amount</th>
                 <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Payment</th>
-                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>LLN</th>
+                <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>LLND</th>
                 <th style={{ textAlign: "left", padding: "6px 8px", color: colors.textMuted, fontWeight: 600 }}>Enrolled</th>
               </tr>
             </thead>

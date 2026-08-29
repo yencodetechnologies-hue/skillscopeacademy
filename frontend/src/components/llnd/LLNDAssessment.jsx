@@ -261,7 +261,7 @@ function LLNDAssessment(props) {
 
         <div className="llnd-card" style={{ margin: "0% 10%" }}>
 
-            <h3 className="llnd-h3"> LLN Assessment</h3>
+            <h3 className="llnd-h3"> LLND Assessment</h3>
 
             <p>
                 Section {topicIndex + 1} of 4 : {topics[topicIndex]}

@@ -145,11 +145,11 @@ const buildStudentBookingHtml = (data) => {
 
         <div class="eb-important-box">
             <span class="eb-important-title">⚠ IMPORTANT — ACTION REQUIRED</span>
-            <p class="eb-important-text">Please finish your LLN & Enrolment in the Student Portal before attending the course. Your spot will not be confirmed until this is completed.</p>
+            <p class="eb-important-text">Please finish your LLND & Enrolment in the Student Portal before attending the course. Your spot will not be confirmed until this is completed.</p>
         </div>
 
         <div class="eb-section"><div class="eb-section-head"><span>NEXT STEPS</span></div><div style="padding:20px;">
-            <div class="eb-step"><div class="eb-step-num">1</div><div class="eb-step-text">Log in to the <a href="https://www.safetytrainingacademy.edu.au/login" style="color:#F57C00; font-weight:700; text-decoration:none;">Student Portal</a> and complete your <strong>LLN Assessment</strong> and <strong>Enrolment Form</strong>.</div></div>
+            <div class="eb-step"><div class="eb-step-num">1</div><div class="eb-step-text">Log in to the <a href="https://www.safetytrainingacademy.edu.au/login" style="color:#F57C00; font-weight:700; text-decoration:none;">Student Portal</a> and complete your <strong>LLND Assessment</strong> and <strong>Enrolment Form</strong>.</div></div>
             <div class="eb-step"><div class="eb-step-num">2</div><div class="eb-step-text">Ensure you have a valid <strong>USI</strong>. Visit <a href="https://www.usi.gov.au" style="color:#F57C00; text-decoration:none;">usi.gov.au</a> if needed.</div></div>
             <div class="eb-step"><div class="eb-step-num">3</div><div class="eb-step-text">Arrive at the venue at least <strong>15 minutes early</strong> with photo ID.</div></div>
             <div class="eb-step"><div class="eb-step-num">4</div><div class="eb-step-text">Check your email for any updates regarding your session.</div></div>
@@ -260,9 +260,9 @@ const buildLLNNotificationHtml = (data, isAdmin = false) => {
   const { bookingId, studentName, studentEmail, studentPhone, score, status, gatewayTransactionId } = data;
   const statusColor = status === "Passed" ? "#16a34a" : "#ca8a04";
   const cleanGatewayId = String(gatewayTransactionId || '').replace(/-/g, '');
-  const subTitle = isAdmin ? "LLN NOTIFICATION" : "ASSESSMENT CONFIRMATION";
+  const subTitle = isAdmin ? "LLND NOTIFICATION" : "ASSESSMENT CONFIRMATION";
   
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><style>${commonStyles}</style></head><body><div class="eb-body">${buildCommonHeader("Safeticks", subTitle, "LLN SUBMITTED", bookingId, isAdmin)}<div class="eb-content"><div class="eb-section"><div class="eb-section-head"><span>STUDENT DETAILS</span></div><table class="eb-table"><tr><td class="lbl">Name</td><td class="val-bold">${studentName}</td></tr><tr><td class="lbl">Email</td><td class="val">${studentEmail}</td></tr><tr><td class="lbl">Phone Number</td><td class="val">${studentPhone}</td></tr></table></div><div class="eb-section"><div class="eb-section-head"><span>ASSESSMENT RESULT</span></div><table class="eb-table"><tr><td class="lbl">Booking ID</td><td class="val-bold">${formatBookingId(bookingId)}</td></tr><tr><td class="lbl">Score</td><td class="val-bold" style="font-size:18px;">${Number(score).toFixed(1)}%</td></tr><tr><td class="lbl">Status</td><td class="val-bold" style="color:${statusColor};">${status}</td></tr>${cleanGatewayId && cleanGatewayId !== '—' && cleanGatewayId !== '-' ? `<tr><td class="lbl">Transaction ID</td><td class="val">${cleanGatewayId}</td></tr>` : ''}</table></div></div><div class="eb-footer">&copy; ${new Date().getFullYear()} Safeticks. All rights reserved.</div></div></body></html>`;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><style>${commonStyles}</style></head><body><div class="eb-body">${buildCommonHeader("Safeticks", subTitle, "LLND SUBMITTED", bookingId, isAdmin)}<div class="eb-content"><div class="eb-section"><div class="eb-section-head"><span>STUDENT DETAILS</span></div><table class="eb-table"><tr><td class="lbl">Name</td><td class="val-bold">${studentName}</td></tr><tr><td class="lbl">Email</td><td class="val">${studentEmail}</td></tr><tr><td class="lbl">Phone Number</td><td class="val">${studentPhone}</td></tr></table></div><div class="eb-section"><div class="eb-section-head"><span>ASSESSMENT RESULT</span></div><table class="eb-table"><tr><td class="lbl">Booking ID</td><td class="val-bold">${formatBookingId(bookingId)}</td></tr><tr><td class="lbl">Score</td><td class="val-bold" style="font-size:18px;">${Number(score).toFixed(1)}%</td></tr><tr><td class="lbl">Status</td><td class="val-bold" style="color:${statusColor};">${status}</td></tr>${cleanGatewayId && cleanGatewayId !== '—' && cleanGatewayId !== '-' ? `<tr><td class="lbl">Transaction ID</td><td class="val">${cleanGatewayId}</td></tr>` : ''}</table></div></div><div class="eb-footer">&copy; ${new Date().getFullYear()} Safeticks. All rights reserved.</div></div></body></html>`;
 };
 
 const buildEnrollmentNotificationHtml = (data, isAdmin = false) => {
@@ -399,13 +399,13 @@ const sendLLNCompletionNotification = async (req, res) => {
 
     try { 
         // Send to student
-        await sendEmail({ to: studentEmail, subject: `LLN Assessment Completed - ${studentName}`, html: studentHtml }); 
+        await sendEmail({ to: studentEmail, subject: `LLND Assessment Completed - ${studentName}`, html: studentHtml }); 
         
         // Send to admin separately (Academy and Tech Team)
         const adminRecipients = [process.env.BOOKINGS_EMAIL, process.env.NOTIFY_EMAIL].filter(Boolean);
         for (const recipient of adminRecipients) {
           try {
-            await sendEmail({ to: recipient, subject: `NEW LLN SUBMISSION: ${studentName}`, html: adminHtml });
+            await sendEmail({ to: recipient, subject: `NEW LLND SUBMISSION: ${studentName}`, html: adminHtml });
           } catch (e) {}
         }
 

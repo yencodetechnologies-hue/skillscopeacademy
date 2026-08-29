@@ -1,5 +1,28 @@
 /* ===== ABOUT PAGE ===== */
 
+/* Hide mobile nav on desktop screens */
+
+
+/* Desktop */
+.desktop-navbar {
+  display: block;
+}
+
+.mobile-navbar {
+  display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .desktop-navbar {
+    display: none;
+  }
+
+  .mobile-navbar {
+    display: block;
+  }
+}
+
 .ab-page {
     font-family: 'Segoe UI', sans-serif;
     color: var(--color-text-primary);
@@ -13,7 +36,7 @@
 /* ── HERO ── */
 .ab-hero {
     background: var(--color-navy-deep);
-    padding: 80px 24px 90px;
+    padding: 80px 24px 40px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -44,7 +67,7 @@
     font-size: clamp(40px, 7vw, 64px);
     font-weight: 800;
     color: var(--color-surface);
-    margin: 20 0 0 16px;
+    margin: 20px 0 0 16px;
     position: relative;
 }
 
@@ -165,7 +188,7 @@
 /* ── WHY CHOOSE US ── */
 .ab-why {
     background: var(--color-slate-50);
-    padding: 72px 24px;
+    padding: 40px 24px;
 }
 
 .ab-why-inner {
@@ -264,7 +287,7 @@
 /* ── VISION & MISSION ── */
 .ab-vm {
     background: var(--color-slate-50);
-    padding: 72px 24px;
+    padding: 40px 24px;
 }
 
 .ab-vm-inner {

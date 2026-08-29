@@ -131,7 +131,7 @@ function CreateModal({ onClose, onCreate }) {
             </label>
           </div>
           <p className="el-toggle-hint">
-            Pay Later: complete enrollment without payment (name, email, mobile, LLN, enrollment form).
+            Pay Later: complete enrollment without payment (name, email, mobile, LLND, enrollment form).
             Agent: course list shows course names only—no prices in the dropdown.
           </p>
           <div className="el-field">

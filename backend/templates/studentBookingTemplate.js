@@ -124,7 +124,7 @@ const studentBookingTemplate = (data) => {
       <div class="eb-important-box">
         <span class="eb-important-title">⚠ ACTION REQUIRED</span>
         <p class="eb-important-text">
-          Please log in to the student portal to complete your <strong>LLN Assessment</strong> and <strong>Enrolment Form</strong> before attending the course.
+          Please log in to the student portal to complete your <strong>LLND Assessment</strong> and <strong>Enrolment Form</strong> before attending the course.
         </p>
       </div>
 

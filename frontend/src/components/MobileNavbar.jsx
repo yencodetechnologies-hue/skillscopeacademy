@@ -6,6 +6,7 @@ import "../styles/MobileNavbar.css";
 const defaultMenuItems = [
   { label: "Home", path: "/" },
   { label: "Courses", path: "/all-courses" },
+  { label: "Sign In", path: "/login" },
   { label: "Resources", path: "/" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
@@ -14,7 +15,7 @@ const defaultMenuItems = [
   { label: "Unique Student Identifier (USI)", path: "/usi" },
   { label: "Code of Practice", path: "/code-of-practice" },
   { label: "Gallery", path: "/gallery" },
-  { label: "Sign In", path: "/login" },
+  
 ];
 
 export default function MobileNavbar({
@@ -84,7 +85,7 @@ export default function MobileNavbar({
             {!isHomePage && (
               <button
                 type="button"
-                className="mnb-home-btn"
+                className="mnb-phone-circle"
                 onClick={() => handleNavClick("/")}
                 aria-label="Home"
                 title="Home"
@@ -133,46 +134,52 @@ export default function MobileNavbar({
             </div>
 
             {/* BOTTOM BUTTONS */}
-            <div className="mnb-drawer-footer">
+<div className="mnb-drawer-footer">
 
-              {/* PHONE */}
-              <a
-                href={telLink}
-                className="mnb-footer-btn mnb-phone-btn"
-                onClick={closeMenu}
-              >
-                <i className="fa-solid fa-phone"></i>
-                {phoneNumber}
-              </a>
+  {/* FIRST ROW */}
+  <div className="mnb-footer-row">
+    {/* PHONE */}
+    <a
+      href={telLink}
+      className="mnb-footer-btn mnb-phone-btn"
+      onClick={closeMenu}
+    >
+      <i className="fa-solid fa-phone"></i>
+      {phoneNumber}
+    </a>
 
-              {/* COMBO COURSES */}
-              <button
-                type="button"
-                className="mnb-footer-btn mnb-combo-btn"
-                onClick={() => handleNavClick("/combo-courses")}
-              >
-                Combo Courses
-              </button>
+    {/* COMBO COURSES */}
+    <button
+      type="button"
+      className="mnb-footer-btn mnb-combo-btn"
+      onClick={() => handleNavClick("/combo-courses")}
+    >
+      Combo Courses
+    </button>
+  </div>
 
-              {/* BOOK NOW */}
-              <button
-                type="button"
-                className="mnb-footer-btn mnb-book-btn"
-                onClick={() => handleNavClick("/book-now")}
-              >
-                Book Now
-              </button>
+  {/* SECOND ROW */}
+  <div className="mnb-footer-row">
+    {/* LOGIN */}
+    <Link
+      to="/login"
+      className="mnb-footer-btn mnb-login-btn"
+      onClick={closeMenu}
+    >
+      Login
+    </Link>
 
-              {/* LOGIN */}
-              <Link
-                to="/login"
-                className="mnb-footer-btn mnb-login-btn"
-                onClick={closeMenu}
-              >
-                Login
-              </Link>
+    {/* BOOK NOW */}
+    <button
+      type="button"
+      className="mnb-footer-btn mnb-book-btn"
+      onClick={() => handleNavClick("/book-now")}
+    >
+      Book Now
+    </button>
+  </div>
 
-            </div>
+</div>
           </nav>
         )}
       </header>

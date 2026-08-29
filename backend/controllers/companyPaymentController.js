@@ -47,7 +47,7 @@ const buildOrderEmails = (payment) => {
     </table>
     <p style="margin:0 0 12px;font-size:14px;font-weight:600;color:#334155;">Courses Booked</p>
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">${coursesHtml}</table>
-    <p style="margin:0 0 16px;font-size:14px;color:#334155;">Once payment is confirmed, employee enrolment links will be shared with you. Please ask your employees to complete the form and LLN assessment before the course date.</p>
+    <p style="margin:0 0 16px;font-size:14px;color:#334155;">Once payment is confirmed, employee enrolment links will be shared with you. Please ask your employees to complete the form and LLND assessment before the course date.</p>
     <p style="margin:0;font-size:14px;color:#64748b;">Questions? Contact us at <a href="mailto:info@safetytrainingacademy.edu.au" style="color:#3b82f6;">info@safetytrainingacademy.edu.au</a> or call 1300 976 097.</p>
 </td></tr>
 <tr><td style="padding:20px 30px;background-color:#f8fafc;border-top:1px solid #e2e8f0;">

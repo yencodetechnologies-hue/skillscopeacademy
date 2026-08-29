@@ -1,4 +1,28 @@
 /* Navy Top Bar Container */
+.mobile-navbar {
+    display: none;
+}
+
+.desktop-navbar {
+    display: block;
+}
+
+/* On mobile screens (768px and below) */
+@media screen and (max-width: 768px) {
+    .desktop-navbar {
+        display: none;
+    }
+
+    .mobile-navbar {
+        display: block;
+    }
+    .site-header{
+      top:0px !important;
+      left: 0px !important;
+      right: 0px !important;
+      border-radius: 0% !important;
+    }
+}
 .mnb-header-bar {
   background-color: #fff; /* Dark navy blue from logo image */
   width: 100%;
@@ -80,7 +104,7 @@
 
 /* Mobile Dropdown Drawer Panel */
 .mnb-drawer {
-  position: absolute;
+ 
   top: 100%;
   left: 0;
   right: 0;
@@ -228,6 +252,7 @@
   text-decoration: none;
 
   font-size: 16px;
+  border: none;
 
   transition: all 0.25s ease;
 
@@ -238,6 +263,18 @@
   background: #0a1e3f;
   color: #ffffff;
   transform: translateY(-2px);
+}
+.mnb-footer-row {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.mnb-footer-row .mnb-footer-btn {
+  flex: 1;
+  width: 50%;
+  box-sizing: border-box;
 }
 
 

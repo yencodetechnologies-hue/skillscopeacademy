@@ -174,7 +174,7 @@ function Numeracy({ next }) {
                 </button>
 
                 <div>
-                    <span className="num-ques-m">LLN</span> <span className="num-ques-l">Question</span> {index + 1} of 3
+                    <span className="num-ques-m">LLND</span> <span className="num-ques-l">Question</span> {index + 1} of 3
                 </div>
 
                 <button

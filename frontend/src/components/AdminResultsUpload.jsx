@@ -47,7 +47,7 @@ function WarningModal({ student, onClose }) {
         <div className="ru-warn-checks">
           <div className={`ru-warn-check-row ${llndOk ? "pass" : "fail"}`}>
             <span className="wc-icon">{llndOk ? "✅" : "❌"}</span>
-            LLN Status — {llndOk ? "Completed" : "Not Completed"}
+            LLND Status — {llndOk ? "Completed" : "Not Completed"}
           </div>
           <div className={`ru-warn-check-row ${enrollOk ? "pass" : "fail"}`}>
             <span className="wc-icon">{enrollOk ? "✅" : "❌"}</span>
@@ -397,7 +397,7 @@ setCourses(coursesRes);
       <div className="ru-table-card">
         <div className="ru-table-head">
           <h3>Student Accounts ({filtered.length})</h3>
-          <p>LLN and Enrollment Form must be Completed before uploading a result</p>
+          <p>LLND and Enrollment Form must be Completed before uploading a result</p>
         </div>
 
         {loading && <p className="ru-loading">Loading students...</p>}
@@ -415,7 +415,7 @@ setCourses(coursesRes);
                   <th>Phone</th>
                   <th>Course</th>
                   <th>Course Schedule</th>
-                  <th>LLN Status</th>
+                  <th>LLND Status</th>
                   <th>Enrollment Form</th>
                   <th>Actions</th>
                 </tr>

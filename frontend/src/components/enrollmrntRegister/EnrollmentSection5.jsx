@@ -364,8 +364,8 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                         <p>Credit Transfer may be granted for equivalent units with verified evidence. requires evidence of competence.</p>
                     </div>
                     <div className="s5-policy-item">
-                        <h5>Language, Literacy and Numeracy (LLN)</h5>
-                        <p>Learners may be assessed for LLN needs. Support may be provided or referrals made where appropriate.</p>
+                        <h5>Language, Literacy and Numeracy (LLND)</h5>
+                        <p>Learners may be assessed for LLND needs. Support may be provided or referrals made where appropriate.</p>
                     </div>
                     <div className="s5-policy-item">
                         <h5>Important information</h5>

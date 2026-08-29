@@ -3,6 +3,7 @@ import "../styles/About.css"
 import TopNav from "../components/landingPage/TopNav"
 import TrustBar from "../components/landingPage/TrustBar"
 import PublicNavbar from "../components/PublicNavbar"
+import MobileNavbar from '../components/MobileNavbar';
 import Footer from "../components/landingPage/Footer"
 import { Link } from "react-router-dom"
 import buildingImg from "../assets/Office-in-Sydney.jpg"   // replace with your image
@@ -48,8 +49,15 @@ function AboutPage() {
     return (
         <div className="ab-page">
             <div className="site-header">
-            <TopNav />
-            <PublicNavbar />
+           
+            <div className="desktop-navbar">
+                 <TopNav />
+                    <PublicNavbar />
+                </div>
+                {/* Mobile View */}
+                <div className="mobile-navbar">
+                    <MobileNavbar />
+                </div>
             </div>
 
             {/* ── HERO ── */}

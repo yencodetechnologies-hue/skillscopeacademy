@@ -156,7 +156,7 @@ function ViewModal({ student, onClose }) {
                     : "badge-not-completed"
                 }`}
               >
-                LLN: {student.llndStatus || "—"}
+                LLND: {student.llndStatus || "—"}
               </span>
 
               <span
@@ -2634,7 +2634,7 @@ export default function Students() {
                   <th>
                     Course schedule date
                   </th>
-                  <th>LLN Status</th>
+                  <th>LLND Status</th>
                   <th>
                     Enrollment Form
                   </th>
@@ -2887,7 +2887,7 @@ export default function Students() {
 
                             <button
                               className="sm-icon-btn"
-                              title="View LLN"
+                              title="View LLND"
                               onClick={() =>
                                 navigate(
                                   `/admin/llnd-results?studentId=${s.flowId}&openModal=true`

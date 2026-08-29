@@ -21,7 +21,7 @@ function EnrolmentsTable({ students }) {
             <th>Course</th>
             <th>Amount</th>
             <th>Source</th>
-            <th>LLN</th>
+            <th>LLND</th>
             <th>Form</th>
             <th>Training</th>
             <th>Enrolled</th>

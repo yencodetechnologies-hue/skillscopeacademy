@@ -144,3 +144,98 @@
   background-color: #f3e8ff;
   color: #7c3aed;
 }
+
+/* ===================================================
+   MOBILE & TABLET RESPONSIVE STYLES
+   =================================================== */
+
+/* Tablet & Smaller Screens (<= 768px) */
+@media (max-width: 768px) {
+  .vsc__welcome-header {
+    margin-bottom: 18px;
+  }
+
+  .vsc__welcome-title {
+    font-size: 20px;
+  }
+
+  .vsc__welcome-subtitle {
+    font-size: 13px;
+  }
+
+  .vsc__grid {
+    /* 2 columns on tablet/large mobile */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .vsc__card {
+    padding: 14px 16px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+
+  .vsc__badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .vsc__badge svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .vsc__value {
+    font-size: 20px;
+  }
+}
+
+/* Small Mobile Screens (<= 480px) */
+@media (max-width: 480px) {
+  .vsc__welcome-header {
+    margin-bottom: 14px;
+  }
+  .vsc__container{padding: 20px;}
+  .calandar-div{margin:15px;}
+  .qa__container{margin: 15px;}
+
+  .vsc__welcome-title {
+    font-size: 18px;
+  }
+
+  .vsc__welcome-subtitle {
+    font-size: 12px;
+  }
+
+  .vsc__grid {
+    /* Stacks 1 card per row or 2 depending on preference */
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .vsc__card {
+    padding: 12px 14px;
+    align-items: center; /* Vertically centers the badge with the content */
+  }
+
+  .vsc__title {
+    font-size: 13px;
+  }
+
+  .vsc__value {
+    font-size: 18px;
+  }
+
+  .vsc__subtitle {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+}
+
+/* Touch-friendly adjustments for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .vsc__card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+}

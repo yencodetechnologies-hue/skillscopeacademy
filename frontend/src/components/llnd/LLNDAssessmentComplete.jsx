@@ -76,7 +76,7 @@ function LLNDAssessmentComplete({ data, onRetry, attempt, onContinue, flowId: fl
     <div className="llnd-complete-card">
 
       <div className="llnd-header">
-        📋 Step 3: LLN Assessment - Complete
+        📋 Step 3: LLND Assessment - Complete
       </div>
 
       <div className={`llnd-body ${isPassed ? "pass-bg" : "fail-bg"}`}>
@@ -89,7 +89,7 @@ function LLNDAssessmentComplete({ data, onRetry, attempt, onContinue, flowId: fl
 
         <p className="sub-text">
           {isPassed
-            ? "Congratulations! You have successfully passed the LLN assessment."
+            ? "Congratulations! You have successfully passed the LLND assessment."
             : "You have completed the assessment. Please reattempt to continue."
           }
         </p>

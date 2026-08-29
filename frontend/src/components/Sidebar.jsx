@@ -117,7 +117,7 @@ const menu = {
     },
 
     {
-      name: "LLN Results",
+      name: "LLND Results",
       path: "/admin/llnd-results",
       icon: "fa-solid fa-clipboard-check",
     },

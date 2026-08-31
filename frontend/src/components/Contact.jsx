@@ -6,6 +6,7 @@
     import { useState } from "react";
     import contactImg from "../assets/Contact-Us.jpg";
     import { ORG_PHONE_1300, ORG_PHONE_MOBILE } from "../utils/organizationPhones";
+    import MobileNavbar from "./MobileNavbar";
 
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -116,8 +117,14 @@
     return (
         <div className="cp-page">
         <div className="site-header">
-            <TopNav />
-            <PublicNavbar />
+            <div className="desktop-navbar">
+                 <TopNav />
+                    <PublicNavbar />
+                </div>
+                {/* Mobile View */}
+                <div className="mobile-navbar">
+                    <MobileNavbar />
+                </div>
         </div>
 
         {/* ── HERO SECTION ── */}

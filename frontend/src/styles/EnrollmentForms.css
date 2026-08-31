@@ -642,3 +642,130 @@
     max-height: 95vh;
   }
 }
+@media (max-width: 900px) {
+  .ef-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ef-container{padding: 20px;}
+  .ef-header {
+    margin-bottom: 16px;
+  }
+  .ef-title {
+    font-size: 1.35rem;
+  }
+  .ef-subtitle {
+    font-size: 0.85rem;
+  }
+
+  /* Stat cards 1-col */
+  .ef-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    padding: 14px 16px;
+  }
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  /* Filter fields */
+  .ef-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .search-wrapper,
+  .ef-select {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .ef-table-header {
+    padding: 14px 16px 12px;
+  }
+
+  /* Pagination stacked */
+  .ef-pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+  .pagination-controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .page-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Modal Mobile Adaptations */
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-box {
+    max-height: 94vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+  }
+
+  .modal-header {
+    padding: 16px 18px 12px;
+  }
+  .modal-title {
+    font-size: 16px;
+  }
+
+  .modal-status-bar {
+    margin: 12px 16px 0;
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .modal-status-actions {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 8px;
+    gap: 6px;
+  }
+  .modal-action-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 9px;
+  }
+
+  .modal-tabs {
+    padding: 10px 16px 0;
+  }
+  .modal-tab {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+  .modal-section {
+    padding: 14px;
+  }
+
+  .modal-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-photo-img {
+    max-height: 240px;
+  }
+}

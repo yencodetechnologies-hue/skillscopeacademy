@@ -3,13 +3,18 @@ import "../../styles/EnrollmentRegister.css"
 import ValidationToast from "./ValidationToast"
 
 const STATES = ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"]
+const MAX_SIZE_BYTES = 5 * 1024 * 1024
 
-function EnrollmentSection1({ userDetails, data, setData, next }) {
+function EnrollmentSection1({ userDetails, data, setData, next, saving }) {
     console.log(data,"data");
     
     const [errors, setErrors] = useState([])
     const [showToast, setShowToast] = useState(false)
     const [missingFieldsNames, setMissingFieldsNames] = useState([])
+
+    // ✅ ID/Photo upload state
+    const [idFileError, setIdFileError] = useState("")
+    const [photoFileError, setPhotoFileError] = useState("")
 
     const set = (key, value) => {
         setData(p => ({ ...p, [key]: value }))
@@ -51,12 +56,61 @@ setData(prev => ({
 }));
     }, [userDetails])
 
+    // ✅ upload handlers
+    const handleFileClick = (inputId) => {
+        document.getElementById(inputId).click()
+    }
+
+    const handleIdUpload = (file) => {
+        if (!file) return
+        if (file.size > MAX_SIZE_BYTES) {
+            setIdFileError("File size exceeds 5MB. Please upload a smaller file.")
+            document.getElementById("er-id-input").value = ""
+            return
+        }
+        setIdFileError("")
+        set("idDocument", file)
+        if (errors.includes("idDocument")) {
+            setErrors(prev => prev.filter(e => e !== "idDocument"))
+        }
+    }
+
+    const handlePhotoUpload = (file) => {
+        if (!file) return
+        if (file.size > MAX_SIZE_BYTES) {
+            setPhotoFileError("File size exceeds 5MB. Please upload a smaller file.")
+            document.getElementById("er-photo-input").value = ""
+            return
+        }
+        setPhotoFileError("")
+        set("photoDocument", file)
+        if (errors.includes("photoDocument")) {
+            setErrors(prev => prev.filter(e => e !== "photoDocument"))
+        }
+    }
+
+    const handleDelete = (key, urlKey) => {
+        set(key, null)
+        set(urlKey, null)
+    }
+
+    const deleteButtonStyle = {
+        position: "absolute", top: -8, right: -8,
+        background: "red", color: "#fff", border: "none",
+        borderRadius: "50%", width: 20, height: 20,
+        cursor: "pointer", fontSize: 12, zIndex: 1
+    }
+
     const handleNext = () => {
+        // ✅ prevent double-submit while a save is already in flight
+        if (saving) return
+
         const required = [
             "title", "surname", "givenName", "dob", "gender",
             "mobilePhone", "email", "residentialAddress",
             "suburb", "state", "postcode"
         ]
+        const fileRequired = { idDocument: "idDocumentUrl", photoDocument: "photoDocumentUrl" }
         const newErrors = []
         const missingNames = []
 
@@ -71,11 +125,20 @@ setData(prev => ({
             residentialAddress: "Residential Address",
             suburb: "Suburb",
             state: "State",
-            postcode: "Postcode"
+            postcode: "Postcode",
+            idDocument: "Identification Document",
+            photoDocument: "Photo"
         }
 
         for (const field of required) {
             if (!data[field]) {
+                newErrors.push(field)
+                missingNames.push(fieldLabels[field])
+            }
+        }
+
+        for (const [field, urlField] of Object.entries(fileRequired)) {
+            if (!data[field] && !data[urlField]) {
                 newErrors.push(field)
                 missingNames.push(fieldLabels[field])
             }
@@ -114,6 +177,159 @@ setData(prev => ({
                 <p className="er-card-subtitle">
                     Please complete <strong>full name</strong> and <strong>date of birth</strong> as listed on your ID documents.
                 </p>
+
+                {/* PHOTO AND ID CARD — above the Title field */}
+                <div className="er-photo-header">
+                    <h4 className="er-photo-header-title">PHOTO AND ID CARD</h4>
+                    <p className="er-photo-header-text">
+                        Please upload a clear copy of your identification document(s). Files must be readable.
+                    </p>
+                    <p className="er-photo-header-text">
+                        Accepted: PDF, JPG, PNG. Example: Passport / Driver Licence.
+                    </p>
+                </div>
+
+                <div className="s5-upload-row">
+
+                    {/* ID Document upload card */}
+                    <div className="s5-upload-card" id="er-idDocument">
+                        <div className="s5-upload-card-header">
+                            <span className="s5-upload-icon">📄</span>
+                            <span className={`s5-upload-label ${errors.includes("idDocument") ? "s5-label-error" : ""}`}>
+                                Identification document <span className="s5-required">*</span>
+                            </span>
+                        </div>
+                        <p className="s5-upload-hint">e.g. Passport / Driver Licence</p>
+                        <div
+                            className={`s5-dropzone ${(data.idDocument || data.idDocumentUrl) ? "s5-dropzone-active" : ""} ${idFileError || errors.includes("idDocument") ? "s5-dropzone-error" : ""}`}
+                            onClick={() => handleFileClick("er-id-input")}
+                        >
+                            {data.idDocument ? (
+                                <p className="s5-file-name">✅ {data.idDocument.name}</p>
+                            ) : data.idDocumentUrl ? (
+                                <p className="s5-file-name">✅ Already uploaded</p>
+                            ) : (
+                                <>
+                                    <span className="s5-upload-arrow">↑</span>
+                                    <p className="s5-dropzone-text">Click to upload</p>
+                                    <p className="s5-dropzone-hint">PDF, JPG, PNG (max 5MB)</p>
+                                </>
+                            )}
+                        </div>
+                        {idFileError && (
+                            <div className="s5-file-error">
+                                <span className="s5-file-error-icon">⚠</span>
+                                {idFileError}
+                            </div>
+                        )}
+                        <input
+                            id="er-id-input"
+                            type="file"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            style={{ display: "none" }}
+                            onChange={e => handleIdUpload(e.target.files[0])}
+                        />
+                    </div>
+
+                    {/* Photo upload card */}
+                    <div className="s5-upload-card" id="er-photoDocument">
+                        <div className="s5-upload-card-header">
+                            <span className="s5-upload-icon">🖼️</span>
+                            <span className={`s5-upload-label ${errors.includes("photoDocument") ? "s5-label-error" : ""}`}>
+                                Upload a Photo <span className="s5-required">*</span>
+                            </span>
+                        </div>
+                        <p className="s5-upload-hint">Example: Upload a Photo.</p>
+                        <div
+                            className={`s5-dropzone ${(data.photoDocument || data.photoDocumentUrl) ? "s5-dropzone-active" : ""} ${photoFileError || errors.includes("photoDocument") ? "s5-dropzone-error" : ""}`}
+                            onClick={() => handleFileClick("er-photo-input")}
+                        >
+                            {data.photoDocument ? (
+                                <p className="s5-file-name">✅ {data.photoDocument.name}</p>
+                            ) : data.photoDocumentUrl ? (
+                                <p className="s5-file-name">✅ Already uploaded</p>
+                            ) : (
+                                <>
+                                    <span className="s5-upload-arrow">↑</span>
+                                    <p className="s5-dropzone-text">Click to upload</p>
+                                    <p className="s5-dropzone-hint">PDF, JPG, PNG (max 5MB)</p>
+                                </>
+                            )}
+                        </div>
+                        {photoFileError && (
+                            <div className="s5-file-error">
+                                <span className="s5-file-error-icon">⚠</span>
+                                {photoFileError}
+                            </div>
+                        )}
+                        <input
+                            id="er-photo-input"
+                            type="file"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            style={{ display: "none" }}
+                            onChange={e => handlePhotoUpload(e.target.files[0])}
+                        />
+                    </div>
+
+                </div>
+
+                <p className="er-upload-footer-note">
+                    Ensure documents are clear and readable. Accepted: PDF, JPG, PNG. Max 5MB per file.
+                </p>
+
+                {/* Preview */}
+                {(data.idDocument || data.photoDocument || data.idDocumentUrl || data.photoDocumentUrl) && (
+                    <div className="er-preview-section">
+                        <h4 className="er-card-title">Preview</h4>
+                        <div className="er-preview-row">
+
+                            {(data.idDocument || data.idDocumentUrl) && (
+                                <div className="er-preview-item" style={{ position: "relative" }}>
+                                    <button
+                                        onClick={() => handleDelete("idDocument", "idDocumentUrl")}
+                                        style={deleteButtonStyle}
+                                        aria-label="Remove ID document"
+                                    >✕</button>
+                                    <p className="er-preview-label">ID Document</p>
+                                    {data.idDocument ? (
+                                        data.idDocument.type === "application/pdf" ? (
+                                            <p className="er-preview-pdf">📄 {data.idDocument.name}</p>
+                                        ) : (
+                                            <img src={URL.createObjectURL(data.idDocument)} alt="ID" className="er-preview-img" />
+                                        )
+                                    ) : data.idDocumentUrl?.endsWith(".pdf") ? (
+                                        <a href={data.idDocumentUrl} target="_blank" rel="noreferrer" className="er-preview-pdf">📄 View ID Document</a>
+                                    ) : (
+                                        <img src={data.idDocumentUrl} alt="ID" className="er-preview-img" />
+                                    )}
+                                </div>
+                            )}
+
+                            {(data.photoDocument || data.photoDocumentUrl) && (
+                                <div className="er-preview-item" style={{ position: "relative" }}>
+                                    <button
+                                        onClick={() => handleDelete("photoDocument", "photoDocumentUrl")}
+                                        style={deleteButtonStyle}
+                                        aria-label="Remove photo"
+                                    >✕</button>
+                                    <p className="er-preview-label">Photo</p>
+                                    {data.photoDocument ? (
+                                        data.photoDocument.type === "application/pdf" ? (
+                                            <p className="er-preview-pdf">📄 {data.photoDocument.name}</p>
+                                        ) : (
+                                            <img src={URL.createObjectURL(data.photoDocument)} alt="Photo" className="er-preview-img" />
+                                        )
+                                    ) : data.photoDocumentUrl?.endsWith(".pdf") ? (
+                                        <a href={data.photoDocumentUrl} target="_blank" rel="noreferrer" className="er-preview-pdf">📄 View Photo</a>
+                                    ) : (
+                                        <img src={data.photoDocumentUrl} alt="Photo" className="er-preview-img" />
+                                    )}
+                                </div>
+                            )}
+
+                        </div>
+                    </div>
+                )}
 
                 <div className="er-field-group" id="er-title">
                     <label className={`er-label ${errors.includes("title") ? "er-label-error" : ""}`}>
@@ -448,8 +664,8 @@ setData(prev => ({
             </div>
 
             <div className="er-submit-row">
-                <button className="er-submit-btn" onClick={handleNext}>
-                    Next
+                <button className="er-submit-btn" onClick={handleNext} disabled={saving}>
+                    {saving ? "Saving..." : "Next"}
                 </button>
             </div>
 

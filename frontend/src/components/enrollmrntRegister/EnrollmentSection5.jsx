@@ -20,8 +20,6 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
     const [submittingState, setSubmittingState] = useState("idle") // "idle" | "loading" | "success"
     const [showErrorToast, setShowErrorToast] = useState(false) // Validation toast
     const [missingFieldsNames, setMissingFieldsNames] = useState([])
-    const [idFileError, setIdFileError] = useState("")
-    const [photoFileError, setPhotoFileError] = useState("")
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -118,35 +116,6 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
         }
     }, [isDrawing])
 
-    const handleFileClick = (inputId) => {
-        document.getElementById(inputId).click()
-    }
-
-    // ✅ 5MB validation handler
-    const MAX_SIZE_BYTES = 5 * 1024 * 1024
-
-    const handleIdUpload = (file) => {
-        if (!file) return
-        if (file.size > MAX_SIZE_BYTES) {
-            setIdFileError("File size exceeds 5MB. Please upload a smaller file.")
-            document.getElementById("s5-id-input").value = ""
-            return
-        }
-        setIdFileError("")
-        set("idDocument", file)
-    }
-
-    const handlePhotoUpload = (file) => {
-        if (!file) return
-        if (file.size > MAX_SIZE_BYTES) {
-            setPhotoFileError("File size exceeds 5MB. Please upload a smaller file.")
-            document.getElementById("s5-photo-input").value = ""
-            return
-        }
-        setPhotoFileError("")
-        set("photoDocument", file)
-    }
-
     const handleValidation = () => {
         const newErrors = []
         const missingNames = []
@@ -181,6 +150,8 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
             newErrors.push("signature")
             missingNames.push(fieldLabels.signature)
         }
+        // ✅ ID/Photo are now uploaded in Section 1 — still validated here as a
+        // final safety net before submit, in case data was cleared after Section 1.
         if (!data.idDocument && !data.idDocumentUrl) {
             newErrors.push("idDocument")
             missingNames.push(fieldLabels.idDocument)
@@ -429,106 +400,6 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                 </div>
             </div>
 
-            <div className="s5-photo-header">
-                <h4 className="s5-photo-header-title">PHOTO AND ID CARD</h4>
-                <p className="s5-photo-header-text">
-                    Please upload a clear copy of your identification document(s). Files must be readable.
-                </p>
-                <p className="s5-photo-header-text">
-                    Accepted: PDF, JPG, PNG. Example: Passport / Driver Licence.
-                </p>
-            </div>
-
-            <div className="s5-upload-row">
-
-                {/* ✅ ID Document upload card */}
-                <div className="s5-upload-card" id="s5-idDocument">
-                    <div className="s5-upload-card-header">
-                        <span className="s5-upload-icon">📄</span>
-                        <span className={`s5-upload-label ${errors.includes("idDocument") ? "s5-label-error" : ""}`}>
-                            Identification document <span className="s5-required">*</span>
-                        </span>
-                    </div>
-                    <p className="s5-upload-hint">e.g. Passport / Driver Licence</p>
-                    <div
-                        className={`s5-dropzone ${(data.idDocument || data.idDocumentUrl) ? "s5-dropzone-active" : ""} ${idFileError || errors.includes("idDocument") ? "s5-dropzone-error" : ""}`}
-                        onClick={() => handleFileClick("s5-id-input")}
-                    >
-                        {data.idDocument ? (
-                            <p className="s5-file-name">✅ {data.idDocument.name}</p>
-                        ) : data.idDocumentUrl ? (
-                            <p className="s5-file-name">✅ Already uploaded</p>
-                        ) : (
-                            <>
-                                <span className="s5-upload-arrow">↑</span>
-                                <p className="s5-dropzone-text">Click to upload</p>
-                                <p className="s5-dropzone-hint">PDF, JPG, PNG (max 5MB)</p>
-                            </>
-                        )}
-                    </div>
-                    {/* ✅ ID error message */}
-                    {idFileError && (
-                        <div className="s5-file-error">
-                            <span className="s5-file-error-icon">⚠</span>
-                            {idFileError}
-                        </div>
-                    )}
-                    <input
-                        id="s5-id-input"
-                        type="file"
-                        accept=".pdf,.jpg,.jpeg,.png"
-                        style={{ display: "none" }}
-                        onChange={e => handleIdUpload(e.target.files[0])}
-                    />
-                </div>
-
-                {/* ✅ Photo upload card */}
-                <div className="s5-upload-card" id="s5-photoDocument">
-                    <div className="s5-upload-card-header">
-                        <span className="s5-upload-icon">🖼️</span>
-                        <span className={`s5-upload-label ${errors.includes("photoDocument") ? "s5-label-error" : ""}`}>
-                            Upload a Photo <span className="s5-required">*</span>
-                        </span>
-                    </div>
-                    <p className="s5-upload-hint">Example: Upload a Photo.</p>
-                    <div
-                        className={`s5-dropzone ${(data.photoDocument || data.photoDocumentUrl) ? "s5-dropzone-active" : ""} ${photoFileError || errors.includes("photoDocument") ? "s5-dropzone-error" : ""}`}
-                        onClick={() => handleFileClick("s5-photo-input")}
-                    >
-                        {data.photoDocument ? (
-                            <p className="s5-file-name">✅ {data.photoDocument.name}</p>
-                        ) : data.photoDocumentUrl ? (
-                            <p className="s5-file-name">✅ Already uploaded</p>
-                        ) : (
-                            <>
-                                <span className="s5-upload-arrow">↑</span>
-                                <p className="s5-dropzone-text">Click to upload</p>
-                                <p className="s5-dropzone-hint">PDF, JPG, PNG (max 5MB)</p>
-                            </>
-                        )}
-                    </div>
-                    {/* ✅ Photo error message */}
-                    {photoFileError && (
-                        <div className="s5-file-error">
-                            <span className="s5-file-error-icon">⚠</span>
-                            {photoFileError}
-                        </div>
-                    )}
-                    <input
-                        id="s5-photo-input"
-                        type="file"
-                        accept=".pdf,.jpg,.jpeg,.png"
-                        style={{ display: "none" }}
-                        onChange={e => handlePhotoUpload(e.target.files[0])}
-                    />
-                </div>
-
-            </div>
-
-            <p className="s5-upload-footer-note">
-                Ensure documents are clear and readable. Accepted: PDF, JPG, PNG. Max 5MB per file.
-            </p>
-
             <div className="s5-card" id="s5-signature">
                 <label className={`s5-label ${errors.includes("signature") ? "s5-label-error" : ""}`}>
                     Online Signature <span className="s5-required">*</span>
@@ -558,7 +429,8 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                 </div>
             </div>
 
-            {/* ✅ PREVIEW with DELETE buttons */}
+            {/* ✅ PREVIEW with DELETE buttons — ID/Photo now come from Section 1;
+                 this is a read-only recap (no upload dropzones here anymore). */}
             {(data.idDocument || data.photoDocument || data.signature ||
               data.idDocumentUrl || data.photoDocumentUrl || data.signatureUrl) && (
                 <div className="s5-preview-section">
@@ -566,7 +438,7 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                     <div className="s5-preview-row">
 
                         {/* ID Document */}
-                        {(data.idDocument || data.idDocumentUrl) && (
+                        {/* {(data.idDocument || data.idDocumentUrl) && (
                             <div className="s5-preview-item" style={{ position: "relative" }}>
                                 <button
                                     onClick={() => handleDelete(data.idDocumentUrl, "idDocument", ["idDocument", "idDocumentUrl"])}
@@ -585,10 +457,10 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                                     <img src={data.idDocumentUrl} alt="ID" className="s5-preview-img" />
                                 )}
                             </div>
-                        )}
+                        )} */}
 
                         {/* Photo */}
-                        {(data.photoDocument || data.photoDocumentUrl) && (
+                        {/* {(data.photoDocument || data.photoDocumentUrl) && (
                             <div className="s5-preview-item" style={{ position: "relative" }}>
                                 <button
                                     onClick={() => handleDelete(data.photoDocumentUrl, "photoDocument", ["photoDocument", "photoDocumentUrl"])}
@@ -607,7 +479,7 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                                     <img src={data.photoDocumentUrl} alt="Photo" className="s5-preview-img" />
                                 )}
                             </div>
-                        )}
+                        )} */}
 
                         {/* Signature */}
                         {(data.signature || data.signatureUrl) && (
@@ -628,8 +500,6 @@ function EnrollmentSection5({ data, setData, prev, validateAndSubmit }) {
                     </div>
                 </div>
             )}
-
-
 
             <div className="s5-footer">
                 <button className="s5-prev-btn" onClick={prev}>

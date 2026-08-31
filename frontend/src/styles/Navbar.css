@@ -168,7 +168,7 @@ body.sidebar-open {
         gap: 16px;
     }
 
-    .burger-icon {
+    .navbar .burger-icon {
         display: none !important;
     }
 

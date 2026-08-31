@@ -596,3 +596,127 @@ body {
 }
 
 .el-btn-dark:hover { background: var(--gray-700); }
+
+@media (max-width: 900px) {
+  .el-page {
+    padding: 24px 20px;
+  }
+
+  .el-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .el-page {
+    padding: 16px 14px;
+  }
+
+  /* Header */
+  .el-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .el-header-text h1 {
+    font-size: 22px;
+  }
+
+  .el-header-text p {
+    font-size: 13px;
+  }
+
+  .el-btn-primary {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Stats: single column on phones */
+  .el-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .el-stat-card {
+    padding: 16px 18px;
+  }
+
+  .el-stat-card .value {
+    font-size: 26px;
+  }
+
+  /* Table Card */
+  .el-table-header {
+    padding: 16px 18px 14px;
+  }
+
+  /* Modal Mobile Adaptations */
+  .el-overlay {
+    padding: 0;
+    align-items: flex-end; /* Bottom sheet experience on phone */
+  }
+
+  .el-modal {
+    max-height: 92vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .el-modal-head {
+    padding: 18px 20px 14px;
+  }
+
+  .el-modal-body {
+    padding: 18px 20px;
+  }
+
+  .el-modal-footer {
+    padding: 14px 20px 18px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .el-modal-footer button,
+  .el-btn-cancel,
+  .el-btn-danger,
+  .el-btn-dark {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Form & Grid elements */
+  .el-row-2,
+  .el-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .el-toggles {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .el-url-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .el-url-row .el-icon-btn {
+    width: 100%;
+    height: 38px;
+  }
+
+  /* Toast Notification */
+  .el-toast {
+    top: auto;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+  }
+}

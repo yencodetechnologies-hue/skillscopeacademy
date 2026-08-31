@@ -671,4 +671,6 @@
 @media (max-width: 400px) {
   .view-tab { padding: 5px 7px; font-size: .7rem; }
   .btn-today { padding: 5px 8px; font-size: .75rem; }
+  .sch-cal { width:100%;overflow-x: auto;}
+
 }

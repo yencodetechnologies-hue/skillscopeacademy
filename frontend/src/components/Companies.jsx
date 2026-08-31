@@ -682,7 +682,7 @@ function ViewAllDetailsModal({ records, onClose, onPayLaterToggle }) {
 function GroupedRecordsModal({ records, onClose, onView, onEdit, onToggle, onDeleteRequest, onOpenLinks, onPayLaterToggle }) {
     const handleBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
     const email = records?.[0]?.email || "";
-
+    
     return (
         <div className="modal-backdrop" onClick={handleBackdrop}>
             <div className="modal-box" style={{ maxWidth: 1100 }}>

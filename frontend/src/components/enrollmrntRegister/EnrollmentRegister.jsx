@@ -33,6 +33,9 @@ const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref
     // ✅ single source of truth for saved data — fetched internally
     const [savedFormData, setSavedFormData] = useState(null)
 
+    // ✅ NEW: tracks whether a section save is currently in flight
+    const [saving, setSaving] = useState(false)
+
     useEffect(() => {
         const studentId = localStorage.getItem("studentId")
         if (!studentId) return
@@ -135,47 +138,95 @@ const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref
         const studentId = localStorage.getItem("studentId")
         if (!studentId) return
 
-        let payload = {}
-
+        // ✅ Section 1 now carries ID/Photo documents (uploaded above the Title field
+        // in EnrollmentSection1). Send multipart/form-data through the SAME
+        // /api/enrollment-form/section endpoint whenever a NEW file was picked;
+        // otherwise fall back to the original plain-JSON request, unchanged.
         if (sectionNumber === 1) {
-            payload = {
-                studentId,
-                section: 1,
-                personalDetails: {
-                    title: formData.title,
-                    surname: formData.surname,
-                    givenName: formData.givenName,
-                    middleName: formData.middleName,
-                    preferredName: formData.preferredName,
-                    dob: formData.dob,
-                    gender: formData.gender,
-                    email: formData.email,
-                    homePhone: formData.homePhone,
-                    workPhone: formData.workPhone,
-                    mobilePhone: formData.mobilePhone,
+            const hasNewId = formData.idDocument instanceof File
+            const hasNewPhoto = formData.photoDocument instanceof File
+
+            const personalDetails = {
+                title: formData.title,
+                surname: formData.surname,
+                givenName: formData.givenName,
+                middleName: formData.middleName,
+                preferredName: formData.preferredName,
+                dob: formData.dob,
+                gender: formData.gender,
+                email: formData.email,
+                homePhone: formData.homePhone,
+                workPhone: formData.workPhone,
+                mobilePhone: formData.mobilePhone,
+            }
+            const address = {
+                residential: {
+                    address: formData.residentialAddress,
+                    suburb: formData.suburb,
+                    state: formData.state,
+                    postcode: formData.postcode,
                 },
-                address: {
-                    residential: {
-                        address: formData.residentialAddress,
-                        suburb: formData.suburb,
-                        state: formData.state,
-                        postcode: formData.postcode,
-                    },
-                    postal: {
-                        address: formData.postalAddress,
-                        suburb: formData.postalSuburb,
-                        state: formData.postalState,
-                        postcode: formData.postalPostcode,
-                    }
-                },
-                emergencyContact: {
-                    name: formData.emergencyName,
-                    relationship: formData.emergencyRelationship,
-                    contactNumber: formData.emergencyContact,
-                    consent: formData.emergencyPermission === "yes"
+                postal: {
+                    address: formData.postalAddress,
+                    suburb: formData.postalSuburb,
+                    state: formData.postalState,
+                    postcode: formData.postalPostcode,
                 }
             }
+            const emergencyContact = {
+                name: formData.emergencyName,
+                relationship: formData.emergencyRelationship,
+                contactNumber: formData.emergencyContact,
+                consent: formData.emergencyPermission === "yes"
+            }
+
+            try {
+                let res
+
+                if (hasNewId || hasNewPhoto) {
+                    const fd = new FormData()
+                    fd.append("studentId", studentId)
+                    fd.append("section", "1")
+                    fd.append("personalDetails", JSON.stringify(personalDetails))
+                    fd.append("address", JSON.stringify(address))
+                    fd.append("emergencyContact", JSON.stringify(emergencyContact))
+                    if (hasNewId) fd.append("idDocument", formData.idDocument)
+                    if (hasNewPhoto) fd.append("photoDocument", formData.photoDocument)
+
+                    res = await fetch(`${API_URL}/api/enrollment-form/section`, {
+                        method: "POST",
+                        body: fd
+                    })
+                } else {
+                    res = await fetch(`${API_URL}/api/enrollment-form/section`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            studentId,
+                            section: 1,
+                            personalDetails,
+                            address,
+                            emergencyContact
+                        })
+                    })
+                }
+
+                const data = await res.json()
+
+                if (res.ok && data.form) {
+                    setFormData(prev => ({
+                        ...prev,
+                        idDocumentUrl: data.form.idDocumentUrl || prev.idDocumentUrl,
+                        photoDocumentUrl: data.form.photoDocumentUrl || prev.photoDocumentUrl,
+                    }))
+                }
+            } catch (err) {
+                console.error("Section 1 save error:", err)
+            }
+            return
         }
+
+        let payload = {}
 
         if (sectionNumber === 2) {
             payload = {
@@ -467,8 +518,11 @@ const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref
                     userDetails={userDetails}
                     data={formData}
                     setData={setFormData}
+                    saving={saving}
                     next={async () => {
+                        setSaving(true)
                         await saveSectionToBackend(1)
+                        setSaving(false)
                         scrollToTop()
                         setSection(2)
                     }}
@@ -480,9 +534,12 @@ const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref
                     data={formData}
                     setData={setFormData}
                     userId={formData.userId}
+                    saving={saving}
                     prev={() => { setSection(1); scrollToTop() }}
                     next={async () => {
+                        setSaving(true)
                         await saveSectionToBackend(2)
+                        setSaving(false)
                         scrollToTop()
                         setSection(3)
                     }}
@@ -493,9 +550,12 @@ const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref
                 <EnrollmentSection3
                     data={formData}
                     setData={setFormData}
+                    saving={saving}
                     prev={() => { setSection(2); scrollToTop() }}
                     next={async () => {
+                        setSaving(true)
                         await saveSectionToBackend(3)
+                        setSaving(false)
                         scrollToTop()
                         setSection(4)
                     }}
@@ -506,12 +566,15 @@ const EnrollmentRegister = forwardRef(({ userDetails, section, setSection }, ref
                 <EnrollmentSection4
                     data={formData}
                     setData={setFormData}
+                    saving={saving}
                     prev={() => {
                         setSection(3)
                         scrollToTop()
                     }}
                     next={async () => {
+                        setSaving(true)
                         await saveSectionToBackend(4)
+                        setSaving(false)
                         scrollToTop()
                         setSection(5)
                     }}

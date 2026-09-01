@@ -1710,7 +1710,7 @@ const handleCardPayment = async () => {
                                 <p>Card details stay with Square — never stored on our servers</p>
                             </div>
                         </div>
-                        <div className="pci">PCI DSS · Sandbox</div>
+                        <div className="pci">PCI DSS · Production</div>
                     </div>
 
                     <div className="square-amount-chip">
@@ -1779,9 +1779,9 @@ const handleCardPayment = async () => {
                         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" />
                     </div>
 
-                    <p className="square-test-hint">
+                    {/* <p className="square-test-hint">
                         Sandbox test card: <code>4111 1111 1111 1111</code> · any future expiry · any CVV
-                    </p>
+                    </p> */}
 
                     {paymentStatus === "success" && (
                         <div className="payment-success">

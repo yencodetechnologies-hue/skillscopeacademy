@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/LoginForm.css";
-import { useFormik } from "formik";
+import { useFormik } from "formik";import { API_URL } from "../data/service";
 import * as Yup from "yup";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { API_URL } from "../data/service";
+
 
 function LoginForm() {
   const { login } = useContext(AuthContext);
@@ -132,7 +132,7 @@ function LoginForm() {
               <input type="checkbox" />
               <span>Remember me</span>
             </label>
-            <a href="#forgot" className="forgot-link">Forgot password?</a>
+            <a href="/forgot-password" className="forgot-link">Forgot password?</a>
           </div>
 
           {/* Submit Button */}

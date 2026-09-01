@@ -281,6 +281,7 @@ import PromotionMail from "./components/PromotionMail";
 import CustomMail from "./components/CustomMail";
 import MarqueeContent from "./components/MarqueeContent"
 import CouponSection from "./components/CouponSection"
+import ForgotPassword from "./components/ForgotPassword"
 
 function App() {
 
@@ -297,6 +298,7 @@ function App() {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 {/*
                   SEO-friendly course URLs. The param is the course's
                   manual slug (unique) — e.g. /course/forklift-licence.

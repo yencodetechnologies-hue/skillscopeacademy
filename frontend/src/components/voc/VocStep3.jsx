@@ -622,7 +622,17 @@ function VocStep3({
 
 
                 console.log(
-                    "✅ Square card initialized successfully"
+                    "✅ Square card initialized successfully",
+                    {
+                        containerHeight:
+                            cardContainerRef.current?.offsetHeight,
+
+                        containerWidth:
+                            cardContainerRef.current?.offsetWidth,
+
+                        childCount:
+                            cardContainerRef.current?.children.length,
+                    }
                 )
 
             } catch (err) {
@@ -1494,8 +1504,12 @@ function VocStep3({
                                 ref={
                                     cardContainerRef
                                 }
-                                id="square-card-container"
-                                className="square-card-container"
+                                id="voc-square-card-container"
+                                className={`square-card-container ${
+                                    squareError
+                                        ? "is-error"
+                                        : ""
+                                }`}
                             />
 
 

@@ -282,6 +282,7 @@ import CustomMail from "./components/CustomMail";
 import MarqueeContent from "./components/MarqueeContent"
 import CouponSection from "./components/CouponSection"
 import ForgotPassword from "./components/ForgotPassword"
+import SectionContentManager from "./components/SectionContentManager"
 
 function App() {
 
@@ -405,6 +406,7 @@ function App() {
                     <Route path="/admin/promotion-mail" element={<PromotionMail />}/>
                     <Route path="/admin/custommail-student" element={<CustomMail />} />
                     <Route path="/admin/marquee-content" element={<MarqueeContent />} />
+                    <Route path="short-sections" element={<SectionContentManager/>} />
                     <Route path="/admin/coupon" element={<CouponSection />} />
                     <Route path="schedule" element={<Schedule />} />
                     <Route path="teachers" element={<Teachers />} />

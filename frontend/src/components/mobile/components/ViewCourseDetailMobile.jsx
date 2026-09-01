@@ -192,6 +192,7 @@ export default function ViewCourseDetailMobile({
   const [showModal, setShowModal] = useState(false);
   const [selectedOptionId, setSelectedOptionId] = useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
+  const [quickFacts, setQuickFacts] = useState([]);
   const PAGE_SIZE = 7;
   const SHOW_DEFAULT = 3;
   const trustBadges = useMemo(
@@ -202,6 +203,14 @@ export default function ViewCourseDetailMobile({
     ],
     [],
   );
+
+  // ── Fetch quick facts ────────────────────────────────────────────────────
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/api/section-content/quick-facts/all`)
+      .then((res) => setQuickFacts(res.data || []))
+      .catch(() => setQuickFacts([]));
+  }, []);
 
   // ── Fetch sessions ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -365,6 +374,43 @@ export default function ViewCourseDetailMobile({
     window.open(fixedUrl, "_blank");
   };
 
+  // Map each DB quick-fact key to its icon + pill color class (icons/colors
+  // aren't stored in the DB — only val/label are admin-editable).
+  const QUICK_FACT_ICON_MAP = {
+    duration: { icon: <FaCalendarDays />, color: "blue" },
+    classHours: { icon: <FaClock />, color: "red" },
+    location: { icon: <FaLocationDot />, color: "pink" },
+    rto: { icon: <FaGraduationCap />, color: "purple" },
+    certificate: { icon: <FaCertificate />, color: "orange" },
+    recognition: { icon: <FaAward />, color: "blue" },
+  };
+
+  // Course-specific overrides for keys that should reflect this particular
+  // course rather than the generic DB default.
+  const qfOverrides = {
+    duration: course.duration || null,
+    location: (course.location || "").replace(/Safton/gi, "Sefton").trim() || null,
+  };
+
+  const displayFacts = quickFacts.map((f) => {
+    const meta = QUICK_FACT_ICON_MAP[f.key] || { icon: <FaCalendarDays />, color: "blue" };
+    return {
+      ...f,
+      val: qfOverrides[f.key] || f.val,
+      icon: meta.icon,
+      color: meta.color,
+    };
+  });
+
+
+  const truncateWords = (text, maxWords = 3) => {
+  if (!text) return "";
+  const words = text.trim().split(/\s+/);
+  return words.length > maxWords 
+    ? words.slice(0, maxWords).join(" ") + "..." 
+    : text;
+};
+
   return (
     <div className="cdm-root">
       {/* ── Top Bar ── */}
@@ -438,78 +484,23 @@ export default function ViewCourseDetailMobile({
 
   {/* ───────────── QUICK FACTS ───────────── */}
   <div className="cdm-quick-facts">
+    {displayFacts.map((f) => (
+      <div className="cdm-fact" key={f._id || f.key}>
+        <div className={`cdm-fact-icon cdm-fact-icon--${f.color}`}>
+          {f.icon}
+        </div>
 
-    {/* Duration */}
-    <div className="cdm-fact">
-      <div className="cdm-fact-icon cdm-fact-icon--blue"><FaCalendarDays /></div>
+        <div className="cdm-fact-val">
+          {f.val}
+        </div>
 
-      <div className="cdm-fact-val">
-        {course.duration || "1 Day"}
+<div className="cdm-fact-label">
+  {f?.label && f.label.length > 7
+    ? `${f.label.slice(0, 7)}...`
+    : f?.label}
+</div>
       </div>
-
-      <div className="cdm-fact-label">
-        Duration
-      </div>
-    </div>
-
-
-    {/* Class hours */}
-    <div className="cdm-fact">
-      <div className="cdm-fact-icon cdm-fact-icon--red"><FaClock /></div>
-
-      <div className="cdm-fact-val">
-        8:30am – 4:30pm
-      </div>
-
-      <div className="cdm-fact-label">
-        Class hours
-      </div>
-    </div>
-
-
-    {/* Location */}
-    <div className="cdm-fact">
-      <div className="cdm-fact-icon cdm-fact-icon--pink"><FaLocationDot /></div>
-
-      <div className="cdm-fact-val">
-        {(course.location || "Sefton")
-          .replace(/Safton/gi, "Sefton")
-          .trim()}
-      </div>
-
-      <div className="cdm-fact-label">
-        Location
-      </div>
-    </div>
-
-
-    {/* Certified */}
-    <div className="cdm-fact">
-      <div className="cdm-fact-icon cdm-fact-icon--purple"><FaGraduationCap /></div>
-
-      <div className="cdm-fact-val">
-        Accredited
-      </div>
-
-      <div className="cdm-fact-label">
-        Certified
-      </div>
-    </div>
-
-
-    {/* Certificate */}
-    <div className="cdm-fact">
-      <div className="cdm-fact-icon cdm-fact-icon--orange"><FaCertificate /></div>
-
-      <div className="cdm-fact-val">
-        Same Day
-      </div>
-
-      <div className="cdm-fact-label">
-        Certificate
-      </div>
-    </div>
-
+    ))}
   </div>
 
 </div>

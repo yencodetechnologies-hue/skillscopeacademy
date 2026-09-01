@@ -91,6 +91,7 @@ const menu = {
       path: "/admin/marquee-content",
       icon: "fa-solid fa-bullhorn",
     },
+     { name: "Quick Facts Bar", path: "/admin/short-sections", icon: "fa-solid fa-list-check" },
 
      {
       name: "Coupons",

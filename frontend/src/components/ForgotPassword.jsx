@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // remove if not using react-router
+import { useNavigate } from "react-router-dom";
 import "../styles/ForgotPassword.css";
 import { API_URL } from "../data/service";
 
@@ -9,7 +9,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", message: "" });
 
-  const navigate = useNavigate(); // remove if not using react-router
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,13 +23,11 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      // Calls: POST /api/auth/forgot-password
-      // Matches backend route: router.post("/forgot-password", forgotPassword)
       const res = await axios.post(`${API_URL}/api/auth/forgot-password`, {
         email: email.trim(),
       });
 
-      const data = res.data; // { success, message }
+      const data = res.data;
 
       if (data.success) {
         setStatus({
@@ -44,7 +42,6 @@ const ForgotPassword = () => {
         });
       }
     } catch (err) {
-      // Handles the 400 / 404 / 500 responses sent by your forgotPassword controller
       const backendMessage = err.response?.data?.message;
       if (backendMessage) {
         setStatus({ type: "error", message: backendMessage });
@@ -62,7 +59,7 @@ const ForgotPassword = () => {
   };
 
   const handleBackToLogin = () => {
-    navigate("/login"); // or use <Link>/window.location as preferred
+    navigate("/login");
   };
 
   return (
@@ -71,41 +68,38 @@ const ForgotPassword = () => {
         <div className="fp-bg-blob one" />
         <div className="fp-bg-blob two" />
 
+        {/* ---------- LEFT PANEL ---------- */}
         <div className="fp-left-panel">
-          <div className="fp-side-label">DAILY UI DESIGN CHALLENGE</div>
           <div className="fp-left-content">
-            <div className="fp-day">DAY #9</div>
-            <div className="fp-line">
-              FORGOT
-              <br />
-              PASSWORD
-              <br />
-              POPUP UI
-            </div>
-            <div className="fp-figma-badge">
-              <svg viewBox="0 0 38 57" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M19 28.5a9.5 9.5 0 119.5-9.5 9.5 9.5 0 01-9.5 9.5z"
-                  fill="#1abcfe"
-                />
-                <path
-                  d="M0 47.5A9.5 9.5 0 019.5 38H19v9.5a9.5 9.5 0 11-19 0z"
-                  fill="#0acf83"
-                />
-                <path d="M19 0v19h9.5a9.5 9.5 0 100-19H19z" fill="#ff7262" />
-                <path
-                  d="M0 9.5A9.5 9.5 0 009.5 19H19V0H9.5A9.5 9.5 0 000 9.5z"
-                  fill="#f24e1e"
-                />
-                <path
-                  d="M0 28.5A9.5 9.5 0 009.5 38H19V19H9.5A9.5 9.5 0 000 28.5z"
-                  fill="#a259ff"
-                />
+            {/* Relevant Key & Security Illustration */}
+            <div className="fp-illustration">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 2l-2 2m-1.5 1.5L16 7l-1.5-1.5-1.5 1.5 1.5 1.5-1.5 1.5 1.5 1.5-3 3a6 6 0 1 1-2.12-2.12l8.62-8.62z" />
+                <circle cx="7.5" cy="16.5" r="1.5" fill="currentColor" />
               </svg>
+            </div>
+
+            <h2 className="fp-brand-heading">Account Recovery</h2>
+            <p className="fp-brand-desc">
+              Don't worry, it happens to the best of us. Let's get you back into
+              your account securely.
+            </p>
+
+            <div className="fp-tip-box">
+              <span className="fp-tip-icon">💡</span>
+              <p>We'll send a secure password reset link directly to your inbox.</p>
             </div>
           </div>
         </div>
 
+        {/* ---------- CARD ---------- */}
         <div className="fp-card">
           <div className="fp-icon-circle">
             <svg viewBox="0 0 24 24">
@@ -131,7 +125,6 @@ const ForgotPassword = () => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                
               />
             </div>
 
@@ -141,7 +134,14 @@ const ForgotPassword = () => {
           </form>
 
           <button type="button" className="fp-back-link" onClick={handleBackToLogin}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
             Return back to login page

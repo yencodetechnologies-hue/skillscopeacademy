@@ -193,6 +193,31 @@
     font-size: 15px;
 }
 
+/* Square Web Payments card container — no rule existed for this before,
+   so the div had zero defined height/padding and collapsed to 0px even
+   after Square successfully attached its iframe inside it. Styled to
+   match .v3-input so it looks consistent with the rest of the form. */
+.square-card-container {
+    width: 100%;
+    min-height: 44px;
+    background: var(--color-slate-100);
+    border: 1px solid var(--color-border-input);
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.square-card-container.is-focus,
+.square-card-container:focus-within {
+    border-color: var(--color-cyan-accent);
+    background: #e0f9ff;
+}
+
+.square-card-container.is-error {
+    border-color: #dc2626;
+}
+
 .v3-accept-text {
     font-size: 13px;
     color: var(--color-text-dim);

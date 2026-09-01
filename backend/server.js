@@ -32,6 +32,7 @@ const customMailRoutes =
 require("./routes/customMailRoutes");
 const marqueeRoutes = require("./routes/marqueeRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const sectionContentRoutes = require("./routes/sectionContentRoutes");
 
 
 
@@ -84,6 +85,7 @@ app.use(
 customMailRoutes
 );
 app.use("/api/contact", contactRoutes);
+app.use("/api/section-content", sectionContentRoutes);
 
 // ROUTES
 app.use("/api/auth", require("./routes/authRoutes"));

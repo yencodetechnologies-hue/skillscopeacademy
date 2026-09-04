@@ -117,6 +117,10 @@ const courseSchema = new mongoose.Schema({
   location: String,
   image: String,
 
+  classhrs: String,
+  certification_issue: String,
+  national: String,
+
   // PRICING
   pricingType: { type: String, enum: ["standard", "experience", "slbl"], default: "standard" },
   originalPrice: Number,

@@ -484,24 +484,86 @@ export default function ViewCourseDetailMobile({
 
   {/* ───────────── QUICK FACTS ───────────── */}
   <div className="cdm-quick-facts">
-    {displayFacts.map((f) => (
-      <div className="cdm-fact" key={f._id || f.key}>
-        <div className={`cdm-fact-icon cdm-fact-icon--${f.color}`}>
-          {f.icon}
-        </div>
+       {/* Duration */}
+       <div className="cdm-fact">
+         <div className="cdm-fact-icon cdm-fact-icon--blue"><FaCalendarDays /></div>
+   
+         <div className="cdm-fact-val">
+           {course.duration || "1 Day"}
+         </div>
+   
+         <div className="cdm-fact-label">
+           Duration
+         </div>
+       </div>
+   
+   
+       {/* Class hours */}
+       <div className="cdm-fact">
+         <div className="cdm-fact-icon cdm-fact-icon--red"><FaClock /></div>
+   
+         <div className="cdm-fact-val">
+          {course.classhrs || "8:30 - 4:30"}
+         </div>
+   
+         <div className="cdm-fact-label">
+           Class hours
+         </div>
+       </div>
+   
+   
+       {/* Location */}
+       <div className="cdm-fact">
+         <div className="cdm-fact-icon cdm-fact-icon--pink"><FaLocationDot /></div>
+   
+         <div className="cdm-fact-val">
+           {(course.location || "Sefton")
+             .replace(/Safton/gi, "Sefton")
+             .trim()}
+         </div>
+   
+         <div className="cdm-fact-label">
+           Location
+         </div>
+       </div>
+   
+   
+       {/* Certified */}
+       <div className="cdm-fact">
+         <div className="cdm-fact-icon cdm-fact-icon--purple"><FaGraduationCap /></div>
+   
+         <div className="cdm-fact-val">
+           RTO #45234
+         </div>
+   
+         <div className="cdm-fact-label">
+           Accredited
+         </div>
+       </div>
+   
+   
+       {/* Certificate */}
+       <div className="cdm-fact">
+         <div className="cdm-fact-icon cdm-fact-icon--orange"><FaCertificate /></div>
+   
+         <div className="cdm-fact-val">
+            {course.certification_issue || "Same Day"}
+         </div>
+   
+         <div className="cdm-fact-label">
+           Certificate
+         </div>
+       </div>
 
-        <div className="cdm-fact-val">
-          {f.val}
+        <div className="cdm-fact">
+          <div className="cdm-fact-icon cdm-fact-icon--blue"><FaAward /></div>
+          <div className="cdm-fact-val"> {course.national || "8:30 - 4:30"}</div>
+          <div className="cdm-fact-label">Recognition</div>
         </div>
-
-<div className="cdm-fact-label">
-  {f?.label && f.label.length > 7
-    ? `${f.label.slice(0, 7)}...`
-    : f?.label}
-</div>
-      </div>
-    ))}
-  </div>
+   
+     </div>
+   
+  
 
 </div>
 

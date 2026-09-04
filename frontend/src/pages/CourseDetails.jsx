@@ -933,20 +933,60 @@ function CourseDetails() {
               QUICK FACTS
           ====================================================== */}
             <div className="cdp-modern-facts">
-              {displayFacts.map((item) => (
-                <div className="cdp-modern-fact" key={item._id || item.key}>
-                  <div className="cdp-modern-fact-icon">
-                    <item.Icon size={32} strokeWidth={1.8} />
-                  </div>
-
-                  <div className="cdp-modern-fact-content">
-                    <div className="cdp-modern-fact-value">{item.val}</div>
-
-                    <div className="cdp-modern-fact-label">{item.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                         {[
+                           {
+                             icon: Clock3,
+                             value: course?.trainingDuration || "Flexible",
+                             label: "Course Duration",
+                           },
+           
+                           {
+                             icon: CalendarClock,
+                             value: course?.classhrs || "8:30am – 4:30pm",
+                             label: "Class Hours",
+                           },
+           
+                           {
+                             icon: MapPin,
+                             value: course?.location || "Sefton NSW",
+                             label: "Training Location",
+                           },
+           
+                           {
+                             icon: Award,
+                             value: "RTO #45234",
+                             label: "Accredited Provider",
+                           },
+           
+                           {
+                             icon: BadgeCheck,
+                             value: course?.certification_issue || "Same Day",
+                             label: "Certificate",
+                           },
+           
+                           {
+                             icon: MapPinned,
+                             value: course?.national || "All States",
+                             label: "Recognition",
+                           },
+                         ].map((item, index) => {
+                           const Icon = item.icon;
+           
+                           return (
+                             <div className="cdp-modern-fact" key={index}>
+                               <div className="cdp-modern-fact-icon">
+                                 <Icon size={32} strokeWidth={1.8} />
+                               </div>
+           
+                               <div className="cdp-modern-fact-content">
+                                 <div className="cdp-modern-fact-value">{item.value}</div>
+           
+                                 <div className="cdp-modern-fact-label">{item.label}</div>
+                               </div>
+                             </div>
+                           );
+                         })}
+                       </div>
           </div>
         </section>
       </div>

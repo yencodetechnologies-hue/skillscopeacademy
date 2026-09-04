@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { colors } from '../../constants/theme';
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 import "../../styles/CreateCourseModal.css";
 import DynamicField from "../DynamicField";
-import EditableLabel from "../EditableLabel";
 import { API_URL } from "../../data/service";
 import { authHeaders } from "../../utils/authHeaders";
 
@@ -23,53 +21,14 @@ const toSlug = (raw) =>
 function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
 
     const [activeTab, setActiveTab] = useState("basic")
-    const [descriptions, setDescriptions] = useState([""])
-    const [trainingOverview, setTrainingOverview] = useState([""])
-    const [vocationalOutcome, setVocationalOutcome] = useState([""])
-    const [feesCharges, setFeesCharges] = useState([""])
-    const [optionalCharges, setOptionalCharges] = useState([""])
-    const [outcomePoint, setOutcomePoint] = useState([""])
-    const [requirements, setRequirements] = useState([""])
-    const [pathways, setPathways] = useState([""])
-    const [trainingDuration, setTrainingDuration] = useState("")
-    // Editable section headings for Details tab
-    const [headingDescription, setHeadingDescription]           = useState("Course Description")
-    const [headingTrainingOverview, setHeadingTrainingOverview] = useState("Training Overview")
-    const [headingVocationalOutcome, setHeadingVocationalOutcome] = useState("Vocational Outcome")
-    const [headingFeesCharges, setHeadingFeesCharges]           = useState("Fees and Charges")
-    const [headingOptionalCharges, setHeadingOptionalCharges]   = useState("Optional Charges")
-    const [headingOutcomePoint, setHeadingOutcomePoint]         = useState("Outcome Point")
-    const [headingTrainingDuration, setHeadingTrainingDuration] = useState("Training Duration")
-
-    // Editable labels — Basic Info tab
-    const [lblCourseCode, setLblCourseCode]               = useState("Course Code (Optional)")
-    const [lblCategory, setLblCategory]                   = useState("Category (Optional)")
-    const [lblPricingType, setLblPricingType]             = useState("Pricing Type")
-    const [lblVocPrice, setLblVocPrice]                   = useState("VOC Price ($)")
-    const [lblOriginalPrice, setLblOriginalPrice]         = useState("Original Price / Strike Price ($)")
-    const [lblSellingPrice, setLblSellingPrice]           = useState("Selling Price ($)")
-    const [lblCourseTitle, setLblCourseTitle]             = useState("Course Title (Optional)")
-    const [lblUrlSlug, setLblUrlSlug]                     = useState("URL Slug *")
-    const [lblDuration, setLblDuration]                   = useState("Duration (Optional)")
-    const [lblCertValidity, setLblCertValidity]           = useState("Certificate Validity (Optional)")
-    const [lblCourseValidity, setLblCourseValidity]           = useState("Course Validity (Optional)")
-    const [lblDeliveryMethod, setLblDeliveryMethod]       = useState("Delivery Method")
-    const [lblLocation, setLblLocation]                   = useState("Location")
-    const [lblCourseImage, setLblCourseImage]             = useState("Course Image")
-
-    // Editable labels — Requirements tab
-    const [lblCourseReq, setLblCourseReq]                 = useState("Course Requirement")
-    const [lblCopTitle, setLblCopTitle]                   = useState("Course of Practice title")
-    const [lblCopUpload, setLblCopUpload]                 = useState("Upload Course of Practice")
-    const [lblSyllabusUpload, setLblSyllabusUpload]       = useState("Upload Syllabus PDF")
-
-    // Editable labels — Pathways tab
-    const [lblPathways, setLblPathways]                   = useState("Pathways")
-
-    // Editable labels — Combo tab
-    const [lblComboDesc, setLblComboDesc]                 = useState("Combo Description (Optional)")
-    const [lblComboPrice, setLblComboPrice]               = useState("Combo Price ($) (Optional)")
-    const [lblComboDuration, setLblComboDuration]         = useState("Combo Duration (Optional)")
+    const [descriptions, setDescriptions] = useState([""]);
+    const [trainingOverview, setTrainingOverview] = useState([""]);
+    const [vocationalOutcome, setVocationalOutcome] = useState([""]);
+    const [feesCharges, setFeesCharges] = useState([""]);
+    const [optionalCharges, setOptionalCharges] = useState([""]);
+    const [outcomePoint, setOutcomePoint] = useState([""]);
+    const [requirements, setRequirements] = useState([""]);
+    const [pathways, setPathways] = useState([""]);
     const [pricingType, setPricingType] = useState("standard")
     const [comboEnabled, setComboEnabled] = useState(false)
     const [withExpPrice, setWithExpPrice] = useState("")
@@ -131,12 +90,12 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
 
         initialValues: {
             courseCode: editCourse?.courseCode || "",
+            nationalCode: editCourse?.nationalCode || "",
             title: editCourse?.title || "",
             slug:  editCourse?.slug  || "",
             category: editCourse?.category?._id || editCourse?.category || "",
             duration: editCourse?.duration || "",
             certificateValidity: editCourse?.certificateValidity || "",
-            courseValidity: editCourse?.courseValidity || "",
             deliveryMethod: editCourse?.deliveryMethod || "",
             location: editCourse?.location || "",
             courseImage: editCourse?.image || "",
@@ -147,6 +106,12 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             slblPrice: editCourse?.slblPrice || "",
             metaTitle: editCourse?.metaTitle || "",
             metaDescription: editCourse?.metaDescription || "",
+            // FIX: these three were previously all wired to name="classhrs",
+            // so typing in any one of them overwrote the same Formik field.
+            // Each now has its own key and its own initial value.
+            classhrs: editCourse?.classhrs || "",
+            certification_issue: editCourse?.certification_issue || "",
+            national: editCourse?.national || "",
 
         },
         onSubmit: async (values, { setFieldError }) => {
@@ -155,6 +120,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
 
             // normal fields
             formData.append("courseCode", values.courseCode)
+            formData.append("nationalCode", values.nationalCode)
             formData.append("title", values.title)
             // Manual SEO slug — sanitize one more time before sending so a
             // copy-pasted value with stray casing/spaces never breaks the
@@ -163,11 +129,15 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             formData.append("category", values.category)
             formData.append("duration", values.duration)
             formData.append("certificateValidity", values.certificateValidity)
-            formData.append("courseValidity", values.courseValidity)
             formData.append("deliveryMethod", values.deliveryMethod)
             formData.append("location", values.location)
             formData.append("metaTitle", values.metaTitle || "")
             formData.append("metaDescription", values.metaDescription || "")
+            // FIX: these were being collected by Formik but never actually
+            // sent to the backend.
+            formData.append("classhrs", values.classhrs || "")
+            formData.append("certification_issue", values.certification_issue || "")
+            formData.append("national", values.national || "")
 
             formData.append("pricingType", pricingType)
             formData.append("originalPrice", values.originalPrice)
@@ -185,40 +155,6 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             formData.append("feesCharges", JSON.stringify(feesCharges))
             formData.append("optionalCharges", JSON.stringify(optionalCharges))
             formData.append("outcomePoints", JSON.stringify(outcomePoint))
-            formData.append("trainingDuration", trainingDuration)
-            formData.append("headingDescription", headingDescription)
-            formData.append("headingTrainingOverview", headingTrainingOverview)
-            formData.append("headingVocationalOutcome", headingVocationalOutcome)
-            formData.append("headingFeesCharges", headingFeesCharges)
-            formData.append("headingOptionalCharges", headingOptionalCharges)
-            formData.append("headingOutcomePoint", headingOutcomePoint)
-            formData.append("headingTrainingDuration", headingTrainingDuration)
-            // Basic Info labels
-            formData.append("lblCourseCode", lblCourseCode)
-            formData.append("lblCategory", lblCategory)
-            formData.append("lblPricingType", lblPricingType)
-            formData.append("lblVocPrice", lblVocPrice)
-            formData.append("lblOriginalPrice", lblOriginalPrice)
-            formData.append("lblSellingPrice", lblSellingPrice)
-            formData.append("lblCourseTitle", lblCourseTitle)
-            formData.append("lblUrlSlug", lblUrlSlug)
-            formData.append("lblDuration", lblDuration)
-            formData.append("lblCertValidity", lblCertValidity)
-            formData.append("lblCourseValidity", lblCourseValidity)
-            formData.append("lblDeliveryMethod", lblDeliveryMethod)
-            formData.append("lblLocation", lblLocation)
-            formData.append("lblCourseImage", lblCourseImage)
-            // Requirements labels
-            formData.append("lblCourseReq", lblCourseReq)
-            formData.append("lblCopTitle", lblCopTitle)
-            formData.append("lblCopUpload", lblCopUpload)
-            formData.append("lblSyllabusUpload", lblSyllabusUpload)
-            // Pathways labels
-            formData.append("lblPathways", lblPathways)
-            // Combo labels
-            formData.append("lblComboDesc", lblComboDesc)
-            formData.append("lblComboPrice", lblComboPrice)
-            formData.append("lblComboDuration", lblComboDuration)
 
             formData.append("requirements", JSON.stringify(requirements))
             formData.append("pathways", JSON.stringify(pathways))
@@ -302,44 +238,14 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
     })
     useEffect(() => {
         if (editCourse) {
-            setDescriptions(editCourse.description || [""])
-            setTrainingOverview(editCourse.trainingOverview || [""])
-            setVocationalOutcome(editCourse.vocationalOutcome || [""])
-            setFeesCharges(editCourse.feesCharges || [""])
-            setOptionalCharges(editCourse.optionalCharges || [""])
-            setOutcomePoint(editCourse.outcomePoints || [""])
-            setRequirements(editCourse.requirements || [""])
-            setPathways(editCourse.pathways || [""])
-            setTrainingDuration(editCourse.trainingDuration || "")
-            setHeadingDescription(editCourse.headingDescription || "Course Description")
-            setHeadingTrainingOverview(editCourse.headingTrainingOverview || "Training Overview")
-            setHeadingVocationalOutcome(editCourse.headingVocationalOutcome || "Vocational Outcome")
-            setHeadingFeesCharges(editCourse.headingFeesCharges || "Fees and Charges")
-            setHeadingOptionalCharges(editCourse.headingOptionalCharges || "Optional Charges")
-            setHeadingOutcomePoint(editCourse.headingOutcomePoint || "Outcome Point")
-            setHeadingTrainingDuration(editCourse.headingTrainingDuration || "Training Duration")
-            setLblCourseCode(editCourse.lblCourseCode || "Course Code (Optional)")
-            setLblCategory(editCourse.lblCategory || "Category (Optional)")
-            setLblPricingType(editCourse.lblPricingType || "Pricing Type")
-            setLblVocPrice(editCourse.lblVocPrice || "VOC Price ($)")
-            setLblOriginalPrice(editCourse.lblOriginalPrice || "Original Price / Strike Price ($)")
-            setLblSellingPrice(editCourse.lblSellingPrice || "Selling Price ($)")
-            setLblCourseTitle(editCourse.lblCourseTitle || "Course Title (Optional)")
-            setLblUrlSlug(editCourse.lblUrlSlug || "URL Slug *")
-            setLblDuration(editCourse.lblDuration || "Duration (Optional)")
-            setLblCertValidity(editCourse.lblCertValidity || "Certificate Validity (Optional)")
-            setLblCourseValidity(editCourse.lblCourseValidity || "Course Validity (Optional)")
-            setLblDeliveryMethod(editCourse.lblDeliveryMethod || "Delivery Method")
-            setLblLocation(editCourse.lblLocation || "Location")
-            setLblCourseImage(editCourse.lblCourseImage || "Course Image")
-            setLblCourseReq(editCourse.lblCourseReq || "Course Requirement")
-            setLblCopTitle(editCourse.lblCopTitle || "Course of Practice title")
-            setLblCopUpload(editCourse.lblCopUpload || "Upload Course of Practice")
-            setLblSyllabusUpload(editCourse.lblSyllabusUpload || "Upload Syllabus PDF")
-            setLblPathways(editCourse.lblPathways || "Pathways")
-            setLblComboDesc(editCourse.lblComboDesc || "Combo Description (Optional)")
-            setLblComboPrice(editCourse.lblComboPrice || "Combo Price ($) (Optional)")
-            setLblComboDuration(editCourse.lblComboDuration || "Combo Duration (Optional)")
+            setDescriptions(editCourse.description || [""]);
+            setTrainingOverview(editCourse.trainingOverview || [""]);
+            setVocationalOutcome(editCourse.vocationalOutcome || [""]);
+            setFeesCharges(editCourse.feesCharges || [""]);
+            setOptionalCharges(editCourse.optionalCharges || [""]);
+            setOutcomePoint(editCourse.outcomePoints || [""]);
+            setRequirements(editCourse.requirements || [""]);
+            setPathways(editCourse.pathways || [""]);
             setPricingType(editCourse.pricingType || (editCourse.experienceBasedBooking ? "experience" : "standard"));
             setImageType("url")
             setWithExpPrice(editCourse.withExperiencePrice || "");
@@ -359,43 +265,13 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             setExistingSyllabusUrl(editCourse.syllabusUrl || "");
         } else {
             setDescriptions([""]);
-            setTrainingOverview([""])
-            setVocationalOutcome([""])
-            setFeesCharges([""])
-            setOptionalCharges([""])
-            setOutcomePoint([""])
-            setRequirements([""])
-            setPathways([""])
-            setTrainingDuration("")
-            setHeadingDescription("Course Description")
-            setHeadingTrainingOverview("Training Overview")
-            setHeadingVocationalOutcome("Vocational Outcome")
-            setHeadingFeesCharges("Fees and Charges")
-            setHeadingOptionalCharges("Optional Charges")
-            setHeadingOutcomePoint("Outcome Point")
-            setHeadingTrainingDuration("Training Duration")
-            setLblCourseCode("Course Code (Optional)")
-            setLblCategory("Category (Optional)")
-            setLblPricingType("Pricing Type")
-            setLblVocPrice("VOC Price ($)")
-            setLblOriginalPrice("Original Price / Strike Price ($)")
-            setLblSellingPrice("Selling Price ($)")
-            setLblCourseTitle("Course Title (Optional)")
-            setLblUrlSlug("URL Slug *")
-            setLblDuration("Duration (Optional)")
-            setLblCertValidity("Certificate Validity (Optional)")
-            setLblCourseValidity("Course Validity (Optional)")
-            setLblDeliveryMethod("Delivery Method")
-            setLblLocation("Location")
-            setLblCourseImage("Course Image")
-            setLblCourseReq("Course Requirement")
-            setLblCopTitle("Course of Practice title")
-            setLblCopUpload("Upload Course of Practice")
-            setLblSyllabusUpload("Upload Syllabus PDF")
-            setLblPathways("Pathways")
-            setLblComboDesc("Combo Description (Optional)")
-            setLblComboPrice("Combo Price ($) (Optional)")
-            setLblComboDuration("Combo Duration (Optional)")
+            setTrainingOverview([""]);
+            setVocationalOutcome([""]);
+            setFeesCharges([""]);
+            setOptionalCharges([""]);
+            setOutcomePoint([""]);
+            setRequirements([""]);
+            setPathways([""]);
             setPricingType("standard");
             setImageType("upload");
             setWithExpPrice("");
@@ -488,7 +364,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                 <div className="course-form">
 
                                     <div className="form-group">
-                                        <EditableLabel value={lblCourseCode} onChange={setLblCourseCode} />
+                                        <label>Course Code (Optional)</label>
                                         <input type="text" placeholder="e.g., RIIHAN309F"
                                             name="courseCode"
                                             value={formik.values.courseCode}
@@ -496,9 +372,18 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         />
                                     </div>
 
+                                    <div className="form-group">
+                                        <label>National code (AVETMISS)</label>
+                                        <input type="text" placeholder="e.g., CPCCWHS1001"
+                                            name="nationalCode"
+                                            value={formik.values.nationalCode}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+
                                     {/* ✅ ONLY CHANGE: category dropdown from backend */}
                                     <div className="form-group">
-                                        <EditableLabel value={lblCategory} onChange={setLblCategory} />
+                                        <label>Category (Optional)</label>
                                         <select
                                             name="category"
                                             value={formik.values.category}
@@ -516,7 +401,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         </select>
                                     </div>
 
-                                    <EditableLabel value={lblPricingType} onChange={setLblPricingType} className="pricing-label" />
+                                    <p className="pricing">Pricing Type</p>
                                     <div className="pricing-type-selector">
                                         <label className={`pricing-type-option ${pricingType === "standard" ? "active" : ""}`}>
                                             <input type="radio" value="standard" checked={pricingType === "standard"} onChange={() => setPricingType("standard")} />
@@ -533,7 +418,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                     </div>
 
                                     <div className="form-group">
-                                        <EditableLabel value={lblVocPrice} onChange={setLblVocPrice} />
+                                        <label>VOC Price ($)</label>
                                         <input type="number" placeholder="e.g., 150"
                                             name="vocPrice"
                                             value={formik.values.vocPrice}
@@ -544,7 +429,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                     {pricingType === "standard" && (
                                         <>
                                             <div className="form-group">
-                                                <EditableLabel value={lblOriginalPrice} onChange={setLblOriginalPrice} />
+                                                <label>Original Price / Strike Price ($)</label>
                                                 <input type="number" placeholder="e.g., 1200"
                                                     name="originalPrice"
                                                     value={formik.values.originalPrice}
@@ -552,7 +437,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <EditableLabel value={lblSellingPrice} onChange={setLblSellingPrice} />
+                                                <label>Selling Price ($)</label>
                                                 <input type="number" placeholder="e.g., 1050"
                                                     name="sellingPrice"
                                                     value={formik.values.sellingPrice}
@@ -632,13 +517,16 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                 </div>
                                 <div className="course-form">
                                     <div className="form-group">
-                                        <EditableLabel value={lblCourseTitle} onChange={setLblCourseTitle} />
+                                        <label>Course Title (Optional)</label>
                                         <input type="text" placeholder="e.g., Conduct Telescopic mate"
                                             name="title"
                                             value={formik.values.title}
                                             onChange={formik.handleChange}
                                             onBlur={(e) => {
                                                 formik.handleBlur(e)
+                                                // Auto-suggest the slug only when the field is
+                                                // still empty — never overwrite an admin's
+                                                // manual choice.
                                                 if (!formik.values.slug && e.target.value) {
                                                     formik.setFieldValue("slug", toSlug(e.target.value))
                                                 }
@@ -646,13 +534,15 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <EditableLabel value={lblUrlSlug} onChange={setLblUrlSlug} />
+                                        <label>URL Slug *</label>
                                         <input
                                             type="text"
                                             placeholder="e.g., forklift-licence"
                                             name="slug"
                                             value={formik.values.slug}
                                             onChange={(e) => {
+                                                // Live-sanitize as the admin types so what
+                                                // they see is exactly what gets saved.
                                                 formik.setFieldValue("slug", e.target.value.toLowerCase())
                                             }}
                                             onBlur={(e) => {
@@ -666,46 +556,39 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                                         : undefined,
                                             }}
                                         />
-                                        <small style={{ color: colors.textMuted, fontSize: 12 }}>
+                                        <small style={{ color: "#6b7280", fontSize: 12 }}>
                                             Page URL: <code>/course/{formik.values.slug || "your-slug"}</code>
                                         </small>
                                         {formik.touched.slug && formik.errors.slug && (
-                                            <div style={{ color: "#e53935", fontSize: 12, marginTop: 4 }}>
+                                            <div
+                                                style={{
+                                                    color: "#e53935",
+                                                    fontSize: 12,
+                                                    marginTop: 4,
+                                                }}
+                                            >
                                                 {formik.errors.slug}
                                             </div>
                                         )}
                                     </div>
                                     <div className="form-group">
-                                        <EditableLabel value={lblDuration} onChange={setLblDuration} />
-                                        <small style={{ color: "#888", fontSize: 11, display: "block", marginBottom: 4 }}>
-                                            Max 5 characters — shown on home page card only (e.g. "1 Day")
-                                        </small>
-                                        <input type="text" placeholder="e.g., 1 Day"
+                                        <label>Duration (Optional)</label>
+                                        <input type="text" placeholder="e.g., 1 Day Course"
                                             name="duration"
-                                            maxLength={5}
                                             value={formik.values.duration}
                                             onChange={formik.handleChange}
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <EditableLabel value={lblCertValidity} onChange={setLblCertValidity} />
+                                        <label>Certificate Validity (Optional)</label>
                                         <input type="text" placeholder="e.g., 3 years"
                                             name="certificateValidity"
                                             value={formik.values.certificateValidity}
                                             onChange={formik.handleChange}
                                         />
                                     </div>
-
-                                     <div className="form-group">
-                                        <EditableLabel value={lblCourseValidity} onChange={setLblCourseValidity} />
-                                        <input type="text" placeholder="e.g., 3 years"
-                                            name="courseValidity"
-                                            value={formik.values.courseValidity}
-                                            onChange={formik.handleChange}
-                                        />
-                                    </div>
                                     <div className="form-group">
-                                        <EditableLabel value={lblDeliveryMethod} onChange={setLblDeliveryMethod} />
+                                        <label>Delivery Method</label>
                                         <input type="text" placeholder="e.g., Online, Classroom"
                                             name="deliveryMethod"
                                             value={formik.values.deliveryMethod}
@@ -713,16 +596,48 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <EditableLabel value={lblLocation} onChange={setLblLocation} />
+                                        <label>Location1</label>
                                         <input type="text" placeholder="e.g., New York, London"
                                             name="location"
                                             value={formik.values.location}
                                             onChange={formik.handleChange}
                                         />
                                     </div>
+
+                                     <div className="form-group">
+                                        <label>Class Hours</label>
+                                        <input type="text" placeholder="e.g 8-30 - 4:30"
+                                            name="classhrs"
+                                            value={formik.values.classhrs}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+
+                                     <div className="form-group">
+                                        {/* FIX: was name="classhrs" — now matches its own
+                                            Formik field so it no longer overwrites Class Hours */}
+                                        <label>Certificate issued</label>
+                                        <input type="text" placeholder=""
+                                            name="certification_issue"
+                                            value={formik.values.certification_issue}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+
                                     <div className="form-group">
-                                        <EditableLabel value={lblCourseImage} onChange={setLblCourseImage} />
+                                        {/* FIX: was name="classhrs" — now matches its own
+                                            Formik field so it no longer overwrites Class Hours */}
+                                        <label>Nationally recognised</label>
+                                        <input type="text" placeholder=""
+                                            name="national"
+                                            value={formik.values.national}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Course Image</label>
                                         <div className="image-upload-options">
+
                                             <button
                                                 type="button"
                                                 className={imageType === "upload" ? "active" : ""}
@@ -730,6 +645,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                             >
                                                 Upload Image
                                             </button>
+
                                             <button
                                                 type="button"
                                                 className={imageType === "url" ? "active" : ""}
@@ -737,6 +653,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                             >
                                                 URL
                                             </button>
+
                                         </div>
                                         {imageType === "upload" && imageFile && (
                                             <img
@@ -745,12 +662,14 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                                 style={{ width: "120px", borderRadius: "8px", marginTop: "10px" }}
                                             />
                                         )}
+
+                                        {/* ✅ URL preview — type பண்ணும் போதே + edit mode existing image */}
                                         {imageType === "url" && formik.values.courseImage && (
                                             <img
                                                 key={formik.values.courseImage}
                                                 src={formik.values.courseImage}
                                                 alt="preview"
-                                                onError={(e) => e.target.style.display = "none"}
+                                                onError={(e) => e.target.style.display = "none"}  // ✅ broken URL hide
                                                 style={{ width: "200px", borderRadius: "8px", marginTop: "20px", display: "block" }}
                                             />
                                         )}
@@ -784,74 +703,56 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
 
                         {activeTab === "details" && (
                             <div className="details-section">
-
-                                {/* ── Training Duration ── */}
                                 <div className="form-group">
-                                    <EditableLabel value={headingTrainingDuration} onChange={setHeadingTrainingDuration} />
-                                    <small style={{ color: "#888", fontSize: 11, display: "block", marginBottom: 4 }}>
-                                        Shown on course details page only (e.g. "1 Day intensive hands-on training")
-                                    </small>
-                                    <input
-                                        type="text"
-                                        placeholder="e.g., 1 Day intensive hands-on training"
-                                        value={trainingDuration}
-                                        onChange={(e) => setTrainingDuration(e.target.value)}
+                                    <DynamicField
+                                        label="Course Description"
+                                        placeholder="Course Description..."
+                                        values={descriptions}
+                                        setValues={setDescriptions}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <DynamicField
+                                        label="Training Overview"
+                                        placeholder="Training Overview..."
+                                        values={trainingOverview}
+                                        setValues={setTrainingOverview}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <DynamicField
+                                        label="Vocational Outcome"
+                                        placeholder="Vocational Outcome..."
+                                        values={vocationalOutcome}
+                                        setValues={setVocationalOutcome}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <DynamicField
+                                        label="Fees and Charges"
+                                        placeholder="Fees and Charges..."
+                                        values={feesCharges}
+                                        setValues={setFeesCharges}
                                     />
                                 </div>
 
-                                {/* ── Course Description ── */}
-                                <DynamicField
-                                    label={headingDescription}
-                                    onLabelChange={setHeadingDescription}
-                                    placeholder="Course Description..."
-                                    values={descriptions}
-                                    setValues={setDescriptions}
-                                />
+                                <div className="form-group">
+                                    <DynamicField
+                                        label="Optional Charges"
+                                        placeholder="Optional Charges..."
+                                        values={optionalCharges}
+                                        setValues={setOptionalCharges}
+                                    />
+                                </div>
 
-                                {/* ── Training Overview ── */}
-                                <DynamicField
-                                    label={headingTrainingOverview}
-                                    onLabelChange={setHeadingTrainingOverview}
-                                    placeholder="Training Overview..."
-                                    values={trainingOverview}
-                                    setValues={setTrainingOverview}
-                                />
-
-                                {/* ── Vocational Outcome ── */}
-                                <DynamicField
-                                    label={headingVocationalOutcome}
-                                    onLabelChange={setHeadingVocationalOutcome}
-                                    placeholder="Vocational Outcome..."
-                                    values={vocationalOutcome}
-                                    setValues={setVocationalOutcome}
-                                />
-
-                                {/* ── Fees and Charges ── */}
-                                <DynamicField
-                                    label={headingFeesCharges}
-                                    onLabelChange={setHeadingFeesCharges}
-                                    placeholder="Fees and Charges..."
-                                    values={feesCharges}
-                                    setValues={setFeesCharges}
-                                />
-
-                                {/* ── Optional Charges ── */}
-                                <DynamicField
-                                    label={headingOptionalCharges}
-                                    onLabelChange={setHeadingOptionalCharges}
-                                    placeholder="Optional Charges..."
-                                    values={optionalCharges}
-                                    setValues={setOptionalCharges}
-                                />
-
-                                {/* ── Outcome Point ── */}
-                                <DynamicField
-                                    label={headingOutcomePoint}
-                                    onLabelChange={setHeadingOutcomePoint}
-                                    placeholder="Outcome Point..."
-                                    values={outcomePoint}
-                                    setValues={setOutcomePoint}
-                                />
+                                <div className="form-group">
+                                    <DynamicField
+                                        label="Outcome Point"
+                                        placeholder="Outcome Point..."
+                                        values={outcomePoint}
+                                        setValues={setOutcomePoint}
+                                    />
+                                </div>
 
                                 <div className="seo-section">
                                     <h3 className="seo-section-title">SEO Settings</h3>
@@ -860,7 +761,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         <label>Meta title</label>
                                         <input
                                             type="text"
-                                            placeholder="e.g. EWP Licence Over 11m | Boom Lift Course NSW | SafeTicks"
+                                            placeholder="e.g. EWP Licence Over 11m | Boom Lift Course NSW | Safety Training Academy"
                                             maxLength={60}
                                             name="metaTitle"
                                             value={formik.values.metaTitle}
@@ -899,8 +800,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                         {activeTab === "requirements" && (
                             <div className="requirements-section">
                                 <DynamicField
-                                    label={lblCourseReq}
-                                    onLabelChange={setLblCourseReq}
+                                    label="Course Requirement"
                                     placeholder="Course Requirement..."
                                     values={requirements}
                                     setValues={setRequirements}
@@ -914,14 +814,14 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                     <p className="handbook-desc">
                                         Upload a PDF or enter a URL. This document is shown on the course details page with a view option.
                                     </p>
-                                    <EditableLabel value={lblCopTitle} onChange={setLblCopTitle} />
+                                    <label>Course of Practice title</label>
                                     <input
                                         type="text"
                                         placeholder="e.g., Code of Practice Managing the Risk..."
                                         value={handbookTitle}
                                         onChange={(e) => setHandbookTitle(e.target.value)}
                                     />
-                                    <EditableLabel value={lblCopUpload} onChange={setLblCopUpload} />
+                                    <label>Upload Course of Practice</label>
                                     <div className="upload-container" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         <label className="upload-btn" style={{ flex: 1, margin: 0, display: 'block' }}>
                                             <input
@@ -939,8 +839,18 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         {(handbookFile || existingHandbookPdf) && (
                                             <button
                                                 type="button"
-                                                onClick={() => { setHandbookFile(null); setExistingHandbookPdf(""); }}
-                                                style={{ background: '#ff4d4f', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 12px', cursor: 'pointer' }}
+                                                onClick={() => {
+                                                    setHandbookFile(null);
+                                                    setExistingHandbookPdf("");
+                                                }}
+                                                style={{
+                                                    background: '#ff4d4f',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    padding: '8px 12px',
+                                                    cursor: 'pointer'
+                                                }}
                                             >
                                                 Remove
                                             </button>
@@ -956,13 +866,16 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                     <p className="handbook-desc">
                                         Upload the course syllabus [PDF]. This will be viewable by students on the course details page.
                                     </p>
-                                    <EditableLabel value={lblSyllabusUpload} onChange={setLblSyllabusUpload} />
+                                    <label>Upload Syllabus PDF</label>
                                     <div className="upload-container" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         <label className="upload-btn" style={{ flex: 1, margin: 0, display: 'block' }}>
                                             <input
                                                 type="file"
                                                 accept="application/pdf"
-                                                onChange={(e) => { setSyllabusFile(e.target.files[0]); setExistingSyllabusUrl(""); }}
+                                                onChange={(e) => {
+                                                    setSyllabusFile(e.target.files[0]);
+                                                    setExistingSyllabusUrl("");
+                                                }}
                                             />
                                             <span>
                                                 {syllabusFile ? syllabusFile.name : (existingSyllabusUrl ? "📄 Existing Syllabus" : "⬆ Choose Syllabus PDF")}
@@ -971,8 +884,18 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         {(syllabusFile || existingSyllabusUrl) && (
                                             <button
                                                 type="button"
-                                                onClick={() => { setSyllabusFile(null); setExistingSyllabusUrl(""); }}
-                                                style={{ background: '#ff4d4f', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 12px', cursor: 'pointer' }}
+                                                onClick={() => {
+                                                    setSyllabusFile(null);
+                                                    setExistingSyllabusUrl("");
+                                                }}
+                                                style={{
+                                                    background: '#ff4d4f',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    padding: '8px 12px',
+                                                    cursor: 'pointer'
+                                                }}
                                             >
                                                 Remove
                                             </button>
@@ -985,13 +908,14 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                         {activeTab === "pathways" && (
                             <div className="details-section">
                                 <DynamicField
-                                    label={lblPathways}
-                                    onLabelChange={setLblPathways}
+                                    label="Pathways"
                                     placeholder="Pathways..."
                                     values={pathways}
                                     setValues={setPathways}
                                 />
+
                             </div>
+
                         )}
 
 
@@ -1020,7 +944,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         <div className="combo-expanded">
 
                                             <div className="form-group">
-                                                <EditableLabel value={lblComboDesc} onChange={setLblComboDesc} />
+                                                <label>Combo Description (Optional)</label>
                                                 <input
                                                     type="text"
                                                     placeholder="e.g., RIIWHS204E + RIIWHS202E Enter and work in confined spaces"
@@ -1033,7 +957,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                             <div className="combo-price-duration-row">
 
                                                 <div className="form-group">
-                                                    <EditableLabel value={lblComboPrice} onChange={setLblComboPrice} />
+                                                    <label>Combo Price ($) (Optional)</label>
                                                     <input
                                                         type="number"
                                                         placeholder="e.g., 350"
@@ -1043,7 +967,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <EditableLabel value={lblComboDuration} onChange={setLblComboDuration} />
+                                                    <label>Combo Duration (Optional)</label>
                                                     <input
                                                         type="text"
                                                         placeholder="e.g., 2 Days Training"

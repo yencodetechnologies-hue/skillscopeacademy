@@ -115,6 +115,7 @@ const courseSchema = new mongoose.Schema({
   courseValidity: String,
   deliveryMethod: String,
   location: String,
+  location2: String,
   image: String,
 
   classhrs: String,

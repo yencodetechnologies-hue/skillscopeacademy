@@ -78,6 +78,12 @@ function CourseCard({ course, fromPortal }) {
                             <i className="fa-solid fa-location-dot" />
                             {course.location}
                         </span>
+                        {course.location2 && (
+  <span className="course-info-item">
+    <i className="fa-solid fa-location-dot" />
+    {course.location2}
+  </span>
+)}
                         <span className="course-info-item">
                             <i className="fa-solid fa-chalkboard-user" />
                             {course.deliveryMethod}

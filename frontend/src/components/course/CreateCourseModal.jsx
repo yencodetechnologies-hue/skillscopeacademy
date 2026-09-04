@@ -98,6 +98,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             certificateValidity: editCourse?.certificateValidity || "",
             deliveryMethod: editCourse?.deliveryMethod || "",
             location: editCourse?.location || "",
+            location2: editCourse?.location2 || "",
             courseImage: editCourse?.image || "",
             originalPrice: editCourse?.originalPrice || "",
             sellingPrice: editCourse?.sellingPrice || "",
@@ -131,6 +132,7 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
             formData.append("certificateValidity", values.certificateValidity)
             formData.append("deliveryMethod", values.deliveryMethod)
             formData.append("location", values.location)
+            formData.append("location2", values.location2)
             formData.append("metaTitle", values.metaTitle || "")
             formData.append("metaDescription", values.metaDescription || "")
             // FIX: these were being collected by Formik but never actually
@@ -596,10 +598,19 @@ function CreateCourseModal({ close, categories, refreshCourses, editCourse }) {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Location1</label>
+                                        <label>Location 1</label>
                                         <input type="text" placeholder="e.g., New York, London"
                                             name="location"
                                             value={formik.values.location}
+                                            onChange={formik.handleChange}
+                                        />
+                                    </div>
+
+                                     <div className="form-group">
+                                        <label>Location 2</label>
+                                        <input type="text" placeholder="e.g., New York, London"
+                                            name="location2"
+                                            value={formik.values.location2}
                                             onChange={formik.handleChange}
                                         />
                                     </div>

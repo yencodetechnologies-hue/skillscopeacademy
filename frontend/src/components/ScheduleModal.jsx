@@ -1,8 +1,16 @@
 import "../styles/ScheduleModal.css";
 import { useFormik } from "formik";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { API_URL } from "../data/service";
+import {
+  getCoursePricingType,
+  getDefaultSchedulePricingValues,
+  buildSchedulePricingPayload,
+  getCoursePriceNumber,
+  getCourseOriginalDisplay,
+  getCourseVariants,
+} from "../utils/coursePrice";
 
 // ─────────────────────────────────────────────────────────────
 // AUTH HELPERS
@@ -29,8 +37,7 @@ function jsonAuthHeaders() {
 // HELPERS
 // ─────────────────────────────────────────────────────────────
 
-const toYMD = (d) =>
-  new Date(d).toISOString().split("T")[0];
+const toYMD = (d) => new Date(d).toISOString().split("T")[0];
 
 const todayYMD = toYMD(new Date());
 
@@ -42,33 +49,31 @@ const formatDate = (d) =>
     year: "numeric",
   });
 
-const DAYS = [
-  "Sun",
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat",
-];
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 // Available city options
 const CITIES = ["Sydney", "Adelaide"];
+
+const PRICING_VALUE_KEYS = [
+  "promotionalText",
+  "originalPrice",
+  "sellingPrice",
+  "withExperiencePrice",
+  "withExperienceOriginal",
+  "withoutExperiencePrice",
+  "withoutExperienceOriginal",
+  "slSingleStrikePrice",
+  "slSinglePrice",
+  "slblStrikePrice",
+  "slblPrice",
+];
 
 // ─────────────────────────────────────────────────────────────
 // GENERATE DATES
 // ─────────────────────────────────────────────────────────────
 
-const generateDates = (
-  start,
-  end,
-  selectedDays
-) => {
-  if (
-    !start ||
-    !end ||
-    selectedDays.length === 0
-  ) {
+const generateDates = (start, end, selectedDays) => {
+  if (!start || !end || selectedDays.length === 0) {
     return [];
   }
 
@@ -89,27 +94,218 @@ const generateDates = (
 };
 
 // ─────────────────────────────────────────────────────────────
+// PRICING HELPERS
+// ─────────────────────────────────────────────────────────────
+
+// Pricing now lives on the SESSION (time slot) itself, not on the date/schedule.
+const sessionPricingFromDoc = (session, course) => {
+  const defaults = getDefaultSchedulePricingValues(course);
+  if (!session) return defaults;
+
+  // Prefer stored session override; otherwise show course default for editing
+  const pick = (field) => {
+    if (session[field] != null && session[field] !== "") return String(session[field]);
+    return defaults[field];
+  };
+
+  return {
+    promotionalText: session.promotionalText || "",
+    originalPrice: pick("originalPrice"),
+    sellingPrice: pick("sellingPrice"),
+    withExperiencePrice: pick("withExperiencePrice"),
+    withExperienceOriginal: pick("withExperienceOriginal"),
+    withoutExperiencePrice: pick("withoutExperiencePrice"),
+    withoutExperienceOriginal: pick("withoutExperienceOriginal"),
+    slSingleStrikePrice: pick("slSingleStrikePrice"),
+    slSinglePrice: pick("slSinglePrice"),
+    slblStrikePrice: pick("slblStrikePrice"),
+    slblPrice: pick("slblPrice"),
+  };
+};
+
+function PricingFields({ values, onChange, pricingType }) {
+  return (
+    <div className="csm-pricing-block">
+      <div className="csm-pricing-title">Time slot pricing (optional override)</div>
+      <p className="csm-hint">Leave blank to use the course default prices for this time slot.</p>
+
+      {pricingType === "standard" && (
+        <div className="csm-grid">
+          <div className="csm-field">
+            <label>Original / Strike Price ($)</label>
+            <input
+              type="number"
+              name="originalPrice"
+              placeholder="e.g., 1200"
+              value={values.originalPrice}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>Selling Price ($)</label>
+            <input
+              type="number"
+              name="sellingPrice"
+              placeholder="e.g., 1050"
+              value={values.sellingPrice}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+      )}
+
+      {pricingType === "experience" && (
+        <div className="csm-grid">
+          <div className="csm-field">
+            <label>With Exp — Strike ($)</label>
+            <input
+              type="number"
+              name="withExperienceOriginal"
+              value={values.withExperienceOriginal}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>With Exp — Selling ($)</label>
+            <input
+              type="number"
+              name="withExperiencePrice"
+              value={values.withExperiencePrice}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>Without Exp — Strike ($)</label>
+            <input
+              type="number"
+              name="withoutExperienceOriginal"
+              value={values.withoutExperienceOriginal}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>Without Exp — Selling ($)</label>
+            <input
+              type="number"
+              name="withoutExperiencePrice"
+              value={values.withoutExperiencePrice}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+      )}
+
+      {pricingType === "slbl" && (
+        <div className="csm-grid">
+          <div className="csm-field">
+            <label>SL or BL — Strike ($)</label>
+            <input
+              type="number"
+              name="slSingleStrikePrice"
+              value={values.slSingleStrikePrice}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>SL or BL — Selling ($)</label>
+            <input
+              type="number"
+              name="slSinglePrice"
+              value={values.slSinglePrice}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>SL + BL — Strike ($)</label>
+            <input
+              type="number"
+              name="slblStrikePrice"
+              value={values.slblStrikePrice}
+              onChange={onChange}
+            />
+          </div>
+          <div className="csm-field">
+            <label>SL + BL — Selling ($)</label>
+            <input
+              type="number"
+              name="slblPrice"
+              value={values.slblPrice}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="csm-field csm-field-full" style={{ marginTop: "0.75rem" }}>
+        <label>Promotional text</label>
+        <input
+          type="text"
+          name="promotionalText"
+          placeholder="Optional promo message for this date"
+          value={values.promotionalText}
+          onChange={onChange}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Renders the price for ONE session/time slot (pricing is per-slot, not per-date).
+function SessionPriceSummary({ course, pricing }) {
+  const variants = getCourseVariants(course, pricing);
+  const pt = getCoursePricingType(course);
+
+  if (pt === "standard") {
+    const sell = getCoursePriceNumber(course, pricing);
+    const orig = getCourseOriginalDisplay(course, pricing);
+    return (
+      <div className="csm-date-price">
+        {orig && <span className="csm-price-strike">{orig}</span>}
+        <span className="csm-price-now">${sell}</span>
+        {pricing?.promotionalText ? (
+          <span className="csm-promo-text">{pricing.promotionalText}</span>
+        ) : null}
+      </div>
+    );
+  }
+
+  return (
+    <div className="csm-date-price">
+      {variants.map((v) => (
+        <span key={v.key || "std"} className="csm-price-variant">
+          {v.label}:{" "}
+          {v.original ? <span className="csm-price-strike">${v.original}</span> : null}{" "}
+          <span className="csm-price-now">${v.price}</span>
+        </span>
+      ))}
+      {pricing?.promotionalText ? (
+        <span className="csm-promo-text">{pricing.promotionalText}</span>
+      ) : null}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
 // EDIT SESSION MODAL
 // ─────────────────────────────────────────────────────────────
 
 function EditSessionModal({
   session,
   scheduleDate,
+  schedule,
+  course,
   onClose,
   onSaved,
 }) {
-  const [startTime, setStartTime] = useState(
-    session.startTime || ""
-  );
+  const pricingType = getCoursePricingType(course);
 
-  const [endTime, setEndTime] = useState(
-    session.endTime || ""
-  );
+  const [startTime, setStartTime] = useState(session.startTime || "");
 
-  const [availableSlots, setAvailableSlots] =
-    useState(
-      session.availableSlots || 0
-    );
+  const [endTime, setEndTime] = useState(session.endTime || "");
+
+  const [availableSlots, setAvailableSlots] = useState(
+    session.availableSlots || 0
+  );
 
   // IMPORTANT:
   // Database field is preferredCity
@@ -121,45 +317,36 @@ function EditSessionModal({
   // preferredCity: ["Sydney", "Adelaide"]
   //
   // We bind exactly that value.
-  const [selectedEditCities, setSelectedEditCities] =
-    useState(
-      Array.isArray(session.preferredCity)
-        ? session.preferredCity
-        : []
-    );
+  const [selectedEditCities, setSelectedEditCities] = useState(
+    Array.isArray(session.preferredCity) ? session.preferredCity : []
+  );
 
-  const [saving, setSaving] =
-    useState(false);
+  // Pricing belongs to THIS session/time slot, not the date/schedule.
+  const [pricing, setPricing] = useState(() =>
+    sessionPricingFromDoc(session, course)
+  );
+
+  const [saving, setSaving] = useState(false);
 
   // ─────────────────────────────────────────────
   // DEBUG API RESPONSE
   // ─────────────────────────────────────────────
 
   useEffect(() => {
-    console.log(
-      "========== EDIT SESSION API DATA =========="
-    );
+    console.log("========== EDIT SESSION API DATA ==========");
 
     console.log("Full session:", session);
 
-    console.log(
-      "preferredCity from API:",
-      session?.preferredCity
-    );
+    console.log("preferredCity from API:", session?.preferredCity);
 
     console.log(
       "preferredCity is array:",
       Array.isArray(session?.preferredCity)
     );
 
-    console.log(
-      "selectedEditCities:",
-      selectedEditCities
-    );
+    console.log("selectedEditCities:", selectedEditCities);
 
-    console.log(
-      "==========================================="
-    );
+    console.log("===========================================");
   }, [session, selectedEditCities]);
 
   // ─────────────────────────────────────────────
@@ -169,13 +356,20 @@ function EditSessionModal({
   const toggleCity = (city) => {
     setSelectedEditCities((prev) => {
       if (prev.includes(city)) {
-        return prev.filter(
-          (item) => item !== city
-        );
+        return prev.filter((item) => item !== city);
       }
 
       return [...prev, city];
     });
+  };
+
+  // ─────────────────────────────────────────────
+  // PRICING CHANGE
+  // ─────────────────────────────────────────────
+
+  const handlePricingChange = (e) => {
+    const { name, value } = e.target;
+    setPricing((prev) => ({ ...prev, [name]: value }));
   };
 
   // ─────────────────────────────────────────────
@@ -184,49 +378,44 @@ function EditSessionModal({
 
   const handleSave = async () => {
     if (selectedEditCities.length === 0) {
-      alert(
-        "Please select at least one city."
-      );
+      alert("Please select at least one city.");
       return;
     }
 
     if (!availableSlots) {
-      alert(
-        "Available slots is required."
-      );
+      alert("Available slots is required.");
       return;
     }
 
     setSaving(true);
 
     try {
+      // Pricing fields are sent as part of the SESSION payload so the
+      // amount is tied to this specific time slot, not the whole date.
+      const pricingPayload = buildSchedulePricingPayload(pricing, {
+        clearEmpty: true,
+      });
+
       const payload = {
         startTime,
         endTime,
-        availableSlots: Number(
-          availableSlots
-        ),
+        availableSlots: Number(availableSlots),
 
         // DATABASE FIELD NAME
-        preferredCity: [
-          ...selectedEditCities,
-        ],
+        preferredCity: [...selectedEditCities],
+
+        // PER-SLOT PRICING
+        ...pricingPayload,
       };
 
-      console.log(
-        "========== EDIT SESSION PAYLOAD =========="
-      );
+      console.log("========== EDIT SESSION PAYLOAD ==========");
 
       console.log("Session ID:", session._id);
       console.log("Payload:", payload);
-      console.log(
-        "preferredCity:",
-        payload.preferredCity
-      );
+      console.log("preferredCity:", payload.preferredCity);
+      console.log("pricing:", pricingPayload);
 
-      console.log(
-        "=========================================="
-      );
+      console.log("===========================================");
 
       const response = await axios.patch(
         `${API_URL}/api/schedules/session/${session._id}/edit`,
@@ -236,42 +425,27 @@ function EditSessionModal({
         }
       );
 
-      console.log(
-        "========== EDIT SESSION RESPONSE =========="
-      );
+      console.log("========== EDIT SESSION RESPONSE ==========");
 
-      console.log(
-        "API response:",
-        response.data
-      );
+      console.log("API response:", response.data);
 
       console.log(
         "Updated preferredCity:",
-        response.data?.session
-          ?.preferredCity ||
+        response.data?.session?.preferredCity ||
           response.data?.preferredCity
       );
 
-      console.log(
-        "==========================================="
-      );
+      console.log("===========================================");
 
       onSaved();
       onClose();
     } catch (err) {
-      console.error(
-        "Edit session error:",
-        err
-      );
+      console.error("Edit session error:", err);
 
-      console.error(
-        "Edit session error response:",
-        err?.response?.data
-      );
+      console.error("Edit session error response:", err?.response?.data);
 
       alert(
-        err?.response?.data?.message ||
-          "Could not update the session."
+        err?.response?.data?.message || "Could not update the session."
       );
     } finally {
       setSaving(false);
@@ -281,7 +455,6 @@ function EditSessionModal({
   return (
     <div className="csm-edit-overlay">
       <div className="csm-edit-modal">
-
         {/* HEADER */}
 
         <div className="csm-edit-header">
@@ -289,17 +462,12 @@ function EditSessionModal({
             <h3>Edit Session</h3>
 
             <p>
-              Update the start/end time,
-              city and capacity for this
-              scheduled session.
+              Update the start/end time, city, capacity and pricing for
+              this specific time slot.
             </p>
           </div>
 
-          <button
-            type="button"
-            className="csm-close-btn"
-            onClick={onClose}
-          >
+          <button type="button" className="csm-close-btn" onClick={onClose}>
             ✕
           </button>
         </div>
@@ -309,117 +477,81 @@ function EditSessionModal({
         <div className="csm-edit-field">
           <label>Date</label>
 
-          <p className="csm-edit-date-val">
-            {formatDate(scheduleDate)}
-          </p>
+          <p className="csm-edit-date-val">{formatDate(scheduleDate)}</p>
         </div>
 
         {/* START / END TIME */}
 
         <div className="csm-grid-2">
-
           <div className="csm-field">
-            <label>
-              Start Time
-            </label>
+            <label>Start Time</label>
 
             <input
               type="time"
               value={startTime}
-              onChange={(e) =>
-                setStartTime(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setStartTime(e.target.value)}
             />
           </div>
 
           <div className="csm-field">
-            <label>
-              End Time
-            </label>
+            <label>End Time</label>
 
             <input
               type="time"
               value={endTime}
-              onChange={(e) =>
-                setEndTime(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setEndTime(e.target.value)}
             />
           </div>
-
         </div>
 
         {/* ACTIVE SLOTS */}
 
         <div className="csm-field">
-          <label>
-            Active Slots
-          </label>
+          <label>Active Slots</label>
 
           <input
             type="number"
             min="1"
             value={availableSlots}
-            onChange={(e) =>
-              setAvailableSlots(
-                e.target.value
-              )
-            }
+            onChange={(e) => setAvailableSlots(e.target.value)}
           />
         </div>
 
         {/* CITY */}
 
         <div className="csm-field csm-field-full">
-
-          <label>
-            City *
-          </label>
+          <label>City *</label>
 
           <div className="csm-city-checkboxes">
-
             {CITIES.map((city) => (
-              <label
-                key={city}
-                className="csm-city-checkbox"
-              >
+              <label key={city} className="csm-city-checkbox">
                 <input
                   type="checkbox"
                   value={city}
-                  checked={selectedEditCities.includes(
-                    city
-                  )}
-                  onChange={() =>
-                    toggleCity(city)
-                  }
+                  checked={selectedEditCities.includes(city)}
+                  onChange={() => toggleCity(city)}
                 />
 
-                <span>
-                  {city}
-                </span>
+                <span>{city}</span>
               </label>
             ))}
-
           </div>
 
-          <span className="csm-hint">
-            Select one or more cities
-          </span>
-
+          <span className="csm-hint">Select one or more cities</span>
         </div>
+
+        {/* PRICING */}
+
+        <PricingFields
+          values={pricing}
+          onChange={handlePricingChange}
+          pricingType={pricingType}
+        />
 
         {/* FOOTER */}
 
         <div className="csm-edit-footer">
-
-          <button
-            type="button"
-            className="csm-cancel-btn"
-            onClick={onClose}
-          >
+          <button type="button" className="csm-cancel-btn" onClick={onClose}>
             Cancel
           </button>
 
@@ -429,13 +561,9 @@ function EditSessionModal({
             onClick={handleSave}
             disabled={saving}
           >
-            {saving
-              ? "Saving..."
-              : "Save Changes"}
+            {saving ? "Saving..." : "Save Changes"}
           </button>
-
         </div>
-
       </div>
     </div>
   );
@@ -445,43 +573,37 @@ function EditSessionModal({
 // MAIN COURSE SCHEDULE MODAL
 // ─────────────────────────────────────────────────────────────
 
-function CourseScheduleModal({
-  course,
-  close,
-}) {
-  const [schedules, setSchedules] =
-    useState([]);
+function CourseScheduleModal({ course, close }) {
+  const pricingType = getCoursePricingType(course);
 
-  const [localSessions, setLocalSessions] =
-    useState([]);
+  const defaultPricing = useMemo(
+    () => getDefaultSchedulePricingValues(course),
+    [course]
+  );
 
-  const [bulkMode, setBulkMode] =
-    useState(false);
+  const [schedules, setSchedules] = useState([]);
 
-  const [selectedDays, setSelectedDays] =
-    useState([]);
+  const [localSessions, setLocalSessions] = useState([]);
+
+  const [bulkMode, setBulkMode] = useState(false);
+
+  const [selectedDays, setSelectedDays] = useState([]);
 
   // ADD SINGLE SESSION
   // Sydney selected by default
-  const [selectedCities, setSelectedCities] =
-    useState(["Sydney"]);
+  const [selectedCities, setSelectedCities] = useState(["Sydney"]);
 
   // ADD BULK SESSION
   // Sydney selected by default
-  const [bulkCities, setBulkCities] =
-    useState(["Sydney"]);
+  const [bulkCities, setBulkCities] = useState(["Sydney"]);
 
-  const [editTarget, setEditTarget] =
-    useState(null);
+  const [editTarget, setEditTarget] = useState(null);
 
-  const [saving, setSaving] =
-    useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const [togglingId, setTogglingId] =
-    useState(null);
+  const [togglingId, setTogglingId] = useState(null);
 
-  const [filterType, setFilterType] =
-    useState("All");
+  const [filterType, setFilterType] = useState("All");
 
   // ─────────────────────────────────────────────
   // FETCH SCHEDULES
@@ -496,53 +618,30 @@ function CourseScheduleModal({
         }
       );
 
-      console.log(
-        "========== SCHEDULE API RESPONSE =========="
-      );
+      console.log("========== SCHEDULE API RESPONSE ==========");
 
-      console.log(
-        "Full schedules:",
-        res.data
-      );
+      console.log("Full schedules:", res.data);
 
       res.data?.forEach((schedule) => {
-        schedule?.sessions?.forEach(
-          (session) => {
-            console.log(
-              "Session:",
-              session._id
-            );
+        schedule?.sessions?.forEach((session) => {
+          console.log("Session:", session._id);
 
-            console.log(
-              "preferredCity:",
-              session.preferredCity
-            );
+          console.log("preferredCity:", session.preferredCity);
 
-            console.log(
-              "preferredCity type:",
-              typeof session.preferredCity
-            );
+          console.log("preferredCity type:", typeof session.preferredCity);
 
-            console.log(
-              "preferredCity array:",
-              Array.isArray(
-                session.preferredCity
-              )
-            );
-          }
-        );
+          console.log(
+            "preferredCity array:",
+            Array.isArray(session.preferredCity)
+          );
+        });
       });
 
-      console.log(
-        "==========================================="
-      );
+      console.log("===========================================");
 
       setSchedules(res.data);
     } catch (err) {
-      console.error(
-        "Fetch schedules error:",
-        err
-      );
+      console.error("Fetch schedules error:", err);
     }
   };
 
@@ -557,29 +656,21 @@ function CourseScheduleModal({
   // ─────────────────────────────────────────────
 
   const deleteSession = async (id) => {
-    if (
-      !window.confirm(
-        "Delete this session?"
-      )
-    ) {
+    if (!window.confirm("Delete this session?")) {
       return;
     }
 
     try {
-      await axios.delete(
-        `${API_URL}/api/schedules/session/${id}`,
-        {
-          headers: authHeaders(),
-        }
-      );
+      await axios.delete(`${API_URL}/api/schedules/session/${id}`, {
+        headers: authHeaders(),
+      });
 
       await fetchSchedules();
     } catch (err) {
       console.error(err);
 
       alert(
-        err?.response?.data?.message ||
-          "Could not delete this session."
+        err?.response?.data?.message || "Could not delete this session."
       );
     }
   };
@@ -599,16 +690,11 @@ function CourseScheduleModal({
       prev.map((schedule) => ({
         ...schedule,
 
-        sessions: (
-          schedule.sessions || []
-        ).map((s) =>
+        sessions: (schedule.sessions || []).map((s) =>
           s._id === id
             ? {
                 ...s,
-                status:
-                  s.status === "Active"
-                    ? "Inactive"
-                    : "Active",
+                status: s.status === "Active" ? "Inactive" : "Active",
               }
             : s
         ),
@@ -616,13 +702,9 @@ function CourseScheduleModal({
     );
 
     try {
-      await axios.patch(
-        `${API_URL}/api/schedules/session/${id}`,
-        null,
-        {
-          headers: authHeaders(),
-        }
-      );
+      await axios.patch(`${API_URL}/api/schedules/session/${id}`, null, {
+        headers: authHeaders(),
+      });
 
       await fetchSchedules();
     } catch (err) {
@@ -630,9 +712,7 @@ function CourseScheduleModal({
 
       await fetchSchedules();
 
-      alert(
-        "Could not update session status. Please try again."
-      );
+      alert("Could not update session status. Please try again.");
     } finally {
       setTogglingId(null);
     }
@@ -643,9 +723,7 @@ function CourseScheduleModal({
   // ─────────────────────────────────────────────
 
   const deleteLocalSession = (index) => {
-    setLocalSessions((prev) =>
-      prev.filter((_, i) => i !== index)
-    );
+    setLocalSessions((prev) => prev.filter((_, i) => i !== index));
   };
 
   // ─────────────────────────────────────────────
@@ -655,9 +733,7 @@ function CourseScheduleModal({
   const toggleSingleCity = (city) => {
     setSelectedCities((prev) => {
       if (prev.includes(city)) {
-        return prev.filter(
-          (item) => item !== city
-        );
+        return prev.filter((item) => item !== city);
       }
 
       return [...prev, city];
@@ -671,9 +747,7 @@ function CourseScheduleModal({
   const toggleBulkCity = (city) => {
     setBulkCities((prev) => {
       if (prev.includes(city)) {
-        return prev.filter(
-          (item) => item !== city
-        );
+        return prev.filter((item) => item !== city);
       }
 
       return [...prev, city];
@@ -681,10 +755,23 @@ function CourseScheduleModal({
   };
 
   // ─────────────────────────────────────────────
+  // PRICING VALUE PICKER
+  // ─────────────────────────────────────────────
+
+  const pickPricingFromValues = (values) => {
+    const pricing = {};
+    for (const key of PRICING_VALUE_KEYS) {
+      pricing[key] = values[key] ?? "";
+    }
+    return pricing;
+  };
+
+  // ─────────────────────────────────────────────
   // SINGLE SESSION FORMIK
   // ─────────────────────────────────────────────
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       date: "",
       sessionType: "General",
@@ -692,77 +779,63 @@ function CourseScheduleModal({
       endTime: "",
       location: "",
       availableSlots: "",
+      ...defaultPricing,
     },
 
     onSubmit: (values) => {
       if (!values.date) {
-        alert(
-          "Please select a date."
-        );
+        alert("Please select a date.");
         return;
       }
 
-      if (
-        selectedCities.length === 0
-      ) {
-        alert(
-          "Please select at least one city."
-        );
+      if (selectedCities.length === 0) {
+        alert("Please select at least one city.");
         return;
       }
 
-      if (
-        !values.availableSlots
-      ) {
-        alert(
-          "Available slots is required."
-        );
+      if (!values.availableSlots) {
+        alert("Available slots is required.");
         return;
       }
+
+      const pricing = pickPricingFromValues(values);
 
       const session = {
-        sessionType:
-          values.sessionType,
+        sessionType: values.sessionType,
 
-        startTime:
-          values.startTime,
+        startTime: values.startTime,
 
-        endTime:
-          values.endTime,
+        endTime: values.endTime,
 
-        location:
-          values.location,
+        location: values.location,
 
-        availableSlots:
-          Number(
-            values.availableSlots
-          ),
+        availableSlots: Number(values.availableSlots),
 
         // DATABASE FIELD
-        preferredCity: [
-          ...selectedCities,
-        ],
+        preferredCity: [...selectedCities],
+
+        // PER-SLOT PRICING (lives on the session, not the date)
+        ...buildSchedulePricingPayload(pricing, { clearEmpty: true }),
       };
 
-      console.log(
-        "New single session:",
-        session
-      );
+      console.log("New single session:", session);
 
-      setLocalSessions((prev) => [
-        ...prev,
-        {
-          date: values.date,
-          session,
+      setLocalSessions((prev) => [...prev, { date: values.date, session, pricing }]);
+
+      formik.resetForm({
+        values: {
+          date: "",
+          sessionType: "General",
+          startTime: "",
+          endTime: "",
+          location: "",
+          availableSlots: "",
+          ...defaultPricing,
         },
-      ]);
-
-      formik.resetForm();
+      });
 
       // Sydney default for next session
-      setSelectedCities([
-        "Sydney",
-      ]);
+      setSelectedCities(["Sydney"]);
     },
   });
 
@@ -771,6 +844,7 @@ function CourseScheduleModal({
   // ─────────────────────────────────────────────
 
   const bulkFormik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       startDate: "",
       endDate: "",
@@ -779,118 +853,86 @@ function CourseScheduleModal({
       endTime: "",
       location: "Face to Face",
       availableSlots: "",
+      ...defaultPricing,
     },
 
     onSubmit: (values) => {
-      if (
-        !values.startDate ||
-        !values.endDate
-      ) {
-        alert(
-          "Please select start and end dates."
-        );
+      if (!values.startDate || !values.endDate) {
+        alert("Please select start and end dates.");
         return;
       }
 
-      if (
-        selectedDays.length === 0
-      ) {
-        alert(
-          "Please select at least one day."
-        );
+      if (selectedDays.length === 0) {
+        alert("Please select at least one day.");
         return;
       }
 
-      if (
-        bulkCities.length === 0
-      ) {
-        alert(
-          "Please select at least one city."
-        );
+      if (bulkCities.length === 0) {
+        alert("Please select at least one city.");
         return;
       }
 
-      if (
-        !values.availableSlots
-      ) {
-        alert(
-          "Available slots is required."
-        );
+      if (!values.availableSlots) {
+        alert("Available slots is required.");
         return;
       }
 
-      const dates =
-        generateDates(
-          values.startDate,
-          values.endDate,
-          selectedDays
-        );
+      const dates = generateDates(
+        values.startDate,
+        values.endDate,
+        selectedDays
+      );
 
       if (dates.length === 0) {
-        alert(
-          "No dates are available for the selected days."
-        );
+        alert("No dates are available for the selected days.");
         return;
       }
 
-      const newSessions =
-        dates.map((date) => ({
-          date,
+      const pricing = pickPricingFromValues(values);
+      const pricingPayload = buildSchedulePricingPayload(pricing, {
+        clearEmpty: true,
+      });
 
-          session: {
-            sessionType:
-              values.sessionType,
+      const newSessions = dates.map((date) => ({
+        date,
 
-            startTime:
-              values.startTime,
+        session: {
+          sessionType: values.sessionType,
 
-            endTime:
-              values.endTime,
+          startTime: values.startTime,
 
-            location:
-              values.location,
+          endTime: values.endTime,
 
-            availableSlots:
-              Number(
-                values.availableSlots
-              ),
+          location: values.location,
 
-            // DATABASE FIELD
-            preferredCity: [
-              ...bulkCities,
-            ],
-          },
-        }));
+          availableSlots: Number(values.availableSlots),
+
+          // DATABASE FIELD
+          preferredCity: [...bulkCities],
+
+          // PER-SLOT PRICING — every generated time slot gets its own amount
+          ...pricingPayload,
+        },
+
+        pricing,
+      }));
 
       setLocalSessions((prev) => {
         const merged = [...prev];
 
         newSessions.forEach((ns) => {
-          const exists = merged.some(
-            (m) => {
-              const oldCities =
-                m.session.preferredCity ||
-                [];
+          const exists = merged.some((m) => {
+            const oldCities = m.session.preferredCity || [];
 
-              const newCities =
-                ns.session.preferredCity ||
-                [];
+            const newCities = ns.session.preferredCity || [];
 
-              return (
-                m.date === ns.date &&
-                m.session.startTime ===
-                  ns.session.startTime &&
-                m.session.endTime ===
-                  ns.session.endTime &&
-                JSON.stringify(
-                  oldCities
-                ) ===
-                  JSON.stringify(
-                    newCities
-                  )
-              );
-            }
-          );
+            return (
+              m.date === ns.date &&
+              m.session.startTime === ns.session.startTime &&
+              m.session.endTime === ns.session.endTime &&
+              JSON.stringify(oldCities) === JSON.stringify(newCities)
+            );
+          });
 
           if (!exists) {
             merged.push(ns);
@@ -900,7 +942,18 @@ function CourseScheduleModal({
         return merged;
       });
 
-      bulkFormik.resetForm();
+      bulkFormik.resetForm({
+        values: {
+          startDate: "",
+          endDate: "",
+          sessionType: "General",
+          startTime: "",
+          endTime: "",
+          location: "Face to Face",
+          availableSlots: "",
+          ...defaultPricing,
+        },
+      });
 
       setSelectedDays([]);
 
@@ -914,140 +967,87 @@ function CourseScheduleModal({
   // ─────────────────────────────────────────────
 
   const saveNewDates = async () => {
-    if (
-      localSessions.length === 0
-    ) {
+    if (localSessions.length === 0) {
       return;
     }
 
     setSaving(true);
 
     try {
-      console.log(
-        "========== SAVING NEW SESSIONS =========="
-      );
+      console.log("========== SAVING NEW SESSIONS ==========");
 
-      console.log(
-        "Local sessions:",
-        localSessions
-      );
+      console.log("Local sessions:", localSessions);
 
       await Promise.all(
-        localSessions.map(
-          ({ date, session }) => {
-            const payload = {
-              course:
-                course._id,
+        localSessions.map(({ date, session }) => {
+          // Pricing already lives on `session` (per time slot), so it's
+          // just sent through as-is — no separate schedule-level patch.
+          const payload = {
+            course: course._id,
 
-              date,
+            date,
 
-              session: {
-                ...session,
+            session: {
+              ...session,
 
-                // DATABASE FIELD
-                preferredCity:
-                  Array.isArray(
-                    session.preferredCity
-                  )
-                    ? [
-                        ...session.preferredCity,
-                      ]
-                    : [],
-              },
-            };
+              // DATABASE FIELD
+              preferredCity: Array.isArray(session.preferredCity)
+                ? [...session.preferredCity]
+                : [],
+            },
+          };
 
-            console.log(
-              "POST /api/schedules/session payload:",
-              payload
-            );
+          console.log(
+            "POST /api/schedules/session payload:",
+            payload
+          );
 
-            return axios.post(
-              `${API_URL}/api/schedules/session`,
-              payload,
-              {
-                headers:
-                  jsonAuthHeaders(),
-              }
-            );
-          }
-        )
+          return axios.post(`${API_URL}/api/schedules/session`, payload, {
+            headers: jsonAuthHeaders(),
+          });
+        })
       );
 
-      console.log(
-        "========================================="
-      );
+      console.log("=========================================");
 
       setLocalSessions([]);
 
       await fetchSchedules();
     } catch (err) {
-      console.error(
-        "Save sessions error:",
-        err
-      );
+      console.error("Save sessions error:", err);
 
-      console.error(
-        "Save sessions response:",
-        err?.response?.data
-      );
+      console.error("Save sessions response:", err?.response?.data);
 
       alert(
-        err?.response?.data
-          ?.message ||
-          "Could not save the sessions."
+        err?.response?.data?.message || "Could not save the sessions."
       );
     } finally {
       setSaving(false);
     }
   };
 
-  const unsavedCount =
-    localSessions.length;
+  const unsavedCount = localSessions.length;
 
   // ─────────────────────────────────────────────
   // FILTER
   // ─────────────────────────────────────────────
 
-  const sessionTypes = [
-    "All",
-    "General",
-    "Theory",
-    "Practical",
-    "Exam",
-  ];
+  const sessionTypes = ["All", "General", "Theory", "Practical", "Exam"];
 
-  const sessionMatchesFilter =
-    (session) =>
-      filterType === "All" ||
-      session.sessionType ===
-        filterType;
+  const sessionMatchesFilter = (session) =>
+    filterType === "All" || session.sessionType === filterType;
 
-  const allDates =
-    Array.from(
-      new Set([
-        ...schedules
-          .filter((s) =>
-            (
-              s.sessions || []
-            ).some(
-              sessionMatchesFilter
-            )
-          )
-          .map((s) =>
-            toYMD(s.date)
-          ),
+  const allDates = Array.from(
+    new Set([
+      ...schedules
+        .filter((s) => (s.sessions || []).some(sessionMatchesFilter))
+        .map((s) => toYMD(s.date)),
 
-        ...localSessions
-          .filter((l) =>
-            sessionMatchesFilter(
-              l.session
-            )
-          )
-          .map(
-            (l) => l.date
-          ),
-      ])
-    ).sort();
+      ...localSessions
+        .filter((l) => sessionMatchesFilter(l.session))
+        .map((l) => l.date),
+    ])
+  ).sort();
 
   // ─────────────────────────────────────────────
   // RENDER
@@ -1055,20 +1055,15 @@ function CourseScheduleModal({
 
   return (
     <div className="csm-overlay">
-
       {/* EDIT SESSION MODAL */}
 
       {editTarget && (
         <EditSessionModal
-          session={
-            editTarget.session
-          }
-          scheduleDate={
-            editTarget.scheduleDate
-          }
-          onClose={() =>
-            setEditTarget(null)
-          }
+          session={editTarget.session}
+          scheduleDate={editTarget.scheduleDate}
+          schedule={editTarget.schedule}
+          course={course}
+          onClose={() => setEditTarget(null)}
           onSaved={() => {
             setEditTarget(null);
             fetchSchedules();
@@ -1077,74 +1072,48 @@ function CourseScheduleModal({
       )}
 
       <div className="csm-container">
-
         {/* HEADER */}
 
         <div className="csm-header">
-
           <div className="csm-header-icon"></div>
 
           <div className="csm-header-text">
+            <h2 className="csm-title">Manage Course Dates</h2>
 
-            <h2 className="csm-title">
-              Manage Course Dates
-            </h2>
-
-            <p className="csm-subtitle">
-              {course?.title}
-            </p>
-
+            <p className="csm-subtitle">{course?.title}</p>
           </div>
 
-          <button
-            type="button"
-            className="csm-close-btn"
-            onClick={close}
-          >
+          <button type="button" className="csm-close-btn" onClick={close}>
             ✕
           </button>
-
         </div>
 
         {/* ADD FORM */}
 
         <div className="csm-form-card">
-
           <div className="csm-add-header">
-
-            <span className="csm-add-title">
-              + Add New Date
-            </span>
+            <span className="csm-add-title">+ Add New Date</span>
 
             <label className="csm-bulk-toggle">
-
               <input
                 type="checkbox"
                 checked={bulkMode}
                 onChange={(e) => {
-                  setBulkMode(
-                    e.target.checked
-                  );
+                  setBulkMode(e.target.checked);
 
                   setSelectedDays([]);
 
                   // Add mode always starts with Sydney
-                  setSelectedCities([
-                    "Sydney",
-                  ]);
+                  setSelectedCities(["Sydney"]);
 
-                  setBulkCities([
-                    "Sydney",
-                  ]);
+                  setBulkCities(["Sydney"]);
                 }}
               />
 
               <span className="csm-bulk-check"></span>
 
               Bulk Upload
-
             </label>
-
           </div>
 
           {/* =====================================================
@@ -1152,240 +1121,132 @@ function CourseScheduleModal({
           ===================================================== */}
 
           {!bulkMode && (
-            <form
-              onSubmit={
-                formik.handleSubmit
-              }
-            >
-
+            <form onSubmit={formik.handleSubmit}>
               <div className="csm-grid">
-
                 {/* DATE */}
 
                 <div className="csm-field">
-
-                  <label>
-                    Date *
-                  </label>
+                  <label>Date *</label>
 
                   <input
                     type="date"
                     name="date"
                     min={todayYMD}
-                    value={
-                      formik.values
-                        .date
-                    }
-                    onChange={
-                      formik.handleChange
-                    }
+                    value={formik.values.date}
+                    onChange={formik.handleChange}
                   />
-
                 </div>
 
                 {/* SESSION TYPE */}
 
                 <div className="csm-field">
-
-                  <label>
-                    Session Type
-                  </label>
+                  <label>Session Type</label>
 
                   <select
                     name="sessionType"
-                    value={
-                      formik.values
-                        .sessionType
-                    }
-                    onChange={
-                      formik.handleChange
-                    }
+                    value={formik.values.sessionType}
+                    onChange={formik.handleChange}
                   >
+                    <option>General</option>
 
-                    <option>
-                      General
-                    </option>
+                    <option>Theory</option>
 
-                    <option>
-                      Theory
-                    </option>
+                    <option>Practical</option>
 
-                    <option>
-                      Practical
-                    </option>
-
-                    <option>
-                      Exam
-                    </option>
-
+                    <option>Exam</option>
                   </select>
-
                 </div>
 
                 {/* START TIME */}
 
                 <div className="csm-field">
-
-                  <label>
-                    Start Time
-                  </label>
+                  <label>Start Time</label>
 
                   <input
                     type="time"
                     name="startTime"
-                    value={
-                      formik.values
-                        .startTime
-                    }
-                    onChange={
-                      formik.handleChange
-                    }
+                    value={formik.values.startTime}
+                    onChange={formik.handleChange}
                   />
-
                 </div>
 
                 {/* END TIME */}
 
                 <div className="csm-field">
-
-                  <label>
-                    End Time
-                  </label>
+                  <label>End Time</label>
 
                   <input
                     type="time"
                     name="endTime"
-                    min={
-                      formik.values
-                        .startTime ||
-                      undefined
-                    }
-                    value={
-                      formik.values
-                        .endTime
-                    }
-                    onChange={
-                      formik.handleChange
-                    }
+                    min={formik.values.startTime || undefined}
+                    value={formik.values.endTime}
+                    onChange={formik.handleChange}
                   />
-
                 </div>
 
                 {/* LOCATION */}
 
                 <div className="csm-field">
-
-                  <label>
-                    Location (Optional)
-                  </label>
+                  <label>Location (Optional)</label>
 
                   <select
                     name="location"
-                    value={
-                      formik.values
-                        .location
-                    }
-                    onChange={
-                      formik.handleChange
-                    }
+                    value={formik.values.location}
+                    onChange={formik.handleChange}
                   >
+                    <option value="">Select</option>
 
-                    <option value="">
-                      Select
-                    </option>
+                    <option>Online</option>
 
-                    <option>
-                      Online
-                    </option>
-
-                    <option>
-                      Face to Face
-                    </option>
-
+                    <option>Face to Face</option>
                   </select>
-
                 </div>
 
                 {/* ACTIVE SLOTS */}
 
                 <div className="csm-field">
-
-                  <label>
-                    Active Slots *
-                  </label>
+                  <label>Active Slots *</label>
 
                   <input
                     type="number"
                     min="1"
                     name="availableSlots"
                     placeholder="e.g., 20"
-                    value={
-                      formik.values
-                        .availableSlots
-                    }
-                    onChange={
-                      formik.handleChange
-                    }
+                    value={formik.values.availableSlots}
+                    onChange={formik.handleChange}
                   />
-
                 </div>
 
                 {/* CITY */}
 
                 <div className="csm-field csm-field-full">
-
-                  <label>
-                    Preferred City *
-                  </label>
+                  <label>Preferred City *</label>
 
                   <div className="csm-city-checkboxes">
+                    {CITIES.map((city) => (
+                      <label key={city} className="csm-city-checkbox">
+                        <input
+                          type="checkbox"
+                          value={city}
+                          checked={selectedCities.includes(city)}
+                          onChange={() => toggleSingleCity(city)}
+                        />
 
-                    {CITIES.map(
-                      (city) => (
-                        <label
-                          key={city}
-                          className="csm-city-checkbox"
-                        >
-
-                          <input
-                            type="checkbox"
-                            value={city}
-                            checked={selectedCities.includes(
-                              city
-                            )}
-                            onChange={() =>
-                              toggleSingleCity(
-                                city
-                              )
-                            }
-                          />
-
-                          <span>
-                            {city}
-                          </span>
-
-                        </label>
-                      )
-                    )}
-
+                        <span>{city}</span>
+                      </label>
+                    ))}
                   </div>
 
                   <span className="csm-hint">
-                    Sydney is selected by
-                    default. You can select
-                    multiple cities.
+                    Sydney is selected by default. You can select multiple
+                    cities.
                   </span>
-
                 </div>
 
                 {/* TEACHER */}
 
                 <div className="csm-field csm-field-full">
-
-                  <label>
-                    🎓 Assign Teacher
-                    (Optional)
-                  </label>
+                  <label>🎓 Assign Teacher (Optional)</label>
 
                   <input
                     type="text"
@@ -1393,22 +1254,20 @@ function CourseScheduleModal({
                   />
 
                   <span className="csm-hint">
-                    Search and select a
-                    teacher to conduct this
-                    session
+                    Search and select a teacher to conduct this session
                   </span>
-
                 </div>
-
               </div>
 
-              <button
-                type="submit"
-                className="csm-add-date-btn"
-              >
+              <PricingFields
+                values={formik.values}
+                onChange={formik.handleChange}
+                pricingType={pricingType}
+              />
+
+              <button type="submit" className="csm-add-date-btn">
                 + Add Date
               </button>
-
             </form>
           )}
 
@@ -1417,350 +1276,190 @@ function CourseScheduleModal({
           ===================================================== */}
 
           {bulkMode && (
-            <form
-              onSubmit={
-                bulkFormik.handleSubmit
-              }
-            >
-
+            <form onSubmit={bulkFormik.handleSubmit}>
               {/* START / END DATE */}
 
               <div className="csm-grid">
-
                 <div className="csm-field">
-
-                  <label>
-                    Start Date *
-                  </label>
+                  <label>Start Date *</label>
 
                   <input
                     type="date"
                     name="startDate"
                     min={todayYMD}
-                    value={
-                      bulkFormik.values
-                        .startDate
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    value={bulkFormik.values.startDate}
+                    onChange={bulkFormik.handleChange}
                   />
-
                 </div>
 
                 <div className="csm-field">
-
-                  <label>
-                    End Date *
-                  </label>
+                  <label>End Date *</label>
 
                   <input
                     type="date"
                     name="endDate"
-                    min={
-                      bulkFormik.values
-                        .startDate ||
-                      todayYMD
-                    }
-                    value={
-                      bulkFormik.values
-                        .endDate
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    min={bulkFormik.values.startDate || todayYMD}
+                    value={bulkFormik.values.endDate}
+                    onChange={bulkFormik.handleChange}
                   />
-
                 </div>
-
               </div>
 
               {/* DAYS */}
 
               <div className="csm-day-picker-wrap">
-
-                <label>
-                  Select Days of the Week *
-                </label>
+                <label>Select Days of the Week *</label>
 
                 <div className="csm-day-picker">
+                  {DAYS.map((day, idx) => {
+                    const rangeActive =
+                      bulkFormik.values.startDate &&
+                      bulkFormik.values.endDate;
 
-                  {DAYS.map(
-                    (day, idx) => {
+                    const datesForThisDay = rangeActive
+                      ? generateDates(
+                          bulkFormik.values.startDate,
+                          bulkFormik.values.endDate,
+                          [idx]
+                        )
+                      : [1];
 
-                      const rangeActive =
-                        bulkFormik.values
-                          .startDate &&
-                        bulkFormik.values
-                          .endDate;
+                    const disabled =
+                      rangeActive && datesForThisDay.length === 0;
 
-                      const datesForThisDay =
-                        rangeActive
-                          ? generateDates(
-                              bulkFormik
-                                .values
-                                .startDate,
-                              bulkFormik
-                                .values
-                                .endDate,
-                              [idx]
-                            )
-                          : [1];
-
-                      const disabled =
-                        rangeActive &&
-                        datesForThisDay.length ===
-                          0;
-
-                      return (
-                        <button
-                          key={day}
-                          type="button"
-                          disabled={
-                            disabled
-                          }
-                          className={`csm-day-btn ${
-                            selectedDays.includes(
-                              idx
-                            )
-                              ? "active"
-                              : ""
-                          } ${
-                            disabled
-                              ? "blurred"
-                              : ""
-                          }`}
-                          onClick={() =>
-                            setSelectedDays(
-                              (prev) =>
-                                prev.includes(
-                                  idx
-                                )
-                                  ? prev.filter(
-                                      (d) =>
-                                        d !==
-                                        idx
-                                    )
-                                  : [
-                                      ...prev,
-                                      idx,
-                                    ]
-                            )
-                          }
-                        >
-                          {day}
-                        </button>
-                      );
-                    }
-                  )}
-
+                    return (
+                      <button
+                        key={day}
+                        type="button"
+                        disabled={disabled}
+                        className={`csm-day-btn ${
+                          selectedDays.includes(idx) ? "active" : ""
+                        } ${disabled ? "blurred" : ""}`}
+                        onClick={() =>
+                          setSelectedDays((prev) =>
+                            prev.includes(idx)
+                              ? prev.filter((d) => d !== idx)
+                              : [...prev, idx]
+                          )
+                        }
+                      >
+                        {day}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 <span className="csm-hint">
-                  Select the days on which
-                  sessions should be scheduled
+                  Select the days on which sessions should be scheduled
                 </span>
-
               </div>
 
               {/* SESSION TYPE */}
 
               <div className="csm-grid">
-
                 <div className="csm-field">
-
-                  <label>
-                    Session Type *
-                  </label>
+                  <label>Session Type *</label>
 
                   <select
                     name="sessionType"
-                    value={
-                      bulkFormik.values
-                        .sessionType
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    value={bulkFormik.values.sessionType}
+                    onChange={bulkFormik.handleChange}
                   >
+                    <option>General</option>
 
-                    <option>
-                      General
-                    </option>
+                    <option>Theory</option>
 
-                    <option>
-                      Theory
-                    </option>
+                    <option>Practical</option>
 
-                    <option>
-                      Practical
-                    </option>
-
-                    <option>
-                      Exam
-                    </option>
-
+                    <option>Exam</option>
                   </select>
-
                 </div>
-
               </div>
 
               {/* TIME / LOCATION / SLOTS */}
 
               <div className="csm-grid">
-
                 <div className="csm-field">
-
-                  <label>
-                    Start Time
-                  </label>
+                  <label>Start Time</label>
 
                   <input
                     type="time"
                     name="startTime"
-                    value={
-                      bulkFormik.values
-                        .startTime
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    value={bulkFormik.values.startTime}
+                    onChange={bulkFormik.handleChange}
                   />
-
                 </div>
 
                 <div className="csm-field">
-
-                  <label>
-                    End Time
-                  </label>
+                  <label>End Time</label>
 
                   <input
                     type="time"
                     name="endTime"
-                    value={
-                      bulkFormik.values
-                        .endTime
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    value={bulkFormik.values.endTime}
+                    onChange={bulkFormik.handleChange}
                   />
-
                 </div>
 
                 <div className="csm-field">
-
-                  <label>
-                    Location (Optional)
-                  </label>
+                  <label>Location (Optional)</label>
 
                   <select
                     name="location"
-                    value={
-                      bulkFormik.values
-                        .location
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    value={bulkFormik.values.location}
+                    onChange={bulkFormik.handleChange}
                   >
+                    <option value="">Select</option>
 
-                    <option value="">
-                      Select
-                    </option>
+                    <option>Online</option>
 
-                    <option>
-                      Online
-                    </option>
-
-                    <option>
-                      Face to Face
-                    </option>
-
+                    <option>Face to Face</option>
                   </select>
-
                 </div>
 
                 <div className="csm-field">
-
-                  <label>
-                    Active Slots *
-                  </label>
+                  <label>Active Slots *</label>
 
                   <input
                     type="number"
                     min="1"
                     name="availableSlots"
                     placeholder="e.g., 20"
-                    value={
-                      bulkFormik.values
-                        .availableSlots
-                    }
-                    onChange={
-                      bulkFormik.handleChange
-                    }
+                    value={bulkFormik.values.availableSlots}
+                    onChange={bulkFormik.handleChange}
                   />
-
                 </div>
 
                 {/* CITY */}
 
                 <div className="csm-field csm-field-full">
-
-                  <label>
-                    Preferred City *
-                  </label>
+                  <label>Preferred City *</label>
 
                   <div className="csm-city-checkboxes">
+                    {CITIES.map((city) => (
+                      <label key={city} className="csm-city-checkbox">
+                        <input
+                          type="checkbox"
+                          value={city}
+                          checked={bulkCities.includes(city)}
+                          onChange={() => toggleBulkCity(city)}
+                        />
 
-                    {CITIES.map(
-                      (city) => (
-                        <label
-                          key={city}
-                          className="csm-city-checkbox"
-                        >
-
-                          <input
-                            type="checkbox"
-                            value={city}
-                            checked={bulkCities.includes(
-                              city
-                            )}
-                            onChange={() =>
-                              toggleBulkCity(
-                                city
-                              )
-                            }
-                          />
-
-                          <span>
-                            {city}
-                          </span>
-
-                        </label>
-                      )
-                    )}
-
+                        <span>{city}</span>
+                      </label>
+                    ))}
                   </div>
 
                   <span className="csm-hint">
-                    Sydney is selected by
-                    default. You can select
-                    multiple cities.
+                    Sydney is selected by default. You can select multiple
+                    cities.
                   </span>
-
                 </div>
 
                 {/* TEACHER */}
 
                 <div className="csm-field csm-field-full">
-
-                  <label>
-                    🎓 Assign Teacher
-                    (Optional)
-                  </label>
+                  <label>🎓 Assign Teacher (Optional)</label>
 
                   <input
                     type="text"
@@ -1768,25 +1467,22 @@ function CourseScheduleModal({
                   />
 
                   <span className="csm-hint">
-                    Search and select a
-                    teacher to conduct this
-                    session
+                    Search and select a teacher to conduct this session
                   </span>
-
                 </div>
-
               </div>
 
-              <button
-                type="submit"
-                className="csm-add-date-btn"
-              >
+              <PricingFields
+                values={bulkFormik.values}
+                onChange={bulkFormik.handleChange}
+                pricingType={pricingType}
+              />
+
+              <button type="submit" className="csm-add-date-btn">
                 + Add Bulk Dates
               </button>
-
             </form>
           )}
-
         </div>
 
         {/* =====================================================
@@ -1794,427 +1490,269 @@ function CourseScheduleModal({
         ===================================================== */}
 
         <div className="csm-schedule-section">
-
           <div className="csm-section-top">
-
             <h3 className="csm-section-title">
-
               Scheduled Dates (
               {schedules.length +
                 (localSessions.length > 0
                   ? ` +${localSessions.length} unsaved`
                   : "")}
               )
-
             </h3>
 
             <div className="csm-filter-row">
-
               <div className="csm-filter-tabs">
+                {sessionTypes.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className={`csm-filter-tab ${
+                      filterType === t ? "active" : ""
+                    } ${t === "Exam" ? "exam" : ""}`}
+                    onClick={() => setFilterType(t)}
+                  >
+                    {t === "Exam" && <span className="csm-dot green"></span>}
 
-                {sessionTypes.map(
-                  (t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      className={`csm-filter-tab ${
-                        filterType === t
-                          ? "active"
-                          : ""
-                      } ${
-                        t === "Exam"
-                          ? "exam"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        setFilterType(t)
-                      }
-                    >
-
-                      {t === "Exam" && (
-                        <span className="csm-dot green"></span>
-                      )}
-
-                      {t}
-
-                    </button>
-                  )
-                )}
-
+                    {t}
+                  </button>
+                ))}
               </div>
-
             </div>
-
           </div>
 
           {allDates.length === 0 && (
-            <div className="csm-no-session">
-              No session available
-            </div>
+            <div className="csm-no-session">No session available</div>
           )}
 
-          {allDates.map(
-            (dateStr) => {
+          {allDates.map((dateStr) => {
+            const backendSchedule = schedules.find(
+              (s) => toYMD(s.date) === dateStr
+            );
 
-              const backendSchedule =
-                schedules.find(
-                  (s) =>
-                    toYMD(s.date) ===
-                    dateStr
-                );
+            const localForDate = localSessions
+              .map((l, idx) => ({
+                ...l,
+                _localIdx: idx,
+              }))
+              .filter((l) => l.date === dateStr);
 
-              const localForDate =
-                localSessions
-                  .map(
-                    (l, idx) => ({
-                      ...l,
-                      _localIdx: idx,
-                    })
+            const backendSessions = (
+              backendSchedule?.sessions || []
+            ).filter(sessionMatchesFilter);
+
+            const localSessionsFiltered = localForDate.filter((l) =>
+              sessionMatchesFilter(l.session)
+            );
+
+            if (
+              backendSessions.length === 0 &&
+              localSessionsFiltered.length === 0
+            ) {
+              return null;
+            }
+
+            const totalSessions =
+              backendSessions.length + localSessionsFiltered.length;
+
+            return (
+              <div key={dateStr} className="csm-date-block">
+                {/* DATE HEADER */}
+
+                <div className="csm-date-header">
+                  <span>
+                    <span className="csm-cal-icon"></span>
+
+                    {formatDate(dateStr)}
+                  </span>
+
+                  <span className="csm-session-count">
+                    {totalSessions} session available
+                  </span>
+
+                  <button type="button" className="csm-add-slot-btn">
+                    + Add slot
+                  </button>
+                </div>
+
+                {/* BACKEND SESSIONS */}
+
+                {backendSessions.map((session) => {
+                  // IMPORTANT:
+                  // Read preferredCity from database
+                  const preferredCities = Array.isArray(
+                    session.preferredCity
                   )
-                  .filter(
-                    (l) =>
-                      l.date ===
-                      dateStr
-                  );
+                    ? session.preferredCity
+                    : [];
 
-              const backendSessions =
-                (
-                  backendSchedule
-                    ?.sessions || []
-                ).filter(
-                  sessionMatchesFilter
-                );
-
-              const localSessionsFiltered =
-                localForDate.filter(
-                  (l) =>
-                    sessionMatchesFilter(
-                      l.session
-                    )
-                );
-
-              if (
-                backendSessions.length ===
-                  0 &&
-                localSessionsFiltered.length ===
-                  0
-              ) {
-                return null;
-              }
-
-              const totalSessions =
-                backendSessions.length +
-                localSessionsFiltered.length;
-
-              return (
-                <div
-                  key={dateStr}
-                  className="csm-date-block"
-                >
-
-                  {/* DATE HEADER */}
-
-                  <div className="csm-date-header">
-
-                    <span>
-
-                      <span className="csm-cal-icon"></span>
-
-                      {formatDate(
-                        dateStr
-                      )}
-
-                    </span>
-
-                    <span className="csm-session-count">
-                      {totalSessions}{" "}
-                      session available
-                    </span>
-
-                    <button
-                      type="button"
-                      className="csm-add-slot-btn"
+                  return (
+                    <div
+                      key={session._id}
+                      className={`csm-session-card ${
+                        session.status === "Inactive"
+                          ? "csm-session-inactive"
+                          : ""
+                      }`}
                     >
-                      + Add slot
-                    </button>
+                      <div className="csm-session-left">
+                        <span className="csm-tag">
+                          {session.sessionType}
+                        </span>
 
-                  </div>
+                        <span className="csm-time">
+                          ⏱ {session.startTime} - {session.endTime}
+                        </span>
 
-                  {/* BACKEND SESSIONS */}
+                        {/* PREFERRED CITY */}
 
-                  {backendSessions.map(
-                    (session) => {
+                        {preferredCities.length > 0 && (
+                          <span className="csm-session-cities">
+                            📍 {preferredCities.join(", ")}
+                          </span>
+                        )}
 
-                      // IMPORTANT:
-                      // Read preferredCity from database
-                      const preferredCities =
-                        Array.isArray(
-                          session.preferredCity
-                        )
-                          ? session.preferredCity
-                          : [];
+                        {/* PER-SLOT PRICE */}
+                        <SessionPriceSummary
+                          course={course}
+                          pricing={sessionPricingFromDoc(session, course)}
+                        />
+                      </div>
 
-                      return (
-                        <div
-                          key={session._id}
-                          className={`csm-session-card ${
-                            session.status ===
-                            "Inactive"
-                              ? "csm-session-inactive"
-                              : ""
+                      <div className="csm-avl-slot">
+                        {session.availableSlots}
+
+                        <br />
+
+                        <span>Active slots</span>
+                      </div>
+
+                      <div className="csm-session-right">
+                        <button
+                          type="button"
+                          className="csm-edit-btn"
+                          onClick={() =>
+                            setEditTarget({
+                              session,
+                              scheduleDate: dateStr,
+                              schedule: backendSchedule,
+                            })
+                          }
+                        >
+                          Edit
+                        </button>
+
+                        <label
+                          className={`csm-status-switch ${
+                            session.status === "Active" ? "is-on" : ""
+                          } ${
+                            togglingId === session._id ? "is-loading" : ""
                           }`}
                         >
+                          <input
+                            type="checkbox"
+                            checked={session.status === "Active"}
+                            onChange={() => toggleSession(session._id)}
+                            disabled={togglingId === session._id}
+                          />
 
-                          <div className="csm-session-left">
+                          <span className="csm-status-slider" />
 
-                            <span className="csm-tag">
-                              {
-                                session.sessionType
-                              }
-                            </span>
+                          <span className="csm-status-label">
+                            {session.status === "Active"
+                              ? "Active"
+                              : "Deactivate"}
+                          </span>
+                        </label>
 
-                            <span className="csm-time">
-                              ⏱{" "}
-                              {
-                                session.startTime
-                              }{" "}
-                              -{" "}
-                              {
-                                session.endTime
-                              }
-                            </span>
-
-                            {/* PREFERRED CITY */}
-
-                            {preferredCities.length >
-                              0 && (
-                              <span className="csm-session-cities">
-                                📍{" "}
-                                {
-                                  preferredCities.join(
-                                    ", "
-                                  )
-                                }
-                              </span>
-                            )}
-
-                          </div>
-
-                          <div className="csm-avl-slot">
-
-                            {
-                              session.availableSlots
-                            }
-
-                            <br />
-
-                            <span>
-                              Active slots
-                            </span>
-
-                          </div>
-
-                          <div className="csm-session-right">
-
-                            <button
-                              type="button"
-                              className="csm-edit-btn"
-                              onClick={() =>
-                                setEditTarget({
-                                  session,
-                                  scheduleDate:
-                                    dateStr,
-                                })
-                              }
-                            >
-                              Edit
-                            </button>
-
-                            <label
-                              className={`csm-status-switch ${
-                                session.status ===
-                                "Active"
-                                  ? "is-on"
-                                  : ""
-                              } ${
-                                togglingId ===
-                                session._id
-                                  ? "is-loading"
-                                  : ""
-                              }`}
-                            >
-
-                              <input
-                                type="checkbox"
-                                checked={
-                                  session.status ===
-                                  "Active"
-                                }
-                                onChange={() =>
-                                  toggleSession(
-                                    session._id
-                                  )
-                                }
-                                disabled={
-                                  togglingId ===
-                                  session._id
-                                }
-                              />
-
-                              <span className="csm-status-slider" />
-
-                              <span className="csm-status-label">
-
-                                {session.status ===
-                                "Active"
-                                  ? "Active"
-                                  : "Deactivate"}
-
-                              </span>
-
-                            </label>
-
-                            <button
-                              type="button"
-                              className="csm-delete"
-                              onClick={() =>
-                                deleteSession(
-                                  session._id
-                                )
-                              }
-                            >
-                              🗑
-                            </button>
-
-                          </div>
-
-                        </div>
-                      );
-                    }
-                  )}
-
-                  {/* UNSAVED LOCAL SESSIONS */}
-
-                  {localSessionsFiltered.map(
-                    (l) => {
-
-                      const preferredCities =
-                        Array.isArray(
-                          l.session
-                            .preferredCity
-                        )
-                          ? l.session
-                              .preferredCity
-                          : [];
-
-                      return (
-                        <div
-                          key={l._localIdx}
-                          className="csm-session-card csm-session-unsaved"
+                        <button
+                          type="button"
+                          className="csm-delete"
+                          onClick={() => deleteSession(session._id)}
                         >
+                          🗑
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
 
-                          <div className="csm-session-left">
+                {/* UNSAVED LOCAL SESSIONS */}
 
-                            <span className="csm-tag">
-                              {
-                                l.session
-                                  .sessionType
-                              }
-                            </span>
+                {localSessionsFiltered.map((l) => {
+                  const preferredCities = Array.isArray(
+                    l.session.preferredCity
+                  )
+                    ? l.session.preferredCity
+                    : [];
 
-                            <span className="csm-time">
-                              ⏱{" "}
-                              {
-                                l.session
-                                  .startTime
-                              }{" "}
-                              -{" "}
-                              {
-                                l.session
-                                  .endTime
-                              }
-                            </span>
+                  return (
+                    <div
+                      key={l._localIdx}
+                      className="csm-session-card csm-session-unsaved"
+                    >
+                      <div className="csm-session-left">
+                        <span className="csm-tag">
+                          {l.session.sessionType}
+                        </span>
 
-                            {/* PREFERRED CITY */}
+                        <span className="csm-time">
+                          ⏱ {l.session.startTime} - {l.session.endTime}
+                        </span>
 
-                            {preferredCities.length >
-                              0 && (
-                              <span className="csm-session-cities">
-                                📍{" "}
-                                {
-                                  preferredCities.join(
-                                    ", "
-                                  )
-                                }
-                              </span>
-                            )}
+                        {/* PREFERRED CITY */}
 
-                          </div>
+                        {preferredCities.length > 0 && (
+                          <span className="csm-session-cities">
+                            📍 {preferredCities.join(", ")}
+                          </span>
+                        )}
 
-                          <div className="csm-avl-slot csm-unsaved-badge">
-                            Unsaved
-                          </div>
+                        {/* PER-SLOT PRICE */}
+                        <SessionPriceSummary
+                          course={course}
+                          pricing={l.pricing}
+                        />
+                      </div>
 
-                          <div className="csm-session-right">
+                      <div className="csm-avl-slot csm-unsaved-badge">
+                        Unsaved
+                      </div>
 
-                            <button
-                              type="button"
-                              className="csm-delete"
-                              onClick={() =>
-                                deleteLocalSession(
-                                  l._localIdx
-                                )
-                              }
-                            >
-                              🗑
-                            </button>
-
-                          </div>
-
-                        </div>
-                      );
-                    }
-                  )}
-
-                </div>
-              );
-            }
-          )}
-
+                      <div className="csm-session-right">
+                        <button
+                          type="button"
+                          className="csm-delete"
+                          onClick={() => deleteLocalSession(l._localIdx)}
+                        >
+                          🗑
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
 
         {/* FOOTER */}
 
         <div className="csm-footer">
-
           <button
             type="button"
             className={`csm-save-dates-btn ${
-              unsavedCount > 0
-                ? "active"
-                : ""
+              unsavedCount > 0 ? "active" : ""
             }`}
             onClick={saveNewDates}
-            disabled={
-              unsavedCount === 0 ||
-              saving
-            }
+            disabled={unsavedCount === 0 || saving}
           >
-            {saving
-              ? "Saving..."
-              : `Save New Dates (${unsavedCount})`}
+            {saving ? "Saving..." : `Save New Dates (${unsavedCount})`}
           </button>
 
-          <button
-            type="button"
-            className="csm-cancel-btn"
-            onClick={close}
-          >
+          <button type="button" className="csm-cancel-btn" onClick={close}>
             Close
           </button>
-
         </div>
-
       </div>
     </div>
   );

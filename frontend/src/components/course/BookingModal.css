@@ -52,6 +52,194 @@
   display:flex; align-items:center; justify-content:center;
   z-index:1000; padding:20px; backdrop-filter:blur(2px);
 } */
+ /* Schedule View Clean Styling */
+.cc-modal-schedule-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cc-schedule-selected-pill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 18px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.cc-ssp-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #0f172a;
+}
+
+.cc-ssp-price {
+    font-weight: 700;
+    font-size: 18px;
+    color: #00a8e8;
+}
+
+.cc-schedule-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 10px;
+}
+
+.cc-date-cards-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.cc-date-card {
+    flex: 0 0 72px;
+    height: 80px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cc-date-card:hover {
+    border-color: #94a3b8;
+}
+
+.cc-date-card--active {
+    border-color: #00a8e8;
+    background: #f0f9ff;
+    box-shadow: 0 0 0 1px #00a8e8;
+}
+
+.cc-dc-day {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.cc-date-card--active .cc-dc-day {
+    color: #00a8e8;
+}
+
+.cc-dc-num {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.cc-dc-month {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.cc-date-slider-indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.cc-dsi-bar {
+    width: 40px;
+    height: 4px;
+    background: #cbd5e1;
+    border-radius: 2px;
+}
+
+.cc-timeslots-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cc-timeslot-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cc-timeslot-box:hover {
+    border-color: #94a3b8;
+}
+
+.cc-timeslot-box--active {
+    border-color: #00a8e8;
+    background: #f0f9ff;
+    box-shadow: 0 0 0 1px #00a8e8;
+}
+
+.cc-tb-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cc-tb-clock {
+    color: #00a8e8;
+    font-size: 16px;
+}
+
+.cc-tb-time {
+    font-weight: 600;
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.cc-tb-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+}
+
+.cc-tb-price {
+    font-weight: 700;
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.cc-tb-strike {
+    font-size: 13px;
+    text-decoration: line-through;
+    color: #94a3b8;
+}
+
+.cc-tb-seats {
+    font-size: 13px;
+    font-weight: 500;
+    color: #10b981;
+}
+
+/* .cc-modal-back-btn {
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: #00a8e8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    font-size: 14px;
+} */
 
 .cc-modal-overlay {
   position:fixed; inset:0; background:rgba(13,34,64,0.6);

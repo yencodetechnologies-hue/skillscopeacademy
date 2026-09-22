@@ -23,6 +23,66 @@ export function getCoursePricingType(course) {
   return "standard"
 }
 
+// utils/coursePrice.js
+
+export const SCHEDULE_PRICING_FIELDS = [
+  "promotionalText",
+  "originalPrice",
+  "sellingPrice",
+  "withExperiencePrice",
+  "withExperienceOriginal",
+  "withoutExperiencePrice",
+  "withoutExperienceOriginal",
+  "slSingleStrikePrice",
+  "slSinglePrice",
+  "slblStrikePrice",
+  "slblPrice",
+];
+
+export function buildSchedulePricingPayload(pricing, options = {}) {
+  const payload = {};
+  SCHEDULE_PRICING_FIELDS.forEach((key) => {
+    const val = pricing[key];
+    if (options.clearEmpty && (val === "" || val == null)) {
+      return;
+    }
+    if (val !== undefined) {
+      payload[key] = val;
+    }
+  });
+  return payload;
+}
+export function getDefaultSchedulePricingValues(course) {
+  const empty = {
+    promotionalText: "",
+    originalPrice: "",
+    sellingPrice: "",
+    withExperiencePrice: "",
+    withExperienceOriginal: "",
+    withoutExperiencePrice: "",
+    withoutExperienceOriginal: "",
+    slSingleStrikePrice: "",
+    slSinglePrice: "",
+    slblStrikePrice: "",
+    slblPrice: "",
+  }
+  if (!course) return empty
+  const num = (v) => (v != null && v !== "" ? String(v) : "")
+  return {
+    promotionalText: "",
+    originalPrice: num(course.originalPrice),
+    sellingPrice: num(course.sellingPrice),
+    withExperiencePrice: num(course.withExperiencePrice),
+    withExperienceOriginal: num(course.withExperienceOriginal),
+    withoutExperiencePrice: num(course.withoutExperiencePrice),
+    withoutExperienceOriginal: num(course.withoutExperienceOriginal),
+    slSingleStrikePrice: num(course.slSingleStrikePrice),
+    slSinglePrice: num(course.slSinglePrice),
+    slblStrikePrice: num(course.slblStrikePrice),
+    slblPrice: num(course.slblPrice),
+  }
+}
+
 // Display label for listings/cards/hero. Returns a string.
 export function getCoursePriceDisplay(course) {
   if (!course) return "Enquire"
@@ -93,61 +153,45 @@ export function getCourseSavingDisplay(course) {
 //   label:    user-facing string
 //   price:    numeric price for this variant (0 if not configured)
 //   original: optional strike-through price (or null)
-export function getCourseVariants(course) {
-  if (!course) return []
-  const pt = getCoursePricingType(course)
+// Inside ../utils/coursePrice.js
 
-  if (pt === "experience") {
+export function getCourseVariants(course, pricing = {}) {
+  const pricingType = getCoursePricingType(course);
+
+  if (pricingType === "experience") {
     return [
       {
-        key: "with-experience",
+        key: "withExperience",
         label: "With Experience",
-        price: Number(course.withExperiencePrice || 0),
-        original: course.withExperienceOriginal
-          ? Number(course.withExperienceOriginal)
-          : null,
+        // Check pricing override first, then fallback to course default
+        original: pricing.withExperienceOriginal || course.withExperienceOriginal,
+        price: pricing.withExperiencePrice || course.withExperiencePrice,
       },
       {
-        key: "without-experience",
+        key: "withoutExperience",
         label: "Without Experience",
-        price: Number(course.withoutExperiencePrice || 0),
-        original: course.withoutExperienceOriginal
-          ? Number(course.withoutExperienceOriginal)
-          : null,
+        original: pricing.withoutExperienceOriginal || course.withoutExperienceOriginal,
+        price: pricing.withoutExperiencePrice || course.withoutExperiencePrice,
       },
-    ]
+    ];
   }
 
-  if (pt === "slbl") {
+  if (pricingType === "slbl") {
     return [
       {
-        key: "sl",
-        label: "Single License",
-        price: Number(course.slSinglePrice || 0),
-        original: course.slSingleStrikePrice
-          ? Number(course.slSingleStrikePrice)
-          : null,
+        key: "slSingle",
+        label: "SL or BL",
+        original: pricing.slSingleStrikePrice || course.slSingleStrikePrice,
+        price: pricing.slSinglePrice || course.slSinglePrice,
       },
       {
         key: "slbl",
-        label: "Both Licenses (SL + BL)",
-        price: Number(course.slblPrice || 0),
-        original: course.slblStrikePrice ? Number(course.slblStrikePrice) : null,
+        label: "SL + BL",
+        original: pricing.slblStrikePrice || course.slblStrikePrice,
+        price: pricing.slblPrice || course.slblPrice,
       },
-    ]
+    ];
   }
 
-  // Standard course → single, default variant. Caller can detect via
-  // .length === 1 to render the existing one-button layout.
-  return [
-    {
-      key: null, // no `?type=` needed
-      label: "Book Now",
-      price: Number(course.sellingPrice || 0),
-      original:
-        course.originalPrice && course.originalPrice > course.sellingPrice
-          ? Number(course.originalPrice)
-          : null,
-    },
-  ]
+  return [];
 }

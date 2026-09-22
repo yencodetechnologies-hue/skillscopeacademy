@@ -66,6 +66,68 @@ const loadCompanySelection = () => {
 
 const variantKey = (courseId, variant) => variant ? `${courseId}|${variant}` : String(courseId)
 
+// ─── Per-slot price resolver ─────────────────────────────────────────────────
+// Each time slot (session) can carry its own price override fields
+// (sellingPrice/originalPrice, withExperiencePrice/..., slblPrice/..., etc —
+// set per-date in the schedule admin). This resolves the right price/strike
+// pair for a given session based on the course's pricing type and whichever
+// variant (with/without experience, SL/SL+BL) is currently selected, falling
+// back to the course-level default when the slot has no override.
+const getSessionPrice = (session, course) => {
+    if (!course) return { price: 0, originalPrice: null }
+
+    const pt = course.pricingType || (course.experienceBasedBooking ? "experience" : "standard")
+    const v  = course.__variant || null
+
+    // Same fallback the dropdown/getCoursePrice use: when no variant has
+    // been explicitly set on the course object (e.g. landing here straight
+    // from a URL like ?type=with-experience without __variant attached),
+    // read the URL's `type` param so the right variant's price still binds.
+    const urlParams = new URLSearchParams(window.location.search)
+    const bookingType = urlParams.get("type")
+
+    const fallback = (...vals) => vals.find(val => val !== undefined && val !== null && val !== "")
+
+    if (pt === "slbl") {
+        if (v === "slbl" || (v == null && bookingType === "slbl")) {
+            return {
+                price: Number(fallback(session?.slblPrice, course.slblPrice, 0)),
+                originalPrice: fallback(session?.slblStrikePrice, course.slblStrikePrice),
+            }
+        }
+        return {
+            price: Number(fallback(session?.slSinglePrice, course.slSinglePrice, course.sellingPrice, 0)),
+            originalPrice: fallback(session?.slSingleStrikePrice, course.slSingleStrikePrice, course.originalPrice),
+        }
+    }
+
+    if (pt === "experience") {
+        if (v === "with-experience" || (v == null && bookingType === "with-experience")) {
+            return {
+                price: Number(fallback(session?.withExperiencePrice, course.withExperiencePrice, 0)),
+                originalPrice: fallback(session?.withExperienceOriginal, course.withExperienceOriginal),
+            }
+        }
+        if (v === "without-experience" || (v == null && bookingType === "without-experience")) {
+            return {
+                price: Number(fallback(session?.withoutExperiencePrice, course.withoutExperiencePrice, course.withExperiencePrice, 0)),
+                originalPrice: fallback(session?.withoutExperienceOriginal, course.withoutExperienceOriginal, course.originalPrice),
+            }
+        }
+        // No variant chosen at all yet (neither __variant nor URL type) —
+        // default to Without Experience, same default getCoursePrice uses.
+        return {
+            price: Number(fallback(session?.withoutExperiencePrice, course.withoutExperiencePrice, course.withExperiencePrice, 0)),
+            originalPrice: fallback(session?.withoutExperienceOriginal, course.withoutExperienceOriginal, course.originalPrice),
+        }
+    }
+
+    return {
+        price: Number(fallback(session?.sellingPrice, course.sellingPrice, 0)),
+        originalPrice: fallback(session?.originalPrice, course.originalPrice),
+    }
+}
+
 function CourseDropdown({ groupedCourses, value, onChange, placeholder = "Select Course", getCoursePrice, enrollmentType }) {
     const [open, setOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
@@ -291,7 +353,7 @@ function AddCourseButton({ groupedCourses, onAdd, enrollmentType }) {
 }
 
 // ✅ Calendar Date Picker Component
-function CalendarDatePicker({ groupedSlots, selectedSession, onSelectSession }) {
+function CalendarDatePicker({ groupedSlots, selectedSession, onSelectSession, course }) {
     const [calOpen, setCalOpen] = useState(false)
     const [currentYear, setCurrentYear] = useState(() => {
         const dates = Object.keys(groupedSlots)
@@ -499,14 +561,26 @@ useEffect(() => {
                         {allSessions.map((session, idx) => {
                             const isFull = (session.availableSlots ?? session.maxCapacity) === 0
                             const isActive = selectedSession?._id === session._id
+                            const { price, originalPrice } = getSessionPrice(session, course)
+                            const hasStrike = originalPrice && Number(originalPrice) > price
                             return (
                                 <div
                                     key={idx}
                                     className={`slot-card ${isActive ? "active" : ""} ${isFull ? "slot-card--full" : ""}`}
-                                    onClick={() => !isFull && onSelectSession({ ...session, date: selectedDate })}
+                                    onClick={() => !isFull && onSelectSession({ ...session, date: selectedDate, price, originalPrice })}
                                     style={isFull ? { opacity: 0.5, cursor: "not-allowed" } : {}}
                                 >
                                     <div className="slot-time">🕒 {session.startTime} - {session.endTime}</div>
+                                    <div className="slot-price" style={{ display: "flex", alignItems: "center", gap: 6, margin: "4px 0" }}>
+                                        {hasStrike && (
+                                            <span className="slot-price-strike" style={{ textDecoration: "line-through", color: colors.textFaint, fontSize: 12 }}>
+                                                ${originalPrice}
+                                            </span>
+                                        )}
+                                        <span className="slot-price-now" style={{ fontWeight: 700, color: "#1a1a2e" }}>
+                                            ${price}
+                                        </span>
+                                    </div>
                                     <p className="spots">
                                         {isFull ? "Full" : (session.availableSlots <= 3 ? "Filling Fast" : "Seats Available")}
                                     </p>
@@ -746,6 +820,18 @@ useEffect(() => {
         return course.sellingPrice || 0
     }
 
+    // Once a session (time slot) has been picked, its own bound price
+    // (set when the slot card was clicked in CalendarDatePicker) takes
+    // priority over the generic course-level price — a slot can have its
+    // own override. Falls back to the course price until a session/slot
+    // has actually been chosen.
+    const getEffectivePrice = (sc) => {
+        if (sc?.session?.price !== undefined && sc.session.price !== null) {
+            return Number(sc.session.price)
+        }
+        return getCoursePrice(sc?.course)
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -768,7 +854,12 @@ useEffect(() => {
                 if (paramCourseId && !bookingLinkData?.courseId) {
                     const selected = fetchedCourses.find(c => c._id === paramCourseId)
                     if (selected) {
-                        setSelectedCourse(selected)
+                        // Carry the booking option chosen in BookingModal (?type=with-experience
+                        // etc) onto the course object itself, so every price lookup downstream
+                        // (getCoursePrice, getSessionPrice, the dropdown label, company carryover)
+                        // consistently resolves the SAME variant instead of silently defaulting.
+                        const courseWithVariant = bookingType ? { ...selected, __variant: bookingType } : selected
+                        setSelectedCourse(courseWithVariant)
                         setLoadingSlots(true)
                         try {
                             const slotRes = await axios.get(`${API_URL}/api/schedules/course/${paramCourseId}`)
@@ -785,8 +876,12 @@ useEffect(() => {
                                     })
                                 })
                                 if (matched) {
-                                    // Pre-select the date only; the user must pick a timing
-                                    setSelectedSession({ date: matched.date })
+                                    // Auto-select the full session (date + time), with the
+                                    // correct with/without-experience (or SLBL) price bound
+                                    // onto it — same resolver the slot cards use.
+                                    const { price, originalPrice } = getSessionPrice(matched, courseWithVariant)
+                                    setSelectedSession({ ...matched, price, originalPrice })
+                                    processedUrlSession.current = true
                                 }
                             }
                         } finally {
@@ -821,8 +916,12 @@ useEffect(() => {
                 })
             })
             if (matched) {
-                // Pre-select the date only; the user must pick a timing
-                setSelectedSession({ date: matched.date })
+                // Auto-select the full session (date + time), with the correct
+                // with/without-experience (or SLBL) price bound onto it —
+                // getSessionPrice falls back to the URL's ?type= param when
+                // selectedCourse.__variant hasn't been explicitly set yet.
+                const { price, originalPrice } = getSessionPrice(matched, selectedCourse)
+                setSelectedSession({ ...matched, price, originalPrice })
                 processedUrlSession.current = true
             }
         }
@@ -960,7 +1059,7 @@ useEffect(() => {
     }
 
     const companyTotal = selectedCourses?.reduce((sum, sc) => {
-        return sum + (getCoursePrice(sc.course) * sc.quantity)
+        return sum + (getEffectivePrice(sc) * sc.quantity)
     }, 0) || 0
 
     const getCompanyGroupedSlots = (courseId) => {
@@ -1164,6 +1263,7 @@ useEffect(() => {
                                     groupedSlots={groupedSlots}
                                     selectedSession={selectedSession}
                                     onSelectSession={setSelectedSession}
+                                    course={selectedCourse}
                                 />
                             ) : (
                                 <div style={{ textAlign: 'center', padding: '30px', background: '#fff5f5', borderRadius: '12px', border: '1px solid #feb2b2' }}>
@@ -1207,7 +1307,7 @@ useEffect(() => {
                                     </span>
 
                                     <span className="company-cart-price">
-                                        ${getCoursePrice(sc.course)} per person
+                                        ${getEffectivePrice(sc)} per person
                                     </span>
                                 </div>
 
@@ -1237,7 +1337,7 @@ useEffect(() => {
 
                                     <span className="company-cart-subtotal">
                                         = $
-                                        {getCoursePrice(sc.course) *
+                                        {getEffectivePrice(sc) *
                                             sc.quantity}
                                     </span>
 
@@ -1308,6 +1408,7 @@ useEffect(() => {
                                                 session
                                             )
                                         }
+                                        course={sc.course}
                                     />
 
                                 </div>
@@ -1381,11 +1482,11 @@ useEffect(() => {
 
                                     <span className="company-order-price">
                                         $
-                                        {getCoursePrice(sc.course)}
+                                        {getEffectivePrice(sc)}
                                         {" × "}
                                         {sc.quantity}
                                         {" = $"}
-                                        {getCoursePrice(sc.course) *
+                                        {getEffectivePrice(sc) *
                                             sc.quantity}
                                     </span>
 

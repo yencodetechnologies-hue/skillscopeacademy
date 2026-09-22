@@ -13,8 +13,6 @@ const personalSchema = Yup.object({
     agreed: Yup.boolean().oneOf([true], "Please agree to the terms and conditions"),
 })
 
-// In company-register mode the personal-details form represents the company,
-// so we additionally require the primary Contact Person at the company.
 const personalCompanySchema = personalSchema.shape({
     contactPerson: Yup.string().trim().required("Contact person is required"),
 })
@@ -61,14 +59,13 @@ async function runSchema(schema, values) {
     }
 }
 
-// ✅ 5MB limit
 const MAX_FILE_SIZE_MB = 5
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 
 function Payment({
     selectedCourse,
-    selectedCourses,      // ✅ company courses array
-    isCompany,            // ✅ company mode flag
+    selectedCourses,
+    isCompany,
     coursePrice,
     setUserDetails,
     setIsValid,
@@ -81,19 +78,12 @@ function Payment({
     onExistingStudentId,
     isExistingCompany = false,
     initialPaymentData = {},
-    isEnrollmentLink = false,  // ✅ NEW: for enrollment links
-    shouldAutofill = false,    // ✅ NEW: for student portal autofill
-    tokenData = null,          // ✅ NEW
-    enrollmentLinkData = null, // ✅ NEW
+    isEnrollmentLink = false,
+    shouldAutofill = false,
+    tokenData = null,
+    enrollmentLinkData = null,
 }) {
-    console.log(selectedCourse,"selectedCoursessssssss");
-    console.log(selectedSession)
-
-    const [paymentMethod, setPaymentMethod] = useState(() => {
-        // We initialize with a safe default, but useEffect below will adjust it
-        // once enrollmentLinkData or tokenData arrives.
-        return "Bank Transfer"
-    })
+    const [paymentMethod, setPaymentMethod] = useState(() => "Bank Transfer")
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
@@ -103,7 +93,7 @@ function Payment({
     const [emailExists, setEmailExists] = useState(false)
     const [transactionId, setTransactionId] = useState("")
     const [paymentSlip, setPaymentSlip] = useState(null)
-    const [fileSizeError, setFileSizeError] = useState("") // ✅ NEW
+    const [fileSizeError, setFileSizeError] = useState("")
     const [cardName, setCardName] = useState("")
     const [errors, setErrors] = useState({})
     const [paymentStatus, setPaymentStatus] = useState(null)
@@ -114,25 +104,29 @@ function Payment({
     const [squareError, setSquareError] = useState("")
     const [squareCurrency, setSquareCurrency] = useState("AUD")
     const [preferredCity, setPreferredCity] = useState("");
-
-    // ✅ NEW: tracks whether company details were auto-filled from localStorage id/role
     const [isAutoFilledCompany, setIsAutoFilledCompany] = useState(false)
 
-
-    // ── Single-course coupon (Individual enrollment) ──────────────
     const [couponCode, setCouponCode] = useState("");
     const [couponLoading, setCouponLoading] = useState(false);
     const [couponError, setCouponError] = useState("");
     const [couponSuccess, setCouponSuccess] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState(null);
-    const originalCourseAmount = Number(
-        coursePrice ||
-        selectedCourse?.sellingPrice ||
-        0
-    );
 
-    // ── Per-course coupons (Company / multi-course enrollment) ────
-    // Keyed by sc.uid → { code, loading, error, success, applied }
+    // ── Timeslot-aware pricing (individual) ────────────────────────
+    // selectedSession — when set via CalendarDatePicker's onSelectSession —
+    // carries `.price` / `.originalPrice` directly (from getSessionPrice in
+    // CourseSelection.jsx). That per-slot price always wins over the generic
+    // course price whenever a slot has actually been picked.
+    const hasSessionPrice = selectedSession?.price !== undefined && selectedSession?.price !== null
+    const originalCourseAmount = Number(
+        hasSessionPrice
+            ? selectedSession.price
+            : (coursePrice || selectedCourse?.sellingPrice || 0)
+    );
+    const originalCourseStrike = hasSessionPrice
+        ? (selectedSession.originalPrice != null ? Number(selectedSession.originalPrice) : null)
+        : null;
+
     const [courseCoupons, setCourseCoupons] = useState({});
 
     const getCourseCouponState = (uid) =>
@@ -151,8 +145,25 @@ function Payment({
         }));
     };
 
+    // ── Timeslot-aware pricing (company) ───────────────────────────
+    // Each cart entry's sc.session, when set via handleSessionSelect, is the
+    // same enriched slot object (price/originalPrice included), so this
+    // reads the exact time-slot price the user picked for that course.
+    const getCourseUnitAmount = (sc) => {
+        const sessionPrice = sc?.session?.price
+        if (sessionPrice !== undefined && sessionPrice !== null) {
+            return Number(sessionPrice)
+        }
+        return Number(sc.course?.sellingPrice || 0)
+    };
+
+    const getCourseUnitStrike = (sc) => {
+        const sessionOriginal = sc?.session?.originalPrice
+        return sessionOriginal != null ? Number(sessionOriginal) : null
+    };
+
     const getCourseLineAmount = (sc) =>
-        Number(sc.course?.sellingPrice || 0) * Number(sc.quantity || 1);
+        getCourseUnitAmount(sc) * Number(sc.quantity || 1);
 
     const handleApplyCourseCoupon = async (sc) => {
         const state = getCourseCouponState(sc.uid);
@@ -226,8 +237,6 @@ function Payment({
         });
     };
 
-    // Push the per-course coupon selections into paymentData whenever they change,
-    // so the parent has the full list at submit time.
     useEffect(() => {
         if (!isCompany || !selectedCourses?.length) return;
 
@@ -274,21 +283,14 @@ function Payment({
         }
 
         if (originalCourseAmount <= 0) {
-            setCouponError(
-                "Unable to determine the course amount."
-            );
+            setCouponError("Unable to determine the course amount.");
             return;
         }
 
-        const couponType = isCompany
-            ? "company"
-            : "individual";
+        const couponType = isCompany ? "company" : "individual";
 
-        // Individual enrollment
         if (!isCompany && !selectedCourse?._id) {
-            setCouponError(
-                "Please select a course before applying a coupon."
-            );
+            setCouponError("Please select a course before applying a coupon.");
             return;
         }
 
@@ -300,101 +302,55 @@ function Payment({
                 : selectedCourse?._id;
 
             if (!validationCourseId) {
-                throw new Error(
-                    "Unable to determine the selected course."
-                );
+                throw new Error("Unable to determine the selected course.");
             }
 
-            const response = await fetch(
-                `${API_URL}/api/coupons/validate`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        couponCode: code,
-                        courseId: validationCourseId,
-                        type: couponType,
-                        amount: originalCourseAmount,
-                    }),
-                }
-            );
+            const response = await fetch(`${API_URL}/api/coupons/validate`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    couponCode: code,
+                    courseId: validationCourseId,
+                    type: couponType,
+                    amount: originalCourseAmount,
+                }),
+            });
 
             const result = await response.json();
 
             if (!response.ok || !result.success) {
-                throw new Error(
-                    result.message ||
-                    "Invalid coupon code."
-                );
+                throw new Error(result.message || "Invalid coupon code.");
             }
 
             const coupon = result.data;
 
             setAppliedCoupon(coupon);
-
-            // FIXED AMOUNT MESSAGE
-            setCouponSuccess(
-                `Coupon applied! $${Number(
-                    coupon.discountAmount
-                ).toFixed(2)} discount`
-            );
-
+            setCouponSuccess(`Coupon applied! $${Number(coupon.discountAmount).toFixed(2)} discount`);
             setCouponCode(coupon.couponCode);
 
-            // Store coupon details
             setPaymentData((prev) => ({
                 ...prev,
-
-                couponId:
-                    coupon.couponId,
-
-                couponCode:
-                    coupon.couponCode,
-
-                couponType:
-                    coupon.type,
-
-                couponDiscountAmount:
-                    coupon.discountAmount,
-
-                originalAmount:
-                    coupon.originalAmount,
-
-                discountedAmount:
-                    coupon.finalAmount,
+                couponId: coupon.couponId,
+                couponCode: coupon.couponCode,
+                couponType: coupon.type,
+                couponDiscountAmount: coupon.discountAmount,
+                originalAmount: coupon.originalAmount,
+                discountedAmount: coupon.finalAmount,
             }));
 
         } catch (error) {
-            console.error(
-                "Coupon validation error:",
-                error
-            );
-
+            console.error("Coupon validation error:", error);
             setAppliedCoupon(null);
-
-            setCouponError(
-                error.message ||
-                "Unable to validate coupon."
-            );
+            setCouponError(error.message || "Unable to validate coupon.");
 
             setPaymentData((prev) => ({
                 ...prev,
-
                 couponId: null,
-
                 couponCode: "",
-
                 couponType: null,
-
                 couponDiscountAmount: 0,
-
-                originalAmount:
-                    originalCourseAmount,
-
-                discountedAmount:
-                    originalCourseAmount,
+                originalAmount: originalCourseAmount,
+                discountedAmount: originalCourseAmount,
             }));
 
         } finally {
@@ -420,7 +376,6 @@ function Payment({
         }));
     };
 
-    // ✅ File input ref
     const fileInputRef = useRef(null)
     const didShowTriggeredErrors = useRef(false)
     const cardContainerRef = useRef(null)
@@ -438,102 +393,39 @@ function Payment({
 
     const isCompanyRegister = isCompany && !isCompanyEnroll && !isEnrollmentLink && !isExistingCompany
     const companyEmailTakenMsg = "Company already registered. Please login to continue."
-    const existingStudentInfoMsg =
-        "This email is already on file — we'll add this course to your existing account."
+    const existingStudentInfoMsg = "This email is already on file — we'll add this course to your existing account."
     const blockPaymentForExistingEmail = emailExists && isCompanyRegister
-
-    // ── Email Check ──────────────────────────────────────────────
-    // const checkEmailExists = async (emailValue) => {
-    //     if (!emailValue || !emailValue.includes("@")) return
-    //     if (isExistingCompany || shouldAutofill) return
-    //     setEmailChecking(true)
-    //     setEmailExists(false)
-    //     const checkUrl = isCompanyRegister
-    //         ? `${API_URL}/api/companies/check-email`
-    //         : `${API_URL}/api/auth/check-email`
-    //     try {
-    //         const response = await fetch(checkUrl, {
-    //             method: "POST",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify({ email: emailValue })
-    //         })
-    //         const result = await response.json()
-    //         if (result.exists) {
-    //             setEmailExists(true)
-    //             if (isCompanyRegister) {
-    //                 setErrors(prev => ({ ...prev, email: result.message || companyEmailTakenMsg }))
-    //             } else {
-    //                 setErrors(prev => {
-    //                     const newErrors = { ...prev }
-    //                     delete newErrors.email
-    //                     return newErrors
-    //                 })
-    //                 if (result.studentId && onExistingStudentId) {
-    //                     onExistingStudentId(result.studentId)
-    //                 }
-    //             }
-    //         } else {
-    //             setEmailExists(false)
-    //             if (onExistingStudentId) onExistingStudentId(null)
-    //             setErrors(prev => {
-    //                 const newErrors = { ...prev }
-    //                 if (newErrors.email === companyEmailTakenMsg) {
-    //                     delete newErrors.email
-    //                 }
-    //                 return newErrors
-    //             })
-    //         }
-    //     } catch (err) {
-    //         console.error("Email check failed:", err)
-    //     } finally {
-    //         setEmailChecking(false)
-    //     }
-    // }
 
     useEffect(() => {
         if (onEmailStatusChange) onEmailStatusChange(blockPaymentForExistingEmail)
     }, [blockPaymentForExistingEmail])
 
     useEffect(() => {
-    const cities = selectedSession?.preferredCity || [];
+        const cities = selectedSession?.preferredCity || [];
+        if (cities.length > 0) {
+            setPreferredCity(cities[0]);
+        } else {
+            setPreferredCity("");
+        }
+    }, [selectedSession]);
 
-    if (cities.length > 0) {
-        setPreferredCity(cities[0]);
-    } else {
-        setPreferredCity("");
-    }
-}, [selectedSession]);
-
- useEffect(() => {
-    if (!name && !email && !phone) return;
-
-    setUserDetails(prev => ({
-        ...prev,
-        name,
-        email,
-        phone,
-        preferredCity,
-    }));
-}, [name, email, phone, preferredCity]);
+    useEffect(() => {
+        if (!name && !email && !phone) return;
+        setUserDetails(prev => ({ ...prev, name, email, phone, preferredCity }));
+    }, [name, email, phone, preferredCity]);
 
     useEffect(() => {
         if ((isExistingCompany || shouldAutofill) && initialPaymentData && initialPaymentData.email) {
             setName(initialPaymentData.name || "")
             setEmail(initialPaymentData.email || "")
-            // Students use 'phone', Companies use 'mobileNumber'
             setPhone(initialPaymentData.phone || initialPaymentData.mobileNumber || initialPaymentData.mobile || "")
             setAgreed(true)
         }
-        
-        // ✅ Set default payment method if Pay Later is enabled
         if (enrollmentLinkData?.payLater || tokenData?.payLater || initialPaymentData?.payLater) {
             setPaymentMethod("Pay Later")
         }
     }, [isExistingCompany, shouldAutofill, initialPaymentData, enrollmentLinkData, tokenData])
 
-    // ✅ Auto-fill + lock details from localStorage "user" object based on role.
-    // Only "student" and "company" roles get their fields bound from localStorage
-    // and made read-only. Empty role or "admin" leaves fields editable and unbound.
     useEffect(() => {
         let storedUser = null
         try {
@@ -575,42 +467,19 @@ function Payment({
         return () => clearTimeout(timer)
     }, [email, isExistingCompany, shouldAutofill, isAutoFilledCompany, isCompanyRegister])
 
-   // new
-useEffect(() => {
-   const fullData = {
-    name,
-    email,
-    phone,
-    agreed,
-    contactPerson,
-    preferredCity,
-    paymentMethod,
-    transactionId,
-    paymentSlip,
-    cardName,
-    ewayTransactionId,
-    paymentConfirmed: paymentStatus === "success",
-}
+    useEffect(() => {
+        const fullData = {
+            name, email, phone, agreed, contactPerson, preferredCity,
+            paymentMethod, transactionId, paymentSlip, cardName,
+            ewayTransactionId, paymentConfirmed: paymentStatus === "success",
+        }
         setPaymentData(prev => ({ ...prev, ...fullData }))
-    }, [ name,
-    email,
-    phone,
-    agreed,
-    contactPerson,
-    preferredCity,
-    paymentMethod,
-    transactionId,
-    paymentSlip,
-    cardName,
-    ewayTransactionId,
-    paymentStatus])
+    }, [name, email, phone, agreed, contactPerson, preferredCity, paymentMethod, transactionId, paymentSlip, cardName, ewayTransactionId, paymentStatus])
 
     const getFullErrors = async (overrideValues = {}) => {
         const vals = {
-            name, phone, email, agreed,
-            contactPerson,
-            transactionId, paymentSlip,
-            cardName,
+            name, phone, email, agreed, contactPerson,
+            transactionId, paymentSlip, cardName,
             ...overrideValues,
         }
         const schema = isCompanyRegister ? personalCompanySchema : personalSchema
@@ -654,7 +523,6 @@ useEffect(() => {
             }
             if (setIsValid) setIsValid(Object.keys(errs).length === 0)
 
-            // Show the full error set once per "Next" click — not on every keystroke.
             if (triggerValidation && !didShowTriggeredErrors.current) {
                 didShowTriggeredErrors.current = true
                 setErrors(errs)
@@ -671,7 +539,6 @@ useEffect(() => {
         })
     }, [name, phone, email, agreed, contactPerson, transactionId, paymentSlip, cardName, paymentMethod, triggerValidation, blockPaymentForExistingEmail, fileSizeError, squareReady])
 
-    // ── Square Web Payments card form ─────────────────────────────
     useEffect(() => {
         let cancelled = false
 
@@ -694,7 +561,6 @@ useEffect(() => {
             setSquareError("")
             setSquareReady(false)
 
-            // Wait for the card host to mount after React paint
             for (let i = 0; i < 20 && !cardContainerRef.current && !cancelled; i++) {
                 await new Promise((r) => setTimeout(r, 50))
             }
@@ -732,7 +598,6 @@ useEffect(() => {
                 await destroyCard()
                 if (cancelled || !cardContainerRef.current) return
 
-                // Clear host before attach (Square requires empty container)
                 cardContainerRef.current.innerHTML = ""
 
                 const payments = Square.payments(config.applicationId, config.locationId)
@@ -740,24 +605,11 @@ useEffect(() => {
 
                 const card = await payments.card({
                     style: {
-                        input: {
-                            fontSize: "15px",
-                            fontFamily: "inherit",
-                            color: "#111827",
-                        },
-                        "input::placeholder": {
-                            color: "#94a3b8",
-                        },
-                        ".input-container": {
-                            borderColor: "#e5e7eb",
-                            borderRadius: "10px",
-                        },
-                        ".input-container.is-focus": {
-                            borderColor: "#00796B",
-                        },
-                        ".input-container.is-error": {
-                            borderColor: "#dc2626",
-                        },
+                        input: { fontSize: "15px", fontFamily: "inherit", color: "#111827" },
+                        "input::placeholder": { color: "#94a3b8" },
+                        ".input-container": { borderColor: "#e5e7eb", borderRadius: "10px" },
+                        ".input-container.is-focus": { borderColor: "#00796B" },
+                        ".input-container.is-error": { borderColor: "#dc2626" },
                     },
                 })
                 await card.attach(cardContainerRef.current)
@@ -802,263 +654,143 @@ useEffect(() => {
         await handleBlur("email", { email: trimmed })
     }
 
-const handleCardPayment = async () => {
-    if (blockPaymentForExistingEmail) {
-        setErrors(prev => ({
-            ...prev,
-            email: companyEmailTakenMsg
-        }));
-
-        return {
-            success: false,
-            message: "Email already registered"
-        };
-    }
-
-    const newErrors = await getFullErrors();
-
-    if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-
-        return {
-            success: false,
-            message: "Validation failed"
-        };
-    }
-
-    if (!squareCardRef.current) {
-        setPaymentStatus("error");
-        setPaymentError(
-            "Secure card form is not ready. Please wait a moment and try again."
-        );
-
-        return {
-            success: false,
-            message: "Square card not ready"
-        };
-    }
-
-    setPaymentStatus("loading");
-    setPaymentError("");
-
-    try {
-        const tokenResult =
-            await squareCardRef.current.tokenize();
-
-        if (
-            tokenResult.status !== "OK" ||
-            !tokenResult.token
-        ) {
-            const detail =
-                tokenResult.errors?.[0]?.message ||
-                "Please check your card details and try again.";
-
-            setPaymentStatus("error");
-            setPaymentError(detail);
-
-            return {
-                success: false,
-                message: detail
-            };
+    const handleCardPayment = async () => {
+        if (blockPaymentForExistingEmail) {
+            setErrors(prev => ({ ...prev, email: companyEmailTakenMsg }));
+            return { success: false, message: "Email already registered" };
         }
 
-        // ============================================
-        // IMPORTANT: use discounted amount
-        // (company mode: sum of per-course discounted lines;
-        //  individual mode: single-course applied coupon)
-        // ============================================
+        const newErrors = await getFullErrors();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return { success: false, message: "Validation failed" };
+        }
 
-        const companySubtotal = isCompany
-            ? (selectedCourses || []).reduce((sum, sc) => sum + getCourseLineAmount(sc), 0)
-            : 0;
-        const companyDiscountTotal = isCompany
-            ? (selectedCourses || []).reduce((sum, sc) => {
-                  const state = getCourseCouponState(sc.uid);
-                  return sum + Number(state.applied?.discountAmount || 0);
-              }, 0)
-            : 0;
+        if (!squareCardRef.current) {
+            setPaymentStatus("error");
+            setPaymentError("Secure card form is not ready. Please wait a moment and try again.");
+            return { success: false, message: "Square card not ready" };
+        }
 
-        const amount = isCompany
-            ? Number(companySubtotal - companyDiscountTotal)
-            : Number(
-                  appliedCoupon
-                      ? appliedCoupon.finalAmount
-                      : originalCourseAmount
-              );
+        setPaymentStatus("loading");
+        setPaymentError("");
 
-        const companyCoupons = isCompany
-            ? (selectedCourses || [])
-                  .map((sc) => {
+        try {
+            const tokenResult = await squareCardRef.current.tokenize();
+
+            if (tokenResult.status !== "OK" || !tokenResult.token) {
+                const detail = tokenResult.errors?.[0]?.message || "Please check your card details and try again.";
+                setPaymentStatus("error");
+                setPaymentError(detail);
+                return { success: false, message: detail };
+            }
+
+            // Amounts here are all timeslot-aware: company sums per-course
+            // lines priced via getCourseLineAmount (sc.session.price when
+            // present); individual uses originalCourseAmount (selectedSession.price
+            // when present).
+            const companySubtotal = isCompany
+                ? (selectedCourses || []).reduce((sum, sc) => sum + getCourseLineAmount(sc), 0)
+                : 0;
+            const companyDiscountTotal = isCompany
+                ? (selectedCourses || []).reduce((sum, sc) => {
                       const state = getCourseCouponState(sc.uid);
-                      if (!state.applied) return null;
-                      return {
-                          uid: sc.uid,
-                          courseId: sc.course?._id,
-                          couponId: state.applied.couponId,
-                          couponCode: state.applied.couponCode,
-                          discountAmount: state.applied.discountAmount,
-                          originalAmount: getCourseLineAmount(sc),
-                          discountedAmount: state.applied.finalAmount,
-                      };
-                  })
-                  .filter(Boolean)
-            : [];
+                      return sum + Number(state.applied?.discountAmount || 0);
+                  }, 0)
+                : 0;
 
-        const response = await fetch(
-            `${API_URL}/api/payment/pay`,
-            {
+            const amount = isCompany
+                ? Number(companySubtotal - companyDiscountTotal)
+                : Number(appliedCoupon ? appliedCoupon.finalAmount : originalCourseAmount);
+
+            const companyCoupons = isCompany
+                ? (selectedCourses || [])
+                      .map((sc) => {
+                          const state = getCourseCouponState(sc.uid);
+                          if (!state.applied) return null;
+                          return {
+                              uid: sc.uid,
+                              courseId: sc.course?._id,
+                              couponId: state.applied.couponId,
+                              couponCode: state.applied.couponCode,
+                              discountAmount: state.applied.discountAmount,
+                              originalAmount: getCourseLineAmount(sc),
+                              discountedAmount: state.applied.finalAmount,
+                          };
+                      })
+                      .filter(Boolean)
+                : [];
+
+            const response = await fetch(`${API_URL}/api/payment/pay`, {
                 method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     sourceId: tokenResult.token,
-
                     amount,
-
                     currency: squareCurrency,
-
-                    email,
-                    name,
-                    phone,
-                    preferredCity,
-
+                    email, name, phone, preferredCity,
                     userId: phone || email,
-
-                    courseName:
-                        selectedCourse?.title || "",
-
+                    courseName: selectedCourse?.title || "",
                     description: selectedCourse
                         ? `${selectedCourse.courseCode || ""} - ${selectedCourse.title || ""}`.trim()
                         : "Course enrollment",
-
-                    // Coupon information (individual)
-                    couponId:
-                        appliedCoupon?.couponId || null,
-
-                    couponCode:
-                        appliedCoupon?.couponCode || "",
-
-                    couponDiscountPercentage:
-                        appliedCoupon?.discountPercentage || 0,
-
-                    couponDiscountAmount:
-                        appliedCoupon?.discountAmount || 0,
-
-                    // Coupon information (company, per course)
+                    couponId: appliedCoupon?.couponId || null,
+                    couponCode: appliedCoupon?.couponCode || "",
+                    couponDiscountPercentage: appliedCoupon?.discountPercentage || 0,
+                    couponDiscountAmount: appliedCoupon?.discountAmount || 0,
                     companyCoupons,
-
-                    originalAmount: isCompany
-                        ? companySubtotal
-                        : originalCourseAmount,
-
-                    discountedAmount:
-                        amount,
+                    originalAmount: isCompany ? companySubtotal : originalCourseAmount,
+                    discountedAmount: amount,
                 }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setPaymentStatus("success");
+                const txId = result.gatewayTransactionId || result.transactionId || "";
+                setEwayTransactionId(txId);
+
+                setPaymentData(prev => ({
+                    ...prev,
+                    ewayTransactionId: txId,
+                    paymentConfirmed: true,
+                    couponId: appliedCoupon?.couponId || null,
+                    couponCode: appliedCoupon?.couponCode || "",
+                    couponDiscountPercentage: appliedCoupon?.discountPercentage || 0,
+                    couponDiscountAmount: appliedCoupon?.discountAmount || 0,
+                    companyCoupons,
+                    originalAmount: isCompany ? companySubtotal : originalCourseAmount,
+                    discountedAmount: amount,
+                }));
+
+                return { success: true, transactionId: txId };
             }
-        );
 
-        const result =
-            await response.json();
+            setPaymentStatus("error");
+            setPaymentError(result.message || "Your card was declined. Please contact your bank or try a different payment method.");
+            return { success: false, message: result.message };
 
-        if (result.success) {
-            setPaymentStatus("success");
-
-            const txId =
-                result.gatewayTransactionId ||
-                result.transactionId ||
-                "";
-
-            setEwayTransactionId(txId);
-
-            setPaymentData(prev => ({
-                ...prev,
-
-                ewayTransactionId: txId,
-                paymentConfirmed: true,
-
-                // Coupon information (individual)
-                couponId:
-                    appliedCoupon?.couponId || null,
-
-                couponCode:
-                    appliedCoupon?.couponCode || "",
-
-                couponDiscountPercentage:
-                    appliedCoupon?.discountPercentage || 0,
-
-                couponDiscountAmount:
-                    appliedCoupon?.discountAmount || 0,
-
-                // Coupon information (company, per course)
-                companyCoupons,
-
-                originalAmount: isCompany
-                    ? companySubtotal
-                    : originalCourseAmount,
-
-                discountedAmount:
-                    amount,
-            }));
-
-            return {
-                success: true,
-                transactionId: txId
-            };
+        } catch (err) {
+            console.error("Card payment error:", err);
+            setPaymentStatus("error");
+            setPaymentError("Network error. Please check your connection and try again.");
+            return { success: false, message: "Network error" };
         }
-
-        setPaymentStatus("error");
-
-        setPaymentError(
-            result.message ||
-            "Your card was declined. Please contact your bank or try a different payment method."
-        );
-
-        return {
-            success: false,
-            message: result.message
-        };
-
-    } catch (err) {
-
-        console.error(
-            "Card payment error:",
-            err
-        );
-
-        setPaymentStatus("error");
-
-        setPaymentError(
-            "Network error. Please check your connection and try again."
-        );
-
-        return {
-            success: false,
-            message: "Network error"
-        };
-    }
-};
+    };
 
     useEffect(() => {
         if (onCardPayment) {
-            onCardPayment({
-                trigger: handleCardPayment,
-                paymentMethod,
-                paymentStatus
-            })
+            onCardPayment({ trigger: handleCardPayment, paymentMethod, paymentStatus })
         }
     }, [paymentMethod, paymentStatus, name, phone, email, agreed, cardName, squareReady])
 
-    // ── Remove slip ───────────────────────────────────────────────
     const removeSlip = () => {
         setPaymentSlip(null)
-        setFileSizeError("") // ✅ clear error on remove
+        setFileSizeError("")
         if (fileInputRef.current) fileInputRef.current.value = ""
     }
 
-    // ✅ Handle file change with size validation
     const handleFileChange = (e) => {
         const file = e.target.files[0]
         if (!file) return
@@ -1070,12 +802,11 @@ const handleCardPayment = async () => {
             return
         }
 
-        setFileSizeError("") // ✅ clear any previous error
+        setFileSizeError("")
         setPaymentSlip(file)
         handleBlur("paymentSlip", { paymentSlip: file })
     }
 
-    // ── Company totals (per-course discounts applied) ──────────────
     const companySubtotal = (selectedCourses || []).reduce(
         (sum, sc) => sum + getCourseLineAmount(sc), 0
     );
@@ -1093,12 +824,7 @@ const handleCardPayment = async () => {
                 <p>Enter your details and choose your payment method</p>
             </div>
 
-            {/* Personal Details */}
             <div className="payment-card">
-                {/* Brand-new company sign-up: header + labels switch to company copy
-                    and we ask for a Contact Person. Logged-in / existing companies
-                    stay on the standard "Personal Details" form (their company
-                    name and contact person are already stored). */}
                 <h4>{isCompany && !isCompanyEnroll && !isEnrollmentLink && !isExistingCompany ? "Company Details" : "Personal Details"}</h4>
 
                 <div className="form-group">
@@ -1163,62 +889,38 @@ const handleCardPayment = async () => {
                         placeholder="your.email@example.com"
                         value={email}
                         onChange={(e) => {
-                          //  if (isExistingCompany) return
                             if (isAutoFilledCompany) return
                             setEmail(e.target.value)
                             clearFieldError("email")
                         }}
                         onBlur={handleEmailBlur}
                         className={errors.email || blockPaymentForExistingEmail ? "input-error" : ""}
-                        ////disabled={emailChecking || isExistingCompany}
-                        //readOnly={isExistingCompany}
                         readOnly={isAutoFilledCompany}
                         autoComplete="email"
                     />
-                    {/* {emailChecking && <span className="checking-text">🔄 Checking email...</span>}
-                    {blockPaymentForExistingEmail && (
-                        <span className="error-text">
-                            ⚠ {companyEmailTakenMsg}{" "}
-                            <a href="/login" style={{ color: colors.brandPrimary, textDecoration: "underline" }}>Login</a>
-                            {" "}to continue.
-                        </span>
-                    )} */}
-                    {/* {emailExists && !blockPaymentForExistingEmail && ( */}
-                        {/* <span className="checking-text" style={{ color: "#059669" }}>
-                            ✓ {existingStudentInfoMsg}
-                        </span>
-                    )} */}
-                    {/* {errors.email && !blockPaymentForExistingEmail && <span className="error-text">⚠ {errors.email}</span>} */}
                 </div>
 
                 {selectedSession?.preferredCity?.length > 0 && (
-    <div className="form-group">
-        <label>Preferred City1 *</label>
-
-        <select
-            value={preferredCity}
-            onChange={(e) => {
-                setPreferredCity(e.target.value);
-                clearFieldError("preferredCity");
-            }}
-            className={errors.preferredCity ? "input-error" : ""}
-        >
-            <option value="">Select preferred city</option>
-
-            {selectedSession.preferredCity.map((city) => (
-                <option key={city} value={city}>
-                    {city}
-                </option>
-            ))}
-        </select>
-
-        {errors.preferredCity && (
-            <span className="error-text">
-                ⚠ {errors.preferredCity}
-            </span>
-        )}
-    </div>
-)}
+                    <div className="form-group">
+                        <label>Preferred City1 *</label>
+                        <select
+                            value={preferredCity}
+                            onChange={(e) => {
+                                setPreferredCity(e.target.value);
+                                clearFieldError("preferredCity");
+                            }}
+                            className={errors.preferredCity ? "input-error" : ""}
+                        >
+                            <option value="">Select preferred city</option>
+                            {selectedSession.preferredCity.map((city) => (
+                                <option key={city} value={city}>{city}</option>
+                            ))}
+                        </select>
+                        {errors.preferredCity && (
+                            <span className="error-text">⚠ {errors.preferredCity}</span>
+                        )}
+                    </div>
+                )}
 
                 <div className="terms">
                     <input
@@ -1235,322 +937,273 @@ const handleCardPayment = async () => {
                 {errors.agreed && <span className="error-text">⚠ {errors.agreed}</span>}
             </div>
 
-            {/* ✅ Order Summary — company vs individual */}
-           <div className="summary-card coupon-summary-card">
+            <div className="summary-card coupon-summary-card">
 
-    <div className="summary-title-row">
-        <h4>Order Summary</h4>
-    </div>
+                <div className="summary-title-row">
+                    <h4>Order Summary</h4>
+                </div>
 
-    {/* =========================================
-        COURSE DETAILS
-    ========================================= */}
+                {isCompany && selectedCourses?.length > 0 ? (
+                    <>
+                        {selectedCourses.map((sc) => {
+                            const state = getCourseCouponState(sc.uid);
+                            const lineAmount = getCourseLineAmount(sc);
+                            const lineStrike = getCourseUnitStrike(sc);
+                            const hasLineStrike = lineStrike != null && lineStrike > getCourseUnitAmount(sc);
+                            const lineFinal = state.applied
+                                ? Number(state.applied.finalAmount)
+                                : lineAmount;
 
-    {isCompany && selectedCourses?.length > 0 ? (
-        <>
-            {selectedCourses.map((sc) => {
-                const state = getCourseCouponState(sc.uid);
-                const lineAmount = getCourseLineAmount(sc);
-                const lineFinal = state.applied
-                    ? Number(state.applied.finalAmount)
-                    : lineAmount;
+                            return (
+                                <div className="company-course-summary-block" key={sc.uid}>
+                                    <div className="summary-row">
+                                        <span>
+                                            {sc.course.title} × {sc.quantity}
+                                            {sc.session?.date && (
+                                                <span style={{ display: "block", fontSize: 11, color: colors.textFaint, marginTop: 2 }}>
+                                                    {new Date(sc.session.date).toLocaleDateString("en-AU", { day: "numeric", month: "short" })}
+                                                    {sc.session.startTime ? ` · ${sc.session.startTime} - ${sc.session.endTime}` : ""}
+                                                </span>
+                                            )}
+                                        </span>
 
-                return (
-                    <div className="company-course-summary-block" key={sc.uid}>
-                        <div className="summary-row">
-                            <span>
-                                {sc.course.title} × {sc.quantity}
-                            </span>
-
-                            <span>
-                                ${lineAmount.toFixed(2)}
-                            </span>
-                        </div>
-
-                        {/* ── Per-course coupon apply/remove ── */}
-                        <div className="coupon-apply-box coupon-apply-box--per-course">
-                            <label className="coupon-label">
-                                Coupon for this course
-                            </label>
-
-                            {!state.applied ? (
-                                <div className="coupon-input-row">
-                                    <input
-                                        type="text"
-                                        value={state.code}
-                                        placeholder="Enter coupon code"
-                                        onChange={(e) =>
-                                            updateCourseCouponState(sc.uid, {
-                                                code: e.target.value.toUpperCase(),
-                                                error: "",
-                                                success: "",
-                                            })
-                                        }
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                e.preventDefault();
-                                                handleApplyCourseCoupon(sc);
-                                            }
-                                        }}
-                                        disabled={state.loading}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        className="coupon-apply-btn"
-                                        onClick={() => handleApplyCourseCoupon(sc)}
-                                        disabled={state.loading || !state.code.trim()}
-                                    >
-                                        {state.loading ? "Checking..." : "Apply"}
-                                    </button>
-                                </div>
-                            ) : (
-                                <div className="coupon-applied-box">
-                                    <div className="coupon-applied-left">
-                                        <div className="coupon-check-icon">✓</div>
-
-                                        <div>
-                                            <strong>{state.applied.couponCode}</strong>
-                                            <span>
-                                                ${Number(state.applied.discountAmount).toFixed(2)}{" "}
-                                                discount applied
-                                            </span>
-                                        </div>
+                                        <span>
+                                            {hasLineStrike && (
+                                                <span style={{ textDecoration: "line-through", color: colors.textFaint, fontSize: 12, marginRight: 6 }}>
+                                                    ${(lineStrike * Number(sc.quantity || 1)).toFixed(2)}
+                                                </span>
+                                            )}
+                                            ${lineAmount.toFixed(2)}
+                                        </span>
                                     </div>
 
-                                    <button
-                                        type="button"
-                                        className="coupon-remove-btn"
-                                        onClick={() => handleRemoveCourseCoupon(sc.uid)}
-                                    >
-                                        Remove
-                                    </button>
+                                    <div className="coupon-apply-box coupon-apply-box--per-course">
+                                        <label className="coupon-label">Coupon for this course</label>
+
+                                        {!state.applied ? (
+                                            <div className="coupon-input-row">
+                                                <input
+                                                    type="text"
+                                                    value={state.code}
+                                                    placeholder="Enter coupon code"
+                                                    onChange={(e) =>
+                                                        updateCourseCouponState(sc.uid, {
+                                                            code: e.target.value.toUpperCase(),
+                                                            error: "",
+                                                            success: "",
+                                                        })
+                                                    }
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            e.preventDefault();
+                                                            handleApplyCourseCoupon(sc);
+                                                        }
+                                                    }}
+                                                    disabled={state.loading}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="coupon-apply-btn"
+                                                    onClick={() => handleApplyCourseCoupon(sc)}
+                                                    disabled={state.loading || !state.code.trim()}
+                                                >
+                                                    {state.loading ? "Checking..." : "Apply"}
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="coupon-applied-box">
+                                                <div className="coupon-applied-left">
+                                                    <div className="coupon-check-icon">✓</div>
+                                                    <div>
+                                                        <strong>{state.applied.couponCode}</strong>
+                                                        <span>
+                                                            ${Number(state.applied.discountAmount).toFixed(2)}{" "}discount applied
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="coupon-remove-btn"
+                                                    onClick={() => handleRemoveCourseCoupon(sc.uid)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        {state.error && (
+                                            <div className="coupon-message coupon-error">
+                                                <span>⚠</span><span>{state.error}</span>
+                                            </div>
+                                        )}
+
+                                        {state.success && (
+                                            <div className="coupon-message coupon-success">
+                                                <span>✓</span><span>{state.success}</span>
+                                            </div>
+                                        )}
+
+                                        {state.applied && (
+                                            <div className="summary-row" style={{ marginTop: 6 }}>
+                                                <span>Course total after discount:</span>
+                                                <strong>${lineFinal.toFixed(2)}</strong>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                            )}
-
-                            {state.error && (
-                                <div className="coupon-message coupon-error">
-                                    <span>⚠</span>
-                                    <span>{state.error}</span>
-                                </div>
-                            )}
-
-                            {state.success && (
-                                <div className="coupon-message coupon-success">
-                                    <span>✓</span>
-                                    <span>{state.success}</span>
-                                </div>
-                            )}
-
-                            {state.applied && (
-                                <div className="summary-row" style={{ marginTop: 6 }}>
-                                    <span>Course total after discount:</span>
-                                    <strong>${lineFinal.toFixed(2)}</strong>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                );
-            })}
-        </>
-    ) : (
-        <>
-            <div className="summary-row">
-                <span>Course:</span>
-
-                <span>
-                    {selectedCourse
-                        ? `${selectedCourse.courseCode} - ${selectedCourse.title}`
-                        : "Select a course"}
-                </span>
-            </div>
-
-            <div className="summary-row">
-                <span>Duration:</span>
-
-                <span>
-                    {selectedCourse?.duration || "0"}
-                </span>
-            </div>
-        </>
-    )}
-
-    {/* =========================================
-        COUPON SECTION (Individual enrollment only —
-        company mode applies coupons per-course above)
-    ========================================= */}
-
-    {!isEnrollmentLink && !isCompany && (
-        <div className="coupon-apply-box">
-
-            <label className="coupon-label">
-                Have a coupon?
-            </label>
-
-            {!appliedCoupon ? (
-                <div className="coupon-input-row">
-
-                    <input
-                        type="text"
-                        value={couponCode}
-                        placeholder="Enter coupon code"
-                        onChange={(e) => {
-                            setCouponCode(
-                                e.target.value.toUpperCase()
                             );
-
-                            setCouponError("");
-                            setCouponSuccess("");
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                e.preventDefault();
-                                handleApplyCoupon();
-                            }
-                        }}
-                        disabled={couponLoading}
-                    />
-
-                    <button
-                        type="button"
-                        className="coupon-apply-btn"
-                        onClick={handleApplyCoupon}
-                        disabled={
-                            couponLoading ||
-                            !couponCode.trim()
-                        }
-                    >
-                        {couponLoading
-                            ? "Checking..."
-                            : "Apply"}
-                    </button>
-
-                </div>
-            ) : (
-                <div className="coupon-applied-box">
-
-                    <div className="coupon-applied-left">
-
-                        <div className="coupon-check-icon">
-                            ✓
-                        </div>
-
-                        <div>
-                            <strong>
-                                {appliedCoupon.couponCode}
-                            </strong>
-
+                        })}
+                    </>
+                ) : (
+                    <>
+                        <div className="summary-row">
+                            <span>Course:</span>
                             <span>
-    $
-    {Number(
-        appliedCoupon.discountAmount
-    ).toFixed(2)}
-    {" "}discount applied
-</span>
+                                {selectedCourse
+                                    ? `${selectedCourse.courseCode} - ${selectedCourse.title}`
+                                    : "Select a course"}
+                            </span>
                         </div>
 
+                        {selectedSession?.date && (
+                            <div className="summary-row">
+                                <span>Date & Time:</span>
+                                <span>
+                                    {new Date(selectedSession.date).toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" })}
+                                    {selectedSession.startTime ? ` · ${selectedSession.startTime} - ${selectedSession.endTime}` : ""}
+                                </span>
+                            </div>
+                        )}
+
+                        <div className="summary-row">
+                            <span>Duration:</span>
+                            <span>{selectedCourse?.duration || "0"}</span>
+                        </div>
+                    </>
+                )}
+
+                {!isEnrollmentLink && !isCompany && (
+                    <div className="coupon-apply-box">
+                        <label className="coupon-label">Have a coupon?</label>
+
+                        {!appliedCoupon ? (
+                            <div className="coupon-input-row">
+                                <input
+                                    type="text"
+                                    value={couponCode}
+                                    placeholder="Enter coupon code"
+                                    onChange={(e) => {
+                                        setCouponCode(e.target.value.toUpperCase());
+                                        setCouponError("");
+                                        setCouponSuccess("");
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            e.preventDefault();
+                                            handleApplyCoupon();
+                                        }
+                                    }}
+                                    disabled={couponLoading}
+                                />
+                                <button
+                                    type="button"
+                                    className="coupon-apply-btn"
+                                    onClick={handleApplyCoupon}
+                                    disabled={couponLoading || !couponCode.trim()}
+                                >
+                                    {couponLoading ? "Checking..." : "Apply"}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="coupon-applied-box">
+                                <div className="coupon-applied-left">
+                                    <div className="coupon-check-icon">✓</div>
+                                    <div>
+                                        <strong>{appliedCoupon.couponCode}</strong>
+                                        <span>
+                                            ${Number(appliedCoupon.discountAmount).toFixed(2)}{" "}discount applied
+                                        </span>
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    className="coupon-remove-btn"
+                                    onClick={handleRemoveCoupon}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        )}
+
+                        {couponError && (
+                            <div className="coupon-message coupon-error">
+                                <span>⚠</span><span>{couponError}</span>
+                            </div>
+                        )}
+
+                        {couponSuccess && (
+                            <div className="coupon-message coupon-success">
+                                <span>✓</span><span>{couponSuccess}</span>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                <div className="summary-price-breakdown">
+                    <div className="summary-row">
+                        <span>Subtotal:</span>
+                        <span>
+                            {!isCompany && originalCourseStrike != null && originalCourseStrike > originalCourseAmount && (
+                                <span style={{ textDecoration: "line-through", color: colors.textFaint, fontSize: 12, marginRight: 6 }}>
+                                    ${originalCourseStrike.toFixed(2)}
+                                </span>
+                            )}
+                            ${(isCompany ? companySubtotal : originalCourseAmount).toFixed(2)}
+                        </span>
                     </div>
 
-                    <button
-                        type="button"
-                        className="coupon-remove-btn"
-                        onClick={handleRemoveCoupon}
-                    >
-                        Remove
-                    </button>
-
-                </div>
-            )}
-
-            {couponError && (
-                <div className="coupon-message coupon-error">
-                    <span>⚠</span>
-                    <span>{couponError}</span>
-                </div>
-            )}
-
-            {couponSuccess && (
-                <div className="coupon-message coupon-success">
-                    <span>✓</span>
-                    <span>{couponSuccess}</span>
-                </div>
-            )}
-
-        </div>
-    )}
-
-    {/* =========================================
-        PRICE BREAKDOWN
-    ========================================= */}
-
-    <div className="summary-price-breakdown">
-
-        <div className="summary-row">
-            <span>Subtotal:</span>
-
-            <span>
-                $
-                {(isCompany ? companySubtotal : originalCourseAmount).toFixed(2)}
-            </span>
-        </div>
-
-{isCompany ? (
-    companyDiscountTotal > 0 && (
-        <div className="summary-row coupon-discount-row">
-            <span>Coupon discount:</span>
-            <span>−${companyDiscountTotal.toFixed(2)}</span>
-        </div>
-    )
-) : (
-    appliedCoupon && (
-        <div className="summary-row coupon-discount-row">
-            <span>Coupon discount:</span>
-            <span>
-                −$
-                {Number(appliedCoupon.discountAmount).toFixed(2)}
-            </span>
-        </div>
-    )
-)}
-
-        <div className="summary-row total final-total-row">
-
-            <span>Total:</span>
-
-            <strong>
-                $
-                {(
-                    isCompany
-                        ? companyFinalTotal
-                        : Number(
-                            appliedCoupon
-                                ? appliedCoupon.finalAmount
-                                : originalCourseAmount
+                    {isCompany ? (
+                        companyDiscountTotal > 0 && (
+                            <div className="summary-row coupon-discount-row">
+                                <span>Coupon discount:</span>
+                                <span>−${companyDiscountTotal.toFixed(2)}</span>
+                            </div>
                         )
-                ).toFixed(2)}
-            </strong>
+                    ) : (
+                        appliedCoupon && (
+                            <div className="summary-row coupon-discount-row">
+                                <span>Coupon discount:</span>
+                                <span>−${Number(appliedCoupon.discountAmount).toFixed(2)}</span>
+                            </div>
+                        )
+                    )}
 
-        </div>
+                    <div className="summary-row total final-total-row">
+                        <span>Total:</span>
+                        <strong>
+                            ${(
+                                isCompany
+                                    ? companyFinalTotal
+                                    : Number(appliedCoupon ? appliedCoupon.finalAmount : originalCourseAmount)
+                            ).toFixed(2)}
+                        </strong>
+                    </div>
+                </div>
+            </div>
 
-    </div>
-
-</div>
-
-            {/* Enrollment Link Info (Only show "No Payment Required" if Pay Later is NOT enabled for the link) */}
             {isEnrollmentLink && (
                 <div className="summary-card" style={{ backgroundColor: "#f3e8ff", borderLeft: `4px solid ${colors.brandPrimary}` }}>
                     <div style={{ fontSize: 14, color: colors.brandPrimary, fontWeight: 600 }}>
                         {enrollmentLinkData?.payLater ? "✓ Pay Later Enabled" : "✓ No Payment Required"}
                     </div>
                     <div style={{ fontSize: 12, color: "#6b21b6", marginTop: 4 }}>
-                        {enrollmentLinkData?.payLater 
+                        {enrollmentLinkData?.payLater
                             ? "Your enrollment will be processed now, and an invoice will be issued to your company."
                             : "Complete enrollment and assessment to activate your account."}
                     </div>
                 </div>
             )}
 
-            {/* Payment Method - Show if not an enrollment/company link */}
             {(!isCompanyEnroll && !isEnrollmentLink && !blockPaymentForExistingEmail) && (
                 <div className="payment-method">
                     <label>Select Payment Method *</label>
@@ -1576,8 +1229,7 @@ const handleCardPayment = async () => {
                         </div>
                         <span className="method-badge">Instant</span>
                     </div>
-                    
-                    {/* Standalone Pay Later option - only if enabled */}
+
                     {(tokenData?.payLater || enrollmentLinkData?.payLater || initialPaymentData?.payLater) && (
                         <div
                             className={`method-card ${paymentMethod === "Pay Later" ? "active" : ""}`}
@@ -1593,7 +1245,6 @@ const handleCardPayment = async () => {
                 </div>
             )}
 
-            {/* Bank Transfer Details (Normal bank transfer requiring slip) */}
             {!blockPaymentForExistingEmail && (!isCompanyEnroll && !isEnrollmentLink || tokenData?.payLater || enrollmentLinkData?.payLater || initialPaymentData?.payLater) && paymentMethod === "Bank Transfer" && (
                 <div className="bank-details">
                     <h4>Bank Details</h4>
@@ -1621,31 +1272,23 @@ const handleCardPayment = async () => {
                             type="file"
                             accept="image/*,application/pdf"
                             ref={fileInputRef}
-                            onChange={handleFileChange}  
+                            onChange={handleFileChange}
                             className={errors.paymentSlip || fileSizeError ? "input-error" : ""}
                         />
-                        {/* ✅ File size warning */}
-                        {fileSizeError && (
-                            <span className="error-text">⚠ {fileSizeError}</span>
-                        )}
+                        {fileSizeError && <span className="error-text">⚠ {fileSizeError}</span>}
                         {errors.paymentSlip && !fileSizeError && (
                             <span className="error-text">⚠ {errors.paymentSlip}</span>
                         )}
 
-                        {/* Image preview */}
                         {paymentSlip && paymentSlip.type?.startsWith("image/") && (
                             <div style={{ marginTop: 10, position: "relative", width: "100%" }}>
                                 <img
                                     src={URL.createObjectURL(paymentSlip)}
                                     alt="Receipt preview"
                                     style={{
-                                        width: "100%",
-                                        maxHeight: 220,
-                                        objectFit: "contain",
-                                        borderRadius: 8,
-                                        border: "1px solid #e5e7eb",
-                                        background: colors.bg,
-                                        display: "block",
+                                        width: "100%", maxHeight: 220, objectFit: "contain",
+                                        borderRadius: 8, border: "1px solid #e5e7eb",
+                                        background: colors.bg, display: "block",
                                     }}
                                 />
                                 <button
@@ -1664,7 +1307,6 @@ const handleCardPayment = async () => {
                             </div>
                         )}
 
-                        {/* PDF preview */}
                         {paymentSlip && paymentSlip.type === "application/pdf" && (
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
                                 <p style={{ fontSize: 12, color: colors.brandPrimary, margin: 0 }}>📄 {paymentSlip.name}</p>
@@ -1685,13 +1327,10 @@ const handleCardPayment = async () => {
                 </div>
             )}
 
-            {/* Pay Later Option Note (No fields required) */}
             {(isEnrollmentLink || tokenData?.payLater || enrollmentLinkData?.payLater || initialPaymentData?.payLater) && paymentMethod === "Pay Later" && (
                 <div className="bank-details" style={{ backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0" }}>
                     <div style={{ padding: 10 }}>
-                        <p style={{ margin: 0, fontSize: 14, color: "#166534", fontWeight: 600 }}>
-                            ✓ Pay Later Method Selected
-                        </p>
+                        <p style={{ margin: 0, fontSize: 14, color: "#166534", fontWeight: 600 }}>✓ Pay Later Method Selected</p>
                         <p style={{ margin: "8px 0 0", fontSize: 13, color: "#15803d" }}>
                             You can proceed with the enrollment now. Your company will be invoiced for this booking. No immediate payment or receipt is required.
                         </p>
@@ -1699,7 +1338,6 @@ const handleCardPayment = async () => {
                 </div>
             )}
 
-            {/* Card Payment — Square Web Payments */}
             {!blockPaymentForExistingEmail && !isCompanyEnroll && !isEnrollmentLink && paymentMethod === "Card Payment" && (
                 <form className="card-payment square-card-panel" onSubmit={(e) => e.preventDefault()}>
                     <div className="secure-box">
@@ -1715,21 +1353,17 @@ const handleCardPayment = async () => {
 
                     <div className="square-amount-chip">
                         <span>Amount due</span>
-                       <strong>
-    {squareCurrency}{" "}
-    {(
-        isCompany
-            ? companyFinalTotal
-            : Number(
-                appliedCoupon
-                    ? appliedCoupon.finalAmount
-                    : originalCourseAmount
-            )
-    ).toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    })}
-</strong>
+                        <strong>
+                            {squareCurrency}{" "}
+                            {(
+                                isCompany
+                                    ? companyFinalTotal
+                                    : Number(appliedCoupon ? appliedCoupon.finalAmount : originalCourseAmount)
+                            ).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            })}
+                        </strong>
                     </div>
 
                     <div className="form-group">
@@ -1770,18 +1404,10 @@ const handleCardPayment = async () => {
 
                     <div className="card-logos">
                         <span>We accept</span>
-                          <img
-        src="https://cdn.simpleicons.org/visa"
-        alt="Visa"
-        className="card-logo visa-logo"
-    />
+                        <img src="https://cdn.simpleicons.org/visa" alt="Visa" className="card-logo visa-logo" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" />
                     </div>
-
-                    {/* <p className="square-test-hint">
-                        Sandbox test card: <code>4111 1111 1111 1111</code> · any future expiry · any CVV
-                    </p> */}
 
                     {paymentStatus === "success" && (
                         <div className="payment-success">
@@ -1793,8 +1419,7 @@ const handleCardPayment = async () => {
                         <div className="payment-error-card">
                             <div className="payment-error-card-header">
                                 <div className="payment-error-card-title">
-                                    <span>⚠️</span>
-                                    <strong>Payment failed</strong>
+                                    <span>⚠️</span><strong>Payment failed</strong>
                                 </div>
                                 <button className="payment-error-close" type="button" onClick={() => setPaymentStatus(null)}>✕</button>
                             </div>

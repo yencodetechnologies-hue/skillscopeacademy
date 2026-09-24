@@ -198,7 +198,7 @@ export default function ViewCourseDetailMobile({
   const trustBadges = useMemo(
     () => [
       { icon: <FaBuildingColumns />, text: "SafeWork NSW approved RTO" },
-      { icon: <FaCertificate />, text: "Certificate same day" },
+      // { icon: <FaCertificate />, text: "Certificate same day" },
       { icon: <FaCalendarDays />, text: "Sunday sessions available" },
     ],
     [],

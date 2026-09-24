@@ -16,11 +16,11 @@ const features = [
         title: "Flexible Delivery",
         desc: "Group bookings, onsite delivery, multi-day packages, and RPL assessments. We come to you, or you come to us.",
     },
-    {
-        icon: "⚡",
-        title: "Same-Day Certificates",
-        desc: "Same-day digital certificates for most courses. Workers back on site without delay, documentation in hand.",
-    },
+    // {
+    //     icon: "⚡",
+    //     title: "Same-Day Certificates",
+    //     desc: "Same-day digital certificates for most courses. Workers back on site without delay, documentation in hand.",
+    // },
 ]
 
 function AboutSection() {

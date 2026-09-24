@@ -933,7 +933,7 @@ export default function ViewCourseDetailMobile({ course, courses = [], fromPorta
   const trustBadges = useMemo(
     () => [
       { icon: "🏛", text: "SafeWork NSW approved RTO" },
-      { icon: "📜", text: "Certificate same day" },
+      // { icon: "📜", text: "Certificate same day" },
       { icon: "📅", text: "Sunday sessions available" },
     ],
     []

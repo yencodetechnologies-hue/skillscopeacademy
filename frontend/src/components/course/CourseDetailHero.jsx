@@ -94,7 +94,7 @@ function CourseDetailHero({ course }) {
                             </button>
 
                             <ul className="checklist">
-                                <li><span className="check-icon">✓</span> Certificate issued same day</li>
+                                {/* <li><span className="check-icon">✓</span> Certificate issued same day</li> */}
                                 <li><span className="check-icon">✓</span> Sunday sessions available</li>
                                 <li><span className="check-icon">✓</span> SafeWork NSW approved RTO</li>
                                 <li><span className="check-icon">✓</span> {reviewCountFormatted} five-star Google reviews</li>
@@ -137,13 +137,13 @@ function CourseDetailHero({ course }) {
                             <span>Accredited provider</span>
                         </div>
                     </div>
-                    <div className="info-item">
+                    {/* <div className="info-item">
                         <span className="info-icon">📋</span>
                         <div className="info-text">
                             <strong>Same Day</strong>
                             <span>Certificate issued</span>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="info-item">
                         <span className="info-icon">🌏</span>
                         <div className="info-text">

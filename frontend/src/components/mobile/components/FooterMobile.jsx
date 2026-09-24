@@ -2,6 +2,8 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { ORG_PHONE_1300, ORG_PHONE_MOBILE } from "../../../utils/organizationPhones"
 import "../styles/FooterMobile.css"
+import redflag from "../../../assets/redflag.png"
+import greenflag from "../../../assets/greenflag.jpg"
 
 // Social media links
 const socialLinks = [
@@ -63,49 +65,40 @@ function Footer() {
       </div>
 
       {/* ── 2. MAIN FOOTER CARD ── */}
-    <div className="st-footer-card">
-      
-    <div className="st-section-label">SafeTicks</div>
-  <div className="st-footer-section1">
-    {/* <div className="st-section-label">Location</div> */}
+      <div className="st-footer-card">
+        <div className="st-section-label">SafeTicks</div>
 
-    <div className="st-office-row">
-      <i className="fa-solid fa-location-dot st-info-icon" />
+        <div className="st-footer-section1">
+          <div className="st-office-row">
+            <i className="fa-solid fa-location-dot st-info-icon" />
 
-      <div className="st-office-list">
+            <div className="st-office-list">
+              {/* Sydney */}
+              <div className="st-office">
+                <strong>Sydney</strong>
+                <div className="st-office-address">
+                  15/3 Lancaster Street,
+                  <br />
+                  Ingleburn,
+                  <br />
+                  NSW 2565
+                </div>
+              </div>
 
-        {/* Sydney */}
-        <div className="st-office">
-          <strong>Sydney</strong>
-          {/* <span>SafeTicks</span> */}
-          <div className="st-office-address">
-            15/3 Lancaster Street,
-            <br />
-            Ingleburn,
-            <br />NSW 2565
-            {/* <br />
-            Australia. */}
+              {/* Adelaide */}
+              <div className="st-office">
+                <strong>Adelaide</strong>
+                <div className="st-office-address">
+                  8 Cord Street,
+                  <br />
+                  Dudley Park,
+                  <br />
+                  SA 5008
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Adelaide */}
-        <div className="st-office">
-          <strong>Adelaide</strong>
-          {/* <span>SafeTicks</span> */}
-          <div className="st-office-address">
-            8 Cord Street,
-            <br />
-            Dudley Park,
-            <br/>SA 5008
-            {/* <br />
-            Australia. */}
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
 
         {/* CONTACT */}
         <div className="st-footer-section">
@@ -164,8 +157,8 @@ function Footer() {
           <div className="st-section-label st-center-label">FOLLOW US</div>
           <div className="st-socials-row">
             {socialLinks.map((s, i) => (
-              <a
-                key={i}
+              
+                <a key={i}
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
@@ -178,9 +171,28 @@ function Footer() {
           </div>
         </div>
 
+        {/* ACKNOWLEDGEMENT OF COUNTRY */}
+        <div className="st-ack">
+          <div className="st-ack-flags">
+            <img
+              src={redflag}
+              alt="Aboriginal flag"
+              className="st-ack-flag"
+            />
+            <img
+              src={greenflag}
+              alt="Torres Strait Islander flag"
+              className="st-ack-flag"
+            />
+          </div>
+          <p className="st-ack-text">
+            SafeTicks acknowledges the traditional owners and custodians of country throughout Australia and acknowledges their continuing connection to land, sea and community. We pay our respects to the people, the cultures and the elders past, present and emerging.
+          </p>
+        </div>
+
         {/* COPYRIGHT */}
         <div className="st-copyright">
-          © 2024 SafeTicks. All Rights Reserved.
+          © 2026 SafeTicks. All Rights Reserved.
         </div>
       </div>
     </footer>

@@ -52,8 +52,11 @@ function CoursesSection() {
                 <div className="cs-header">
                     <div className="cs-label">All courses</div>
                     <div className="cs-title">Browse &amp; Book</div>
-                    <div className="cs-sub">
+                    {/* <div className="cs-sub">
                         Nationally recognised training. Certificate issued same day. Same-week sessions available.
+                    </div> */}
+                    <div className="cs-sub">
+                        Nationally recognised training. Same-week sessions available.
                     </div>
                 </div>
 

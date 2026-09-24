@@ -644,10 +644,10 @@ function CourseDetails() {
     ====================================================== */}
 
       <ul className="cdp-trust-list">
-        <li>
+        {/* <li>
           <span className="cdp-check">✓</span>
           Certificate issued same day
-        </li>
+        </li> */}
 
         <li>
           <span className="cdp-check">✓</span>
@@ -758,9 +758,9 @@ function CourseDetails() {
         Already Trained? Book VOC
       </button>
       <ul className="cdp-sb-mini-list">
-        <li>
+        {/* <li>
           <span>✓</span> Certificate same day
-        </li>
+        </li> */}
         <li>
           <span>✓</span> Sunday sessions available
         </li>
@@ -1523,7 +1523,7 @@ function CourseDetails() {
             <div className="cdp-trust-grid">
               {[
                 { icon: "🏛", title: "SafeWork NSW Approved Provider" },
-                { icon: "📜", title: "Certificate Issued Same Day" },
+                // { icon: "📜", title: "Certificate Issued Same Day" },
                 { icon: "📅", title: "Sunday Sessions Available" },
                 { icon: "💰", title: "All-Inclusive Pricing — No Hidden Fees" },
                 { icon: "📍", title: "Easy Location with Free Parking" },

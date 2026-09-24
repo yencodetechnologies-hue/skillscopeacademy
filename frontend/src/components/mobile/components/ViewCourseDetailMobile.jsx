@@ -547,7 +547,7 @@ export default function ViewCourseDetailMobile({
          <div className="cdm-fact-icon cdm-fact-icon--orange"><FaCertificate /></div>
    
          <div className="cdm-fact-val">
-            {course.certification_issue || "Same Day"}
+            {course.certification_issue || "-"}
          </div>
    
          <div className="cdm-fact-label">

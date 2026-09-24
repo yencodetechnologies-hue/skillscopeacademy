@@ -960,7 +960,7 @@ function CourseDetails() {
            
                            {
                              icon: BadgeCheck,
-                             value: course?.certification_issue || "Same Day",
+                             value: course?.certification_issue || "-",
                              label: "Certificate",
                            },
            
